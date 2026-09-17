@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Tether · UI/UX Specification</title><link rel="stylesheet" href="style.css"></head>
+<body data-doc="UI/UX Specification">
+<div class="doc">
+
+<div class="cover">
+  <p class="kicker">UI / UX Specification</p>
+  <h1>Tether</h1>
+  <p class="sub">Design system, component library, and screen-by-screen specification</p>
+  <div class="meta">
+    <div><b>Version</b> 1.0</div>
+    <div><b>Date</b> 17 Sept 2026</div>
+    <div><b>Status</b> Ready for design production</div>
+    <div><b>Platforms</b> iOS 16+, Android 10+</div>
+    <div><b>Companion</b> PRD · TRD · Backend Schema</div>
+  </div>
+</div>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li>Design principles</li>
+    <li>Brand identity</li>
+    <li>Foundations: colour, type, spacing</li>
+    <li>Component library</li>
+    <li>Motion specification</li>
+    <li>Accessibility</li>
+    <li>Screen inventory</li>
+    <li>Screen specifications</li>
+    <li>States: empty, loading, error, offline</li>
+    <li>Voice and tone</li>
+    <li>Localisation readiness</li>
+  </ol>
+</div>
+
+<h2><span class="num">01</span>Design principles</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>1. Quiet, not loud</h4>
+    <p>People open this app at vulnerable moments. No confetti explosions, no streak-shaming, no bright red badges. Celebration is a warm shift in colour, not a party.</p>
+  </div>
+  <div class="card">
+    <h4>2. One thing per screen</h4>
+    <p>The daily prompt screen contains the prompt and nothing else. If a user has to look for the primary action, the screen has failed.</p>
+  </div>
+  <div class="card">
+    <h4>3. Never a dead end</h4>
+    <p>No screen may exist where the user cannot proceed. Waiting, empty, or failed states always carry a next action. This principle directly targets the failure mode that damaged the predecessor product.</p>
+  </div>
+  <div class="card">
+    <h4>4. Both people, always visible</h4>
+    <p>Where content is shared, both partners' presence is visible — avatars, names, states. Tether is not a single-player app wearing a couples costume.</p>
+  </div>
+</div>
+
+<h2><span class="num">02</span>Brand identity</h2>
+<table>
+  <thead><tr><th style="width:20%">Element</th><th>Specification</th></tr></thead>
+  <tbody>
+    <tr><td><b>Name</b></td><td>Tether</td></tr>
+    <tr><td><b>Tagline</b></td><td>Two people. One practice.</td></tr>
+    <tr><td><b>Metaphor</b></td><td>A tether connects while allowing movement — the exact shape of a healthy relationship, and of an interfaith one.</td></tr>
+    <tr><td><b>Mark</b></td><td>Two distinct endpoints joined by a single continuous line. The line should have visible slack — it is not a rigid bar. Works at 24px. Monochrome-safe.</td></tr>
+    <tr><td><b>Personality</b></td><td>Warm, calm, intelligent, unhurried. Not clinical, not cute.</td></tr>
+    <tr><td><b>Avoid</b></td><td>Religious symbols of any kind. Heart icons. Stock photos of smiling couples. Anything that renders as clip-art spirituality.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">03</span>Foundations</h2>
+
+<h3>3.1 Colour</h3>
+<div class="grid2">
+  <div>
+    <h4>Core</h4>
+    <div class="swatch"><i style="background:#3C3489"></i><code>Ink primary · #3C3489</code> <span class="small">brand, headings</span></div>
+    <div class="swatch"><i style="background:#534AB7"></i><code>Brand · #534AB7</code> <span class="small">primary actions</span></div>
+    <div class="swatch"><i style="background:#EEEDFE"></i><code>Brand tint · #EEEDFE</code> <span class="small">surfaces</span></div>
+    <div class="swatch"><i style="background:#1B1A1F"></i><code>Text · #1B1A1F</code></div>
+    <div class="swatch"><i style="background:#6E6B7A"></i><code>Text muted · #6E6B7A</code></div>
+    <div class="swatch"><i style="background:#F7F6FA"></i><code>Surface · #F7F6FA</code></div>
+    <div class="swatch"><i style="background:#E3E1E9"></i><code>Border · #E3E1E9</code></div>
+  </div>
+  <div>
+    <h4>Semantic</h4>
+    <div class="swatch"><i style="background:#0F6E56"></i><code>Thriving · #0F6E56</code></div>
+    <div class="swatch"><i style="background:#BA7517"></i><code>Drifting · #BA7517</code></div>
+    <div class="swatch"><i style="background:#A32D2D"></i><code>Strained · #A32D2D</code></div>
+    <div class="swatch"><i style="background:#D85A30"></i><code>Accent · #D85A30</code> <span class="small">sparingly</span></div>
+    <div class="swatch"><i style="background:#185FA5"></i><code>Info · #185FA5</code></div>
+    <h4 style="margin-top:12px">Wisdom track accents</h4>
+    <div class="swatch"><i style="background:#378ADD"></i><code>Secular · #378ADD</code></div>
+    <div class="swatch"><i style="background:#BA7517"></i><code>Vedic · #BA7517</code></div>
+    <div class="swatch"><i style="background:#1D9E75"></i><code>Quranic · #1D9E75</code></div>
+    <div class="swatch"><i style="background:#7F77DD"></i><code>Biblical · #7F77DD</code></div>
+  </div>
+</div>
+<div class="callout warn">
+  <span class="lbl">Colour rules</span>
+  <p>Track accents identify content, never decorate it. Never colour-code partners by gender. All semantic states must be distinguishable in greyscale — colour is never the only signal.</p>
+</div>
+
+<h3>3.2 Typography</h3>
+<p>System font stack (SF Pro on iOS, Roboto on Android). No custom fonts at v1 — system fonts render better, ship instantly, and support Dynamic Type natively.</p>
+<table>
+  <thead><tr><th style="width:22%">Style</th><th style="width:16%">Size</th><th style="width:16%">Weight</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>display</code></td><td>32 / 40</td><td>700</td><td>Welcome, celebration moments</td></tr>
+    <tr><td><code>title</code></td><td>24 / 32</td><td>700</td><td>Screen titles</td></tr>
+    <tr><td><code>headline</code></td><td>18 / 26</td><td>600</td><td>Section headers, the daily prompt itself</td></tr>
+    <tr><td><code>body</code></td><td>16 / 24</td><td>400</td><td>Default reading text</td></tr>
+    <tr><td><code>callout</code></td><td>15 / 22</td><td>400</td><td>Secondary content</td></tr>
+    <tr><td><code>caption</code></td><td>13 / 18</td><td>400</td><td>Metadata, timestamps</td></tr>
+    <tr><td><code>label</code></td><td>15 / 20</td><td>600</td><td>Buttons, form labels</td></tr>
+  </tbody>
+</table>
+
+<h3>3.3 Spacing, radius, elevation</h3>
+<div class="grid3">
+  <div class="card"><h4>Spacing</h4><p>4pt base grid.<br>4 · 8 · 12 · 16 · 24 · 32 · 48<br>Screen margins: 20pt horizontal, 16pt vertical minimum.</p></div>
+  <div class="card"><h4>Radius</h4><p>Small 8pt (chips, inputs)<br>Medium 12pt (cards)<br>Large 20pt (sheets)<br>Full (avatars, mood dots)</p></div>
+  <div class="card"><h4>Elevation</h4><p>No drop shadows. Depth via 1px borders and surface tint only. Flat is calmer and renders consistently.</p></div>
+</div>
+
+<h2><span class="num">04</span>Component library</h2>
+
+<h3>Atoms</h3>
+<table>
+  <thead><tr><th style="width:18%">Component</th><th style="width:26%">Variants</th><th>Specification</th></tr></thead>
+  <tbody>
+    <tr><td><b>Button</b></td><td>primary, secondary, tertiary, destructive</td><td>Height 52pt minimum touch target. Radius 12pt. Primary uses brand fill. One primary per screen.</td></tr>
+    <tr><td><b>MoodDot</b></td><td>5 states, unselected</td><td>36pt circles in a row. Colour ramps from Strained red to Thriving green. Must be distinguishable in greyscale — use size and label alongside colour.</td></tr>
+    <tr><td><b>Avatar</b></td><td>sm 32, md 44, lg 72</td><td>Circular. Initials or uploaded image. Never gender-coded by default.</td></tr>
+    <tr><td><b>PairBadge</b></td><td>solo, pending, paired</td><td>Shows coupling status anywhere couple context matters.</td></tr>
+    <tr><td><b>Chip</b></td><td>track, filter, state</td><td>Height 32pt, radius 8pt. Track chips carry their accent colour as a 3pt leading bar.</td></tr>
+    <tr><td><b>StreakRing</b></td><td>active, frozen, broken</td><td>Progress ring with count. Frozen state uses a dashed ring, never red.</td></tr>
+    <tr><td><b>PulseIndicator</b></td><td>thriving, drifting, strained, unknown</td><td>Small pill with icon plus text label. Never colour-only.</td></tr>
+    <tr><td><b>PrivateToggle</b></td><td>shared, private</td><td>Explicit visibility control on any composable surface. Default state configurable per surface.</td></tr>
+  </tbody>
+</table>
+
+<h3>Molecules</h3>
+<ul>
+  <li><b>PromptCard</b> — the day's question, date, and a track chip. The hero of the home screen.</li>
+  <li><b>ReplyRow</b> — avatar, one-line reply, timestamp. Locked state shows a covered placeholder with "Reveals when you both answer."</li>
+  <li><b>PartnerRow</b> — avatar, name, last-active, nudge action. Used in waiting room and settings.</li>
+  <li><b>InviteMethod</b> — link, QR, code. All three always visible together, never behind a tab.</li>
+  <li><b>WisdomTrackCard</b> — icon, name, one-line description, selected state. Four cards, equal visual weight — no implied ranking.</li>
+  <li><b>JournalEntry</b> — mood dot, text, visibility indicator, date.</li>
+  <li><b>CoachBubble</b> — AI message with streaming indicator and a persistent "not therapy" affordance.</li>
+  <li><b>ResourceCard</b> — crisis resources. Calm, high contrast, no branding flourish.</li>
+  <li><b>PaywallFeature</b> — icon, title, one-line benefit. Privacy promise appears as a feature row.</li>
+</ul>
+
+<h3>Organisms</h3>
+<ul>
+  <li><b>DailyLoop</b> — PromptCard + MoodDot row + input + lock state + streak. The entire habit in one component.</li>
+  <li><b>InviteSheet</b> — three methods, share sheet integration, copy-to-clipboard.</li>
+  <li><b>WaitingRoom</b> — status, elapsed time, copyable message, refresh, solo escape hatch.</li>
+  <li><b>CoachThread</b> — message list, voice button, streaming, disclaimer footer.</li>
+  <li><b>PulsePanel</b> — current state, trend, tap-through explanation.</li>
+</ul>
+
+<h2><span class="num">05</span>Motion specification</h2>
+<table>
+  <thead><tr><th style="width:26%">Interaction</th><th style="width:20%">Duration</th><th>Easing / notes</th></tr></thead>
+  <tbody>
+    <tr><td>Screen transition</td><td>250ms</td><td>Standard ease-out. Cross-dissolve for tab changes.</td></tr>
+    <tr><td>Reply unlock reveal</td><td>400ms</td><td>The one moment earned theatre. Gentle scale and fade, never confetti.</td></tr>
+    <tr><td>Mood dot select</td><td>150ms</td><td>Immediate tactile feedback.</td></tr>
+    <tr><td>AI token streaming</td><td>—</td><td>Typewriter, 18ms/token. Never a blocking spinner.</td></tr>
+    <tr><td>Pairing success</td><td>600ms</td><td>Warm brand-tint wash and both avatars converging. Celebration without noise.</td></tr>
+    <tr><td>Loading</td><td>—</td><td>Skeleton screens, never spinners, for anything over 400ms.</td></tr>
+  </tbody>
+</table>
+<p><b>Reduced motion</b> — honour the OS setting. Replace all animation with instant state change or opacity-only fades. No exceptions.</p>
+
+<h2><span class="num">06</span>Accessibility</h2>
+<ul>
+  <li><b>WCAG 2.1 AA minimum.</b> Contrast 4.5:1 for body text, 3:1 for large text and UI components.</li>
+  <li><b>Dynamic Type</b> — all text scales to 200% without clipping or overlap. Test every screen at maximum.</li>
+  <li><b>VoiceOver / TalkBack</b> — every interactive element labelled. Mood dots announce state and value ("3 of 5").</li>
+  <li><b>Touch targets</b> — 44×44pt minimum. Mood dots are 36pt visually but must have a 44pt hit area.</li>
+  <li><b>Colour independence</b> — no state communicated by colour alone. Pulse, mood, and streak all carry text or shape.</li>
+  <li><b>Reduced motion</b> and <b>increased contrast</b> both honoured.</li>
+</ul>
+
+<h2><span class="num">07</span>Screen inventory</h2>
+<table>
+  <thead><tr><th style="width:6%">#</th><th style="width:26%">Screen</th><th style="width:14%">Priority</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Splash</td><td><span class="badge b-p0">P0</span></td><td>Brand moment. Under 1.5s, skippable.</td></tr>
+    <tr><td>2</td><td>Welcome</td><td><span class="badge b-p0">P0</span></td><td>Name, promise, get started.</td></tr>
+    <tr><td>3</td><td>Wisdom track selection</td><td><span class="badge b-p0">P0</span></td><td>Four equal options. "Yours alone — change anytime."</td></tr>
+    <tr><td>4</td><td>Love Languages</td><td><span class="badge b-p0">P0</span></td><td>20 questions, under 2 min, immediate result.</td></tr>
+    <tr><td>5</td><td>Home / daily loop</td><td><span class="badge b-p0">P0</span></td><td>The core habit. One prompt, mood, reply.</td></tr>
+    <tr><td>6</td><td>Invite partner</td><td><span class="badge b-p0">P0</span></td><td>Link + QR + code, all visible.</td></tr>
+    <tr><td>7</td><td>Waiting room</td><td><span class="badge b-p0">P0</span></td><td>Status, copyable message, solo escape.</td></tr>
+    <tr><td>8</td><td>Pairing success</td><td><span class="badge b-p0">P0</span></td><td>Celebration. Start of shared streak.</td></tr>
+    <tr><td>9</td><td>Solo mode home</td><td><span class="badge b-p0">P0</span></td><td>Full-value solo experience. Invite affordance present but not nagging.</td></tr>
+    <tr><td>10</td><td>Journal</td><td><span class="badge b-p0">P0</span></td><td>Chronological entries, search, export.</td></tr>
+    <tr><td>11</td><td>Relationship Pulse</td><td><span class="badge b-p0">P0</span></td><td>State, trend, explanation.</td></tr>
+    <tr><td>12</td><td>AI coach</td><td><span class="badge b-p0">P0</span></td><td>Text and voice, streaming, disclaimer.</td></tr>
+    <tr><td>13</td><td>Paywall</td><td><span class="badge b-p0">P0</span></td><td>Trial, pricing, "one sub covers both."</td></tr>
+    <tr><td>14</td><td>Settings</td><td><span class="badge b-p0">P0</span></td><td>Account, track, notifications, privacy, delete.</td></tr>
+    <tr><td>15</td><td>Safety resource</td><td><span class="badge b-p0">P0</span></td><td>Crisis support. Partner never sees this.</td></tr>
+    <tr><td>16</td><td>Weekly recap</td><td><span class="badge b-p1">P1</span></td><td>Sunday summary.</td></tr>
+    <tr><td>17</td><td>Track switch</td><td><span class="badge b-p1">P1</span></td><td>Change wisdom track with history preserved.</td></tr>
+    <tr><td>18</td><td>Onboarding progress</td><td><span class="badge b-p1">P1</span></td><td>Seven-day ritual progress.</td></tr>
+  </tbody>
+</table>
+
+<h2 class="pb"><span class="num">08</span>Screen specifications</h2>
+
+<h3>Screen 3 — Wisdom track selection <span class="badge b-p0">P0</span></h3>
+<table>
+  <thead><tr><th style="width:20%">Aspect</th><th>Specification</th></tr></thead>
+  <tbody>
+    <tr><td><b>Purpose</b></td><td>User selects the framework their content will speak from.</td></tr>
+    <tr><td><b>Header</b></td><td>"What wisdom speaks to you?" Subhead: "This is yours alone. Your partner chooses their own."</td></tr>
+    <tr><td><b>Content</b></td><td>Four cards, equal size and visual weight: Secular &amp; Psychology · Vedic &amp; Dharmic · Quranic · Biblical. Each with icon, name, and one-line description. At v0.1 ship Secular and Biblical live; others show "Coming soon" rather than being hidden — the promise matters.</td></tr>
+    <tr><td><b>Interaction</b></td><td>Tap to select, single choice. Continue button disabled until chosen.</td></tr>
+    <tr><td><b>States</b></td><td>Selected (brand border, 2pt, accent leading bar). Unselected (1pt neutral border). Coming soon (reduced opacity, badge).</td></tr>
+    <tr><td><b>Critical copy</b></td><td>"Yours alone" must appear. It is the entire differentiator and must be legible, not buried.</td></tr>
+  </tbody>
+</table>
+
+<h3>Screen 5 — Home / daily loop <span class="badge b-p0">P0</span></h3>
+<table>
+  <thead><tr><th style="width:20%">Aspect</th><th>Specification</th></tr></thead>
+  <tbody>
+    <tr><td><b>Purpose</b></td><td>The whole habit. Completable in under 60 seconds.</td></tr>
+    <tr><td><b>Layout</b> (top→bottom)</td><td>Date and streak ring · PromptCard with today's question · MoodDot row (5 dots) · one-line input with voice button · partner status row showing locked or revealed state.</td></tr>
+    <tr><td><b>Locked state</b></td><td>Partner's reply area shows a covered placeholder: "Reveals when you both answer." Never show a partial or blurred reply — that reads as a tease and erodes trust.</td></tr>
+    <tr><td><b>Revealed state</b></td><td>Both replies visible, side by side or stacked with avatars. Optional reaction. No comment thread in v1.</td></tr>
+    <tr><td><b>Solo variant</b></td><td>No lock. Reply saves immediately. A quiet, non-nagging invite affordance below.</td></tr>
+    <tr><td><b>Missed day</b></td><td>Offer freeze rather than showing a broken streak. Copy: "Keep your streak? You have 2 freezes left."</td></tr>
+    <tr><td><b>Paywall hook</b></td><td>Free tier sees a limited number of prompts per week. Never block today's prompt if the user has already started it.</td></tr>
+  </tbody>
+</table>
+
+<h3>Screen 6 &amp; 7 — Invite and waiting room <span class="badge b-p0">P0</span></h3>
+<div class="callout danger">
+  <span class="lbl">This is the most important flow in the product</span>
+  <p>The predecessor product failed here. Every screen must offer a way forward. No state in this flow may be terminal.</p>
+</div>
+<table>
+  <thead><tr><th style="width:20%">Aspect</th><th>Specification</th></tr></thead>
+  <tbody>
+    <tr><td><b>Invite screen</b></td><td>All three methods visible simultaneously: a large share button, a QR code, and a 6-digit code. No tabs, no hiding.</td></tr>
+    <tr><td><b>Waiting room</b></td><td>Shows: elapsed time since invite, a pre-written copyable message ("Hey — I found something I'd like us to try together"), a manual refresh, and nudge controls.</td></tr>
+    <tr><td><b>Never</b></td><td>An unexplained spinner. A blank state. A screen with no action available.</td></tr>
+    <tr><td><b>24h</b></td><td>"Invite sent yesterday. Send a reminder?" with one-tap WhatsApp / iMessage / SMS.</td></tr>
+    <tr><td><b>72h</b></td><td>Proactive offer, visually prominent: <b>"Start on your own. Everything you write syncs the moment they join."</b> One tap into Solo Mode.</td></tr>
+    <tr><td><b>Success</b></td><td>Both avatars converge, brand-tint wash, both partners pushed. Marks shared streak start.</td></tr>
+  </tbody>
+</table>
+
+<h3>Screen 12 — AI coach <span class="badge b-p0">P0</span></h3>
+<table>
+  <thead><tr><th style="width:20%">Aspect</th><th>Specification</th></tr></thead>
+  <tbody>
+    <tr><td><b>Layout</b></td><td>Message thread, coach avatar top-left, input bar with text and voice. Persistent footer: "Tether is not therapy."</td></tr>
+    <tr><td><b>Streaming</b></td><td>Typewriter from 18ms per token. Typing indicator before first token. Never a blocking spinner.</td></tr>
+    <tr><td><b>Voice</b></td><td>Press-and-hold or tap mic. Waveform while recording. Spoken playback option on responses.</td></tr>
+    <tr><td><b>Memory</b></td><td>When the coach references past context, show a subtle "Remembering" indicator. Transparency builds trust and differentiates from a stateless chatbot.</td></tr>
+    <tr><td><b>Refusal</b></td><td>Warm and brief, never a lecture. Offer the next best step (a human professional, a prompt, or a pause).</td></tr>
+    <tr><td><b>Privacy</b></td><td>Header affordance opens encryption explanation. "Your conversations are encrypted. We cannot read them."</td></tr>
+  </tbody>
+</table>
+
+<h3>Screen 13 — Paywall <span class="badge b-p0">P0</span></h3>
+<ul>
+  <li><b>Headline</b> — a benefit, not a feature list.</li>
+  <li><b>Critical line, prominent</b> — <b>"One subscription. Both partners. Always."</b></li>
+  <li><b>Feature rows</b> — daily prompts, full content library, AI coach, unlimited journal. <b>Include privacy as a feature row</b> ("End-to-end encrypted").</li>
+  <li><b>Options</b> — annual ($79.99) pre-selected with savings shown, monthly ($12.99) secondary.</li>
+  <li><b>Trial</b> — "14 days free, then $79.99/year. Cancel anytime."</li>
+  <li><b>Placement</b> — after the first value moment, never on launch.</li>
+  <li><b>Restore</b> — visible text link. Required.</li>
+</ul>
+
+<h2><span class="num">09</span>States</h2>
+<table>
+  <thead><tr><th style="width:16%">State</th><th>Requirements</th></tr></thead>
+  <tbody>
+    <tr><td><b>Empty</b></td><td>Must teach, not just fill space. Journal empty state shows a sample entry with "Your entries will look like this." Always carries a primary action.</td></tr>
+    <tr><td><b>Loading</b></td><td>Skeleton screens above 400ms. Spinners only for sub-400ms operations.</td></tr>
+    <tr><td><b>Error</b></td><td>Plain language, what happened, what to do. Never an error code alone. Always a retry.</td></tr>
+    <tr><td><b>Offline</b></td><td>Quiet persistent banner: "Offline — your entries are saved." Never a blocking modal. Full functionality retained.</td></tr>
+    <tr><td><b>Paused</b></td><td>If the user has paused notifications, show a gentle "Resume" affordance, not a warning.</td></tr>
+    <tr><td><b>Crisis</b></td><td>Calm, high contrast, unbranded. Resource card replaces normal content. Partner sees nothing.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">10</span>Voice and tone</h2>
+<div class="grid3">
+  <div class="card"><h4>We are</h4><p>Warm · plain · calm · respectful · brief</p></div>
+  <div class="card"><h4>We are not</h4><p>Cheerful · clinical · preachy · cutesy · urgent</p></div>
+  <div class="card"><h4>We never</h4><p>Guilt · diagnose · prescribe · assume · shame</p></div>
+</div>
+<table>
+  <thead><tr><th style="width:34%">Write this</th><th>Not this</th></tr></thead>
+  <tbody>
+    <tr><td>"Start on your own. Everything syncs when they join."</td><td>"Come back when your partner joins!"</td></tr>
+    <tr><td>"Keep your streak? You have 2 freezes left."</td><td>"You broke your 12-day streak!"</td></tr>
+    <tr><td>"You've been drifting for two weeks."</td><td>"Your relationship is in trouble."</td></tr>
+    <tr><td>"This is yours alone. Your partner chooses their own."</td><td>"Select your faith."</td></tr>
+    <tr><td>"Tether isn't therapy. Here's what might help."</td><td>"I'm not able to help with that."</td></tr>
+  </tbody>
+</table>
+<p><b>Sensitive content rules</b> — no exclamation marks anywhere near conflict, crisis, or Pulse. Sentence case everywhere, never title case for buttons. No emoji in system copy.</p>
+
+<h2><span class="num">11</span>Localisation readiness</h2>
+<ul>
+  <li><b>Build RTL-ready now</b>, even though v0.1 is English-only. Retrofitting directionality is expensive; Urdu and Arabic are on the roadmap.</li>
+  <li><b>Text expansion</b> — allow 35% growth. German and Hindi both run longer than English.</li>
+  <li><b>No text in images.</b> Ever. All strings externalised from day one.</li>
+  <li><b>Date, number, and name formatting</b> — locale-aware via Intl APIs.</li>
+  <li><b>Launch sequence</b> — English (v0.1) → Spanish (v1.0) → Hindi (v1.5) → Tamil, Telugu, Urdu (v2.0). A language ships only when a native speaker owns its content.</li>
+</ul>
+
+<div class="footer-note">Tether · UI/UX Specification v1.0 · Companion documents: PRD, TRD, Backend Schema, Strategy Plan.</div>
+</div>
+</body></html>

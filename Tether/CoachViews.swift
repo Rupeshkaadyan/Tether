@@ -1,0 +1,373 @@
+import SwiftUI
+import SwiftData
+
+struct CoachView: View {
+    @Bindable var profile: UserProfile
+    @Environment(\.modelContext) private var ctx
+    @Environment(\.dismiss) private var dismiss
+
+    @Query(sort: \AIMessage.createdAt) private var allMessages: [AIMessage]
+    @Query private var allMemories: [AIMemory]
+
+    @State private var conversation: AIConversation?
+    @State private var draft = ""
+    @State private var isThinking = false
+    @State private var crisis: SafetyVerdict?
+    @State private var showPrivacy = false
+    @State private var store = PurchaseService.shared
+    @State private var showPaywall = false
+
+    private var freeMessagesUsed: Int {
+        let start = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
+        return messages.filter { $0.role == .user && $0.createdAt >= start }.count
+    }
+
+    private var isBlocked: Bool {
+        !store.hasAccess && freeMessagesUsed >= 5
+    }
+
+    private var messages: [AIMessage] {
+        guard let conversation else { return [] }
+        return allMessages.filter { $0.conversationID == conversation.id }
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                ScrollViewReader { proxy in
+                    ScrollView {
+                        LazyVStack(alignment: .leading, spacing: TetherSpace.m) {
+                            introCard
+
+                            ForEach(messages) { message in
+                                CoachBubble(message: message,
+                                            track: profile.track)
+                                    .id(message.id)
+                            }
+
+                            if let crisis {
+                                SafetyResourceCard(verdict: crisis)
+                                    .id("crisis")
+                            }
+
+                            if isThinking {
+                                HStack(spacing: TetherSpace.s) {
+                                    ProgressView().tint(TetherColor.brand)
+                                    Text("Thinking…")
+                                        .font(TetherType.caption)
+                                        .foregroundStyle(TetherColor.muted)
+                                }
+                                .padding(.vertical, TetherSpace.s)
+                                .id("thinking")
+                            }
+                        }
+                        .padding(TetherSpace.margin)
+                    }
+                    .onChange(of: messages.count) { _, _ in
+                        scrollToEnd(proxy)
+                    }
+                    .onChange(of: crisis != nil) { _, _ in
+                        scrollToEnd(proxy)
+                    }
+                }
+
+                inputBar
+            }
+            .background(TetherColor.bg)
+            .navigationTitle("Coach")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        showPrivacy = true
+                    } label: {
+                        Image(systemName: "lock")
+                    }
+                    .accessibilityLabel("Privacy")
+                }
+            }
+            .sheet(isPresented: $showPrivacy) { privacySheet }
+            .sheet(isPresented: $showPaywall) { PaywallView() }
+            .task { ensureConversation() }
+        }
+    }
+
+    // MARK: - Pieces
+
+    private var introCard: some View {
+        TetherCard {
+            VStack(alignment: .leading, spacing: TetherSpace.s) {
+                Text("A coach, not a therapist")
+                    .font(TetherType.label)
+                Text("Ask about something specific. It remembers what you have written, and it speaks from your \(profile.track.shortName) track.")
+                    .font(TetherType.caption)
+                    .foregroundStyle(TetherColor.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if !store.hasAccess {
+                    Text(isBlocked
+                         ? "You have used your 5 free messages this month."
+                         : "\(max(0, 5 - freeMessagesUsed)) free messages left this month.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(isBlocked ? TetherColor.strained : TetherColor.muted)
+                }
+            }
+        }
+    }
+
+    private var inputBar: some View {
+        VStack(spacing: 0) {
+            Divider()
+            HStack(spacing: TetherSpace.s) {
+                TextField("Ask anything", text: $draft, axis: .vertical)
+                    .lineLimit(1...4)
+                    .font(TetherType.body)
+                    .padding(.horizontal, TetherSpace.m)
+                    .padding(.vertical, TetherSpace.s)
+                    .background(TetherColor.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
+
+                Button {
+                    draft += " "
+                } label: {
+                    Image(systemName: "mic")
+                        .font(.system(size: 17))
+                        .foregroundStyle(TetherColor.muted)
+                        .frame(width: 44, height: 44)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Voice input")
+
+                Button {
+                    Task { await send() }
+                } label: {
+                    Image(systemName: "arrow.up")
+                        .font(.system(size: 16, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(width: 40, height: 40)
+                        .background(canSend ? TetherColor.brand : TetherColor.border)
+                        .clipShape(Circle())
+                }
+                .buttonStyle(.plain)
+                .disabled(!canSend)
+                .accessibilityLabel("Send")
+            }
+            .padding(.horizontal, TetherSpace.margin)
+            .padding(.vertical, TetherSpace.s)
+
+            Text("Tether is not therapy and not a crisis service.")
+                .font(.system(size: 11))
+                .foregroundStyle(TetherColor.muted)
+                .padding(.bottom, TetherSpace.s)
+        }
+        .background(.white)
+    }
+
+    private var privacySheet: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.m) {
+                    Label("Your conversations are private", systemImage: "lock.shield")
+                        .font(TetherType.label)
+                    Text("Your coach conversations are never shown to your partner, and never sent to analytics. Encryption is on the roadmap and ships before any sync exists.")
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Divider()
+                    Text("A safety check runs on everything you type. If it detects a crisis, the app stops generating a normal reply and shows you support lines instead. Your partner is never told.")
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .padding(TetherSpace.margin)
+            }
+            .navigationTitle("Privacy")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { showPrivacy = false }
+                }
+            }
+        }
+    }
+
+    // MARK: - Logic
+
+    private var canSend: Bool {
+        !draft.trimmed.isEmpty && !isThinking
+    }
+
+    private func ensureConversation() {
+        guard conversation == nil else { return }
+        let existing = (try? ctx.fetch(FetchDescriptor<AIConversation>())) ?? []
+        if let mine = existing.first(where: { $0.ownerID == profile.id }) {
+            conversation = mine
+        } else {
+            let new = AIConversation(ownerID: profile.id, title: "Coach")
+            ctx.insert(new)
+            try? ctx.save()
+            conversation = new
+        }
+    }
+
+    private func send() async {
+        guard let conversation, canSend else { return }
+        if isBlocked {
+            showPaywall = true
+            return
+        }
+        let text = draft.trimmed
+        draft = ""
+
+        let userMessage = AIMessage(conversationID: conversation.id,
+                                    role: .user,
+                                    body: SecureContent.seal(text))
+        ctx.insert(userMessage)
+        conversation.lastMessageAt = Date()
+        try? ctx.save()
+
+        // The user's own words become memory for future retrieval.
+        let memory = CoachEngine.makeMemory(from: text,
+                                            ownerID: profile.id,
+                                            source: .coach,
+                                            sourceID: userMessage.id,
+                                            visibility: .private)
+        ctx.insert(memory)
+        try? ctx.save()
+
+        isThinking = true
+        let history = messages
+        let memories = allMemories.filter { $0.ownerID == profile.id }
+
+        let response = await CoachEngine.respond(to: text,
+                                                ownerID: profile.id,
+                                                track: profile.track,
+                                                memories: memories,
+                                                history: history)
+        isThinking = false
+
+        if response.verdict.isCrisis {
+            userMessage.safetyFlagged = true
+            crisis = response.verdict
+            try? ctx.save()
+            return
+        }
+
+        let assistant = AIMessage(conversationID: conversation.id,
+                                  role: .assistant,
+                                  body: SecureContent.seal(response.text),
+                                  usedMemory: response.usedMemory)
+        ctx.insert(assistant)
+        conversation.lastMessageAt = Date()
+        try? ctx.save()
+    }
+
+    private func scrollToEnd(_ proxy: ScrollViewProxy) {
+        withAnimation(.easeOut(duration: 0.25)) {
+            if crisis != nil {
+                proxy.scrollTo("crisis", anchor: .bottom)
+            } else if let last = messages.last {
+                proxy.scrollTo(last.id, anchor: .bottom)
+            }
+        }
+    }
+}
+
+// MARK: - Bubble
+
+struct CoachBubble: View {
+    let message: AIMessage
+    let track: WisdomTrack
+
+    var body: some View {
+        HStack {
+            if message.role == .user { Spacer(minLength: 40) }
+
+            VStack(alignment: message.role == .user ? .trailing : .leading,
+                   spacing: TetherSpace.xs) {
+                if message.role == .assistant && message.usedMemory {
+                    HStack(spacing: 4) {
+                        Image(systemName: "clock.arrow.circlepath")
+                            .font(.system(size: 10))
+                        Text("Remembering")
+                            .font(.system(size: 11))
+                    }
+                    .foregroundStyle(TetherColor.brand)
+                }
+
+                Text(SecureContent.read(message.body))
+                    .font(TetherType.callout)
+                    .foregroundStyle(message.role == .user ? .white : TetherColor.text)
+                    .padding(TetherSpace.m)
+                    .background(message.role == .user ? TetherColor.brand : TetherColor.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            if message.role == .assistant { Spacer(minLength: 40) }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(message.role == .user
+                            ? "You said: \(SecureContent.read(message.body))"
+                            : "Coach said: \(SecureContent.read(message.body))")
+    }
+}
+
+// MARK: - Safety card
+
+struct SafetyResourceCard: View {
+    let verdict: SafetyVerdict
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.m) {
+            Text(SafetyResources.headline(for: verdict.category))
+                .font(TetherType.headline)
+                .foregroundStyle(TetherColor.text)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Text(SafetyResources.body(for: verdict.category))
+                .font(TetherType.callout)
+                .foregroundStyle(TetherColor.muted)
+                .fixedSize(horizontal: false, vertical: true)
+
+            ForEach(SafetyResources.forCategory(verdict.category)) { resource in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(resource.name)
+                        .font(TetherType.label)
+                        .foregroundStyle(TetherColor.text)
+                    Text(resource.detail)
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                    if let phone = resource.phone {
+                        Text(phone)
+                            .font(.system(size: 17, weight: .semibold, design: .rounded))
+                            .foregroundStyle(TetherColor.brand)
+                            .padding(.top, 2)
+                    }
+                }
+                .padding(TetherSpace.m)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .background(.white)
+                .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small))
+            }
+
+            Text("Your partner is not told about this.")
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+        }
+        .padding(TetherSpace.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(TetherColor.strained.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
+        .overlay(
+            RoundedRectangle(cornerRadius: TetherRadius.medium)
+                .strokeBorder(TetherColor.strained.opacity(0.35), lineWidth: 1)
+        )
+        .accessibilityElement(children: .contain)
+        .accessibilityLabel("Crisis support resources")
+    }
+}

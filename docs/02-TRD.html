@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Tether · TRD</title><link rel="stylesheet" href="style.css"></head>
+<body data-doc="Technical Requirements Document">
+<div class="doc">
+
+<div class="cover">
+  <p class="kicker">Technical Requirements Document</p>
+  <h1>Tether</h1>
+  <p class="sub">Architecture, stack, and engineering requirements for v0.1</p>
+  <div class="meta">
+    <div><b>Version</b> 1.0</div>
+    <div><b>Date</b> 17 Sept 2026</div>
+    <div><b>Status</b> Approved for build</div>
+    <div><b>Platforms</b> iOS 17+ (iPhone)</div>
+    <div><b>Companion</b> PRD · UI/UX · Backend Schema</div>
+  </div>
+</div>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li>Architecture overview</li>
+    <li>Technology stack and rationale</li>
+    <li>Client architecture</li>
+    <li>Offline-first sync strategy</li>
+    <li>Backend architecture</li>
+    <li>API specification</li>
+    <li>Authentication and authorisation</li>
+    <li>AI pipeline</li>
+    <li>Push notifications</li>
+    <li>Payments</li>
+    <li>Analytics and instrumentation</li>
+    <li>Security and encryption</li>
+    <li>Performance and scalability</li>
+    <li>Third-party services and cost</li>
+    <li>Environments, CI/CD, testing</li>
+    <li>Compliance</li>
+  </ol>
+</div>
+
+<h2><span class="num">01</span>Architecture overview</h2>
+<pre>
+┌──────────────────────────────────────────────────────────────┐
+│  CLIENT  ·  SwiftUI (native)  ·  iOS 17+, iPhone            │
+│                                                              │
+│   UI layer            →  screens, components, design system   │
+│   State layer         →  @Observable + @Query (SwiftData)            │
+│   Local store         →  SwiftData + UserDefaults        │
+│   Crypto layer        →  AES-256-GCM, keys in Keychain       │
+│   Sync engine         →  outbox queue + pull-with-cursor      │
+└───────────────────────────┬──────────────────────────────────┘
+                            │  HTTPS · TLS 1.3
+┌───────────────────────────▼──────────────────────────────────┐
+│  BACKEND  ·  Supabase                                        │
+│                                                              │
+│   Postgres + RLS      →  source of truth, ciphertext only    │
+│   Auth                →  Apple, Google, email OTP            │
+│   Realtime            →  pairing status, unlock events       │
+│   Edge Functions      →  AI proxy, safety, receipts, cron    │
+│   Storage             →  encrypted media blobs               │
+│   pgvector            →  AI couple memory retrieval          │
+└───────────────────────────┬──────────────────────────────────┘
+                            │
+┌───────────────────────────▼──────────────────────────────────┐
+│  EXTERNAL SERVICES                                           │
+│   Claude API  ·  RevenueCat  ·  APNs  ·  PostHog                       │
+└──────────────────────────────────────────────────────────────┘
+</pre>
+<div class="callout">
+  <span class="lbl">Architectural principle</span>
+  <p><b>Local-first.</b> Every read is served from SQLite. The network is used only to sync. The app is fully usable on a plane, in a subway, or with a dead backend. This single decision eliminates an entire class of the sync bugs that affected the predecessor product.</p>
+</div>
+
+<h2><span class="num">02</span>Technology stack and rationale</h2>
+<table>
+  <thead><tr><th style="width:16%">Layer</th><th style="width:22%">Choice</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr><td><b>Framework</b></td><td>SwiftUI, native</td><td>iPhone-first per the build decision. Native gives the smoothest animation and the tightest Keychain and CryptoKit integration, which the privacy promise depends on. <b>Trade-off accepted:</b> Android is deferred, and roughly half the US market is therefore unaddressed until a separate build exists.</td></tr>
+    <tr><td><b>Language</b></td><td>Swift 5.9, strict concurrency</td><td>Non-negotiable for a codebase with encryption, offline sync, and money. Catches the class of bug you cannot afford to ship.</td></tr>
+    <tr><td><b>Local DB</b></td><td>SwiftData</td><td>Apple-native, offline by default, no dependency to maintain. Encryption is applied at the service boundary so sealed fields stay sealed at rest.</td></tr>
+    <tr><td><b>Key-value</b></td><td>MMKV</td><td>Synchronous, encrypted-at-rest, for settings and session state.</td></tr>
+    <tr><td><b>Server state</b></td><td>@Query (SwiftData)</td><td>Observation-driven reads. No network layer exists yet; the app is fully usable offline.</td></tr>
+    <tr><td><b>UI state</b></td><td>@Observable</td><td>Swift 5.9 Observation. No Combine, no ObservableObject boilerplate.</td></tr>
+    <tr><td><b>Backend</b></td><td>Supabase</td><td>Postgres with real relational couple modelling, Row Level Security, realtime, and edge functions. Cheap to start, portable — it is just Postgres.</td></tr>
+    <tr><td><b>Vector store</b></td><td>pgvector (in Supabase)</td><td>Keeps AI couple memory next to the data it references. No separate vector database to operate.</td></tr>
+    <tr><td><b>AI</b></td><td>Claude API</td><td>Strong instruction-following for a narrow safety-constrained domain, long context for couple memory, voice-ready.</td></tr>
+    <tr><td><b>Payments</b></td><td>RevenueCat (stubbed)</td><td>Handles StoreKit and Play Billing, receipt validation, cross-platform entitlement, and the "one sub covers both partners" sharing model.</td></tr>
+    <tr><td><b>Analytics</b></td><td>PostHog (self-hostable)</td><td>Product analytics without content leakage. Can be run on your own infrastructure, which supports the privacy promise.</td></tr>
+    <tr><td><b>Push</b></td><td>UNUserNotificationCenter → APNs</td><td>Local notifications shipped and working. Remote push is added alongside when the backend lands; identifiers stay the same.</td></tr>
+    <tr><td><b>Error tracking</b></td><td>Sentry</td><td>Scrub all content before send. Configure PII scrubbing explicitly.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">03</span>Client architecture</h2>
+<pre>
+Tether/
+  TetherApp.swift  app entry + RootView
+  components/     design system + feature components
+  features/
+    onboarding/   track selection, love languages, first prompt
+    pairing/      invite, waiting room, QR, merge ceremony
+    daily/        prompt, mood, reply, unlock
+    journal/      entries, export
+    pulse/        relationship state, weekly recap
+    coach/        AI conversation, voice
+    solo/         solo-mode surfaces
+    paywall/      pricing, trial, restore
+  services/
+    crypto/       key management, encrypt/decrypt
+    sync/         outbox, pull, conflict resolution
+    ai/           client wrapper, streaming
+    notifications/ scheduling, send-time learning
+    purchases/    RevenueCat wrapper
+  db/             WatermelonDB schema, models, migrations
+  lib/            utils, constants, feature flags
+</pre>
+<h4>Key client rules</h4>
+<ul>
+  <li><b>No component talks to the network directly.</b> Everything goes through the sync engine or a service layer. This keeps offline behaviour consistent by default.</li>
+  <li><b>Encryption happens at the service boundary, never in the UI.</b> Components handle plaintext; the crypto service handles everything else.</li>
+  <li><b>Optimistic writes always.</b> The UI updates instantly; sync confirms later. Users never wait on a spinner for their own action.</li>
+  <li><b>Feature flags from day one.</b> Remote-configurable so you can kill the AI coach or a content track without a store release.</li>
+</ul>
+
+<h2><span class="num">04</span>Offline-first sync strategy</h2>
+<h4>Write path</h4>
+<ol class="flow">
+  <li><b>User acts</b> — writes a reply, taps a mood.</li>
+  <li><b>Encrypt locally</b> — content encrypted on device.</li>
+  <li><b>Write to SQLite</b> — committed to local store immediately.</li>
+  <li><b>Enqueue in outbox</b> — durable queue, survives app kill.</li>
+  <li><b>Flush</b> — when connectivity allows, batches of encrypted records.</li>
+  <li><b>Ack and clear</b> — server confirms, outbox entry removed.</li>
+</ol>
+<h4>Read path</h4>
+<ol class="flow">
+  <li><b>Pull with cursor</b> — client sends last-synced cursor, receives only deltas.</li>
+  <li><b>Decrypt and merge</b> — into local SQLite.</li>
+  <li><b>Emit to UI</b> — observables refresh automatically.</li>
+</ol>
+<h4>Conflict resolution</h4>
+<table>
+  <thead><tr><th style="width:24%">Data type</th><th style="width:26%">Strategy</th><th>Rationale</th></tr></thead>
+  <tbody>
+    <tr><td>Journal entries</td><td>Last-write-wins on <code>updated_at</code>, keep both versions</td><td>Writes are per-user and immutable in practice; collisions are near-impossible.</td></tr>
+    <tr><td>Mood logs</td><td>Last-write-wins per user per day</td><td>Naturally keyed; no merge needed.</td></tr>
+    <tr><td>Profile / settings</td><td>Last-write-wins with monotonic version</td><td>Low-stakes, easily re-set.</td></tr>
+    <tr><td>Pairing state</td><td>Server authoritative</td><td>Correctness matters more than latency. Never guess here.</td></tr>
+    <tr><td>Streaks</td><td>Server computed, client displays</td><td>Prevents cheating and divergence.</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="lbl">Idempotency</span>
+  <p>Every outbox record carries a client-generated UUID. The server treats it as an idempotency key. This makes retries safe, which is what prevents duplicate entries under flaky mobile networks.</p>
+</div>
+
+<h2><span class="num">05</span>Backend architecture</h2>
+<h4>Supabase services used</h4>
+<ul>
+  <li><b>Postgres</b> — source of truth. Stores ciphertext for journal and chat; plaintext only for non-sensitive relational data.</li>
+  <li><b>Row Level Security</b> — every table protected. A user can only ever read their own rows and their partner's shared rows.</li>
+  <li><b>Auth</b> — Apple, Google, email OTP. No phone number, deliberately.</li>
+  <li><b>Realtime</b> — pairing status, prompt unlock events, typing indicators. Used sparingly; most state arrives via pull.</li>
+  <li><b>Edge Functions (Deno)</b> — AI proxy, safety classification, webhook handlers, scheduled jobs.</li>
+  <li><b>Storage</b> — encrypted media only, private buckets.</li>
+</ul>
+<h4>Edge functions</h4>
+<table>
+  <thead><tr><th style="width:26%">Function</th><th>Responsibility</th></tr></thead>
+  <tbody>
+    <tr><td><code>ai-coach</code></td><td>Safety-classify input → retrieve couple memory → build grounded prompt → stream response → store both sides encrypted.</td></tr>
+    <tr><td><code>safety-scan</code></td><td>Classify journal entries on write. On hit, suppress and return resource payload.</td></tr>
+    <tr><td><code>prompts-daily</code></td><td>Cron. Assign the day's prompt per couple, honouring both partners' tracks and time zones.</td></tr>
+    <tr><td><code>notifications-send</code></td><td>Cron. Per-user send-time optimisation, staggered partner delivery.</td></tr>
+    <tr><td><code>pulse-compute</code></td><td>Cron. Compute Relationship Pulse from mood, cadence, sentiment.</td></tr>
+    <tr><td><code>recap-weekly</code></td><td>Cron. Build and deliver the Sunday recap.</td></tr>
+    <tr><td><code>webhook-revenuecat</code></td><td>Sync entitlement to both partners. Handle renewals, refunds, grace periods.</td></tr>
+    <tr><td><code>webhook-clerk-none</code></td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">06</span>API specification</h2>
+<p>Client talks to Supabase via PostgREST for CRUD, and to edge functions for anything involving AI, safety, or third-party secrets. All requests require a valid JWT.</p>
+<table>
+  <thead><tr><th style="width:12%">Method</th><th style="width:34%">Endpoint</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>POST</td><td><code>/functions/v1/ai-coach</code></td><td>Streaming AI response. Body: <code>{message, conversationId, mode}</code></td></tr>
+    <tr><td>POST</td><td><code>/functions/v1/safety-scan</code></td><td>Classify journal text before commit</td></tr>
+    <tr><td>POST</td><td><code>/functions/v1/pairing/create-invite</code></td><td>Generate link, QR payload, and 6-digit code</td></tr>
+    <tr><td>POST</td><td><code>/functions/v1/pairing/redeem</code></td><td>Redeem a code or QR; creates the couple</td></tr>
+    <tr><td>POST</td><td><code>/functions/v1/pairing/nudge</code></td><td>Send nudge to pending invitee</td></tr>
+    <tr><td>GET</td><td><code>/rest/v1/prompts?day=eq.</code></td><td>Fetch daily prompt (pull)</td></tr>
+    <tr><td>POST</td><td><code>/rest/v1/prompt_replies</code></td><td>Submit encrypted reply</td></tr>
+    <tr><td>GET</td><td><code>/rest/v1/sync?cursor=gt.</code></td><td>Delta pull</td></tr>
+    <tr><td>POST</td><td><code>/rest/v1/sync</code></td><td>Batched outbox flush</td></tr>
+    <tr><td>POST</td><td><code>/functions/v1/account/export</code></td><td>Generate full data export</td></tr>
+    <tr><td>DELETE</td><td><code>/functions/v1/account/delete</code></td><td>Hard delete, 30-day grace, then purge</td></tr>
+    <tr><td>POST</td><td><code>/functions/v1/webhook-revenuecat</code></td><td>Entitlement sync</td></tr>
+  </tbody>
+</table>
+<div class="callout">
+  <span class="lbl">Versioning</span>
+  <p>Edge functions are versioned in the path (<code>/v1/</code>) from day one. Client ships a minimum-supported-version header; older clients get a graceful upgrade prompt rather than a crash.</p>
+</div>
+
+<h2><span class="num">07</span>Authentication and authorisation</h2>
+<ul>
+  <li><b>Methods</b> — Sign in with Apple (required by App Store if any social login is offered), Google, email OTP. <b>No phone number</b> — a competitor loses users at this step.</li>
+  <li><b>Sessions</b> — JWT with refresh rotation. Biometric re-auth optional for the private vault.</li>
+  <li><b>Row Level Security</b> — the real authorisation layer. Policies enforce: you see your rows; you see your partner's rows only where <code>visibility = 'shared'</code> and you are in an active couple.</li>
+  <li><b>Invite tokens</b> — single-use or 7-day expiry, revocable, bound to the inviting user.</li>
+  <li><b>Anonymous pairing</b> — a partner can redeem an invite before creating an account; state transfers on signup.</li>
+</ul>
+
+<h2><span class="num">08</span>AI pipeline</h2>
+<pre>
+User input
+   │
+   ▼
+[1] On-device pre-screen ....... regex + lightweight keyword guard
+   │
+   ▼
+[2] Server safety classifier ... fast model, strict JSON verdict
+   │        ├── CRISIS ──► suppress, return resource card, log event
+   │        └── SAFE ────► continue
+   ▼
+[3] Memory retrieval .......... pgvector similarity over past entries
+   │                            (scoped to this user + shared entries)
+   ▼
+[4] Prompt assembly ........... system: role, safety rules, scope limits
+   │                            + wisdom track context (per partner)
+   │                            + cultural context
+   │                            + retrieved memory (top-k)
+   │                            + conversation history
+   ▼
+[5] Generation ................ streaming, temperature ~0.5
+   │
+   ▼
+[6] Output guard .............. verify no diagnosis, no legal advice,
+   │                            no crisis mishandling
+   ▼
+[7] Encrypt and store ......... both sides stored as ciphertext
+</pre>
+<h4>Requirements</h4>
+<ul>
+  <li><b>Latency</b> — first token under 3s at p95. Stream tokens, never block on full response.</li>
+  <li><b>Memory scope</b> — retrieval is scoped to the asking user plus shared entries. <b>Never retrieve the partner's private entries.</b></li>
+  <li><b>Caching</b> — cache responses to common prompt patterns. Use a small fast model for classification, a large one for coaching.</li>
+  <li><b>Cost control</b> — per-tier monthly message caps, token budget alerts, response length limits.</li>
+  <li><b>Refusal behaviour</b> — must refuse gracefully and warmly, never lecture. A refusal that shames the user is a worse outcome than a slightly generic answer.</li>
+</ul>
+
+<h2><span class="num">09</span>Push notifications</h2>
+<table>
+  <thead><tr><th style="width:26%">Notification</th><th style="width:20%">Trigger</th><th>Rules</th></tr></thead>
+  <tbody>
+    <tr><td>Daily prompt</td><td>Daily, personalised time</td><td>Per-partner send time. Never both at the same minute.</td></tr>
+    <tr><td>Partner replied</td><td>On unlock</td><td>Highest-value notification. Never suppress unless paused.</td></tr>
+    <tr><td>Pairing nudge</td><td>24h, 72h</td><td>Max 3 total, then stop.</td></tr>
+    <tr><td>Streak at risk</td><td>Evening if unanswered</td><td>Offers freeze, not guilt. Max 1/day.</td></tr>
+    <tr><td>Weekly recap</td><td>Sunday</td><td>Opt-out available.</td></tr>
+    <tr><td>Re-engagement</td><td>Day 14, 30 dormant</td><td>Nostalgic, not discount-based.</td></tr>
+  </tbody>
+</table>
+<p><b>Send-time optimisation</b> — record each user's active hours over 14 days, then schedule within their window. Store per-user, recompute weekly. <b>Time-zone aware</b> for long-distance couples.</p>
+
+<h2><span class="num">10</span>Payments</h2>
+<ul>
+  <li><b>RevenueCat</b> wraps StoreKit 2 and Play Billing. Products: monthly, annual, Couples+ annual.</li>
+  <li><b>Shared entitlement</b> — on purchase, write entitlement to both <code>couple_members</code> rows. Either partner purchasing unlocks both.</li>
+  <li><b>Webhook</b> — handles renewal, refund, grace period, billing retry, and crossgrade.</li>
+  <li><b>Intro offers</b> — 14-day free trial configured in App Store Connect and Play Console, surfaced through RevenueCat.</li>
+  <li><b>Restore purchases</b> — prominent, one tap. Required by App Store review.</li>
+  <li><b>Cancellation</b> — handled by the stores, but the app links directly. No dark patterns.</li>
+</ul>
+
+<h2><span class="num">11</span>Analytics and instrumentation</h2>
+<div class="callout danger">
+  <span class="lbl">Hard rule</span>
+  <p><b>Never send journal content, AI message content, or any user text to analytics.</b> Event names and properties only. This is a product promise, not a preference.</p>
+</div>
+<h4>Core events</h4>
+<table>
+  <thead><tr><th style="width:34%">Event</th><th>Properties</th></tr></thead>
+  <tbody>
+    <tr><td><code>onboarding_step_completed</code></td><td>step, duration_ms</td></tr>
+    <tr><td><code>track_selected</code></td><td>track_id</td></tr>
+    <tr><td><code>invite_sent</code></td><td>method (link/qr/code)</td></tr>
+    <tr><td><code>invite_redeemed</code></td><td>method, hours_since_sent</td></tr>
+    <tr><td><code>pairing_completed</code></td><td>method, elapsed_hours</td></tr>
+    <tr><td><code>solo_mode_entered</code></td><td>trigger (immediate/72h_fallback)</td></tr>
+    <tr><td><code>prompt_answered</code></td><td>day_index, has_voice, duration_s</td></tr>
+    <tr><td><code>streak_extended</code> / <code>streak_frozen</code></td><td>length</td></tr>
+    <tr><td><code>coach_message_sent</code></td><td>mode (text/voice), latency_ms</td></tr>
+    <tr><td><code>safety_event</code></td><td>category, action_taken <span class="small">(no content)</span></td></tr>
+    <tr><td><code>paywall_shown</code> / <code>trial_started</code> / <code>converted</code></td><td>placement, product</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">12</span>Security and encryption</h2>
+<table>
+  <thead><tr><th style="width:24%">Control</th><th>Implementation</th></tr></thead>
+  <tbody>
+    <tr><td><b>Transport</b></td><td>TLS 1.3, certificate pinning on the AI edge function.</td></tr>
+    <tr><td><b>At rest, client</b></td><td>SQLite encrypted via SQLCipher. Keys in iOS Keychain / Android Keystore.</td></tr>
+    <tr><td><b>At rest, server</b></td><td>Journal entries and AI messages stored as AES-256-GCM ciphertext. <b>Server holds no key.</b></td></tr>
+    <tr><td><b>Key derivation</b></td><td>Per-user key derived from an auth-bound secret, wrapped by device key. Documented recovery trade-off: loss of all devices means loss of encrypted history.</td></tr>
+    <tr><td><b>Access control</b></td><td>Row Level Security on every table. Tested with automated policy tests in CI.</td></tr>
+    <tr><td><b>Secrets</b></td><td>Edge function secrets only. No API keys in the client bundle. Verified in CI.</td></tr>
+    <tr><td><b>Logging</b></td><td>Sentry and server logs scrub content. Allowlist, not denylist.</td></tr>
+    <tr><td><b>Backup</b></td><td>Daily encrypted Postgres backups, 30-day retention, restore tested quarterly.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">13</span>Performance and scalability</h2>
+<table>
+  <thead><tr><th style="width:30%">Metric</th><th style="width:22%">Target</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Cold start</td><td>&lt; 2.0s</td><td>p95, mid-range device</td></tr>
+    <tr><td>Prompt screen interactive</td><td>&lt; 1.0s</td><td>Local read, no network</td></tr>
+    <tr><td>AI first token</td><td>&lt; 3.0s</td><td>p95, streaming</td></tr>
+    <tr><td>Sync flush (50 records)</td><td>&lt; 2.0s</td><td>On reasonable network</td></tr>
+    <tr><td>API availability</td><td>99.5%</td><td>Excludes planned maintenance</td></tr>
+    <tr><td>Crash-free sessions</td><td>&gt; 99.5%</td><td>Release-blocking below this</td></tr>
+  </tbody>
+</table>
+<h4>Scaling path</h4>
+<ul>
+  <li><b>0–10k users</b> — Supabase free/pro tier. No changes needed.</li>
+  <li><b>10k–100k</b> — read replicas for pull, connection pooling (PgBouncer), edge function regionalisation, AI response caching.</li>
+  <li><b>100k+</b> — partition <code>prompt_replies</code> and <code>journal_entries</code> by month, archive cold data, consider dedicated vector store if pgvector latency degrades.</li>
+</ul>
+
+<h2><span class="num">14</span>Third-party services and cost</h2>
+<table>
+  <thead><tr><th style="width:22%">Service</th><th style="width:22%">Free tier</th><th style="width:22%">Est. at 10k MAU</th><th>Notes</th></tr></thead>
+  <tbody>
+    <tr><td>Supabase</td><td>Yes</td><td>$25–75/mo</td><td>Pro tier at launch for backups and support</td></tr>
+    <tr><td>Claude API</td><td>Pay as you go</td><td>$250–700/mo</td><td>Largest variable cost. Caching and caps essential.</td></tr>
+    <tr><td>RevenueCat</td><td>Up to $2.5k MTR</td><td>Free → $0</td><td>Percentage only above threshold</td></tr>
+    <tr><td>Apple Developer Program</td><td>No</td><td>$99/yr</td><td>Required for TestFlight and App Store</td></tr>
+    <tr><td>PostHog</td><td>1M events</td><td>$0–45/mo</td><td>Self-hostable if privacy requires</td></tr>
+    <tr><td>Sentry</td><td>5k errors</td><td>$0–26/mo</td><td>Configure scrubbing</td></tr>
+    <tr><td>Domain + misc</td><td>—</td><td>$20/mo</td><td>tether.app, email, USPTO filing</td></tr>
+    <tr><td colspan="2"><b>Estimated total at 10k MAU</b></td><td colspan="2"><b>~$350–950/mo</b></td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">15</span>Environments, CI/CD, and testing</h2>
+<h4>Environments</h4>
+<ul>
+  <li><b>local</b> — Supabase local via CLI, seeded fixtures.</li>
+  <li><b>staging</b> — separate Supabase project, sandbox RevenueCat, test AI keys.</li>
+  <li><b>production</b> — separate project, strict RLS, monitoring on.</li>
+</ul>
+<h4>CI pipeline</h4>
+<ol class="flow">
+  <li><b>Lint + typecheck</b> — ESLint, strict TS. Fails fast.</li>
+  <li><b>Unit tests</b> — Vitest. Crypto, sync logic, streak math, Pulse computation.</li>
+  <li><b>RLS policy tests</b> — automated verification that users cannot read others' data. <b>This is a release gate.</b></li>
+  <li><b>Safety red-team suite</b> — fixed corpus of crisis inputs; must classify correctly with zero misses.</li>
+  <li><b>E2E tests</b> — Detox or Maestro on the critical paths: onboarding, pairing, daily loop, paywall.</li>
+  <li><b>Build</b> — EAS Build, distribute to TestFlight / internal track.</li>
+</ol>
+<h4>Manual test matrix before release</h4>
+<ul>
+  <li>Airplane mode: write 10 entries, reconnect, verify all sync and none duplicate.</li>
+  <li>Pairing: all three methods, including in-person QR with both devices offline.</li>
+  <li>Interrupted purchase, restore purchases, cancellation.</li>
+  <li>Dynamic Type at 200% on every screen.</li>
+  <li>VoiceOver traversal of the daily loop.</li>
+</ul>
+
+<h2><span class="num">16</span>Compliance</h2>
+<table>
+  <thead><tr><th style="width:26%">Requirement</th><th>Action</th></tr></thead>
+  <tbody>
+    <tr><td><b>App Store</b></td><td>Account deletion in-app (required). Sign in with Apple if any social login. Privacy nutrition labels accurate. Subscription terms visible on paywall.</td></tr>
+    <tr><td><b>Play Store</b></td><td>Data safety form. Account deletion. Subscription disclosure.</td></tr>
+    <tr><td><b>CCPA / CPRA</b></td><td>Do-not-sell. Data export and deletion. Privacy policy published before launch.</td></tr>
+    <tr><td><b>GDPR</b></td><td>Lawful basis, data portability, erasure. Needed before EU expansion; build the capability now.</td></tr>
+    <tr><td><b>Health claims</b></td><td>Never claim to treat, diagnose, or prevent any condition. Avoid triggering FDA wellness-device scrutiny. Legal review of all marketing copy.</td></tr>
+    <tr><td><b>Telehealth boundary</b></td><td>Clear, persistent disclaimer: not therapy, not a crisis service. Documented in ToS.</td></tr>
+    <tr><td><b>Liability</b></td><td>LLC or corp formed before launch. E&amp;O insurance considered once revenue exists.</td></tr>
+  </tbody>
+</table>
+
+<div class="footer-note">Tether · Technical Requirements Document v1.0 · Companion documents: PRD, UI/UX Specification, Backend Schema, Strategy Plan.</div>
+</div>
+</body></html>

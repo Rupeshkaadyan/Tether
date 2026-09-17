@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Tether · PRD</title><link rel="stylesheet" href="style.css"></head>
+<body data-doc="Product Requirements Document">
+<div class="doc">
+
+<div class="cover">
+  <p class="kicker">Product Requirements Document</p>
+  <h1>Tether</h1>
+  <p class="sub">A relationship practice for two people who don't share a single story.</p>
+  <div class="meta">
+    <div><b>Version</b> 1.0</div>
+    <div><b>Date</b> 17 Sept 2026</div>
+    <div><b>Status</b> Approved for build</div>
+    <div><b>Primary market</b> United States</div>
+    <div><b>Target</b> iOS 17+ (iPhone), v0.1 in 90 days</div>
+  </div>
+</div>
+
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li>Executive summary</li>
+    <li>Problem statement</li>
+    <li>Goals and non-goals</li>
+    <li>Target users and personas</li>
+    <li>Success metrics</li>
+    <li>Release scope</li>
+    <li>Functional requirements</li>
+    <li>User flows</li>
+    <li>User stories and acceptance criteria</li>
+    <li>Content requirements</li>
+    <li>Non-functional requirements</li>
+    <li>Risks, dependencies, open questions</li>
+    <li>Launch criteria</li>
+  </ol>
+</div>
+
+<h2><span class="num">01</span>Executive summary</h2>
+<p><b>Tether</b> is a private, two-person relationship app. It helps a couple build a small daily practice together — one prompt, one mood, one shared reflection — while respecting that the two people involved may not share the same faith, worldview, or cultural background.</p>
+<p>Every major competitor (Paired, Lasting, Couply, Evergreen, Relish, Twogle) is either secular-generic or implicitly Christian. None of them let a Hindu–Muslim, Christian–atheist, or interfaith couple see themselves in the product. In the United States roughly four in ten marriages cross religious lines and about thirty percent of adults are religiously unaffiliated. <b>That is the market Tether serves, and it is currently unserved.</b></p>
+<div class="callout">
+  <span class="lbl">Positioning statement</span>
+  <p>Tether is the relationship app for couples who don't share a single worldview. Each partner chooses their own wisdom track. The practice is shared; the beliefs are not.</p>
+</div>
+
+<h2><span class="num">02</span>Problem statement</h2>
+<table>
+  <thead><tr><th style="width:22%">Problem</th><th style="width:39%">Evidence</th><th style="width:39%">Tether's response</th></tr></thead>
+  <tbody>
+    <tr><td><b>No app serves multi-faith couples</b></td><td>All major couples apps assume a shared worldview. Implicitly Christian or aggressively secular.</td><td>Per-partner wisdom tracks. Shared prompts built from the intersection of both tracks.</td></tr>
+    <tr><td><b>Partner sync failure</b></td><td>The predecessor product's most-reported failure was users trapped in an invite loop waiting for a partner who never appeared. 30–40% of invitees never install.</td><td>Six-screen pairing resilience suite: QR, link, and code paths; waiting room; nudges; 72-hour Solo Mode fallback.</td></tr>
+    <tr><td><b>Enthusiasm asymmetry</b></td><td>"Only works if both partners engage" is the most common criticism of every app in the category. One partner is nearly always the initiator.</td><td>Solo Mode as a first-class product path, not a consolation prize. Full value with zero partner involvement.</td></tr>
+    <tr><td><b>Habit drop-off</b></td><td>Daily couples apps lose users in week two. Multi-field journaling is experienced as homework.</td><td>A sixty-second loop: one prompt, one mood tap, one sentence. Streak freezes instead of guilt.</td></tr>
+    <tr><td><b>Generic content</b></td><td>Reviewers consistently call competitor content repetitive and generic.</td><td>Content engine with four layers: universal psychology, wisdom track, cultural context, language.</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">03</span>Goals and non-goals</h2>
+<div class="grid2">
+  <div class="card">
+    <h4>Goals</h4>
+    <ul>
+      <li><b>G1</b> — Multi-worldview couples feel genuinely represented.</li>
+      <li><b>G2</b> — Pairing completion above 60%.</li>
+      <li><b>G3</b> — Day-30 retention above 25%.</li>
+      <li><b>G4</b> — Deliver full value when only one partner joins.</li>
+      <li><b>G5</b> — Be the safest, most private app in the category.</li>
+      <li><b>G6</b> — Reach $10k MRR within 12 months of US launch.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h4>Non-goals (explicitly out of scope)</h4>
+    <ul>
+      <li>Not therapy, and not a replacement for it.</li>
+      <li>Not a dating or matchmaking product.</li>
+      <li>Not a social network in v1.</li>
+      <li>Not a crisis or emergency service — we detect and refer.</li>
+      <li>Not a co-parenting, household logistics, or finance tool.</li>
+      <li>No advertising, ever. No selling of user content.</li>
+    </ul>
+  </div>
+</div>
+
+<h2><span class="num">04</span>Target users and personas</h2>
+
+<h3>P1 — Priya &amp; Alex <span class="badge b-p0">Primary</span></h3>
+<p>Interfaith couple, US, married 2 years. Priya is Hindu, Alex is lapsed Catholic. Both 29, urban, dual-income. They argue about holidays and about how to raise future children. Priya wants structure; Alex is sceptical of "apps for feelings." Neither has found a relationship product that reflects them.</p>
+<ul>
+  <li><b>Goal</b> — Build a shared practice without either person converting or compromising.</li>
+  <li><b>Frustration</b> — Every app either pushes Christian framing or strips all meaning out.</li>
+  <li><b>Tether wins when</b> — Each sees their own wisdom in the app, and shared prompts feel neutral but not empty.</li>
+</ul>
+
+<h3>P2 — Maya &amp; Jordan <span class="badge b-p1">Primary</span></h3>
+<p>Secular, therapy-literate, US, together 5 years. Both in individual therapy. They know Gottman and attachment theory. They want evidence-based tools, not inspirational quotes.</p>
+<ul>
+  <li><b>Goal</b> — Practical skill-building: conflict repair, emotional bids, repair attempts.</li>
+  <li><b>Frustration</b> — Finds competitor content shallow and repetitive.</li>
+  <li><b>Tether wins when</b> — Content is clearly grounded in Gottman, EFT, attachment, and NVC — and says so.</li>
+</ul>
+
+<h3>P3 — Fatima &amp; Dan <span class="badge b-p1">Secondary</span></h3>
+<p>Fatima is Muslim, Dan is agnostic. Navigating family expectations and in-law dynamics. Dan worries about being asked to believe something; Fatima worries about being asked to let go of something.</p>
+
+<h3>P4 — Solo Sarah <span class="badge b-p0">Critical</span></h3>
+<p>Sarah wants to work on her relationship. Her partner has downloaded three couples apps and opened none of them. Every app she has tried has dead-ended at the invite screen.</p>
+<ul>
+  <li><b>Goal</b> — Start anyway, without waiting for permission or participation.</li>
+  <li><b>Frustration</b> — "Come back when your partner joins" is a dead end.</li>
+  <li><b>Tether wins when</b> — She gets real value on day one alone, and everything merges when he eventually joins.</li>
+</ul>
+
+<h3>P5 — Long-distance <span class="badge b-p2">Later</span></h3>
+<p>Different time zones, asynchronous. Needs time-zone-aware prompt delivery and no "you missed yesterday" guilt.</p>
+
+<h2><span class="num">05</span>Success metrics</h2>
+<table>
+  <thead><tr><th style="width:26%">Metric</th><th style="width:40%">Definition</th><th style="width:16%">Target</th><th style="width:18%">Why it matters</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pairing completion</b></td><td>Invites sent → active two-person pair</td><td>&gt; 60%</td><td>The metric that killed the predecessor</td></tr>
+    <tr><td><b>D30 retention</b></td><td>% of installs active on day 30</td><td>&gt; 25%</td><td>Category runs 10–20%</td></tr>
+    <tr><td><b>Weekly completion</b></td><td>Prompts answered per active partner per week</td><td>&gt; 3</td><td>Proxy for habit formation</td></tr>
+    <tr><td><b>Trial → paid</b></td><td>14-day trial conversion</td><td>&gt; 25%</td><td>Validates pricing and paywall</td></tr>
+    <tr><td><b>Solo → paired</b></td><td>Solo users who eventually pair</td><td>&gt; 30%</td><td>Validates the whole Solo Mode bet</td></tr>
+    <tr><td><b>D7 onboarding completion</b></td><td>Users finishing the 7-day ritual</td><td>&gt; 55%</td><td>Predicts long-term retention</td></tr>
+    <tr><td><b>Safety events handled</b></td><td>Crisis signals correctly escalated</td><td>100%</td><td>Non-negotiable, zero tolerance</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">06</span>Release scope</h2>
+<table>
+  <thead><tr><th style="width:14%">Release</th><th style="width:22%">Theme</th><th>Contents</th></tr></thead>
+  <tbody>
+    <tr><td><b>v0.1</b><br><span class="small">Days 1–90</span></td><td>Prove the loop</td><td>Onboarding · wisdom tracks (Secular, Biblical) · Love Languages · Solo Mode · pairing suite · daily loop · journal · mood · Pulse · AI coach v1 · safety · paywall · privacy</td></tr>
+    <tr><td><b>v1.0</b><br><span class="small">Months 4–6</span></td><td>Prove the moat</td><td>Vedic and Quranic tracks · AI coach memory v2 · voice · cultural modules · weekly recap · streak freeze · Spanish</td></tr>
+    <tr><td><b>v1.5</b><br><span class="small">Months 7–9</span></td><td>Expand</td><td>Interfaith Bridge module · Hindi · India pricing and UPI · therapist directory · widgets</td></tr>
+    <tr><td><b>v2.0</b><br><span class="small">Months 10–12</span></td><td>Scale</td><td>Moderated community · additional languages · Android feature parity polish · web companion</td></tr>
+  </tbody>
+</table>
+<div class="callout warn">
+  <span class="lbl">Explicitly cut from v0.1</span>
+  <p>Community · localisation beyond English · India pricing · therapist directory · cultural modules beyond US · games and extra quizzes · watch app · widgets · web.</p>
+</div>
+
+<h2 class="pb"><span class="num">07</span>Functional requirements</h2>
+<p>Priority key: <span class="badge b-must">Must</span> v0.1 blocker &nbsp; <span class="badge b-should">Should</span> v1.0 &nbsp; <span class="badge b-could">Could</span> later</p>
+
+<h3>7.1 Identity and onboarding</h3>
+<table>
+  <thead><tr><th style="width:9%">ID</th><th style="width:22%">Requirement</th><th style="width:9%">Pri</th><th>Acceptance criteria</th></tr></thead>
+  <tbody>
+    <tr><td>FR-001</td><td>Account creation</td><td><span class="badge b-must">Must</span></td><td>Sign in with Apple, Google, or email. No phone number required — competitors lose users here. Account created in under 20 seconds.</td></tr>
+    <tr><td>FR-002</td><td><b>Per-partner wisdom track</b></td><td><span class="badge b-must">Must</span></td><td>Each partner independently selects a track: Secular/Psychology, Vedic/Dharmic, Quranic, Biblical. At v0.1 ship Secular + Biblical. Choice is per user, not per couple, and is editable in settings.</td></tr>
+    <tr><td>FR-003</td><td>Love Languages assessment</td><td><span class="badge b-must">Must</span></td><td>Standard 5-language assessment, ~20 questions, under 2 minutes. Result shown immediately. Stored per user. Framed as a fun tool, never as science — see FR-041.</td></tr>
+    <tr><td>FR-004</td><td>7-day onboarding ritual</td><td><span class="badge b-must">Must</span></td><td>Day 1 track · Day 2 Love Languages · Day 3 first prompt · Day 4 invite partner · Day 5 first shared entry · Day 6 Pulse baseline · Day 7 AI coach intro. Each step skippable.</td></tr>
+    <tr><td>FR-005</td><td>Notification permission</td><td><span class="badge b-must">Must</span></td><td>Requested after first value moment (day 3), not at launch. Pre-permission explainer screen shown first.</td></tr>
+  </tbody>
+</table>
+
+<h3>7.2 Pairing — the critical path</h3>
+<table>
+  <thead><tr><th style="width:9%">ID</th><th style="width:22%">Requirement</th><th style="width:9%">Pri</th><th>Acceptance criteria</th></tr></thead>
+  <tbody>
+    <tr><td>FR-010</td><td>Three invite paths</td><td><span class="badge b-must">Must</span></td><td>Every invite offers: shareable deep link, QR code, and 6-digit code. All three land the partner in the app on the correct screen, authed or not.</td></tr>
+    <tr><td>FR-011</td><td>Waiting room</td><td><span class="badge b-must">Must</span></td><td>Never a dead spinner. Shows invite status, time sent, and a copyable pre-written message to send. Manual "check again" control.</td></tr>
+    <tr><td>FR-012</td><td>Nudge sequence</td><td><span class="badge b-must">Must</span></td><td>At 24h and 72h, one-tap re-invite via iMessage, WhatsApp, or SMS. Max 3 nudges, then stop.</td></tr>
+    <tr><td>FR-013</td><td>In-person QR pairing</td><td><span class="badge b-must">Must</span></td><td>Scanning a partner's QR while both are present pairs instantly, no network round-trip dependency. Eliminates the entire class of remote link failures.</td></tr>
+    <tr><td>FR-014</td><td><b>72-hour Solo Mode fallback</b></td><td><span class="badge b-must">Must</span></td><td>If no pairing after 72h, proactively offer: "Start solo. Everything syncs the moment they join." One tap. This is the single most important screen in the product.</td></tr>
+    <tr><td>FR-015</td><td>Pairing confirmation</td><td><span class="badge b-must">Must</span></td><td>Both partners receive a push. A celebration moment, not a toast. Marks the start of the shared streak.</td></tr>
+    <tr><td>FR-016</td><td>Solo → paired merge</td><td><span class="badge b-must">Must</span></td><td>All pre-pairing content is preserved and unlocked together in a merge ceremony. Nothing is lost, nothing is retroactively hidden.</td></tr>
+    <tr><td>FR-017</td><td>Unpair</td><td><span class="badge b-should">Should</span></td><td>Either partner can unpair. Requires confirmation. Content is retained per user, not deleted.</td></tr>
+  </tbody>
+</table>
+
+<h3>7.3 The daily loop</h3>
+<table>
+  <thead><tr><th style="width:9%">ID</th><th style="width:22%">Requirement</th><th style="width:9%">Pri</th><th>Acceptance criteria</th></tr></thead>
+  <tbody>
+    <tr><td>FR-020</td><td>One daily prompt</td><td><span class="badge b-must">Must</span></td><td>Exactly one prompt per day per couple. Not four. Derived from the intersection of both partners' tracks.</td></tr>
+    <tr><td>FR-021</td><td>Mood tap</td><td><span class="badge b-must">Must</span></td><td>Single 1–5 selection. One tap. No text required.</td></tr>
+    <tr><td>FR-022</td><td>One-sentence reply</td><td><span class="badge b-must">Must</span></td><td>Single-line input, 280 characters. Voice-to-text enabled and encouraged.</td></tr>
+    <tr><td>FR-023</td><td>Hidden until both reply</td><td><span class="badge b-must">Must</span></td><td>A reply is invisible to the other partner until both have answered. Drives reciprocity and removes performance pressure.</td></tr>
+    <tr><td>FR-024</td><td>Streak with freeze</td><td><span class="badge b-must">Must</span></td><td>Counts consecutive days both replied. Two automatic freeze days per month. Never punitive language.</td></tr>
+    <tr><td>FR-025</td><td>Smart send time</td><td><span class="badge b-should">Should</span></td><td>Learns each partner's active hours and sends individually. Never both partners at the same timestamp.</td></tr>
+    <tr><td>FR-026</td><td>Solo mode loop</td><td><span class="badge b-must">Must</span></td><td>Full loop works for one user: prompts, mood, journal, Pulse, AI coach. No partner-gated surfaces.</td></tr>
+  </tbody>
+</table>
+
+<h3>7.4 Journal, Pulse, and insight</h3>
+<table>
+  <thead><tr><th style="width:9%">ID</th><th style="width:22%">Requirement</th><th style="width:9%">Pri</th><th>Acceptance criteria</th></tr></thead>
+  <tbody>
+    <tr><td>FR-030</td><td>Couple journal</td><td><span class="badge b-must">Must</span></td><td>Mood + one line. Optional private-to-me toggle on any entry. Chronological, searchable, exportable.</td></tr>
+    <tr><td>FR-031</td><td>Relationship Pulse</td><td><span class="badge b-must">Must</span></td><td>Three states: Thriving, Drifting, Strained. Computed from mood, reply cadence, and sentiment. Tap through shows why.</td></tr>
+    <tr><td>FR-032</td><td>Weekly recap</td><td><span class="badge b-should">Should</span></td><td>Sunday summary: streak, Pulse trend, a highlighted memory, one suggested focus. Push + in-app.</td></tr>
+    <tr><td>FR-033</td><td>Trend awareness</td><td><span class="badge b-should">Should</span></td><td>Surfaces sustained change: "You've been drifting for two weeks." Gentle, never alarmist.</td></tr>
+  </tbody>
+</table>
+
+<h3>7.5 AI coach</h3>
+<table>
+  <thead><tr><th style="width:9%">ID</th><th style="width:22%">Requirement</th><th style="width:9%">Pri</th><th>Acceptance criteria</th></tr></thead>
+  <tbody>
+    <tr><td>FR-040</td><td>Conversational coach</td><td><span class="badge b-must">Must</span></td><td>Free-text and voice input. Responds with grounded, non-generic guidance. Latency under 3s to first token.</td></tr>
+    <tr><td>FR-041</td><td><b>Evidence grounding</b></td><td><span class="badge b-must">Must</span></td><td>Core guidance draws on Gottman Method, EFT, attachment theory, NVC. Love Languages is used for engagement only — the model has limited empirical support and must never be presented as clinical.</td></tr>
+    <tr><td>FR-042</td><td>Per-partner wisdom grounding</td><td><span class="badge b-must">Must</span></td><td>Responses reflect the asking partner's own track, not a generic blend.</td></tr>
+    <tr><td>FR-043</td><td>Couple memory</td><td><span class="badge b-should">Should</span></td><td>Retrieves relevant past entries and prior conversations. Can reference a conflict from three weeks ago. Session context persists.</td></tr>
+    <tr><td>FR-044</td><td>Voice mode</td><td><span class="badge b-should">Should</span></td><td>Full voice input and spoken response. Nobody types during a real disagreement.</td></tr>
+    <tr><td>FR-045</td><td>De-escalation mode</td><td><span class="badge b-could">Could</span></td><td>When both partners log high-distress mood within a short window, proactively offer a cool-down protocol.</td></tr>
+    <tr><td>FR-046</td><td>Scope refusal</td><td><span class="badge b-must">Must</span></td><td>Refuses diagnosis, medication advice, legal advice, and divorce recommendation. Redirects to human professionals.</td></tr>
+  </tbody>
+</table>
+
+<h3>7.6 Safety, privacy, and trust</h3>
+<table>
+  <thead><tr><th style="width:9%">ID</th><th style="width:22%">Requirement</th><th style="width:9%">Pri</th><th>Acceptance criteria</th></tr></thead>
+  <tbody>
+    <tr><td>FR-050</td><td><b>Safety classifier</b></td><td><span class="badge b-must">Must</span></td><td>All AI input and all journal text passes a crisis classifier before storage or response. Detects self-harm, suicidality, abuse, and violence.</td></tr>
+    <tr><td>FR-051</td><td>Crisis escalation</td><td><span class="badge b-must">Must</span></td><td>On detection: suppress all couple-facing output, show a partner-only resource card with US hotlines (988, National Domestic Violence Hotline). <b>Never surface one partner's crisis signal to the other.</b></td></tr>
+    <tr><td>FR-052</td><td>Pause state</td><td><span class="badge b-should">Should</span></td><td>User can pause all prompts and notifications for 1–30 days without losing streak or data.</td></tr>
+    <tr><td>FR-053</td><td>End-to-end encryption</td><td><span class="badge b-must">Must</span></td><td>Journal entries and AI conversations encrypted client-side. Server stores ciphertext only and cannot read content.</td></tr>
+    <tr><td>FR-054</td><td>Data export and delete</td><td><span class="badge b-must">Must</span></td><td>One-tap full export (JSON + human-readable). One-tap full account deletion, hard delete within 30 days.</td></tr>
+    <tr><td>FR-055</td><td>No content analytics</td><td><span class="badge b-must">Must</span></td><td>Behavioural analytics only. Journal and chat content is never sent to any analytics provider. Stated publicly.</td></tr>
+    <tr><td>FR-056</td><td>Scope disclaimer</td><td><span class="badge b-must">Must</span></td><td>Shown at onboarding, in ToS, and persistently near the AI coach: Tether is not therapy and not a crisis service.</td></tr>
+  </tbody>
+</table>
+
+<h3>7.7 Monetisation</h3>
+<table>
+  <thead><tr><th style="width:9%">ID</th><th style="width:22%">Requirement</th><th style="width:9%">Pri</th><th>Acceptance criteria</th></tr></thead>
+  <tbody>
+    <tr><td>FR-060</td><td><b>One subscription covers both</b></td><td><span class="badge b-must">Must</span></td><td>Industry standard. Either partner purchasing unlocks premium for both. Stated on the paywall, pricing screen, and App Store subtitle.</td></tr>
+    <tr><td>FR-061</td><td>Free tier</td><td><span class="badge b-must">Must</span></td><td>Free forever: Solo Mode, 1 prompt/week, mood tracking, first-track content, Love Languages, 5 AI messages/month.</td></tr>
+    <tr><td>FR-062</td><td>14-day trial</td><td><span class="badge b-must">Must</span></td><td>Full premium, no ads, covers both partners. Longer than the category-standard 7 days.</td></tr>
+    <tr><td>FR-063</td><td>Pricing</td><td><span class="badge b-must">Must</span></td><td>US $12.99/mo, $79.99/yr, $149.99/yr Couples+. India ₹149/mo, ₹899/yr, ₹1,799/yr Couples+. PPP tiers handled by store.</td></tr>
+    <tr><td>FR-064</td><td>Paywall placement</td><td><span class="badge b-must">Must</span></td><td>After first value moment, never before. Privacy promise is a paywall bullet.</td></tr>
+    <tr><td>FR-065</td><td>Cancellation</td><td><span class="badge b-must">Must</span></td><td>Self-serve in-app and on web in under 3 taps. No retention dark patterns — competitor cancellation friction is a widely cited complaint we will not replicate.</td></tr>
+  </tbody>
+</table>
+
+<h2 class="pb"><span class="num">08</span>User flows</h2>
+
+<h3>8.1 Onboarding</h3>
+<ol class="flow">
+  <li><b>Welcome</b> — name, and the promise: two people, one practice.</li>
+  <li><b>Wisdom track</b> — four options, each partner chooses their own. "You can change this later."</li>
+  <li><b>Love Languages</b> — 20 questions, under 2 minutes, immediate result.</li>
+  <li><b>First prompt</b> — answered solo. Delivers value before asking for anything.</li>
+  <li><b>Notification permission</b> — with pre-explainer, after value is proven.</li>
+  <li><b>Invite partner</b> — three paths offered simultaneously.</li>
+  <li><b>Waiting room or continue solo</b> — never a dead end.</li>
+</ol>
+
+<h3>8.2 Pairing</h3>
+<ol class="flow">
+  <li><b>Invite screen</b> — link, QR, and code all visible at once.</li>
+  <li><b>Waiting room</b> — live status, copyable message, manual refresh.</li>
+  <li><b>24h</b> — gentle nudge option.</li>
+  <li><b>72h</b> — proactive Solo Mode offer: "Start now. Everything syncs when they join."</li>
+  <li><b>Partner joins</b> — merge ceremony, both notified, shared streak begins.</li>
+</ol>
+
+<h3>8.3 Daily loop</h3>
+<ol class="flow">
+  <li><b>Push</b> — personalised send time, per partner.</li>
+  <li><b>Open</b> — one prompt, immediately visible. No navigation required.</li>
+  <li><b>Mood tap</b> — one tap.</li>
+  <li><b>Reply</b> — one sentence, voice or text.</li>
+  <li><b>Lock</b> — hidden until partner replies.</li>
+  <li><b>Unlock</b> — both see both. Optional reaction.</li>
+  <li><b>Streak</b> — updated, with freeze days available.</li>
+</ol>
+
+<h3>8.4 Safety escalation</h3>
+<ol class="flow">
+  <li><b>Input</b> — user writes in journal or AI chat.</li>
+  <li><b>Classify</b> — on-device pre-screen, then server classifier before storage.</li>
+  <li><b>Trigger</b> — crisis signal detected.</li>
+  <li><b>Suppress</b> — no couple-facing output. Partner sees nothing.</li>
+  <li><b>Support</b> — resource card, only to the user who wrote it.</li>
+  <li><b>Log</b> — safety event recorded for review, content not stored in plaintext.</li>
+</ol>
+
+<h2><span class="num">09</span>User stories and acceptance criteria</h2>
+
+<h4>Epic A — I can see myself in this product</h4>
+<ul>
+  <li>As an interfaith partner, I want to choose my own wisdom track so that I'm not force-fed someone else's beliefs. <b>Accept:</b> track selected independently, reflected in all my content, changeable in settings.</li>
+  <li>As a secular user, I want evidence-based content so I trust the guidance. <b>Accept:</b> methodology cited, no faith framing on the Secular track.</li>
+</ul>
+
+<h4>Epic B — I can start, even alone</h4>
+<ul>
+  <li>As the more enthusiastic partner, I want to begin without waiting so the app isn't useless to me. <b>Accept:</b> Solo Mode fully functional on day one; no partner-gated surfaces.</li>
+  <li>As a solo user whose partner later joins, I want my history preserved. <b>Accept:</b> merge ceremony, zero data loss.</li>
+</ul>
+
+<h4>Epic C — We can actually pair</h4>
+<ul>
+  <li>As an inviter, I want multiple ways to invite so a broken link doesn't kill it. <b>Accept:</b> link, QR, and code all functional; in-person QR always works.</li>
+  <li>As someone whose partner hasn't responded, I want to know what to do. <b>Accept:</b> waiting room shows status and offers a copyable message; 72h solo fallback.</li>
+</ul>
+
+<h4>Epic D — The habit sticks</h4>
+<ul>
+  <li>As a busy partner, I want the daily action to be tiny. <b>Accept:</b> prompt + mood + one sentence completable in under 60 seconds.</li>
+  <li>As someone who missed a day, I want grace not guilt. <b>Accept:</b> two freeze days per month, no punitive copy.</li>
+</ul>
+
+<h4>Epic E — I am safe here</h4>
+<ul>
+  <li>As a user in crisis, I want appropriate help. <b>Accept:</b> hotlines surfaced immediately, partner never notified.</li>
+  <li>As a privacy-conscious user, I want my words unreadable to the company. <b>Accept:</b> E2E encryption on journal and chat; clearly stated.</li>
+  <li>As a paying user, I want to cancel easily. <b>Accept:</b> under 3 taps, in-app or web, no dark patterns.</li>
+</ul>
+
+<h2><span class="num">10</span>Content requirements</h2>
+<div class="callout">
+  <span class="lbl">Content architecture — the real moat</span>
+  <p><b>Layer 1</b> Universal psychological core (Gottman, EFT, attachment, NVC) &nbsp;→&nbsp; <b>Layer 2</b> Wisdom track expression (Secular, Vedic, Quranic, Biblical) &nbsp;→&nbsp; <b>Layer 3</b> Cultural context (US individualist, US immigrant, India joint-family, Global) &nbsp;→&nbsp; <b>Layer 4</b> Language.</p>
+  <p>One core, many expressions. This is how you scale to eight languages without eight times the writing.</p>
+</div>
+<ul>
+  <li><b>Volume at v0.1</b> — 90 days of daily prompts, minimum. Two tracks live (Secular, Biblical). US cultural context only.</li>
+  <li><b>Quality bar</b> — benchmark against the Gottman Card Decks, which offer 1,000+ research-backed prompts for free. Any prompt that reads like a horoscope gets cut.</li>
+  <li><b>Review gate</b> — every faith-track prompt reviewed by a practitioner of that tradition. Non-negotiable for credibility.</li>
+  <li><b>Tone</b> — warm, plain, non-clinical. Never cheerful when the content is serious. No exclamation marks in sensitive contexts.</li>
+  <li><b>Never</b> — diagnose, prescribe, shame, or assume the relationship should continue.</li>
+</ul>
+
+<h2><span class="num">11</span>Non-functional requirements</h2>
+<table>
+  <thead><tr><th style="width:20%">Area</th><th>Requirement</th></tr></thead>
+  <tbody>
+    <tr><td><b>Performance</b></td><td>Cold start under 2s. Prompt screen interactive under 1s. AI first token under 3s. All reads served locally.</td></tr>
+    <tr><td><b>Offline</b></td><td>Full read and write offline. Sync queues and resolves automatically. Zero data loss on conflict.</td></tr>
+    <tr><td><b>Reliability</b></td><td>99.5% uptime. No single point of failure for reading existing content.</td></tr>
+    <tr><td><b>Accessibility</b></td><td>WCAG 2.1 AA. Dynamic Type to 200%. Full VoiceOver. Contrast 4.5:1 minimum. Reduced-motion honoured.</td></tr>
+    <tr><td><b>Security</b></td><td>TLS 1.3 in transit. AES-256-GCM client-side for journal and chat. Keys in device keychain, never server-side.</td></tr>
+    <tr><td><b>Privacy</b></td><td>No third-party SDK access to content. No IDFA. Data residency documented. CCPA and GDPR compliant.</td></tr>
+    <tr><td><b>Platform</b></td><td>iOS 17+ (iPhone), native SwiftUI. <b>Android is deferred</b> by the current build decision — accepted trade-off, tracked as a known gap against roughly half the US market.</td></tr>
+    <tr><td><b>Localisation</b></td><td>English at v0.1. Spanish v1.0. Hindi v1.5. RTL architecture ready from day one (needed for Urdu and Arabic later).</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="num">12</span>Risks, dependencies, open questions</h2>
+<table>
+  <thead><tr><th style="width:24%">Risk</th><th style="width:12%">Severity</th><th>Mitigation</th></tr></thead>
+  <tbody>
+    <tr><td>Partner never joins</td><td><span class="badge b-p0">High</span></td><td>Solo Mode and pairing suite are both in v0.1. This is the primary bet.</td></tr>
+    <tr><td>AI produces harmful output</td><td><span class="badge b-p0">High</span></td><td>Safety classifier, scope refusal, human escalation, disclaimers. Liability insurance.</td></tr>
+    <tr><td>Content feels generic</td><td><span class="badge b-p1">Med</span></td><td>Per-partner wisdom grounding and couple memory. Hard for competitors to copy quickly.</td></tr>
+    <tr><td>Competitor copies multi-faith</td><td><span class="badge b-p1">Med</span></td><td>Content depth and reviewed faith content are slow to build. Move fast on the wedge.</td></tr>
+    <tr><td>US liability exposure</td><td><span class="badge b-p1">Med</span></td><td>LLC formation, clear disclaimers, E&amp;O insurance, documented scope.</td></tr>
+    <tr><td>AI inference cost scales</td><td><span class="badge b-p2">Low</span></td><td>Response caching, tiered models, monthly usage caps per tier.</td></tr>
+  </tbody>
+</table>
+<h4>Open questions</h4>
+<ul>
+  <li>Free tier AI message cap — 5/month, or unlimited with a weaker model?</li>
+  <li>Should Relationship Pulse ever predict, or only describe? Recommendation: describe only, in v1.</li>
+  <li>Anonymous mode — can a user try Tether without an account? Recommendation: yes, deferred to v1.0.</li>
+  <li>Faith-track reviewer compensation model — volunteer advisory board or paid?</li>
+</ul>
+
+<h2><span class="num">13</span>Launch criteria</h2>
+<div class="callout ok">
+  <span class="lbl">Definition of done for v0.1</span>
+  <ul style="margin-bottom:0">
+    <li>All <span class="badge b-must">Must</span> requirements shipped and tested.</li>
+    <li>90 days of prompts live for both launch tracks, faith-reviewed.</li>
+    <li>Safety classifier tested against a red-team set with zero misses.</li>
+    <li>E2E encryption independently verified — server cannot read content.</li>
+    <li>Pairing funnel instrumented end to end.</li>
+    <li>50 real couples through TestFlight, minimum 2 weeks.</li>
+    <li>App Store review requirements met, including account deletion.</li>
+    <li>Legal: ToS, privacy policy, disclaimers, LLC formed.</li>
+  </ul>
+</div>
+
+<div class="footer-note">Tether · Product Requirements Document v1.0 · Companion documents: TRD, UI/UX Specification, Backend Schema, Strategy Plan.</div>
+</div>
+</body></html>
