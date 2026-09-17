@@ -39,8 +39,11 @@ fastlane/test_output
 .DS_Store
 .AppleDouble
 .LSOverride
-Icon?
 ._*
+
+# NOTE: deliberately NOT using the common `Icon?` pattern here. Its `?` matches
+# any single character, so it also excludes the `Icons` asset directory and the
+# whole icon set silently disappears from the repo.
 
 # Secrets — never commit these
 *.p8
