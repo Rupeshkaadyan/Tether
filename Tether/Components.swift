@@ -2,6 +2,38 @@ import SwiftUI
 
 // MARK: - Card container
 
+/// A two-part row that flips from horizontal to stacked at accessibility text
+/// sizes. Horizontal rows squeeze labels into hyphenated fragments once text
+/// scales past the standard sizes, so those layouts have to give way.
+struct AdaptiveRow<Leading: View, Trailing: View>: View {
+    let stacked: Bool
+    let leading: Leading
+    let trailing: Trailing
+
+    init(stacked: Bool,
+         @ViewBuilder leading: () -> Leading,
+         @ViewBuilder trailing: () -> Trailing) {
+        self.stacked = stacked
+        self.leading = leading()
+        self.trailing = trailing()
+    }
+
+    var body: some View {
+        if stacked {
+            VStack(alignment: .leading, spacing: TetherSpace.m) {
+                leading
+                trailing
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+        } else {
+            HStack(alignment: .center, spacing: TetherSpace.m) {
+                leading
+                trailing
+            }
+        }
+    }
+}
+
 struct TetherCard<Content: View>: View {
     var padded = true
     let content: Content

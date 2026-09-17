@@ -37,11 +37,19 @@ the person, not the couple.** The practice is shared; the beliefs are not.
 |---|---|
 | <img src="docs/screenshots/04-coach.png" width="260"> | <img src="docs/screenshots/05-pulse.png" width="260"> |
 
-<img src="docs/screenshots/01-welcome.png" width="260">
+| Dark mode | Welcome |
+|---|---|
+| <img src="docs/screenshots/dark-today.png" width="260"> | <img src="docs/screenshots/01-welcome.png" width="260"> |
 
 Every icon is a custom SVG from the app's own icon set — no SF Symbols, no icon
 library. The curve mark is used as the app icon, the welcome hero, a screen
 backdrop, and the pairing animation.
+
+**Accessibility.** Colour is fully adaptive rather than hardcoded, so the app
+works in light and dark. Type is built on semantic text styles, so every label
+scales with the reader's preferred text size — and the horizontal label/value
+rows flip to a stacked layout at accessibility sizes, where they would otherwise
+hyphenate words mid-syllable.
 
 ---
 

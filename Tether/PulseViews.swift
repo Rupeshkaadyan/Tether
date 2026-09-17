@@ -88,31 +88,60 @@ struct PulseCard: View {
     let result: PulseResult
     let onTap: () -> Void
 
+    @Environment(\.dynamicTypeSize) private var typeSize
+
     var body: some View {
         Button(action: onTap) {
             TetherCard {
-                HStack(spacing: TetherSpace.m) {
-                    IconDisc(icon: result.state.icon, size: 40, color: result.state.color)
-
-                    VStack(alignment: .leading, spacing: 2) {
-                        Text("Relationship Pulse")
-                            .font(TetherType.caption)
-                            .foregroundStyle(TetherColor.muted)
-                        Text(result.state.displayName)
-                            .font(TetherType.label)
-                            .foregroundStyle(TetherColor.text)
+                if typeSize.isAccessibility {
+                    // Stacked, because the horizontal row hyphenates labels
+                    // mid-word at accessibility sizes.
+                    VStack(alignment: .leading, spacing: TetherSpace.m) {
+                        HStack(spacing: TetherSpace.m) {
+                            IconDisc(icon: result.state.icon, size: 40, color: result.state.color)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Relationship Pulse")
+                                    .font(TetherType.caption)
+                                    .foregroundStyle(TetherColor.muted)
+                                Text(result.state.displayName)
+                                    .font(TetherType.label)
+                                    .foregroundStyle(TetherColor.text)
+                            }
+                        }
+                        HStack(spacing: TetherSpace.xs) {
+                            Icon(TetherIcon.forTrend(result.trend), size: 13, color: TetherColor.muted)
+                            Text(result.trend.displayName)
+                                .font(TetherType.caption)
+                                .foregroundStyle(TetherColor.muted)
+                            Spacer()
+                            Icon(.chevronRight, size: 15, color: TetherColor.faint)
+                        }
                     }
+                } else {
+                    HStack(spacing: TetherSpace.m) {
+                        IconDisc(icon: result.state.icon, size: 40, color: result.state.color)
 
-                    Spacer()
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text("Relationship Pulse")
+                                .font(TetherType.caption)
+                                .foregroundStyle(TetherColor.muted)
+                            Text(result.state.displayName)
+                                .font(TetherType.label)
+                                .foregroundStyle(TetherColor.text)
+                        }
 
-                    HStack(spacing: TetherSpace.xs) {
-                        Icon(TetherIcon.forTrend(result.trend), size: 13, color: TetherColor.muted)
-                        Text(result.trend.displayName)
-                            .font(TetherType.caption)
-                            .foregroundStyle(TetherColor.muted)
+                        Spacer(minLength: TetherSpace.s)
+
+                        HStack(spacing: TetherSpace.xs) {
+                            Icon(TetherIcon.forTrend(result.trend), size: 13, color: TetherColor.muted)
+                            Text(result.trend.displayName)
+                                .font(TetherType.caption)
+                                .foregroundStyle(TetherColor.muted)
+                        }
+                        .layoutPriority(1)
+
+                        Icon(.chevronRight, size: 15, color: TetherColor.faint)
                     }
-
-                    Icon(.chevronRight, size: 15, color: TetherColor.faint)
                 }
             }
         }

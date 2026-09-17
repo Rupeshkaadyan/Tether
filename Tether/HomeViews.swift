@@ -19,6 +19,7 @@ struct HomeView: View {
     @State private var showRecap = false
     @State private var showNotifExplainer = false
     @AppStorage("tether.notifAsked") private var notifAsked = false
+    @Environment(\.dynamicTypeSize) private var typeSize
 
     private var pulse: PulseResult {
         PulseEngine.compute(entries: entries, ownerID: profile.id)
@@ -153,11 +154,14 @@ struct HomeView: View {
     private var connectionCard: some View {
         TetherCard {
             VStack(alignment: .leading, spacing: TetherSpace.m) {
-                HStack(alignment: .center, spacing: TetherSpace.m) {
+                // Stacks at accessibility text sizes, where the horizontal
+                // pairing row squeezes the text into hyphenated fragments.
+                AdaptiveRow(stacked: typeSize.isAccessibility) {
                     PairedAvatars(left: profile.displayName,
                                   right: partner?.displayName,
                                   size: 42,
                                   converged: isPaired)
+                } trailing: {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(isPaired
                              ? "You and \(partner?.displayName ?? "your partner")"
@@ -248,14 +252,7 @@ struct HomeView: View {
                     .font(TetherType.label)
                 TextField("One sentence is enough", text: $reply, axis: .vertical)
                     .lineLimit(2...6)
-                    .font(TetherType.body)
-                    .padding()
-                    .background(TetherColor.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: TetherRadius.medium)
-                            .strokeBorder(TetherColor.border, lineWidth: 1)
-                    )
+                    .tetherField()
             }
 
             Button("Save today's entry") { save() }
@@ -389,6 +386,24 @@ struct SettingsView: View {
     @State private var showPaywall = false
     @State private var showDeleteConfirm = false
 
+    @Query(sort: \JournalEntry.createdAt, order: .reverse) private var allEntries: [JournalEntry]
+    @Query private var allMessages: [AIMessage]
+    @Query private var allMemories: [AIMemory]
+    @Query private var allProfiles: [UserProfile]
+
+    private var partner: UserProfile? {
+        guard let id = profile.partnerID else { return nil }
+        return allProfiles.first { $0.id == id }
+    }
+
+    private var exportDocument: String {
+        ExportService.markdown(profile: profile,
+                               partner: partner,
+                               entries: allEntries,
+                               messages: allMessages,
+                               memories: allMemories)
+    }
+
     var body: some View {
         NavigationStack {
             List {
@@ -398,6 +413,8 @@ struct SettingsView: View {
                         Spacer()
                         TextField("Name", text: $profile.displayName)
                             .multilineTextAlignment(.trailing)
+                            .foregroundStyle(TetherColor.text)
+                            .tint(TetherColor.brand)
                     }
                 }
 
@@ -463,6 +480,21 @@ struct SettingsView: View {
                                 .foregroundStyle(TetherColor.brand)
                         }
                     }
+                }
+
+                Section("Your data") {
+                    ShareLink(item: exportDocument,
+                              preview: SharePreview("Your Tether export")) {
+                        HStack {
+                            Label("Export everything", systemImage: "square.and.arrow.up")
+                                .font(TetherType.label)
+                            Spacer()
+                            Icon(.download, size: 17, color: TetherColor.faint)
+                        }
+                    }
+                    Text("A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so keep it somewhere safe.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
                 }
 
                 Section("Privacy") {

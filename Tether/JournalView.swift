@@ -98,6 +98,8 @@ struct JournalView: View {
             Icon(.search, size: 17, color: TetherColor.faint)
             TextField("Search your entries", text: $query)
                 .font(TetherType.body)
+                .foregroundStyle(TetherColor.text)
+                .tint(TetherColor.brand)
                 .textInputAutocapitalization(.never)
             if !query.isEmpty {
                 Button { query = "" } label: {

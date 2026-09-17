@@ -131,6 +131,8 @@ struct CoachView: View {
                 TextField("Ask anything", text: $draft, axis: .vertical)
                     .lineLimit(1...4)
                     .font(TetherType.body)
+                    .foregroundStyle(TetherColor.text)
+                    .tint(TetherColor.brand)
                     .padding(.horizontal, TetherSpace.m)
                     .padding(.vertical, TetherSpace.s)
                     .background(TetherColor.surface)

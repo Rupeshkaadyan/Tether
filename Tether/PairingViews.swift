@@ -339,26 +339,23 @@ struct RedeemCodeView: View {
 
                 TextField("6-digit code", text: $code)
                     .font(.system(size: 24, weight: .semibold, design: .monospaced))
+                    .foregroundStyle(TetherColor.text)
+                    .tint(TetherColor.brand)
                     .keyboardType(.numberPad)
+                    .multilineTextAlignment(.center)
                     .padding()
                     .background(TetherColor.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
+                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous))
                     .overlay(
-                        RoundedRectangle(cornerRadius: TetherRadius.medium)
+                        RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous)
                             .strokeBorder(TetherColor.border, lineWidth: 1)
                     )
 
                 Text("What is your partner's name?")
                     .font(TetherType.label)
+                    .foregroundStyle(TetherColor.text)
                 TextField("Name", text: $name)
-                    .font(TetherType.body)
-                    .padding()
-                    .background(TetherColor.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: TetherRadius.medium)
-                            .strokeBorder(TetherColor.border, lineWidth: 1)
-                    )
+                    .tetherField()
 
                 if let error {
                     Text(error)

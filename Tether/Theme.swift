@@ -1,94 +1,120 @@
 import SwiftUI
 
-// MARK: - Colour
+// MARK: - Adaptive colour
 //
-// Warm, not clinical. Pure white and pure grey read as "form"; this palette is
-// built on warm neutrals so the app feels like paper rather than a spreadsheet.
+// Every colour resolves per appearance. This is not decoration: without it,
+// iOS renders system control text (TextField, etc.) light in dark mode, and on
+// a hardcoded white surface that text becomes invisible.
 
-extension Color {
-    init(hex: String) {
+extension UIColor {
+    convenience init(hex: String) {
         let clean = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var value: UInt64 = 0
         Scanner(string: clean).scanHexInt64(&value)
-        self.init(.sRGB,
-                  red: Double((value >> 16) & 0xFF) / 255,
-                  green: Double((value >> 8) & 0xFF) / 255,
-                  blue: Double(value & 0xFF) / 255,
-                  opacity: 1)
+        self.init(red: CGFloat((value >> 16) & 0xFF) / 255,
+                  green: CGFloat((value >> 8) & 0xFF) / 255,
+                  blue: CGFloat(value & 0xFF) / 255,
+                  alpha: 1)
     }
 }
 
+extension Color {
+    init(hex: String) {
+        self.init(uiColor: UIColor(hex: hex))
+    }
+
+    /// A colour that resolves differently in light and dark.
+    static func adaptive(_ light: String, _ dark: String) -> Color {
+        Color(uiColor: UIColor { traits in
+            traits.userInterfaceStyle == .dark ? UIColor(hex: dark) : UIColor(hex: light)
+        })
+    }
+}
+
+// MARK: - Palette
+//
+// Warm paper, not clinical white. The indigo is deepened and slightly
+// desaturated from the obvious default, and the accents run warm rather than
+// neon — the difference between "designed" and "generated".
+
 enum TetherColor {
-    // Surfaces — warm off-white, never pure white
-    static let bg             = Color(hex: "FDFBF8")
-    static let surface        = Color(hex: "FFFFFF")
-    static let surfaceSunken  = Color(hex: "F6F2EC")
-    static let border         = Color(hex: "EAE4DA")
-    static let borderStrong   = Color(hex: "D8CFC0")
+    // Surfaces
+    static let bg            = Color.adaptive("FAF7F2", "15111D")
+    static let surface       = Color.adaptive("FFFFFF", "221C2E")
+    static let surfaceSunken = Color.adaptive("F2EDE4", "1B1626")
+    static let border        = Color.adaptive("E8E1D6", "342C44")
+    static let borderStrong  = Color.adaptive("D5CABA", "463B58")
 
-    // Text — warm near-black, not #000
-    static let text           = Color(hex: "2A2438")
-    static let muted          = Color(hex: "6F6879")
-    static let faint          = Color(hex: "9C95A6")
+    // Text
+    static let text          = Color.adaptive("241F2E", "F2EEF8")
+    static let muted         = Color.adaptive("6B6379", "A79FB5")
+    static let faint         = Color.adaptive("9A93A6", "7A7189")
 
-    // Brand
-    static let ink            = Color(hex: "3A2E6E")
-    static let brand          = Color(hex: "5B4BC4")
-    static let brandSoft      = Color(hex: "EEEAFB")
-    static let tint           = Color(hex: "EEEAFB")
+    // Brand — deeper and calmer than the default indigo
+    static let ink           = Color.adaptive("2E2557", "D8D2F5")
+    static let brand         = Color.adaptive("4C3D9E", "9B8BEF")
+    static let brandSoft     = Color.adaptive("EDE9FA", "2B2440")
+    static let tint          = Color.adaptive("EDE9FA", "2B2440")
 
-    // Warmth — the emotional counterweight to the cool indigo
-    static let warm           = Color(hex: "E08A4B")
-    static let warmSoft       = Color(hex: "FDF0E4")
-    static let rose           = Color(hex: "D96A8A")
-    static let roseSoft       = Color(hex: "FCECF1")
+    // Warmth — burnt orange and a muted rose, not pastel
+    static let warm          = Color.adaptive("C96F3C", "E29A66")
+    static let warmSoft      = Color.adaptive("FBEFE4", "362518")
+    static let rose          = Color.adaptive("B85A76", "E08FA6")
+    static let roseSoft      = Color.adaptive("FAECF0", "33202A")
 
-    // Semantic
-    static let thriving       = Color(hex: "2E9E6B")
-    static let thrivingSoft   = Color(hex: "E6F6EE")
-    static let drifting       = Color(hex: "D08A28")
-    static let driftingSoft   = Color(hex: "FDF3E0")
-    static let strained       = Color(hex: "C4463F")
-    static let strainedSoft   = Color(hex: "FBEBE9")
+    // Semantic — natural, slightly desaturated
+    static let thriving      = Color.adaptive("3F7D5C", "6FBF91")
+    static let thrivingSoft  = Color.adaptive("E8F2EB", "1B2E23")
+    static let drifting      = Color.adaptive("B5822E", "DDB05E")
+    static let driftingSoft  = Color.adaptive("FAF1DF", "2E2515")
+    static let strained      = Color.adaptive("B44A42", "E08B84")
+    static let strainedSoft  = Color.adaptive("FAEBE9", "33201E")
 
-    static let accent         = Color(hex: "E08A4B")
+    static let accent        = Color.adaptive("C96F3C", "E29A66")
 }
 
 // MARK: - Gradient
 
 enum TetherGradient {
     static let brand = LinearGradient(
-        colors: [Color(hex: "6A57D6"), Color(hex: "4A3AA8")],
+        colors: [Color.adaptive("5B4BB5", "6E5FD0"), Color.adaptive("3D3086", "4A3AA8")],
         startPoint: .topLeading, endPoint: .bottomTrailing)
 
     static let dawn = LinearGradient(
-        colors: [Color(hex: "FDF0E4"), Color(hex: "FCECF1")],
+        colors: [Color.adaptive("FBF1E6", "241B26"), Color.adaptive("F7E3E9", "2A1D2C")],
         startPoint: .top, endPoint: .bottom)
 
     static let dusk = LinearGradient(
-        colors: [Color(hex: "3A2E6E"), Color(hex: "5B4BC4")],
+        colors: [Color.adaptive("2E2557", "171226"), Color.adaptive("4C3D9E", "312667")],
         startPoint: .topLeading, endPoint: .bottomTrailing)
 
     static let calm = LinearGradient(
-        colors: [Color(hex: "FDFBF8"), Color(hex: "F3EEF8")],
+        colors: [Color.adaptive("FAF7F2", "15111D"), Color.adaptive("F1EBF5", "1B1526")],
         startPoint: .top, endPoint: .bottom)
 }
 
 // MARK: - Type
 //
-// Rounded design throughout. It is the cheapest lever for warmth, and for a
-// couples app warmth beats editorial severity.
+// SF Pro Rounded throughout. Display sizes carry slightly tight tracking, which
+// is what stops large text looking like a default system heading.
 
 enum TetherType {
-    static let display    = Font.system(size: 34, weight: .bold, design: .rounded)
-    static let largeTitle = Font.system(size: 28, weight: .bold, design: .rounded)
-    static let title      = Font.system(size: 22, weight: .semibold, design: .rounded)
-    static let headline   = Font.system(size: 19, weight: .semibold, design: .rounded)
-    static let body       = Font.system(size: 16.5, weight: .regular, design: .rounded)
-    static let callout    = Font.system(size: 15, weight: .regular, design: .rounded)
-    static let label      = Font.system(size: 15.5, weight: .semibold, design: .rounded)
-    static let caption    = Font.system(size: 13, weight: .regular, design: .rounded)
-    static let micro      = Font.system(size: 11.5, weight: .medium, design: .rounded)
+    // Built on semantic text styles rather than fixed point sizes, so every
+    // label scales with the user's preferred text size. Fixed sizes silently
+    // ignore Dynamic Type, which locks out anyone who needs larger text.
+
+    static let display    = Font.system(.largeTitle, design: .rounded, weight: .bold)
+    static let largeTitle = Font.system(.title, design: .rounded, weight: .bold)
+    static let title      = Font.system(.title2, design: .rounded, weight: .semibold)
+    static let headline   = Font.system(.headline, design: .rounded)
+    static let body       = Font.system(.body, design: .rounded)
+    static let callout    = Font.system(.callout, design: .rounded)
+    static let label      = Font.system(.subheadline, design: .rounded, weight: .semibold)
+    static let caption    = Font.system(.caption, design: .rounded)
+    static let micro      = Font.system(.caption2, design: .rounded, weight: .medium)
+
+    /// Applied to display / largeTitle so big text reads as set, not defaulted.
+    static let displayTracking: CGFloat = -0.6
 }
 
 // MARK: - Metrics
@@ -105,10 +131,10 @@ enum TetherSpace {
 }
 
 enum TetherRadius {
-    static let small: CGFloat = 10
-    static let medium: CGFloat = 16
-    static let large: CGFloat = 24
-    static let xlarge: CGFloat = 32
+    static let small: CGFloat = 12
+    static let medium: CGFloat = 18
+    static let large: CGFloat = 26
+    static let xlarge: CGFloat = 34
 }
 
 // MARK: - Depth
@@ -116,36 +142,63 @@ enum TetherRadius {
 enum TetherShadow {
     case none, soft, lifted, floating
 
-    var color: Color { Color(hex: "2A2438").opacity(opacity) }
+    var color: Color {
+        Color(uiColor: UIColor { $0.userInterfaceStyle == .dark
+            ? UIColor(white: 0, alpha: 1)
+            : UIColor(hex: "241F2E") }).opacity(opacity)
+    }
     var radius: CGFloat {
         switch self {
         case .none: return 0
-        case .soft: return 10
-        case .lifted: return 18
-        case .floating: return 28
+        case .soft: return 12
+        case .lifted: return 22
+        case .floating: return 34
         }
     }
     var y: CGFloat {
         switch self {
         case .none: return 0
-        case .soft: return 3
-        case .lifted: return 8
-        case .floating: return 14
+        case .soft: return 4
+        case .lifted: return 10
+        case .floating: return 18
         }
     }
     var opacity: Double {
         switch self {
         case .none: return 0
         case .soft: return 0.05
-        case .lifted: return 0.08
-        case .floating: return 0.12
+        case .lifted: return 0.10
+        case .floating: return 0.16
         }
     }
+}
+
+extension DynamicTypeSize {
+    /// True at the accessibility sizes. Horizontal label/value rows break down
+    /// here — words hyphenate mid-syllable — so those layouts stack instead.
+    var isAccessibility: Bool { self >= .accessibility1 }
 }
 
 extension View {
     func tetherShadow(_ style: TetherShadow = .soft) -> some View {
         shadow(color: style.color, radius: style.radius, x: 0, y: style.y)
+    }
+
+    /// The single input treatment used everywhere, so no field can drift into
+    /// an unreadable state. The explicit text colour is the important part.
+    func tetherField() -> some View {
+        self
+            .font(TetherType.body)
+            .foregroundStyle(TetherColor.text)
+            .tint(TetherColor.brand)
+            .padding(TetherSpace.l)
+            .background(TetherColor.surface)
+            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous)
+                    .strokeBorder(TetherColor.border, lineWidth: 1)
+            )
+            .tetherShadow(.soft)
     }
 }
 
