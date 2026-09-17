@@ -152,8 +152,7 @@ struct PulsePill: View {
 
     var body: some View {
         HStack(spacing: TetherSpace.xs) {
-            Image(systemName: state.symbol)
-                .font(.system(size: 12))
+            Icon(state.icon, size: 14, color: state.color)
             Text(state.displayName)
                 .font(TetherType.caption)
         }
@@ -175,14 +174,7 @@ struct WisdomTrackCard: View {
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: TetherSpace.m) {
-                ZStack {
-                    Circle()
-                        .fill(isSelected ? track.accent : track.accent.opacity(0.13))
-                        .frame(width: 46, height: 46)
-                    Image(systemName: track.symbol)
-                        .font(.system(size: 19, weight: .medium))
-                        .foregroundStyle(isSelected ? .white : track.accent)
-                }
+                IconDisc(icon: track.icon, size: 46, color: track.accent, filled: isSelected)
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(track.displayName)

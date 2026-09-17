@@ -92,10 +92,7 @@ struct PulseCard: View {
         Button(action: onTap) {
             TetherCard {
                 HStack(spacing: TetherSpace.m) {
-                    Image(systemName: result.state.symbol)
-                        .font(.system(size: 18))
-                        .foregroundStyle(result.state.color)
-                        .frame(width: 28)
+                    IconDisc(icon: result.state.icon, size: 40, color: result.state.color)
 
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Relationship Pulse")
@@ -109,16 +106,13 @@ struct PulseCard: View {
                     Spacer()
 
                     HStack(spacing: TetherSpace.xs) {
-                        Image(systemName: result.trend.symbol)
-                            .font(.system(size: 11))
+                        Icon(TetherIcon.forTrend(result.trend), size: 13, color: TetherColor.muted)
                         Text(result.trend.displayName)
                             .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.muted)
                     }
-                    .foregroundStyle(TetherColor.muted)
 
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 12))
-                        .foregroundStyle(TetherColor.muted)
+                    Icon(.chevronRight, size: 15, color: TetherColor.faint)
                 }
             }
         }
@@ -131,6 +125,9 @@ struct PulseCard: View {
 
 struct PulseView: View {
     @Bindable var profile: UserProfile
+    /// When true the view is hosted in the tab bar — no Done button, large title.
+    var isTab: Bool = false
+
     @Environment(\.modelContext) private var ctx
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
@@ -152,10 +149,12 @@ struct PulseView: View {
             }
             .background(TetherColor.bg)
             .navigationTitle("Relationship Pulse")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(isTab ? .large : .inline)
             .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { dismiss() }
+                if !isTab {
+                    ToolbarItem(placement: .confirmationAction) {
+                        Button("Done") { dismiss() }
+                    }
                 }
             }
         }
@@ -164,9 +163,7 @@ struct PulseView: View {
     private var hero: some View {
         VStack(alignment: .leading, spacing: TetherSpace.m) {
             HStack(spacing: TetherSpace.m) {
-                Image(systemName: result.state.symbol)
-                    .font(.system(size: 26))
-                    .foregroundStyle(result.state.color)
+                IconDisc(icon: result.state.icon, size: 54, color: result.state.color)
                 VStack(alignment: .leading, spacing: 2) {
                     Text(result.state.displayName)
                         .font(TetherType.title)

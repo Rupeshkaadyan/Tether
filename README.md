@@ -27,6 +27,24 @@ the person, not the couple.** The practice is shared; the beliefs are not.
 
 ---
 
+## Screenshots
+
+| Today | Journal |
+|---|---|
+| <img src="docs/screenshots/02-today.png" width="260"> | <img src="docs/screenshots/03-journal.png" width="260"> |
+
+| Coach | Relationship Pulse |
+|---|---|
+| <img src="docs/screenshots/04-coach.png" width="260"> | <img src="docs/screenshots/05-pulse.png" width="260"> |
+
+<img src="docs/screenshots/01-welcome.png" width="260">
+
+Every icon is a custom SVG from the app's own icon set — no SF Symbols, no icon
+library. The curve mark is used as the app icon, the welcome hero, a screen
+backdrop, and the pairing animation.
+
+---
+
 ## Technical highlights
 
 The parts worth reading.

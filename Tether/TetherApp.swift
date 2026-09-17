@@ -36,24 +36,46 @@ struct RootView: View {
     @Environment(\.modelContext) private var ctx
     @Query(sort: \UserProfile.createdAt) private var profiles: [UserProfile]
 
+    @State private var showSplash = true
+
     var body: some View {
-        Group {
-            if let profile = profiles.first {
-                if profile.onboardingDone {
-                    HomeView(profile: profile)
+        ZStack {
+            Group {
+                if let profile = profiles.first {
+                    if profile.onboardingDone {
+                        MainTabView(profile: profile)
+                    } else {
+                        OnboardingFlow(profile: profile)
+                    }
                 } else {
-                    OnboardingFlow(profile: profile)
+                    TetherColor.bg.ignoresSafeArea()
                 }
-            } else {
-                ProgressView()
-                    .tint(TetherColor.brand)
+            }
+            .task { ensureProfile() }
+            .animation(.easeOut(duration: 0.25), value: profiles.first?.onboardingDone)
+
+            if showSplash {
+                SplashView()
+                    .transition(.opacity)
+                    .zIndex(1)
             }
         }
-        .task { ensureProfile() }
-        .animation(.easeOut(duration: 0.25), value: profiles.first?.onboardingDone)
+        .task {
+            try? await Task.sleep(nanoseconds: 1_400_000_000)
+            withAnimation(.easeOut(duration: 0.45)) { showSplash = false }
+        }
     }
 
     private func ensureProfile() {
+        #if DEBUG
+        // Screenshot / preview helper. Never compiled into a release build.
+        if ProcessInfo.processInfo.arguments.contains("-seedDemo") {
+            DemoSeed.runIfNeeded(ctx)
+            session.profile = profiles.first
+            return
+        }
+        #endif
+
         if let existing = profiles.first {
             session.profile = existing
             return

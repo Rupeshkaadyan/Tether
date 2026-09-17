@@ -26,14 +26,38 @@ final class CryptoService {
     private let service = "app.tether.encryption"
     private let account = "primary-key"
     private var cached: SymmetricKey?
+    #if DEBUG
+    /// Screenshot / UI-test mode: an ephemeral in-memory key so the simulator
+    /// does not raise a Keychain access prompt over the UI.
+    private var ephemeral: SymmetricKey?
+    private var useEphemeral: Bool {
+        ProcessInfo.processInfo.arguments.contains("-noKeychain")
+    }
+    #endif
 
     private init() {}
 
     // MARK: - Key
 
-    var hasKey: Bool { loadKey() != nil }
+    var hasKey: Bool {
+        #if DEBUG
+        if useEphemeral { return true }
+        #endif
+        return loadKey() != nil
+    }
 
     func key() throws -> SymmetricKey {
+        #if DEBUG
+        if useEphemeral {
+            if let ephemeral { return ephemeral }
+            // Deterministic so seeded demo data survives relaunches. Debug only —
+            // this key is public and must never protect real content.
+            let material = Data("tether-debug-key-not-for-production".utf8)
+            let fresh = SymmetricKey(data: Data(SHA256.hash(data: material)))
+            ephemeral = fresh
+            return fresh
+        }
+        #endif
         if let cached { return cached }
         if let existing = loadKey() {
             cached = existing
@@ -116,8 +140,16 @@ enum SecureContent {
         (try? CryptoService.shared.encrypt(plaintext)) ?? plaintext
     }
 
+    /// Sealed content that cannot be opened — for example after a restore to a
+    /// new device, where the Keychain key did not come with it — returns a plain
+    /// explanation rather than dumping base64 at the user.
     static func read(_ stored: String) -> String {
-        (try? CryptoService.shared.decrypt(stored)) ?? stored
+        guard isSealed(stored) else { return stored }
+        do {
+            return try CryptoService.shared.decrypt(stored)
+        } catch {
+            return "This entry can't be read on this device."
+        }
     }
 
     static func isSealed(_ stored: String) -> Bool {

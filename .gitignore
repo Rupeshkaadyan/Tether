@@ -68,5 +68,6 @@ venv/
 *.swp
 *.swo
 
-# Generated during PDF rendering
+# Generated during PDF and icon rendering
 docs/tmp_*.html
+Branding/.tmp/

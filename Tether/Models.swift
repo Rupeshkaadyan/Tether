@@ -36,12 +36,14 @@ enum WisdomTrack: String, Codable, CaseIterable, Identifiable {
         }
     }
 
-    var symbol: String {
+    /// Custom glyph from the icon pack. Abstract, never a religious symbol —
+    /// see the note on `TetherIcon`.
+    var icon: TetherIcon {
         switch self {
-        case .secular:  return "brain.head.profile"
-        case .biblical: return "book.closed"
-        case .vedic:    return "flame"
-        case .quranic:  return "moon.stars"
+        case .secular:  return .trackSecular
+        case .biblical: return .trackBiblical
+        case .vedic:    return .trackVedic
+        case .quranic:  return .trackQuranic
         }
     }
 
@@ -92,12 +94,12 @@ enum PulseState: String, Codable, CaseIterable {
         }
     }
 
-    var symbol: String {
+    var icon: TetherIcon {
         switch self {
-        case .thriving: return "leaf.fill"
-        case .drifting: return "waveform.path"
-        case .strained: return "exclamationmark.circle"
-        case .unknown:  return "circle.dashed"
+        case .thriving: return .pulse
+        case .drifting: return .trendFlat
+        case .strained: return .alert
+        case .unknown:  return .pulse
         }
     }
 }

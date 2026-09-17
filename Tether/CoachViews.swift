@@ -3,6 +3,10 @@ import SwiftData
 
 struct CoachView: View {
     @Bindable var profile: UserProfile
+    /// When true the view is hosted in the tab bar, so it drops the modal
+    /// chrome (Close button, inline title) and presents as a full screen.
+    var isTab: Bool = false
+
     @Environment(\.modelContext) private var ctx
     @Environment(\.dismiss) private var dismiss
 
@@ -75,16 +79,18 @@ struct CoachView: View {
             }
             .background(TetherColor.bg)
             .navigationTitle("Coach")
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarTitleDisplayMode(isTab ? .large : .inline)
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Close") { dismiss() }
+                if !isTab {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button("Close") { dismiss() }
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button {
                         showPrivacy = true
                     } label: {
-                        Image(systemName: "lock")
+                        Icon(.privacy, size: 20, color: TetherColor.muted)
                     }
                     .accessibilityLabel("Privacy")
                 }

@@ -16,9 +16,7 @@ struct HomeView: View {
     @State private var showSettings = false
     @State private var showSaved = false
     @State private var showPairing = false
-    @State private var showPulse = false
     @State private var showRecap = false
-    @State private var showCoach = false
     @State private var showNotifExplainer = false
     @AppStorage("tether.notifAsked") private var notifAsked = false
 
@@ -38,7 +36,9 @@ struct HomeView: View {
         return entries.contains { $0.userID == partner.id && Calendar.current.isDateInToday($0.entryDate) }
     }
 
-    init(profile: UserProfile) { self.profile = profile }
+    /// Called when the user taps the Pulse card — the shell switches tabs.
+    var onOpenPulse: () -> Void = {}
+    var onOpenCoach: () -> Void = {}
 
     private var todayPrompt: Prompt {
         PromptLibrary.prompt(for: profile.track,
@@ -65,7 +65,7 @@ struct HomeView: View {
                     header
                     if session.safetyBanner != nil { safetyBannerCard }
                     connectionCard
-                    PulseCard(result: pulse) { showPulse = true }
+                    PulseCard(result: pulse) { onOpenPulse() }
                     PromptCard(prompt: todayPrompt, dayLabel: Date().weekdayDisplay)
 
                     if todayAnswered {
@@ -74,10 +74,7 @@ struct HomeView: View {
                         composer
                     }
 
-                    SectionHeader(title: "Recent")
-                    recentList
-
-                    Button("Ask the coach") { showCoach = true }
+                    Button("Ask the coach") { onOpenCoach() }
                         .tetherButton()
                         .padding(.top, TetherSpace.s)
 
@@ -94,14 +91,8 @@ struct HomeView: View {
             .sheet(isPresented: $showPairing) {
                 PairingView(profile: profile)
             }
-            .sheet(isPresented: $showPulse) {
-                PulseView(profile: profile)
-            }
             .sheet(isPresented: $showRecap) {
                 WeeklyRecapView(profile: profile)
-            }
-            .sheet(isPresented: $showCoach) {
-                CoachView(profile: profile)
             }
             .sheet(isPresented: $showNotifExplainer) {
                 NotificationPermissionSheet(
@@ -416,8 +407,7 @@ struct SettingsView: View {
                             profile.track = track
                         } label: {
                             HStack {
-                                Image(systemName: track.symbol)
-                                    .foregroundStyle(track.accent)
+                                Icon(track.icon, size: 20, color: track.accent)
                                 Text(track.displayName)
                                     .foregroundStyle(TetherColor.text)
                                 Spacer()
