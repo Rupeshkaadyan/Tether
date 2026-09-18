@@ -31,6 +31,10 @@ struct MainTabView: View {
                 .tabItem { label("Pulse", .tabPulse) }
         }
         .tint(TetherColor.brand)
+        // An explicit bar background. The default glass material let scrolled
+        // content show through as a dark smear on the warm background.
+        .toolbarBackground(TetherColor.surface, for: .tabBar)
+        .toolbarBackground(.visible, for: .tabBar)
         .onAppear(perform: applyLaunchTab)
     }
 

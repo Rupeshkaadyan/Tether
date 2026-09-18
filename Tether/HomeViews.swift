@@ -20,6 +20,7 @@ struct HomeView: View {
     @State private var showNotifExplainer = false
     @AppStorage("tether.notifAsked") private var notifAsked = false
     @Environment(\.dynamicTypeSize) private var typeSize
+    @State private var voice = VoiceInput.shared
 
     private var pulse: PulseResult {
         PulseEngine.compute(entries: entries, ownerID: profile.id)
@@ -107,6 +108,11 @@ struct HomeView: View {
                     onDecline: { }
                 )
             }
+            .onChange(of: voice.transcript) { _, spoken in
+                guard voice.isRecording, !spoken.isEmpty else { return }
+                reply = spoken
+            }
+            .onDisappear { voice.stop() }
         }
     }
 
@@ -248,11 +254,37 @@ struct HomeView: View {
             }
 
             VStack(alignment: .leading, spacing: TetherSpace.s) {
-                Text("Your response")
-                    .font(TetherType.label)
+                HStack {
+                    Text("Your response")
+                        .font(TetherType.label)
+                        .foregroundStyle(TetherColor.text)
+                    Spacer()
+                    Button {
+                        Task { await voice.toggle() }
+                    } label: {
+                        HStack(spacing: 5) {
+                            Icon(.mic, size: 15,
+                                 color: voice.isRecording ? TetherColor.strained : TetherColor.muted)
+                            Text(voice.isRecording ? "Listening…" : "Dictate")
+                                .font(TetherType.micro)
+                                .foregroundStyle(voice.isRecording ? TetherColor.strained : TetherColor.muted)
+                        }
+                        .padding(.horizontal, TetherSpace.m)
+                        .padding(.vertical, 5)
+                        .background(voice.isRecording ? TetherColor.strainedSoft : TetherColor.surfaceSunken)
+                        .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(voice.isRecording ? "Stop dictation" : "Dictate your response")
+                }
                 TextField("One sentence is enough", text: $reply, axis: .vertical)
                     .lineLimit(2...6)
                     .tetherField()
+                if let message = voice.errorMessage {
+                    Text(message)
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.strained)
+                }
             }
 
             Button("Save today's entry") { save() }

@@ -20,6 +20,7 @@ struct CoachView: View {
     @State private var showPrivacy = false
     @State private var store = PurchaseService.shared
     @State private var showPaywall = false
+    @State private var voice = VoiceInput.shared
 
     private var freeMessagesUsed: Int {
         let start = Calendar.current.date(byAdding: .month, value: -1, to: Date()) ?? Date()
@@ -97,6 +98,11 @@ struct CoachView: View {
             }
             .sheet(isPresented: $showPrivacy) { privacySheet }
             .sheet(isPresented: $showPaywall) { PaywallView() }
+            .onChange(of: voice.transcript) { _, spoken in
+                guard voice.isRecording, !spoken.isEmpty else { return }
+                draft = spoken
+            }
+            .onDisappear { voice.stop() }
             .task { ensureConversation() }
         }
     }
@@ -139,24 +145,31 @@ struct CoachView: View {
                     .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
 
                 Button {
-                    draft += " "
+                    Task { await voice.toggle() }
                 } label: {
-                    Image(systemName: "mic")
-                        .font(.system(size: 17))
-                        .foregroundStyle(TetherColor.muted)
-                        .frame(width: 44, height: 44)
+                    ZStack {
+                        if voice.isRecording {
+                            Circle()
+                                .fill(TetherColor.strained.opacity(0.14 + voice.level * 0.30))
+                                .frame(width: 40 + voice.level * 10,
+                                       height: 40 + voice.level * 10)
+                        }
+                        Icon(.mic, size: 19,
+                             color: voice.isRecording ? TetherColor.strained : TetherColor.muted)
+                    }
+                    .frame(width: 44, height: 44)
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("Voice input")
+                .animation(.easeOut(duration: 0.12), value: voice.level)
+                .accessibilityLabel(voice.isRecording ? "Stop dictation" : "Start dictation")
 
                 Button {
                     Task { await send() }
                 } label: {
-                    Image(systemName: "arrow.up")
-                        .font(.system(size: 16, weight: .semibold))
-                        .foregroundStyle(.white)
+                    Icon(.send, size: 19, color: canSend ? .white : TetherColor.faint)
                         .frame(width: 40, height: 40)
-                        .background(canSend ? TetherColor.brand : TetherColor.border)
+                        .background(canSend ? AnyShapeStyle(TetherGradient.brand)
+                                            : AnyShapeStyle(TetherColor.border))
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
