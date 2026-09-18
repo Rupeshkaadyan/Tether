@@ -104,7 +104,10 @@ struct PromptCard: View {
                 }
             }
 
-            Text(prompt.body)
+            // Wrapped in LocalizedStringKey so the prompt text resolves through
+            // the strings catalog. A plain String variable passed to Text does
+            // not localise — this is what makes translated prompts appear.
+            Text(LocalizedStringKey(prompt.body))
                 .font(TetherType.prompt)
                 .foregroundStyle(.white)
                 .lineSpacing(4)

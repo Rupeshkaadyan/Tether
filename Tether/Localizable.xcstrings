@@ -39,17 +39,47 @@
             "state": "new",
             "value": "%1$lld day%2$@ logged"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld दिन%@ दर्ज"
+          }
         }
       }
     },
-    "%lld days": {},
-    "%lld free messages left this month.": {},
+    "%lld days": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld दिन"
+          }
+        }
+      }
+    },
+    "%lld free messages left this month.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस महीने %lld मुफ़्त संदेश बाकी हैं।"
+          }
+        }
+      }
+    },
     "%lld of %lld done": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "new",
             "value": "%1$lld of %2$lld done"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld में से %lld पूरे"
           }
         }
       }
@@ -64,14 +94,86 @@
         }
       }
     },
-    "1 Strained → 5 Thriving": {},
-    "6-digit code": {},
-    "7 days": {},
-    "7-day connection challenge": {},
-    "14 days": {},
-    "30 days": {},
-    "A coach, not a therapist": {},
-    "A day at a time. Past entries will appear here as you go.": {},
+    "1 Strained → 5 Thriving": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 तनावपूर्ण → 5 फल-फूल रहा"
+          }
+        }
+      }
+    },
+    "6-digit code": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "6 अंकों का कोड"
+          }
+        }
+      }
+    },
+    "7 days": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 दिन"
+          }
+        }
+      }
+    },
+    "7-day connection challenge": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 दिन की जुड़ाव चुनौती"
+          }
+        }
+      }
+    },
+    "14 days": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "14 दिन"
+          }
+        }
+      }
+    },
+    "30 days": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 दिन"
+          }
+        }
+      }
+    },
+    "A coach, not a therapist": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक मार्गदर्शक, चिकित्सक नहीं"
+          }
+        }
+      }
+    },
+    "A day at a time. Past entries will appear here as you go.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक-एक दिन। पुरानी प्रविष्टियाँ जैसे-जैसे आप लिखेंगे यहाँ दिखेंगी।"
+          }
+        }
+      }
+    },
     "A deeper connection.": {
       "extractionState": "stale",
       "localizations": {
@@ -138,11 +240,56 @@
         }
       }
     },
-    "A read on the last two weeks, not a verdict. It looks at three things: how you have been feeling, how often you showed up, and how steady it has been.": {},
-    "A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so keep it somewhere safe.": {},
-    "A safety check runs on everything you type. If it detects a crisis, the app stops generating a normal reply and shows you support lines instead. Your partner is never told.": {},
-    "A year of showing up": {},
-    "About you": {},
+    "A read on the last two weeks, not a verdict. It looks at three things: how you have been feeling, how often you showed up, and how steady it has been.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पिछले दो हफ़्तों की एक झलक, कोई फ़ैसला नहीं। यह तीन चीज़ें देखता है: आपका मन कैसा रहा, आप कितनी बार आए, और कितने नियमित रहे।"
+          }
+        }
+      }
+    },
+    "A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so keep it somewhere safe.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी डायरी, मार्गदर्शक की बातचीत और यादों की एक पढ़ने योग्य प्रति। यह सुरक्षित भंडार से बाहर निकलती है, इसलिए इसे संभाल कर रखें।"
+          }
+        }
+      }
+    },
+    "A safety check runs on everything you type. If it detects a crisis, the app stops generating a normal reply and shows you support lines instead. Your partner is never told.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप जो भी टाइप करते हैं उस पर एक सुरक्षा जाँच चलती है। यदि संकट मिले, तो ऐप सामान्य उत्तर देना रोक कर सहायता लाइनें दिखाता है। आपके साथी को कभी नहीं बताया जाता।"
+          }
+        }
+      }
+    },
+    "A year of showing up": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साथ निभाने का एक साल"
+          }
+        }
+      }
+    },
+    "About you": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके बारे में"
+          }
+        }
+      }
+    },
     "Active Days": {
       "extractionState": "stale",
       "localizations": {
@@ -193,8 +340,26 @@
         }
       }
     },
-    "All seven done. Start again whenever you like.": {},
-    "Ask anything": {},
+    "All seven done. Start again whenever you like.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सातों पूरे। जब चाहें फिर से शुरू करें।"
+          }
+        }
+      }
+    },
+    "Ask anything": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कुछ भी पूछें"
+          }
+        }
+      }
+    },
     "Ask the coach": {
       "localizations": {
         "hi": {
@@ -211,7 +376,16 @@
         }
       }
     },
-    "Ask: %@": {},
+    "Ask: %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पूछें: %@"
+          }
+        }
+      }
+    },
     "Avg Mood": {
       "extractionState": "stale",
       "localizations": {
@@ -229,10 +403,46 @@
         }
       }
     },
-    "Backup & sync": {},
-    "Because of that, there is no recovery if you lose every device. That is the cost of us not being able to read your words.": {},
-    "Begin": {},
-    "Begin solo": {},
+    "Backup & sync": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बैकअप और सिंक"
+          }
+        }
+      }
+    },
+    "Because of that, there is no recovery if you lose every device. That is the cost of us not being able to read your words.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इसलिए, यदि आप अपना हर डिवाइस खो दें तो कुछ वापस नहीं मिल सकता। यह उस कीमत का हिस्सा है जो हम आपके शब्द न पढ़ पाने के लिए चुकाते हैं।"
+          }
+        }
+      }
+    },
+    "Begin": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शुरू करें"
+          }
+        }
+      }
+    },
+    "Begin solo": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अकेले शुरू करें"
+          }
+        }
+      }
+    },
     "Best month": {
       "extractionState": "stale",
       "localizations": {
@@ -283,8 +493,26 @@
         }
       }
     },
-    "Checking…": {},
-    "Clear search": {},
+    "Checking…": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जाँच रहे हैं…"
+          }
+        }
+      }
+    },
+    "Clear search": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खोज साफ़ करें"
+          }
+        }
+      }
+    },
     "Close": {
       "localizations": {
         "hi": {
@@ -317,8 +545,26 @@
         }
       }
     },
-    "Coach said: %@": {},
-    "Connect": {},
+    "Coach said: %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मार्गदर्शक ने कहा: %@"
+          }
+        }
+      }
+    },
+    "Connect": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जुड़ें"
+          }
+        }
+      }
+    },
     "Consistency": {
       "extractionState": "stale",
       "localizations": {
@@ -352,19 +598,88 @@
         }
       }
     },
-    "Continue on my own": {},
-    "Copied": {},
-    "Copy": {},
-    "Copy message": {},
-    "Covers both partners": {},
-    "Create my invite": {},
-    "Crisis support resources": {},
+    "Continue on my own": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अकेले आगे बढ़ें"
+          }
+        }
+      }
+    },
+    "Copied": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कॉपी हो गया"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कॉपी"
+          }
+        }
+      }
+    },
+    "Copy message": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संदेश कॉपी करें"
+          }
+        }
+      }
+    },
+    "Covers both partners": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दोनों साथियों के लिए"
+          }
+        }
+      }
+    },
+    "Create my invite": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "निमंत्रण बनाएँ"
+          }
+        }
+      }
+    },
+    "Crisis support resources": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "संकट सहायता संसाधन"
+          }
+        }
+      }
+    },
     "Day %lld — %@": {
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "new",
             "value": "Day %1$lld — %2$@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दिन %lld — %@"
           }
         }
       }
@@ -375,6 +690,12 @@
           "stringUnit": {
             "state": "new",
             "value": "Day %1$lld, %2$@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दिन %lld, %@"
           }
         }
       }
@@ -427,7 +748,16 @@
         }
       }
     },
-    "Delete all data?": {},
+    "Delete all data?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सारा डेटा हटाएँ?"
+          }
+        }
+      }
+    },
     "Delete all my data": {
       "localizations": {
         "hi": {
@@ -444,8 +774,26 @@
         }
       }
     },
-    "Dictate": {},
-    "Dictate your response": {},
+    "Dictate": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बोलकर लिखें"
+          }
+        }
+      }
+    },
+    "Dictate your response": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपना उत्तर बोलें"
+          }
+        }
+      }
+    },
     "Different paths.": {
       "extractionState": "stale",
       "localizations": {
@@ -496,7 +844,16 @@
         }
       }
     },
-    "Earned": {},
+    "Earned": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अर्जित"
+          }
+        }
+      }
+    },
     "Encryption": {
       "localizations": {
         "hi": {
@@ -513,8 +870,26 @@
         }
       }
     },
-    "Enter their code": {},
-    "Enter their code instead": {},
+    "Enter their code": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उनका कोड दर्ज करें"
+          }
+        }
+      }
+    },
+    "Enter their code instead": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इसके बजाय उनका कोड दर्ज करें"
+          }
+        }
+      }
+    },
     "Entries": {
       "extractionState": "stale",
       "localizations": {
@@ -532,9 +907,36 @@
         }
       }
     },
-    "Entries you mark as shared with your partner will collect here.": {},
-    "Everything here was written by you, on your device. Nothing was sent anywhere.": {},
-    "Everything in Tether, for both of you, for less than one takeaway a month.": {},
+    "Entries you mark as shared with your partner will collect here.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जिन प्रविष्टियों को आप साझा चिह्नित करेंगे वे यहाँ जमा होंगी।"
+          }
+        }
+      }
+    },
+    "Everything here was written by you, on your device. Nothing was sent anywhere.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह सब आपने अपने डिवाइस पर लिखा है। कुछ भी कहीं नहीं भेजा गया।"
+          }
+        }
+      }
+    },
+    "Everything in Tether, for both of you, for less than one takeaway a month.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether की हर चीज़, आप दोनों के लिए, महीने के एक टेकअवे से भी कम में।"
+          }
+        }
+      }
+    },
     "Export everything": {
       "localizations": {
         "hi": {
@@ -617,12 +1019,66 @@
         }
       }
     },
-    "Higher is better": {},
-    "Highs and lows": {},
-    "How are you today?": {},
-    "How do you feel loved?": {},
-    "How things have been going, drawn from your own journal.": {},
-    "I have a code": {},
+    "Higher is better": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ऊँचा बेहतर"
+          }
+        }
+      }
+    },
+    "Highs and lows": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उतार-चढ़ाव"
+          }
+        }
+      }
+    },
+    "How are you today?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज आप कैसे हैं?"
+          }
+        }
+      }
+    },
+    "How do you feel loved?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप कैसे प्रेम महसूस करते हैं?"
+          }
+        }
+      }
+    },
+    "How things have been going, drawn from your own journal.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी अपनी डायरी से निकाली गई जानकारी।"
+          }
+        }
+      }
+    },
+    "I have a code": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मेरे पास कोड है"
+          }
+        }
+      }
+    },
     "iCloud": {},
     "If you had a subscription, it is active again.": {},
     "Improving": {
@@ -658,12 +1114,66 @@
         }
       }
     },
-    "Invite code %@": {},
-    "Invite expires in 7 days. You can cancel and make a new one anytime.": {},
-    "Invite your partner": {},
-    "It has been three days. You do not have to wait — everything you write syncs the moment they join.": {},
-    "It speaks from your %@ track, and it remembers what you have written.": {},
-    "Join": {},
+    "Invite code %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "निमंत्रण कोड %@"
+          }
+        }
+      }
+    },
+    "Invite expires in 7 days. You can cancel and make a new one anytime.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "निमंत्रण 7 दिन में समाप्त होगा। आप इसे रद्द कर कभी भी नया बना सकते हैं।"
+          }
+        }
+      }
+    },
+    "Invite your partner": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने साथी को आमंत्रित करें"
+          }
+        }
+      }
+    },
+    "It has been three days. You do not have to wait — everything you write syncs the moment they join.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तीन दिन हो गए हैं। इंतज़ार ज़रूरी नहीं — जो भी आप लिखेंगे, वे जुड़ते ही मिल जाएगा।"
+          }
+        }
+      }
+    },
+    "It speaks from your %@ track, and it remembers what you have written.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह आपके %@ मार्ग से बोलता है, और जो आपने लिखा है उसे याद रखता है।"
+          }
+        }
+      }
+    },
+    "Join": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जुड़ें"
+          }
+        }
+      }
+    },
     "Journal": {
       "localizations": {
         "hi": {
@@ -680,10 +1190,46 @@
         }
       }
     },
-    "Just you, for now": {},
-    "Keep the practice going": {},
-    "Listening…": {},
-    "Log a few days to see your trend": {},
+    "Just you, for now": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी केवल आप"
+          }
+        }
+      }
+    },
+    "Keep the practice going": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभ्यास जारी रखें"
+          }
+        }
+      }
+    },
+    "Listening…": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सुन रहे हैं…"
+          }
+        }
+      }
+    },
+    "Log a few days to see your trend": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रुझान देखने के लिए कुछ दिन लिखें"
+          }
+        }
+      }
+    },
     "Milestones": {
       "localizations": {
         "hi": {
@@ -723,15 +1269,75 @@
             "state": "new",
             "value": "Mood %1$lld of 5, %2$@"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मूड ५ में से %lld, %@"
+          }
         }
       }
     },
-    "Mood and one line a day. Entries appear here as you go.": {},
-    "Mood mix": {},
-    "Mood trend over %lld days": {},
-    "Name": {},
-    "No love language for now": {},
-    "Not done": {},
+    "Mood and one line a day. Entries appear here as you go.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मूड और एक पंक्ति रोज़। प्रविष्टियाँ जैसे-जैसे यहाँ दिखेंगी।"
+          }
+        }
+      }
+    },
+    "Mood mix": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मूड मिश्रण"
+          }
+        }
+      }
+    },
+    "Mood trend over %lld days": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld दिनों का मूड रुझान"
+          }
+        }
+      }
+    },
+    "Name": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नाम"
+          }
+        }
+      }
+    },
+    "No love language for now": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी के लिए कोई प्रेम भाषा नहीं"
+          }
+        }
+      }
+    },
+    "Not done": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पूरा नहीं"
+          }
+        }
+      }
+    },
     "Not enough data": {
       "extractionState": "stale",
       "localizations": {
@@ -766,9 +1372,36 @@
         }
       }
     },
-    "Not now": {},
-    "Not set yet — take the quiz to personalise your insights.": {},
-    "Not sure what to say? Send this:": {},
+    "Not now": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी नहीं"
+          }
+        }
+      }
+    },
+    "Not set yet — take the quiz to personalise your insights.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी तय नहीं — अपनी जानकारी बेहतर बनाने के लिए क्विज़ लें।"
+          }
+        }
+      }
+    },
+    "Not sure what to say? Send this:": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्या कहना है समझ नहीं आ रहा? यह भेजें:"
+          }
+        }
+      }
+    },
     "Nothing here yet.": {
       "extractionState": "stale",
       "localizations": {
@@ -786,12 +1419,66 @@
         }
       }
     },
-    "Nothing logged this week. No guilt — start again today.": {},
-    "Nothing shared yet": {},
-    "Off": {},
-    "Off by default. When on, only anonymized counts, mood averages and themes are sent for a richer weekly summary — never your actual words.": {},
-    "OK": {},
-    "On": {},
+    "Nothing logged this week. No guilt — start again today.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस सप्ताह कुछ दर्ज नहीं। कोई गिल्ट नहीं — आज से फिर शुरू करें।"
+          }
+        }
+      }
+    },
+    "Nothing shared yet": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी कुछ साझा नहीं"
+          }
+        }
+      }
+    },
+    "Off": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बंद"
+          }
+        }
+      }
+    },
+    "Off by default. When on, only anonymized counts, mood averages and themes are sent for a richer weekly summary — never your actual words.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "डिफ़ॉल्ट रूप से बंद। चालू करने पर केवल गुमनाम गिनती, मूड औसत और विषय भेजे जाते हैं — आपके वास्तविक शब्द कभी नहीं।"
+          }
+        }
+      }
+    },
+    "OK": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ठीक है"
+          }
+        }
+      }
+    },
+    "On": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "चालू"
+          }
+        }
+      }
+    },
     "On this day": {
       "extractionState": "stale",
       "localizations": {
@@ -825,12 +1512,66 @@
         }
       }
     },
-    "One focus for next week": {},
-    "One reminder a day": {},
-    "One sentence is enough": {},
-    "One subscription. Both partners. Always.": {},
-    "One to remember": {},
-    "Or share this code": {},
+    "One focus for next week": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अगले सप्ताह के लिए एक फ़ोकस"
+          }
+        }
+      }
+    },
+    "One reminder a day": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दिन में एक रिमाइंडर"
+          }
+        }
+      }
+    },
+    "One sentence is enough": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक वाक्य काफ़ी है"
+          }
+        }
+      }
+    },
+    "One subscription. Both partners. Always.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक सदस्यता। दोनों साथी। हमेशा।"
+          }
+        }
+      }
+    },
+    "One to remember": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "याद रखने लायक"
+          }
+        }
+      }
+    },
+    "Or share this code": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "या यह कोड साझा करें"
+          }
+        }
+      }
+    },
     "Physical Touch": {
       "extractionState": "stale",
       "localizations": {
@@ -848,7 +1589,16 @@
         }
       }
     },
-    "Pick whichever is easiest. Tap a different one any time to change your mind.": {},
+    "Pick whichever is easiest. Tap a different one any time to change your mind.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जो सबसे आसान हो चुनें। मन बदलने पर कभी भी किसी और पर टैप करें।"
+          }
+        }
+      }
+    },
     "Privacy": {
       "localizations": {
         "hi": {
@@ -882,7 +1632,16 @@
         }
       }
     },
-    "Purchases restored": {},
+    "Purchases restored": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खरीद बहाल"
+          }
+        }
+      }
+    },
     "Quality Time": {
       "extractionState": "stale",
       "localizations": {
@@ -906,6 +1665,12 @@
           "stringUnit": {
             "state": "new",
             "value": "Question %1$lld of %2$lld"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रश्न %lld / %lld"
           }
         }
       }
@@ -961,7 +1726,16 @@
         }
       }
     },
-    "Reflecting…": {},
+    "Reflecting…": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सोच रहे हैं…"
+          }
+        }
+      }
+    },
     "Relationship Pulse": {
       "localizations": {
         "hi": {
@@ -985,10 +1759,25 @@
             "state": "new",
             "value": "Relationship Pulse. %1$@. %2$@."
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रिश्ते की पल्स. %@. %@."
+          }
         }
       }
     },
-    "Remembering": {},
+    "Remembering": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "याद रख रहा है"
+          }
+        }
+      }
+    },
     "Reminders": {
       "localizations": {
         "hi": {
@@ -1005,8 +1794,26 @@
         }
       }
     },
-    "Restore purchases": {},
-    "Retake the quiz": {},
+    "Restore purchases": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खरीद बहाल करें"
+          }
+        }
+      }
+    },
+    "Retake the quiz": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्विज़ फिर से लें"
+          }
+        }
+      }
+    },
     "Save": {
       "extractionState": "stale",
       "localizations": {
@@ -1024,10 +1831,46 @@
         }
       }
     },
-    "Save today's entry": {},
-    "Saved for today": {},
-    "Scan this on their phone": {},
-    "Search your entries": {},
+    "Save today's entry": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज की प्रविष्टि सहेजें"
+          }
+        }
+      }
+    },
+    "Saved for today": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज के लिए सहेजा गया"
+          }
+        }
+      }
+    },
+    "Scan this on their phone": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इसे उनके फ़ोन पर स्कैन करें"
+          }
+        }
+      }
+    },
+    "Search your entries": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपनी प्रविष्टियाँ खोजें"
+          }
+        }
+      }
+    },
     "Secular": {
       "extractionState": "stale",
       "localizations": {
@@ -1094,9 +1937,36 @@
         }
       }
     },
-    "Send": {},
-    "Send a reminder": {},
-    "Send at %lld:00": {},
+    "Send": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "भेजें"
+          }
+        }
+      }
+    },
+    "Send a reminder": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रिमाइंडर भेजें"
+          }
+        }
+      }
+    },
+    "Send at %lld:00": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld:00 बजे भेजें"
+          }
+        }
+      }
+    },
     "Settings": {
       "localizations": {
         "hi": {
@@ -1113,7 +1983,16 @@
         }
       }
     },
-    "Sign in to iCloud": {},
+    "Sign in to iCloud": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iCloud में साइन इन करें"
+          }
+        }
+      }
+    },
     "Skip": {
       "localizations": {
         "hi": {
@@ -1147,8 +2026,26 @@
         }
       }
     },
-    "Small proofs that you keep showing up.": {},
-    "Start %@": {},
+    "Small proofs that you keep showing up.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "छोटे सबूत कि आप लगातार आते रहे।"
+          }
+        }
+      }
+    },
+    "Start %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ शुरू करें"
+          }
+        }
+      }
+    },
     "Start again": {
       "localizations": {
         "hi": {
@@ -1165,10 +2062,46 @@
         }
       }
     },
-    "Start dictation": {},
-    "Start on your own": {},
-    "Start together": {},
-    "Status": {},
+    "Start dictation": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बोलना शुरू करें"
+          }
+        }
+      }
+    },
+    "Start on your own": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अकेले शुरू करें"
+          }
+        }
+      }
+    },
+    "Start together": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साथ शुरू करें"
+          }
+        }
+      }
+    },
+    "Status": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्थिति"
+          }
+        }
+      }
+    },
     "Steady": {
       "extractionState": "stale",
       "localizations": {
@@ -1193,10 +2126,25 @@
             "state": "new",
             "value": "Step %1$lld of %2$lld"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "चरण %lld / %lld"
+          }
         }
       }
     },
-    "Stop dictation": {},
+    "Stop dictation": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बोलना रोकें"
+          }
+        }
+      }
+    },
     "Strained": {
       "extractionState": "stale",
       "localizations": {
@@ -1238,6 +2186,12 @@
             "state": "new",
             "value": "Streak %1$lld day%2$@"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "लय %lld दिन%@"
+          }
         }
       }
     },
@@ -1257,8 +2211,26 @@
         }
       }
     },
-    "Subscriptions renew automatically unless cancelled at least 24 hours before the period ends. Manage in your App Store account.": {},
-    "Support is available": {},
+    "Subscriptions renew automatically unless cancelled at least 24 hours before the period ends. Manage in your App Store account.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सदस्यताएँ स्वतः नवीनीकृत होती हैं जब तक कि अवधि समाप्त से 24 घंटे पहले रद्द न करें। अपने App Store खाते में प्रबंधित करें।"
+          }
+        }
+      }
+    },
+    "Support is available": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सहायता उपलब्ध है"
+          }
+        }
+      }
+    },
     "Sync": {
       "localizations": {
         "hi": {
@@ -1291,13 +2263,67 @@
         }
       }
     },
-    "Take the quiz": {},
+    "Take the quiz": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्विज़ लें"
+          }
+        }
+      }
+    },
     "Tether": {},
-    "Tether is not therapy and not a crisis service.": {},
-    "Tether is not therapy. If things feel unsafe or overwhelming, please talk to someone qualified.": {},
-    "Tether. Two people. One practice.": {},
-    "That is all we will send. No streaks shaming, no re-engagement spam, no marketing.": {},
-    "That's completely fine. You can take the quiz any time from Settings to personalise your insights.": {},
+    "Tether is not therapy and not a crisis service.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether चिकित्सा नहीं है और न ही संकट सेवा।"
+          }
+        }
+      }
+    },
+    "Tether is not therapy. If things feel unsafe or overwhelming, please talk to someone qualified.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether चिकित्सा नहीं है। यदि चीज़ें असुरक्षित या भारी लगें, तो कृपया किसी योग्य व्यक्ति से बात करें।"
+          }
+        }
+      }
+    },
+    "Tether. Two people. One practice.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether. दो लोग। एक अभ्यास।"
+          }
+        }
+      }
+    },
+    "That is all we will send. No streaks shaming, no re-engagement spam, no marketing.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इतना ही हम भेजेंगे। कोई लय-शर्मिंदगी, कोई स्पैम, कोई मार्केटिंग नहीं।"
+          }
+        }
+      }
+    },
+    "That's completely fine. You can take the quiz any time from Settings to personalise your insights.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह बिल्कुल ठीक है। आप सेटिंग्स से कभी भी क्विज़ ले सकते हैं।"
+          }
+        }
+      }
+    },
     "The seven days": {
       "localizations": {
         "hi": {
@@ -1314,12 +2340,66 @@
         }
       }
     },
-    "Then %@. Cancel anytime in Settings.": {},
-    "Thinking…": {},
-    "This device only": {},
-    "This is a lens, not a verdict. It is a starting point for noticing what actually lands.": {},
-    "This is yours alone. Your partner chooses their own.": {},
-    "This removes every entry on this device and destroys the encryption key. It cannot be undone.": {},
+    "Then %@. Cancel anytime in Settings.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फिर %@. सेटिंग्स में कभी भी रद्द करें।"
+          }
+        }
+      }
+    },
+    "Thinking…": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सोच रहे हैं…"
+          }
+        }
+      }
+    },
+    "This device only": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "केवल इस डिवाइस पर"
+          }
+        }
+      }
+    },
+    "This is a lens, not a verdict. It is a starting point for noticing what actually lands.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह एक दृष्टिकोण है, फ़ैसला नहीं। यह समझने की शुरुआत है कि वास्तव में क्या काम करता है।"
+          }
+        }
+      }
+    },
+    "This is yours alone. Your partner chooses their own.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह केवल आपका है। आपका साथी अपना खुद का चुनता है।"
+          }
+        }
+      }
+    },
+    "This removes every entry on this device and destroys the encryption key. It cannot be undone.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह इस डिवाइस की हर प्रविष्टि हटा देता है और एन्क्रिप्शन कुंजी नष्ट कर देता है। इसे वापस नहीं किया जा सकता।"
+          }
+        }
+      }
+    },
     "This week": {
       "localizations": {
         "hi": {
@@ -1336,7 +2416,16 @@
         }
       }
     },
-    "Three ways to connect": {},
+    "Three ways to connect": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जुड़ने के तीन तरीके"
+          }
+        }
+      }
+    },
     "Thriving": {
       "extractionState": "stale",
       "localizations": {
@@ -1371,8 +2460,26 @@
         }
       }
     },
-    "Today — %@": {},
-    "TRY ASKING": {},
+    "Today — %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज — %@"
+          }
+        }
+      }
+    },
+    "TRY ASKING": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पूछने की कोशिश करें"
+          }
+        }
+      }
+    },
     "Turn on reminders": {
       "localizations": {
         "hi": {
@@ -1405,7 +2512,16 @@
         }
       }
     },
-    "Upgrade": {},
+    "Upgrade": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपग्रेड"
+          }
+        }
+      }
+    },
     "Vedic & Dharmic": {
       "extractionState": "stale",
       "localizations": {
@@ -1439,8 +2555,26 @@
         }
       }
     },
-    "Waiting for your partner": {},
-    "Weekly recap": {},
+    "Waiting for your partner": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने साथी का इंतज़ार"
+          }
+        }
+      }
+    },
+    "Weekly recap": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साप्ताहिक सारांश"
+          }
+        }
+      }
+    },
     "Weekly reflection": {
       "localizations": {
         "hi": {
@@ -1457,7 +2591,16 @@
         }
       }
     },
-    "What is your partner's name?": {},
+    "What is your partner's name?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके साथी का नाम क्या है?"
+          }
+        }
+      }
+    },
     "What should we call you?": {
       "localizations": {
         "hi": {
@@ -1490,9 +2633,36 @@
         }
       }
     },
-    "What wisdom speaks to you?": {},
-    "Wisdom track": {},
-    "With iCloud on, your entries are mirrored across your own devices. They are sealed before they leave this phone.": {},
+    "What wisdom speaks to you?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी बुद्धिमत्ता आपसे बात करती है?"
+          }
+        }
+      }
+    },
+    "Wisdom track": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ज्ञान मार्ग"
+          }
+        }
+      }
+    },
+    "With iCloud on, your entries are mirrored across your own devices. They are sealed before they leave this phone.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "iCloud चालू होने पर, आपकी प्रविष्टियाँ आपके अपने डिवाइसों पर दिखती हैं। वे इस फ़ोन से निकलने से पहले सुरक्षित कर ली जाती हैं।"
+          }
+        }
+      }
+    },
     "Words of Affirmation": {
       "extractionState": "stale",
       "localizations": {
@@ -1510,17 +2680,107 @@
         }
       }
     },
-    "You and %@": {},
-    "You and %@ are now paired. Your practice starts today.": {},
-    "You are connected": {},
-    "You can change this anytime in Settings.": {},
-    "You can do this in under a minute. That is the whole point.": {},
-    "You can start on your own at any point. Nothing is lost when they join later.": {},
-    "You feel loved through %@": {},
-    "You have used your 5 free messages this month.": {},
-    "You said: %@": {},
+    "You and %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप और %@"
+          }
+        }
+      }
+    },
+    "You and %@ are now paired. Your practice starts today.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप और %@ अब जुड़ गए हैं। आपका अभ्यास आज से शुरू।"
+          }
+        }
+      }
+    },
+    "You are connected": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप जुड़े हुए हैं"
+          }
+        }
+      }
+    },
+    "You can change this anytime in Settings.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप इसे सेटिंग्स में कभी भी बदल सकते हैं।"
+          }
+        }
+      }
+    },
+    "You can do this in under a minute. That is the whole point.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह एक मिनट से कम में हो सकता है। यही असली बात है।"
+          }
+        }
+      }
+    },
+    "You can start on your own at any point. Nothing is lost when they join later.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप किसी भी समय अकेले शुरू कर सकते हैं। जब वे बाद में जुड़ेंगे, कुछ भी खोया नहीं जाएगा।"
+          }
+        }
+      }
+    },
+    "You feel loved through %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप %@ से प्रेम महसूस करते हैं"
+          }
+        }
+      }
+    },
+    "You have used your 5 free messages this month.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपने इस महीने अपने 5 मुफ़्त संदेश उपयोग कर लिए हैं।"
+          }
+        }
+      }
+    },
+    "You said: %@": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपने कहा: %@"
+          }
+        }
+      }
+    },
     "Your coach conversations are never shown to your partner, and never sent to analytics. Encryption is on the roadmap and ships before any sync exists.": {},
-    "Your conversations are private": {},
+    "Your conversations are private": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी बातचीत निजी है"
+          }
+        }
+      }
+    },
     "Your data": {
       "localizations": {
         "hi": {
@@ -1537,11 +2797,56 @@
         }
       }
     },
-    "Your first prompt": {},
-    "Your journal starts here": {},
-    "Your journal, coach conversations, and memories are sealed with a key that lives only in this device's Keychain. We cannot read them.": {},
-    "Your love language": {},
-    "Your mood over time": {},
+    "Your first prompt": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपका पहला प्रश्न"
+          }
+        }
+      }
+    },
+    "Your journal starts here": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी डायरी यहीं शुरू होती है"
+          }
+        }
+      }
+    },
+    "Your journal, coach conversations, and memories are sealed with a key that lives only in this device's Keychain. We cannot read them.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी डायरी, मार्गदर्शक बातचीत और यादें एक कुंजी से सुरक्षित हैं जो केवल इसी डिवाइस की Keychain में रहती है। हम उन्हें नहीं पढ़ सकते।"
+          }
+        }
+      }
+    },
+    "Your love language": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी प्रेम भाषा"
+          }
+        }
+      }
+    },
+    "Your mood over time": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समय के साथ आपका मूड"
+          }
+        }
+      }
+    },
     "Your name": {
       "localizations": {
         "hi": {
@@ -1558,13 +2863,76 @@
         }
       }
     },
-    "Your partner is not shown this.": {},
-    "Your partner is not told about this.": {},
-    "Your primary love language": {},
-    "Your recent entries start here": {},
-    "Your response": {},
-    "Your Tether export": {},
-    "Your week together": {},
+    "Your partner is not shown this.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह आपके साथी को नहीं दिखाया जाता।"
+          }
+        }
+      }
+    },
+    "Your partner is not told about this.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इसके बारे में आपके साथी को नहीं बताया जाता।"
+          }
+        }
+      }
+    },
+    "Your primary love language": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी मुख्य प्रेम भाषा"
+          }
+        }
+      }
+    },
+    "Your recent entries start here": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी हाल की प्रविष्टियाँ यहीं शुरू होती हैं"
+          }
+        }
+      }
+    },
+    "Your response": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी प्रतिक्रिया"
+          }
+        }
+      }
+    },
+    "Your Tether export": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपका Tether निर्यात"
+          }
+        }
+      }
+    },
+    "Your week together": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपका सप्ताह साथ"
+          }
+        }
+      }
+    },
     "Your year": {
       "localizations": {
         "hi": {
@@ -1577,6 +2945,146 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tu año"
+          }
+        }
+      }
+    },
+    "What is one small thing your partner did today that you noticed but did not mention?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज आपके साथी ने जो छोटी सी बात की, आपने देखी पर कही नहीं — वह क्या थी?"
+          }
+        }
+      }
+    },
+    "Where did you feel most at ease with them this week?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस सप्ताह आपने उनके साथ सबसे ज़्यादा सुकून कहाँ महसूस किया?"
+          }
+        }
+      }
+    },
+    "What is something about them you have stopped noticing because it is always there?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उनमें ऐसी कौन सी बात है जो हमेशा रहती है, इसलिए आपने उसे देखना बंद कर दिया?"
+          }
+        }
+      }
+    },
+    "Name a moment today when you were glad it was them you were with.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज के किसी एक पल का नाम लें जब आपको ख़ुशी हुई कि साथ में वही हैं।"
+          }
+        }
+      }
+    },
+    "What did they do recently that made your day slightly easier?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हाल ही में उन्होंने ऐसा क्या किया जिससे आपका दिन थोड़ा आसान हो गया?"
+          }
+        }
+      }
+    },
+    "When did you last laugh together? What set it off?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप दोनों ने आख़िरी बार साथ में कब हँसे? किस बात ने?"
+          }
+        }
+      }
+    },
+    "What is one ordinary thing they do that you would miss?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "वे जो एक साधारण सी बात करते हैं, उसकी आपको सबसे ज़्यादा कमी खलेगी?"
+          }
+        }
+      }
+    },
+    "Who did they show up for this week — you, or someone else? How did that land?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस सप्ताह वे किसके लिए मौजूद रहे — आपके लिए, या किसी और के? आपको कैसा लगा?"
+          }
+        }
+      }
+    },
+    "What is something they are better at than you, and you are glad they are?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी चीज़ में वे आपसे बेहतर हैं, और आप ख़ुश हैं कि वे हैं?"
+          }
+        }
+      }
+    },
+    "When did you feel proud of them this week?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस सप्ताह आपको उन पर गर्व कब हुआ?"
+          }
+        }
+      }
+    },
+    "What is one thing they said recently that stuck with you?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हाल ही में उन्होंने जो कुछ कहा, उसमें से एक बात जो आपके मन में बस गई?"
+          }
+        }
+      }
+    },
+    "Where did you see them try this week, even if it did not land?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस सप्ताह आपने उन्हें कोशिश करते कहाँ देखा, चाहे बात बन न पाई हो?"
+          }
+        }
+      }
+    },
+    "What are you looking forward to about seeing them today?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आज उनसे मिलने की किस बात का आपको इंतज़ार है?"
+          }
+        }
+      }
+    },
+    "Name one thing you appreciate about them that you have never actually said out loud.": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उनमें आप जिस एक बात की कद्र करते हैं और कभी ज़बान से कही नहीं — उसका नाम लें।"
           }
         }
       }
