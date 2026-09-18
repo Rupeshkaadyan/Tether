@@ -7,6 +7,10 @@ struct TetherApp: App {
     @State private var session = SessionStore()
     @State private var sync: any SyncService
     @State private var language = LanguageManager.shared
+    @State private var theme = ThemeManager.shared
+    @State private var lock = AppLockManager.shared
+
+    @Environment(\.scenePhase) private var scenePhase
 
     let container: ModelContainer
 
@@ -28,7 +32,22 @@ struct TetherApp: App {
                 // In-app language choice. Setting the locale here makes every
                 // Text(\"literal\") resolve from the chosen .lproj immediately.
                 .environment(\.locale, language.locale)
+                .environment(theme)
+                .preferredColorScheme(theme.colorScheme)
                 .modelContainer(container)
+                // Privacy: cover the app whenever it leaves the foreground.
+                .overlay {
+                    if lock.isLocked {
+                        LockScreen { lock.unlock() }
+                    }
+                }
+                .onChange(of: scenePhase) { _, phase in
+                    switch phase {
+                    case .background: lock.lock()
+                    case .active: if lock.isLocked { lock.unlock() }
+                    default: break
+                    }
+                }
         }
     }
 }

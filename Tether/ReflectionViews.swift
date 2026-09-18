@@ -206,7 +206,11 @@ struct RevealMomentView: View {
     let partnerName: String
     let onClose: () -> Void
 
+    @Environment(\.modelContext) private var ctx
     @State private var revealed = false
+    /// The one line they can send back. This is the point of the whole screen.
+    @State private var replyText = ""
+    @State private var replySent = false
 
     var body: some View {
         ZStack {
@@ -237,7 +241,49 @@ struct RevealMomentView: View {
 
                 VStack(spacing: TetherSpace.m) {
                     revealCard(label: "You", entry: myEntry)
-                    revealCard(label: partnerName, entry: partnerEntry)
+
+                    if let theirEntry = partnerEntry {
+                        VStack(alignment: .leading, spacing: TetherSpace.s) {
+                            revealCard(label: partnerName, entry: theirEntry)
+
+                            // The reply: one line, only on shared entries.
+                            if theirEntry.visibility == .shared {
+                                if let existing = theirEntry.replyBody, !existing.isEmpty {
+                                    HStack(alignment: .top, spacing: TetherSpace.xs) {
+                                        Icon(.send, size: 13, color: .white.opacity(0.6))
+                                        Text(existing)
+                                            .font(TetherType.caption)
+                                            .foregroundStyle(.white.opacity(0.85))
+                                            .fixedSize(horizontal: false, vertical: true)
+                                        Spacer(minLength: 0)
+                                    }
+                                    .padding(TetherSpace.m)
+                                    .background(.white.opacity(0.10))
+                                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
+                                                                style: .continuous))
+                                } else {
+                                    HStack(spacing: TetherSpace.s) {
+                                        TextField("Say one thing back…", text: $replyText, axis: .vertical)
+                                            .lineLimit(1...3)
+                                            .font(TetherType.callout)
+                                            .foregroundStyle(.white)
+                                            .tint(.white)
+                                        Button {
+                                            sendReply(to: theirEntry)
+                                        } label: {
+                                            Icon(.send, size: 17,
+                                                 color: replyText.trimmed.isEmpty ? .white.opacity(0.4) : .white)
+                                        }
+                                        .disabled(replyText.trimmed.isEmpty)
+                                    }
+                                    .padding(TetherSpace.m)
+                                    .background(.white.opacity(0.10))
+                                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
+                                                                style: .continuous))
+                                }
+                            }
+                        }
+                    }
                 }
                 .padding(.horizontal, TetherSpace.margin)
 
@@ -257,6 +303,20 @@ struct RevealMomentView: View {
             TetherHaptics.success()
             revealed = true
         }
+    }
+
+    /// Saves the one-line reply onto THEIR shared entry. Never touches a
+    /// private entry — the guard is the privacy promise.
+    private func sendReply(to entry: JournalEntry) {
+        let text = replyText.trimmed
+        guard !text.isEmpty, entry.visibility == .shared else { return }
+        entry.replyBody = text
+        entry.replyBy = myEntry?.userID
+        entry.replyAt = Date()
+        try? ctx.save()
+        replyText = ""
+        replySent = true
+        TetherHaptics.success()
     }
 
     @ViewBuilder

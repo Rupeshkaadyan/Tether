@@ -226,6 +226,14 @@ final class JournalEntry {
     var safetyFlagged: Bool
     var createdAt: Date
 
+    /// An optional one-line response from the other person — the thing that
+    /// turns Tether from a monologue into a conversation.
+    /// Only ever set on SHARED entries. A private entry can never be replied
+    /// to, which is what keeps the privacy promise intact.
+    var replyBody: String?
+    var replyBy: UUID?
+    var replyAt: Date?
+
     init(userID: UUID, body: String, mood: Int, source: EntrySource = .journal) {
         self.id = UUID()
         self.userID = userID

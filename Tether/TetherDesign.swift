@@ -1,3 +1,4 @@
+import LocalAuthentication
 import SwiftUI
 
 // MARK: - Motion
@@ -299,5 +300,126 @@ final class LanguageManager {
 
     var displayName: String {
         Self.available.first { $0.code == code }?.name ?? "English"
+    }
+}
+
+// MARK: - Appearance
+
+/// Lets someone pick light, dark, or follow the system — rather than only
+/// inheriting the device setting. Persisted, applied at the root via
+/// preferredColorScheme.
+@Observable
+final class ThemeManager {
+    static let shared = ThemeManager()
+
+    enum Mode: String, CaseIterable, Identifiable {
+        case system, light, dark
+
+        var id: String { rawValue }
+
+        var displayName: String {
+            switch self {
+            case .system: return "System"
+            case .light:  return "Light"
+            case .dark:   return "Dark"
+            }
+        }
+    }
+
+    private let key = "tether.theme"
+
+    var modeRaw: String {
+        didSet { UserDefaults.standard.set(modeRaw, forKey: key) }
+    }
+
+    init() {
+        modeRaw = UserDefaults.standard.string(forKey: key) ?? Mode.system.rawValue
+    }
+
+    var mode: Mode { Mode(rawValue: modeRaw) ?? .system }
+
+    /// `nil` means "follow the system", which is what SwiftUI expects.
+    var colorScheme: ColorScheme? {
+        switch mode {
+        case .system: return nil
+        case .light:  return .light
+        case .dark:   return .dark
+        }
+    }
+}
+
+// MARK: - App lock
+
+/// For an app holding someone's private journal this is table stakes: lock it
+/// behind the device passcode or Face ID so nobody else can read it.
+@Observable
+final class AppLockManager {
+    static let shared = AppLockManager()
+
+    private let key = "tether.lockEnabled"
+
+    var isEnabled: Bool {
+        didSet { UserDefaults.standard.set(isEnabled, forKey: key) }
+    }
+
+    /// True while the lock screen is covering the app.
+    var isLocked = false
+
+    init() {
+        isEnabled = UserDefaults.standard.bool(forKey: key)
+    }
+
+    /// Called when the app moves to the background.
+    func lock() {
+        guard isEnabled else { return }
+        isLocked = true
+    }
+
+    /// Prompts for device authentication. If the device has no passcode or
+    /// biometrics configured we unlock rather than trapping the person out of
+    /// their own journal.
+    func unlock() {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
+            isLocked = false
+            return
+        }
+        context.evaluatePolicy(
+            .deviceOwnerAuthentication,
+            localizedReason: "Unlock Tether to read your journal"
+        ) { granted, _ in
+            DispatchQueue.main.async {
+                if granted { self.isLocked = false }
+            }
+        }
+    }
+}
+
+/// The cover shown while locked — the mark, the wordmark, one way back in.
+struct LockScreen: View {
+    let onUnlock: () -> Void
+
+    var body: some View {
+        ZStack {
+            TetherBackdrop(style: .dusk).ignoresSafeArea()
+
+            VStack(spacing: TetherSpace.l) {
+                TetherMark(size: 104,
+                           lineColor: .white.opacity(0.45),
+                           dotColor: .white,
+                           lineWidth: 9)
+                Text("Tether")
+                    .font(TetherType.largeTitle)
+                    .foregroundStyle(.white)
+                Text("Your journal is locked.")
+                    .font(TetherType.caption)
+                    .foregroundStyle(.white.opacity(0.7))
+                Button("Unlock", action: onUnlock)
+                    .tetherButton(.secondary, fullWidth: false)
+                    .padding(.top, TetherSpace.s)
+            }
+        }
+        .accessibilityAddTraits(.isModal)
     }
 }

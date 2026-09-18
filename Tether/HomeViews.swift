@@ -516,6 +516,8 @@ struct SettingsView: View {
     @State private var showDeleteConfirm = false
     @Environment(\.syncService) private var sync
     @Environment(LanguageManager.self) private var language
+    @Environment(ThemeManager.self) private var theme
+    @Environment(AppLockManager.self) private var lock
     @State private var sharesAnon = ReflectionSettings.sharesAnonymizedSummary
 
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var allEntries: [JournalEntry]
@@ -539,6 +541,20 @@ struct SettingsView: View {
     /// Kept as its own property: inlining this Picker inside the Settings List
     /// pushed the body past what the type-checker could resolve in reasonable
     /// time. Each option is shown in its own script so it stays readable.
+    /// Light / dark / system. Same manual-binding approach as the language
+    /// picker — @Environment has no $ projection for an @Observable class.
+    private var themePicker: some View {
+        Picker("Appearance", selection: Binding(
+            get: { theme.modeRaw },
+            set: { theme.modeRaw = $0 }
+        )) {
+            ForEach(ThemeManager.Mode.allCases) { mode in
+                Text(mode.displayName).tag(mode.rawValue)
+            }
+        }
+        .font(TetherType.body)
+    }
+
     private var languagePicker: some View {
         // @Environment does not expose a $ projection for an @Observable
         // class, so the binding is built by hand.
@@ -729,8 +745,26 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
+                Section("Appearance") {
+                    themePicker
+                }
+
                 Section("Language") {
                     languagePicker
+                }
+
+                Section("Security") {
+                    // @Environment has no $ projection for an @Observable
+                    // class — same manual binding as the pickers above.
+                    Toggle("Lock with Face ID", isOn: Binding(
+                        get: { lock.isEnabled },
+                        set: { lock.isEnabled = $0 }
+                    ))
+                        .font(TetherType.body)
+                    Text("Requires your device passcode or Face ID when Tether is opened. Nobody else can read your journal.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Section("Privacy") {
