@@ -8,7 +8,9 @@ struct MainTabView: View {
     @Bindable var profile: UserProfile
     @State private var tab: Tab = .today
 
-    enum Tab: Hashable { case today, journal, coach, pulse, grow, insights }
+    /// Five tabs on purpose. iOS collapses a sixth into "More", and every one
+    /// of these deserves to be one tap away. Insights lives inside Grow.
+    enum Tab: Hashable { case today, journal, coach, grow, pulse }
 
     var body: some View {
         TabView(selection: $tab) {
@@ -26,17 +28,13 @@ struct MainTabView: View {
                 .tag(Tab.coach)
                 .tabItem { label("Coach", .tabCoach) }
 
-            PulseView(profile: profile, isTab: true)
-                .tag(Tab.pulse)
-                .tabItem { label("Pulse", .tabPulse) }
-
             GrowView(profile: profile)
                 .tag(Tab.grow)
                 .tabItem { label("Grow", "sparkles") }
 
-            InsightsView(profile: profile)
-                .tag(Tab.insights)
-                .tabItem { label("Insights", "chart.line.uptrend.xyaxis") }
+            PulseView(profile: profile, isTab: true)
+                .tag(Tab.pulse)
+                .tabItem { label("Pulse", .tabPulse) }
         }
         .tint(TetherColor.brand)
         // An explicit bar background. The default glass material let scrolled
@@ -54,7 +52,6 @@ struct MainTabView: View {
         else if args.contains("-tab-coach") { tab = .coach }
         else if args.contains("-tab-pulse") { tab = .pulse }
         else if args.contains("-tab-grow") { tab = .grow }
-        else if args.contains("-tab-insights") { tab = .insights }
         #endif
     }
 

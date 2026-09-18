@@ -228,6 +228,8 @@ struct GrowView: View {
                         .tetherAppear(delay: 0.12)
                     milestonesSection
                         .tetherAppear(delay: 0.2)
+                    insightsLink
+                        .tetherAppear(delay: 0.26)
                 }
                 .padding(TetherSpace.margin)
                 .readableFrame()
@@ -243,40 +245,50 @@ struct GrowView: View {
 
     private var weekCard: some View {
         TetherCard {
-            VStack(alignment: .leading, spacing: TetherSpace.m) {
-                HStack(spacing: TetherSpace.s) {
-                    Image(systemName: "text.quote")
-                        .font(.system(size: 16))
-                        .foregroundStyle(TetherColor.brand)
-                    Text("This week")
-                        .font(TetherType.label)
-                        .foregroundStyle(TetherColor.ink)
-                    Spacer(minLength: 0)
-                }
+            ZStack(alignment: .topTrailing) {
+                // A soft wash behind the words — depth without noise.
+                Circle()
+                    .fill(TetherColor.brand.opacity(0.14))
+                    .frame(width: 140, height: 140)
+                    .blur(radius: 34)
+                    .offset(x: 48, y: -44)
+                    .allowsHitTesting(false)
 
-                Text(deeperReflection ?? reflection.summary)
-                    .font(TetherType.callout)
-                    .foregroundStyle(TetherColor.text)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                if let deeperNote {
-                    Text(deeperNote)
-                        .font(TetherType.caption)
-                        .foregroundStyle(TetherColor.muted)
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-
-                if ReflectionSettings.sharesAnonymizedSummary {
-                    Button {
-                        Task { await loadDeeperReflection() }
-                    } label: {
-                        HStack(spacing: TetherSpace.xs) {
-                            if isLoadingDeeper { ProgressView() }
-                            Text(isLoadingDeeper ? "Reflecting…" : "Deeper reflection")
-                                .font(TetherType.caption)
-                        }
+                VStack(alignment: .leading, spacing: TetherSpace.m) {
+                    HStack(spacing: TetherSpace.s) {
+                        Image(systemName: "text.quote")
+                            .font(.system(size: 16))
+                            .foregroundStyle(TetherColor.brand)
+                        Text("This week")
+                            .font(TetherType.label)
+                            .foregroundStyle(TetherColor.ink)
+                        Spacer(minLength: 0)
                     }
-                    .disabled(isLoadingDeeper)
+
+                    Text(deeperReflection ?? reflection.summary)
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.text)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    if let deeperNote {
+                        Text(deeperNote)
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    if ReflectionSettings.sharesAnonymizedSummary {
+                        Button {
+                            Task { await loadDeeperReflection() }
+                        } label: {
+                            HStack(spacing: TetherSpace.xs) {
+                                if isLoadingDeeper { ProgressView() }
+                                Text(isLoadingDeeper ? "Reflecting…" : "Deeper reflection")
+                                    .font(TetherType.caption)
+                            }
+                        }
+                        .disabled(isLoadingDeeper)
+                    }
                 }
             }
         }
@@ -398,6 +410,38 @@ struct GrowView: View {
         }
     }
 
+    // MARK: Insights link
+
+    /// Insights stopped being a tab so the bar could stay at five. It is one
+    /// tap from here instead.
+    private var insightsLink: some View {
+        NavigationLink {
+            InsightsView(profile: profile)
+        } label: {
+            HStack(spacing: TetherSpace.m) {
+                Image(systemName: "chart.line.uptrend.xyaxis")
+                    .font(.system(size: 16))
+                    .foregroundStyle(TetherColor.brand)
+                Text("See your insights")
+                    .font(TetherType.label)
+                    .foregroundStyle(TetherColor.ink)
+                Spacer(minLength: 0)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(TetherColor.faint)
+            }
+            .padding(TetherSpace.l)
+            .background(TetherColor.surface)
+            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous)
+                    .strokeBorder(TetherColor.border, lineWidth: 1)
+            )
+            .tetherShadow(.soft)
+        }
+        .buttonStyle(.plain)
+    }
+
     // MARK: Milestones
 
     private var milestonesSection: some View {
@@ -412,10 +456,19 @@ struct GrowView: View {
             ForEach(milestones) { milestone in
                 TetherCard {
                     HStack(alignment: .top, spacing: TetherSpace.m) {
-                        Image(systemName: milestone.symbol)
-                            .font(.system(size: 18))
-                            .foregroundStyle(milestone.isEarned ? milestone.tint : TetherColor.faint)
-                            .frame(width: 28)
+                        ZStack {
+                            Circle()
+                                .fill(milestone.isEarned
+                                      ? milestone.tint.opacity(0.16)
+                                      : TetherColor.border.opacity(0.6))
+                                .frame(width: 36, height: 36)
+                            Image(systemName: milestone.symbol)
+                                .font(.system(size: 15))
+                                .foregroundStyle(milestone.isEarned
+                                                 ? milestone.tint
+                                                 : TetherColor.faint)
+                        }
+                        .frame(width: 36)
                         VStack(alignment: .leading, spacing: TetherSpace.xs) {
                             HStack {
                                 Text(milestone.title)
