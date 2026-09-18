@@ -45,6 +45,11 @@ struct CoachView: View {
                         LazyVStack(alignment: .leading, spacing: TetherSpace.m) {
                             introCard
 
+                            if messages.isEmpty {
+                                suggestionRow
+                                    .tetherAppear(delay: 0.05)
+                            }
+
                             ForEach(messages) { message in
                                 CoachBubble(message: message,
                                             track: profile.track)
@@ -112,15 +117,36 @@ struct CoachView: View {
 
     // MARK: - Pieces
 
+    /// The Coach's presence header: whose voice it speaks in, what it currently
+    /// holds, and how many messages are left. Stops the screen reading as a
+    /// blank chat window — it should feel like a quiet guide who knows context.
     private var introCard: some View {
         TetherCard {
-            VStack(alignment: .leading, spacing: TetherSpace.s) {
-                Text("A coach, not a therapist")
-                    .font(TetherType.label)
-                Text("Ask about something specific. It remembers what you have written, and it speaks from your \(profile.track.shortName) track.")
-                    .font(TetherType.caption)
-                    .foregroundStyle(TetherColor.muted)
-                    .fixedSize(horizontal: false, vertical: true)
+            VStack(alignment: .leading, spacing: TetherSpace.m) {
+                HStack(alignment: .top, spacing: TetherSpace.m) {
+                    VStack(alignment: .leading, spacing: TetherSpace.xs) {
+                        Text("A coach, not a therapist")
+                            .font(TetherType.label)
+                            .foregroundStyle(TetherColor.ink)
+                        Text("It speaks from your \(profile.track.shortName) track, and it remembers what you have written.")
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 0)
+                    // Track identity — whose voice this is.
+                    TetherHeroMark(width: 52, color: profile.track.accent, sag: 7)
+                }
+
+                // What the coach is currently holding.
+                HStack(spacing: TetherSpace.s) {
+                    TetherHeroMark(width: 30, color: TetherColor.brand, sag: 4,
+                                   lineWidth: 1.5, dotRadius: 2.5)
+                    Text(memorySummary)
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                    Spacer(minLength: 0)
+                }
 
                 if !store.hasAccess {
                     Text(isBlocked
@@ -129,6 +155,58 @@ struct CoachView: View {
                         .font(TetherType.caption)
                         .foregroundStyle(isBlocked ? TetherColor.strained : TetherColor.muted)
                 }
+            }
+        }
+    }
+
+    private var memorySummary: String {
+        let count = allMemories.filter { $0.ownerID == profile.id }.count
+        guard count > 0 else { return "Nothing remembered yet" }
+        return "Remembering \(count) \(count == 1 ? "thing" : "things") you have told me"
+    }
+
+    // MARK: - Suggested openings
+
+    /// Ways in, so a first-time conversation never starts from a blank box.
+    private let suggestions = [
+        "How do I bring up something that's been bothering me?",
+        "We keep having the same argument — what actually helps?",
+        "I want to feel closer. Where do I start?"
+    ]
+
+    private var suggestionRow: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.s) {
+            Text("TRY ASKING")
+                .font(TetherType.micro)
+                .foregroundStyle(TetherColor.faint)
+                .tracking(1)
+
+            ForEach(suggestions, id: \.self) { suggestion in
+                Button {
+                    draft = suggestion
+                    TetherHaptics.tap()
+                } label: {
+                    HStack(spacing: TetherSpace.m) {
+                        Text(suggestion)
+                            .font(TetherType.callout)
+                            .foregroundStyle(TetherColor.text)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Spacer(minLength: 0)
+                        TetherHeroMark(width: 26, color: TetherColor.faint, sag: 4,
+                                       lineWidth: 1.5, dotRadius: 2)
+                    }
+                    .padding(TetherSpace.m)
+                    .background(TetherColor.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
+                                                style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous)
+                            .strokeBorder(TetherColor.border, lineWidth: 1)
+                    )
+                    .tetherShadow(.soft)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Ask: \(suggestion)")
             }
         }
     }
