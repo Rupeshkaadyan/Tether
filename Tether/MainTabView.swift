@@ -8,7 +8,7 @@ struct MainTabView: View {
     @Bindable var profile: UserProfile
     @State private var tab: Tab = .today
 
-    enum Tab: Hashable { case today, journal, coach, pulse, insights }
+    enum Tab: Hashable { case today, journal, coach, pulse, grow, insights }
 
     var body: some View {
         TabView(selection: $tab) {
@@ -30,6 +30,10 @@ struct MainTabView: View {
                 .tag(Tab.pulse)
                 .tabItem { label("Pulse", .tabPulse) }
 
+            GrowView(profile: profile)
+                .tag(Tab.grow)
+                .tabItem { label("Grow", "sparkles") }
+
             InsightsView(profile: profile)
                 .tag(Tab.insights)
                 .tabItem { label("Insights", "chart.line.uptrend.xyaxis") }
@@ -49,6 +53,7 @@ struct MainTabView: View {
         if args.contains("-tab-journal") { tab = .journal }
         else if args.contains("-tab-coach") { tab = .coach }
         else if args.contains("-tab-pulse") { tab = .pulse }
+        else if args.contains("-tab-grow") { tab = .grow }
         else if args.contains("-tab-insights") { tab = .insights }
         #endif
     }
