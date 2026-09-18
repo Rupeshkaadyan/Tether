@@ -14,6 +14,7 @@ struct InsightsView: View {
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
 
     @State private var window: Int = 30
+    @State private var showYearInReview = false
 
     private var mine: [JournalEntry] { entries.filter { $0.userID == profile.id } }
     private var hasData: Bool { !mine.isEmpty }
@@ -86,6 +87,15 @@ struct InsightsView: View {
                         distributionCard
                         if let love = LoveLanguageStore.get(for: profile.id) { loveCard(love) }
                         highsAndLows
+
+                        OnThisDayCard(
+                            entries: OnThisDayCard.matches(in: entries, userID: profile.id)
+                        )
+                        .tetherAppear(delay: 0.4)
+
+                        Button("See your year") { showYearInReview = true }
+                            .tetherButton(.secondary)
+                            .padding(.top, TetherSpace.s)
                     } else {
                         emptyState
                     }
@@ -96,6 +106,9 @@ struct InsightsView: View {
             .background { TetherBackdrop() }
             .navigationTitle("Insights")
             .navigationBarTitleDisplayMode(.large)
+            .sheet(isPresented: $showYearInReview) {
+                YearInReviewView(profile: profile)
+            }
         }
     }
 
@@ -309,25 +322,10 @@ struct InsightsView: View {
     // MARK: - Empty state
 
     private var emptyState: some View {
-        VStack(alignment: .leading, spacing: TetherSpace.l) {
-            Spacer(minLength: TetherSpace.xl)
-            ZStack {
-                Circle()
-                    .fill(TetherGradient.dawn)
-                    .frame(width: 100, height: 100)
-                IconDisc(icon: .pulse, size: 54, color: TetherColor.brand)
-            }
-            Text("Your insights start with one entry")
-                .font(TetherType.title)
-                .foregroundStyle(TetherColor.ink)
-            Text("Answer today's prompt on the home screen. After a few days, this page fills in with your mood over time, your streak, and the moments worth remembering.")
-                .font(TetherType.callout)
-                .foregroundStyle(TetherColor.muted)
-                .fixedSize(horizontal: false, vertical: true)
-            Spacer(minLength: TetherSpace.xl)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, TetherSpace.xl)
+        TetherEmptyState(
+        title: "Your insights start with one entry",
+        message: "Answer today's prompt on the home screen. After a few days, this page fills in with your mood over time, your streak, and the moments worth remembering."
+    )
     }
 }
 

@@ -1,0 +1,401 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Today" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "आज" } }
+      }
+    },
+    "Journal" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "डायरी" } }
+      }
+    },
+    "Coach" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "मार्गदर्शक" } }
+      }
+    },
+    "Grow" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "विकास" } }
+      }
+    },
+    "Pulse" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "पल्स" } }
+      }
+    },
+    "Insights" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "अंतर्दृष्टि" } }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सेटिंग्स" } }
+      }
+    },
+    "Get started" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "शुरू करें" } }
+      }
+    },
+    "Get Started" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "शुरू करें" } }
+      }
+    },
+    "Continue" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "जारी रखें" } }
+      }
+    },
+    "Skip" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "छोड़ें" } }
+      }
+    },
+    "Save" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सहेजें" } }
+      }
+    },
+    "Cancel" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "रद्द करें" } }
+      }
+    },
+    "Done" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "हो गया" } }
+      }
+    },
+    "Close" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "बंद करें" } }
+      }
+    },
+    "Delete" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "हटाएँ" } }
+      }
+    },
+    "Recent" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "हाल ही में" } }
+      }
+    },
+    "Milestones" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "उपलब्धियाँ" } }
+      }
+    },
+    "The seven days" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सात दिन" } }
+      }
+    },
+    "This week" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "इस सप्ताह" } }
+      }
+    },
+    "Relationship Pulse" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "रिश्ते की पल्स" } }
+      }
+    },
+    "What this is" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "यह क्या है" } }
+      }
+    },
+    "Your data" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "आपका डेटा" } }
+      }
+    },
+    "Subscription" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सदस्यता" } }
+      }
+    },
+    "Privacy" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "गोपनीयता" } }
+      }
+    },
+    "Sync" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सिंक" } }
+      }
+    },
+    "Weekly reflection" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "साप्ताहिक चिंतन" } }
+      }
+    },
+    "Deeper reflections" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "गहरा चिंतन" } }
+      }
+    },
+    "Deeper reflection" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "गहरा चिंतन" } }
+      }
+    },
+    "Sync now" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "अभी सिंक करें" } }
+      }
+    },
+    "Encryption" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "एन्क्रिप्शन" } }
+      }
+    },
+    "Reminders" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "रिमाइंडर" } }
+      }
+    },
+    "A look back" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "एक नज़र पीछे" } }
+      }
+    },
+    "Your year" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "आपका साल" } }
+      }
+    },
+    "See your year" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "अपना साल देखें" } }
+      }
+    },
+    "See your insights" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "अपनी जानकारी देखें" } }
+      }
+    },
+    "Moments worth keeping" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "संजोने लायक पल" } }
+      }
+    },
+    "On this day" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "इस दिन" } }
+      }
+    },
+    "ON THIS DAY" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "इस दिन" } }
+      }
+    },
+    "Ask the coach" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "मार्गदर्शक से पूछें" } }
+      }
+    },
+    "View weekly recap" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "साप्ताहिक सारांश देखें" } }
+      }
+    },
+    "Add another note" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "एक और नोट जोड़ें" } }
+      }
+    },
+    "Delete all my data" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "मेरा सारा डेटा हटाएँ" } }
+      }
+    },
+    "Turn on reminders" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "रिमाइंडर चालू करें" } }
+      }
+    },
+    "Export everything" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सब कुछ निर्यात करें" } }
+      }
+    },
+    "Start again" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "फिर से शुरू करें" } }
+      }
+    },
+    "Your name" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "आपका नाम" } }
+      }
+    },
+    "What should we call you?" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "हम आपको क्या कहें?" } }
+      }
+    },
+    "Streak" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "निरंतरता" } }
+      }
+    },
+    "Avg Mood" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "औसत मूड" } }
+      }
+    },
+    "Consistency" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "नियमितता" } }
+      }
+    },
+    "Active Days" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सक्रिय दिन" } }
+      }
+    },
+    "Entries" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "प्रविष्टियाँ" } }
+      }
+    },
+    "Best month" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सर्वश्रेष्ठ महीना" } }
+      }
+    },
+    "Thriving" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "फल-फूल रहा" } }
+      }
+    },
+    "Drifting" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "दूर हो रहा" } }
+      }
+    },
+    "Strained" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "तनावपूर्ण" } }
+      }
+    },
+    "Getting to know you" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "आपको जान रहा हूँ" } }
+      }
+    },
+    "Improving" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सुधर रहा" } }
+      }
+    },
+    "Steady" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "स्थिर" } }
+      }
+    },
+    "Slipping" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "फिसल रहा" } }
+      }
+    },
+    "Not enough data" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "पर्याप्त डेटा नहीं" } }
+      }
+    },
+    "Secular & Psychology" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "धर्मनिरपेक्ष और मनोविज्ञान" } }
+      }
+    },
+    "Biblical" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "बाइबिल आधारित" } }
+      }
+    },
+    "Vedic & Dharmic" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "वैदिक और धार्मिक" } }
+      }
+    },
+    "Quranic" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "कुरान आधारित" } }
+      }
+    },
+    "Secular" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "धर्मनिरपेक्ष" } }
+      }
+    },
+    "Words of Affirmation" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सराहना के शब्द" } }
+      }
+    },
+    "Acts of Service" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "सेवा के कार्य" } }
+      }
+    },
+    "Receiving Gifts" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "उपहार पाना" } }
+      }
+    },
+    "Quality Time" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "गुणवत्तापूर्ण समय" } }
+      }
+    },
+    "Physical Touch" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "शारीरिक स्पर्श" } }
+      }
+    },
+    "Two people. One practice." : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "दो लोग। एक अभ्यास।" } }
+      }
+    },
+    "Different paths." : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "अलग-अलग रास्ते।" } }
+      }
+    },
+    "A deeper connection." : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "एक गहरा जुड़ाव।" } }
+      }
+    },
+    "Nothing here yet." : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "अभी यहाँ कुछ नहीं है।" } }
+      }
+    },
+    "Not enough yet" : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "अभी पर्याप्त नहीं" } }
+      }
+    },
+    "A quiet daily ritual you share with one person. You can begin on your own — everything is here waiting when they join." : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "एक शांत दैनिक अनुष्ठान जिसे आप एक व्यक्ति के साथ साझा करते हैं। आप अकेले शुरू कर सकते हैं — जब वे जुड़ेंगे, सब कुछ यहीं इंतज़ार कर रहा होगा।" } }
+      }
+    },
+    "A private space for couples to reflect, understand and grow together — in your own way." : {
+      "localizations" : {
+        "hi" : { "stringUnit" : { "state" : "translated", "value" : "जोड़ों के लिए एक निजी जगह, जहाँ वे सोच सकें, समझ सकें और साथ बढ़ सकें — अपने अपने तरीके से।" } }
+      }
+    }
+  },
+  "version" : "1.0"
+}

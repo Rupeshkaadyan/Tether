@@ -36,11 +36,13 @@ for dirpath, dirnames, filenames in os.walk(SRC):
     dirnames[:] = [d for d in dirnames if not d.endswith(".xcassets")]
     rel = pathlib.Path(dirpath).relative_to(SRC)
     for fn in filenames:
-        if fn.endswith(".xcprivacy"):
+        # Bundle resources that are not asset catalogs: privacy manifests and
+        # localisation catalogs.
+        if fn.endswith(".xcprivacy") or fn.endswith(".xcstrings"):
             rel_path = (rel / fn) if str(rel) != "." else pathlib.Path(fn)
             privacy_files.append(rel_path)
 privacy_files.sort(key=lambda p: str(p).lower())
-print(f"Found {len(privacy_files)} privacy manifest(s)")
+print(f"Found {len(privacy_files)} bundle resource file(s)")
 
 all_files = swift_files + asset_dirs + privacy_files
 
@@ -236,7 +238,10 @@ for p in swift_files:
 for p in asset_dirs:
     a(f"\t\t{file_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
 for p in privacy_files:
-    a(f"\t\t{file_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
+    # A strings catalog is JSON, not a plist — Xcode reads it as the wrong
+    # format if we claim otherwise, and the build fails.
+    ftype = "text.json.xcstrings" if str(p).endswith(".xcstrings") else "text.plist.xml"
+    a(f"\t\t{file_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = {ftype}; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
 a("/* End PBXFileReference section */")
 a("")
 
@@ -321,6 +326,7 @@ a("\t\t\tdevelopmentRegion = en;")
 a("\t\t\thasScannedForEncodings = 0;")
 a("\t\t\tknownRegions = (")
 a("\t\t\t\ten,")
+a("\t\t\t\thi,")
 a("\t\t\t\tBase,")
 a("\t\t\t);")
 a(f"\t\t\tmainGroup = {U['mainGroup']};")

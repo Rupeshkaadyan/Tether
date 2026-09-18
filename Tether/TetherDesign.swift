@@ -223,3 +223,47 @@ struct TetherSectionHeader: View {
         }
     }
 }
+
+// MARK: - Empty state
+
+/// Every "nothing yet" in the app gets the same treatment: the mark, one
+/// honest line, and a single clear next action. No giant blank areas.
+struct TetherEmptyState: View {
+    let title: String
+    let message: String
+    var actionTitle: String?
+    var action: (() -> Void)?
+
+    var body: some View {
+        VStack(spacing: TetherSpace.l) {
+            // The mark, given room to breathe — it is the whole message here.
+            TetherMark(size: 96,
+                       lineColor: TetherColor.brand.opacity(0.28),
+                       dotColor: TetherColor.brand,
+                       lineWidth: 9)
+
+            VStack(spacing: TetherSpace.s) {
+                Text(title)
+                    .font(TetherType.title)
+                    .foregroundStyle(TetherColor.ink)
+                    .multilineTextAlignment(.center)
+
+                Text(message)
+                    .font(TetherType.callout)
+                    .foregroundStyle(TetherColor.muted)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            if let actionTitle, let action {
+                Button(actionTitle, action: action)
+                    .tetherButton(.secondary, fullWidth: false)
+                    .padding(.top, TetherSpace.xs)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, TetherSpace.xxxl)
+        .padding(.horizontal, TetherSpace.xl)
+        .accessibilityElement(children: .combine)
+    }
+}
