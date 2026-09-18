@@ -8,7 +8,7 @@ struct MainTabView: View {
     @Bindable var profile: UserProfile
     @State private var tab: Tab = .today
 
-    enum Tab: Hashable { case today, journal, coach, pulse }
+    enum Tab: Hashable { case today, journal, coach, pulse, insights }
 
     var body: some View {
         TabView(selection: $tab) {
@@ -29,6 +29,10 @@ struct MainTabView: View {
             PulseView(profile: profile, isTab: true)
                 .tag(Tab.pulse)
                 .tabItem { label("Pulse", .tabPulse) }
+
+            InsightsView(profile: profile)
+                .tag(Tab.insights)
+                .tabItem { label("Insights", "chart.line.uptrend.xyaxis") }
         }
         .tint(TetherColor.brand)
         // An explicit bar background. The default glass material let scrolled
@@ -45,6 +49,7 @@ struct MainTabView: View {
         if args.contains("-tab-journal") { tab = .journal }
         else if args.contains("-tab-coach") { tab = .coach }
         else if args.contains("-tab-pulse") { tab = .pulse }
+        else if args.contains("-tab-insights") { tab = .insights }
         #endif
     }
 
@@ -60,6 +65,19 @@ struct MainTabView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 26, height: 26)
+        }
+    }
+
+    /// Overload for SF Symbols (used where a custom asset does not yet exist).
+    private func label(_ title: String, _ systemName: String) -> some View {
+        Label {
+            Text(title)
+        } icon: {
+            Image(systemName: systemName)
+                .renderingMode(.template)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 24, height: 24)
         }
     }
 }
