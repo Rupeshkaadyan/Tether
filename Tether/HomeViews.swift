@@ -113,6 +113,15 @@ struct HomeView: View {
                 }
             }
             .navigationBarHidden(true)
+            .fullScreenCover(isPresented: $showReveal) {
+                RevealMomentView(
+                    myEntry: myEntries.first,
+                    partnerEntry: partnerTodayEntry,
+                    partnerName: partner?.displayName ?? "Your partner"
+                ) {
+                    showReveal = false
+                }
+            }
             .sheet(isPresented: $showSettings) {
                 SettingsView(profile: profile)
             }
@@ -372,6 +381,32 @@ struct HomeView: View {
         }
     }
 
+    // MARK: - Reveal moment
+
+    @State private var showReveal = false
+    /// Day the reveal was last shown, so it appears once per day rather than
+    /// every time the screen opens.
+    @AppStorage("tether.revealedOn") private var revealedOn = ""
+
+    private var bothAnswered: Bool { todayAnswered && partnerAnsweredToday }
+
+    private var partnerTodayEntry: JournalEntry? {
+        guard let partner else { return nil }
+        return entries.first {
+            $0.userID == partner.id && Calendar.current.isDateInToday($0.entryDate)
+        }
+    }
+
+    /// The reveal only fires when both have answered, and at most once a day.
+    private func maybeReveal() {
+        guard bothAnswered else { return }
+        let today = String(Int(Calendar.current.startOfDay(for: Date())
+            .timeIntervalSince1970))
+        guard revealedOn != today else { return }
+        revealedOn = today
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) { showReveal = true }
+    }
+
     // MARK: - Recent
 
     @ViewBuilder
@@ -456,6 +491,9 @@ struct HomeView: View {
             milestoneToast = "\(newStreak)-day streak"
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) { milestoneToast = nil }
         }
+
+        // If they already answered, today is complete — show the reveal.
+        maybeReveal()
 
         // First value moment reached — this is the right time to ask.
         if !notifAsked {

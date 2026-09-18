@@ -194,3 +194,97 @@ struct YearInReviewView: View {
         )
     }
 }
+
+// MARK: - Reveal moment
+
+/// Both partners answered. This is the emotional heart of Tether and the only
+/// celebration the product allows itself: the curve opens, the answers fade in,
+/// one soft haptic. No confetti, no bouncing, no badges.
+struct RevealMomentView: View {
+    let myEntry: JournalEntry?
+    let partnerEntry: JournalEntry?
+    let partnerName: String
+    let onClose: () -> Void
+
+    @State private var revealed = false
+
+    var body: some View {
+        ZStack {
+            TetherBackdrop(style: .dusk).ignoresSafeArea()
+
+            VStack(spacing: TetherSpace.xl) {
+                Spacer(minLength: TetherSpace.xxl)
+
+                // The curve slackens and opens as the two answers meet.
+                TetherSlackCurve(sag: revealed ? 34 : 2)
+                    .stroke(
+                        LinearGradient(colors: [Color(hex: "B3A4F0"), Color(hex: "6A57D6")],
+                                       startPoint: .leading, endPoint: .trailing),
+                        style: StrokeStyle(lineWidth: 3, lineCap: .round)
+                    )
+                    .frame(width: 190, height: 74)
+                    .animation(.easeOut(duration: 1.5), value: revealed)
+
+                VStack(spacing: TetherSpace.xs) {
+                    Text("You both showed up")
+                        .font(TetherType.largeTitle)
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                    Text("Today's answers, together.")
+                        .font(TetherType.callout)
+                        .foregroundStyle(.white.opacity(0.75))
+                }
+
+                VStack(spacing: TetherSpace.m) {
+                    revealCard(label: "You", entry: myEntry)
+                    revealCard(label: partnerName, entry: partnerEntry)
+                }
+                .padding(.horizontal, TetherSpace.margin)
+
+                Spacer()
+
+                Button("Close", action: onClose)
+                    .tetherButton(.secondary)
+                    .padding(.horizontal, TetherSpace.margin)
+                    .padding(.bottom, TetherSpace.xl)
+            }
+            // A slow fade and a small lift — nothing bounces.
+            .opacity(revealed ? 1 : 0)
+            .offset(y: revealed ? 0 : 14)
+            .animation(.easeOut(duration: 1.0), value: revealed)
+        }
+        .onAppear {
+            TetherHaptics.success()
+            revealed = true
+        }
+    }
+
+    @ViewBuilder
+    private func revealCard(label: String, entry: JournalEntry?) -> some View {
+        if let entry {
+            VStack(alignment: .leading, spacing: TetherSpace.xs) {
+                HStack(spacing: TetherSpace.xs) {
+                    Circle()
+                        .fill(Mood.color(for: entry.mood))
+                        .frame(width: 8, height: 8)
+                    Text(label)
+                        .font(TetherType.caption)
+                        .foregroundStyle(.white.opacity(0.75))
+                }
+                Text(SecureContent.read(entry.body))
+                    .font(TetherType.body)
+                    .foregroundStyle(.white)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(TetherSpace.l)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.white.opacity(0.12))
+            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large,
+                                        style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous)
+                    .strokeBorder(.white.opacity(0.18), lineWidth: 1)
+            )
+        }
+    }
+}
