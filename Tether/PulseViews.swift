@@ -170,7 +170,6 @@ struct PulseView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: TetherSpace.xl) {
                     hero
-                    factors
                     explanation
                     disclaimer
                 }
@@ -190,62 +189,81 @@ struct PulseView: View {
         }
     }
 
+    /// Lead with the state, then the three restrained stats. Describes, never
+    /// predicts — the brief is "human, not dashboard".
     private var hero: some View {
-        VStack(alignment: .leading, spacing: TetherSpace.m) {
-            HStack(spacing: TetherSpace.m) {
-                IconDisc(icon: result.state.icon, size: 54, color: result.state.color)
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(result.state.displayName)
-                        .font(TetherType.title)
-                        .foregroundStyle(TetherColor.ink)
-                    Text("Based on \(result.daysOfData) active day\(result.daysOfData == 1 ? "" : "s") this week")
-                        .font(TetherType.caption)
-                        .foregroundStyle(TetherColor.muted)
-                }
-            }
-
-            HStack(spacing: TetherSpace.s) {
-                Image(systemName: result.trend.symbol)
-                    .font(.system(size: 12))
-                Text(result.trend.displayName)
-                    .font(TetherType.caption)
-            }
-            .foregroundStyle(TetherColor.muted)
-        }
-        .padding(.top, TetherSpace.l)
-    }
-
-    private var factors: some View {
         VStack(alignment: .leading, spacing: TetherSpace.l) {
-            factorRow("How you have been feeling", result.mood)
-            factorRow("How often you showed up", result.cadence)
-            factorRow("How steady it has been", result.consistency)
+            VStack(alignment: .leading, spacing: TetherSpace.xs) {
+                Text(result.state.displayName)
+                    .font(.system(size: 44, weight: .bold, design: .rounded))
+                    .foregroundStyle(result.state.color)
+                Text(stateDescription)
+                    .font(TetherType.callout)
+                    .foregroundStyle(TetherColor.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            TetherPulseViz(state: result.state)
+                .frame(height: 80)
+                .padding(.vertical, TetherSpace.xs)
+
+            HStack(alignment: .top, spacing: 0) {
+                statColumn("Avg Mood", value: avgMoodText, color: result.state.color)
+                verticalDivider
+                statColumn("Consistency",
+                          value: "\(Int(result.consistency * 100))%",
+                          color: result.state.color)
+                verticalDivider
+                statColumn("Active Days", value: "\(result.daysOfData)", color: result.state.color)
+            }
+        }
+        .padding(TetherSpace.xl)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(TetherColor.surface)
+        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous)
+                .strokeBorder(TetherColor.border, lineWidth: 1)
+        )
+        .tetherShadow(.soft)
+    }
+
+    private var stateDescription: String {
+        switch result.state {
+        case .thriving: return "You're showing up, staying connected, and building something meaningful."
+        case .drifting: return "You've been a little quiet. No judgement — re-entry is welcome."
+        case .strained: return "Things feel heavy. A small check-in can make a difference."
+        case .unknown:  return "A few more days of writing and your picture will come into focus."
         }
     }
 
-    private func factorRow(_ label: String, _ value: Double) -> some View {
-        VStack(alignment: .leading, spacing: TetherSpace.xs) {
-            HStack {
-                Text(label)
-                    .font(TetherType.callout)
-                    .foregroundStyle(TetherColor.text)
-                Spacer()
-                Text("\(Int(value * 100))%")
-                    .font(TetherType.caption)
-                    .foregroundStyle(TetherColor.muted)
-            }
-            GeometryReader { geo in
-                ZStack(alignment: .leading) {
-                    Capsule().fill(TetherColor.border)
-                    Capsule()
-                        .fill(TetherColor.brand)
-                        .frame(width: max(geo.size.width * value, 4))
-                }
-            }
-            .frame(height: 6)
+    /// Average mood on the 1–5 scale across the last two weeks of entries.
+    private var avgMoodText: String {
+        let mine = entries.filter { $0.userID == profile.id }
+        guard !mine.isEmpty else { return "—" }
+        let recent = mine.suffix(14)
+        let avg = Double(recent.map(\.mood).reduce(0, +)) / Double(recent.count)
+        return String(format: "%.1f", avg)
+    }
+
+    private func statColumn(_ label: String, value: String, color: Color) -> some View {
+        VStack(alignment: .center, spacing: TetherSpace.xs) {
+            Text(value)
+                .font(.system(size: 28, weight: .semibold, design: .rounded))
+                .foregroundStyle(TetherColor.ink)
+            Text(label.uppercased())
+                .font(TetherType.micro)
+                .foregroundStyle(TetherColor.muted)
+                .tracking(0.8)
         }
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(label): \(Int(value * 100)) percent")
+        .frame(maxWidth: .infinity)
+    }
+
+    private var verticalDivider: some View {
+        Rectangle()
+            .fill(TetherColor.border)
+            .frame(width: 1, height: 36)
+            .padding(.horizontal, TetherSpace.s)
     }
 
     private var explanation: some View {
@@ -271,6 +289,44 @@ struct PulseView: View {
             .font(TetherType.caption)
             .foregroundStyle(TetherColor.muted)
             .fixedSize(horizontal: false, vertical: true)
+    }
+}
+
+// MARK: - Pulse visualization
+
+/// A slack Tether curve with three dots, tinted by the pulse state. The
+/// line is the trend; the dots are the signals that compose it.
+private struct TetherPulseViz: View {
+    let state: PulseState
+
+    var body: some View {
+        ZStack {
+            TetherSlackCurve(sag: 22)
+                .stroke(state.color.opacity(0.45),
+                        style: StrokeStyle(lineWidth: 2.5, lineCap: .round))
+                .padding(.horizontal, 6)
+
+            HStack(alignment: .top) {
+                Circle()
+                    .fill(state.color)
+                    .frame(width: 12, height: 12)
+                    .shadow(color: state.color.opacity(0.4), radius: 5, y: 2)
+                Spacer(minLength: 0)
+                Circle()
+                    .fill(state.color)
+                    .frame(width: 12, height: 12)
+                    .shadow(color: state.color.opacity(0.4), radius: 5, y: 2)
+                Spacer(minLength: 0)
+                Circle()
+                    .fill(state.color)
+                    .frame(width: 12, height: 12)
+                    .shadow(color: state.color.opacity(0.4), radius: 5, y: 2)
+            }
+            .padding(.horizontal, 6)
+            .offset(y: -2)
+        }
+        .frame(height: 80)
+        .accessibilityElement(children: .ignore)
     }
 }
 
