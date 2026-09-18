@@ -251,6 +251,7 @@ struct CoachView: View {
     }
 
     private func send() async {
+        guard !isThinking else { return }
         guard let conversation, canSend else { return }
         if isBlocked {
             showPaywall = true

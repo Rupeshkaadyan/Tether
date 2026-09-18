@@ -83,6 +83,9 @@ enum PairingService {
                        in ctx: ModelContext,
                        me: UserProfile,
                        partnerName: String = "Partner") -> Bool {
+        // Already paired — do not create a second partner or leave a dangling one.
+        guard me.partnerID == nil else { return false }
+
         let all = (try? ctx.fetch(FetchDescriptor<Invite>())) ?? []
         guard let invite = all.first(where: { $0.code == code && $0.status == .pending }) else {
             return false

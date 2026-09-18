@@ -18,6 +18,7 @@ struct HomeView: View {
     @State private var showPairing = false
     @State private var showRecap = false
     @State private var showNotifExplainer = false
+    @State private var showComposer = false
     @AppStorage("tether.notifAsked") private var notifAsked = false
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var voice = VoiceInput.shared
@@ -76,7 +77,7 @@ struct HomeView: View {
                     PulseCard(result: pulse) { onOpenPulse() }
                     PromptCard(prompt: todayPrompt, dayLabel: Date().weekdayDisplay)
 
-                    if todayAnswered {
+                    if todayAnswered && !showComposer {
                         answeredToday
                     } else {
                         composer
@@ -350,8 +351,11 @@ struct HomeView: View {
                     }
                 }
             }
-            Button("Add another note") { reply = "" }
-                .tetherButton(.tertiary)
+            Button("Add another note") {
+                reply = ""
+                showComposer = true
+            }
+            .tetherButton(.tertiary)
         }
     }
 
@@ -425,6 +429,7 @@ struct HomeView: View {
 
         try? ctx.save()
         reply = ""
+        showComposer = false
 
         // First value moment reached — this is the right time to ask.
         if !notifAsked {

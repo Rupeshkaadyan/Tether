@@ -192,12 +192,15 @@ struct LoveLanguageStep: View {
     @State private var index = 0
     @State private var picks: [LoveLanguage] = []
     @State private var result: LoveLanguage?
+    @State private var skipped = false
 
     private let questions = LoveLanguageQuiz.questions
 
     var body: some View {
         Group {
-            if let result {
+            if skipped {
+                skipView
+            } else if let result {
                 resultView(result)
             } else {
                 questionView
@@ -232,7 +235,7 @@ struct LoveLanguageStep: View {
             Spacer()
 
             Button("Skip") {
-                result = .words
+                skipped = true
             }
             .tetherButton(.tertiary)
         }
@@ -289,6 +292,32 @@ struct LoveLanguageStep: View {
                 if let result { LoveLanguageStore.set(result, for: profile.id) }
                 onNext()
             } label: {
+                Text("Continue")
+            }
+            .tetherButton()
+        }
+    }
+
+    private var skipView: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.xl) {
+            Spacer(minLength: TetherSpace.xxl)
+
+            Image(systemName: "heart")
+                .font(.system(size: 40))
+                .foregroundStyle(TetherColor.brand)
+
+            Text("No love language for now")
+                .font(TetherType.display)
+                .foregroundStyle(TetherColor.ink)
+
+            Text("That's completely fine. You can take the quiz any time from Settings to personalise your insights.")
+                .font(TetherType.body)
+                .foregroundStyle(TetherColor.text)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Spacer()
+
+            Button { onNext() } label: {
                 Text("Continue")
             }
             .tetherButton()

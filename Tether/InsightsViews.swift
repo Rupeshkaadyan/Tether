@@ -269,20 +269,18 @@ struct InsightsView: View {
                 highlightRow(title: "Your brightest day",
                              color: TetherColor.thriving,
                              date: best.date,
-                             text: SecureContent.read(best.entry.body),
-                             mood: Int(best.value.rounded()))
+                             text: SecureContent.read(best.entry.body))
             }
             if let low = lowestDay, low.date != bestDay?.date {
                 highlightRow(title: "A heavier day",
                              color: TetherColor.strained,
                              date: low.date,
-                             text: SecureContent.read(low.entry.body),
-                             mood: Int(low.value.rounded()))
+                             text: SecureContent.read(low.entry.body))
             }
         }
     }
 
-    private func highlightRow(title: String, color: Color, date: Date, text: String, mood: Int) -> some View {
+    private func highlightRow(title: String, color: Color, date: Date, text: String) -> some View {
         TetherCard {
             VStack(alignment: .leading, spacing: TetherSpace.s) {
                 HStack(spacing: TetherSpace.s) {
@@ -377,13 +375,17 @@ struct InsightsMoodChart: View {
                 area.addLine(to: CGPoint(x: points[0].1.x, y: top + plotH))
                 area.closeSubpath()
 
-                context.fill(area, with: .linearGradient(
-                    Gradient(colors: [TetherColor.brand.opacity(0.30),
-                                      TetherColor.brand.opacity(0.02)]),
+                let gradient = Gradient(colors: [TetherColor.brand.opacity(0.30),
+                                                 TetherColor.brand.opacity(0.02)])
+                let shading = GraphicsContext.Shading.linearGradient(
+                    gradient,
                     startPoint: CGPoint(x: 0, y: top),
-                    endPoint: CGPoint(x: 0, y: top + plotH)))
-                context.stroke(line, with: .color(TetherColor.brand),
-                               lineWidth: 2.5, lineCap: .round, lineJoin: .round)
+                    endPoint: CGPoint(x: 0, y: top + plotH)
+                )
+                context.fill(area, with: shading)
+
+                let style = StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round)
+                context.stroke(line, with: .color(TetherColor.brand), style: style)
 
                 for pt in points {
                     context.fill(Circle().path(in: CGRect(x: pt.1.x - 3, y: pt.1.y - 3,
