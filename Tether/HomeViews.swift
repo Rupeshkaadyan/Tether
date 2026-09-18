@@ -477,6 +477,7 @@ struct SettingsView: View {
     @State private var showLoveQuiz = false
     @State private var showDeleteConfirm = false
     @Environment(\.syncService) private var sync
+    @State private var sharesAnon = ReflectionSettings.sharesAnonymizedSummary
 
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var allEntries: [JournalEntry]
     @Query private var allMessages: [AIMessage]
@@ -658,6 +659,18 @@ struct SettingsView: View {
                     Text("With iCloud on, your entries are mirrored across your own devices. They are sealed before they leave this phone.")
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
+                }
+
+                Section("Weekly reflection") {
+                    Toggle("Deeper reflections", isOn: $sharesAnon)
+                        .font(TetherType.label)
+                        .onChange(of: sharesAnon) { _, newValue in
+                            ReflectionSettings.sharesAnonymizedSummary = newValue
+                        }
+                    Text("Off by default. When on, only anonymized counts, mood averages and themes are sent for a richer weekly summary — never your actual words.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Section("Privacy") {

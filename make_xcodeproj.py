@@ -30,7 +30,19 @@ for dirpath, dirnames, _ in os.walk(SRC):
 asset_dirs.sort(key=lambda x: str(x).lower())
 print(f"Found {len(asset_dirs)} asset catalog(s)")
 
-all_files = swift_files + asset_dirs
+# Apple privacy manifests are bundle resources, not sources.
+privacy_files = []
+for dirpath, dirnames, filenames in os.walk(SRC):
+    dirnames[:] = [d for d in dirnames if not d.endswith(".xcassets")]
+    rel = pathlib.Path(dirpath).relative_to(SRC)
+    for fn in filenames:
+        if fn.endswith(".xcprivacy"):
+            rel_path = (rel / fn) if str(rel) != "." else pathlib.Path(fn)
+            privacy_files.append(rel_path)
+privacy_files.sort(key=lambda p: str(p).lower())
+print(f"Found {len(privacy_files)} privacy manifest(s)")
+
+all_files = swift_files + asset_dirs + privacy_files
 
 # ---- 2. UUID helpers ----
 _ctr = [0]
@@ -66,7 +78,7 @@ U["targDebug"]  = uid()
 U["targRelease"]= uid()
 
 file_refs, build_files = {}, {}
-for p in swift_files + asset_dirs:
+for p in swift_files + asset_dirs + privacy_files:
     file_refs[p] = uid()
     build_files[p] = uid()
 
@@ -212,7 +224,7 @@ a("")
 a("/* Begin PBXBuildFile section */")
 for p in swift_files:
     a(f"\t\t{build_files[p]} /* {p.name} in Sources */ = {{isa = PBXBuildFile; fileRef = {file_refs[p]} /* {p.name} */; }};")
-for p in asset_dirs:
+for p in asset_dirs + privacy_files:
     a(f"\t\t{build_files[p]} /* {p.name} in Resources */ = {{isa = PBXBuildFile; fileRef = {file_refs[p]} /* {p.name} */; }};")
 a("/* End PBXBuildFile section */")
 a("")
@@ -223,6 +235,8 @@ for p in swift_files:
     a(f"\t\t{file_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
 for p in asset_dirs:
     a(f"\t\t{file_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
+for p in privacy_files:
+    a(f"\t\t{file_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
 a("/* End PBXFileReference section */")
 a("")
 
@@ -325,7 +339,7 @@ a(f"\t\t{U['resPhase']} /* Resources */ = {{")
 a("\t\t\tisa = PBXResourcesBuildPhase;")
 a("\t\t\tbuildActionMask = 2147483647;")
 a("\t\t\tfiles = (")
-for p in asset_dirs:
+for p in asset_dirs + privacy_files:
     a(f"\t\t\t\t{build_files[p]} /* {p.name} in Resources */,")
 a("\t\t\t);")
 a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")

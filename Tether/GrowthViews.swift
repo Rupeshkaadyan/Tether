@@ -205,10 +205,23 @@ struct GrowView: View {
                            isPaired: partner != nil)
     }
 
+    /// Computed on-device from this week's entries — never sent anywhere.
+    private var reflection: WeeklyReflection {
+        WeeklyReflectionEngine.compute(entries: entries,
+                                       replies: replies,
+                                       userID: profile.id)
+    }
+
+    @State private var deeperReflection: String?
+    @State private var deeperNote: String?
+    @State private var isLoadingDeeper = false
+
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: TetherSpace.l) {
+                    weekCard
+                        .tetherAppear(delay: 0.03)
                     challengeCard
                         .tetherAppear(delay: 0.05)
                     challengeDays
@@ -224,6 +237,63 @@ struct GrowView: View {
             .navigationTitle("Grow")
         }
         .onAppear { store.startIfNeeded() }
+    }
+
+    // MARK: Weekly reflection
+
+    private var weekCard: some View {
+        TetherCard {
+            VStack(alignment: .leading, spacing: TetherSpace.m) {
+                HStack(spacing: TetherSpace.s) {
+                    Image(systemName: "text.quote")
+                        .font(.system(size: 16))
+                        .foregroundStyle(TetherColor.brand)
+                    Text("This week")
+                        .font(TetherType.label)
+                        .foregroundStyle(TetherColor.ink)
+                    Spacer(minLength: 0)
+                }
+
+                Text(deeperReflection ?? reflection.summary)
+                    .font(TetherType.callout)
+                    .foregroundStyle(TetherColor.text)
+                    .fixedSize(horizontal: false, vertical: true)
+
+                if let deeperNote {
+                    Text(deeperNote)
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                if ReflectionSettings.sharesAnonymizedSummary {
+                    Button {
+                        Task { await loadDeeperReflection() }
+                    } label: {
+                        HStack(spacing: TetherSpace.xs) {
+                            if isLoadingDeeper { ProgressView() }
+                            Text(isLoadingDeeper ? "Reflecting…" : "Deeper reflection")
+                                .font(TetherType.caption)
+                        }
+                    }
+                    .disabled(isLoadingDeeper)
+                }
+            }
+        }
+    }
+
+    @MainActor
+    private func loadDeeperReflection() async {
+        isLoadingDeeper = true
+        defer { isLoadingDeeper = false }
+        let result = await RemoteReflectionProvider.deeperReflection(for: reflection,
+                                                                    track: profile.trackRaw)
+        if let result {
+            deeperReflection = result
+            deeperNote = nil
+        } else {
+            deeperNote = "Deeper reflections need a server connection. Showing your on-device summary."
+        }
     }
 
     // MARK: Challenge
