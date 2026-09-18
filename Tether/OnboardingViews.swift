@@ -243,6 +243,7 @@ struct LoveLanguageStep: View {
 
     private func optionButton(_ language: LoveLanguage) -> some View {
         Button {
+            TetherHaptics.light()
             picks.append(language)
             if index + 1 < questions.count {
                 index += 1

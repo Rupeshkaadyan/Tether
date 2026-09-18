@@ -257,6 +257,7 @@ struct CoachView: View {
             showPaywall = true
             return
         }
+        TetherHaptics.light()
         let text = draft.trimmed
         draft = ""
 

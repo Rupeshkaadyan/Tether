@@ -19,6 +19,7 @@ struct HomeView: View {
     @State private var showRecap = false
     @State private var showNotifExplainer = false
     @State private var showComposer = false
+    @State private var milestoneToast: String?
     @AppStorage("tether.notifAsked") private var notifAsked = false
     @Environment(\.dynamicTypeSize) private var typeSize
     @State private var voice = VoiceInput.shared
@@ -74,8 +75,11 @@ struct HomeView: View {
                     header
                     if session.safetyBanner != nil { safetyBannerCard }
                     connectionCard
+                        .tetherAppear(delay: 0.05)
                     PulseCard(result: pulse) { onOpenPulse() }
+                        .tetherAppear(delay: 0.1)
                     PromptCard(prompt: todayPrompt, dayLabel: Date().weekdayDisplay)
+                        .tetherAppear(delay: 0.15)
 
                     if todayAnswered && !showComposer {
                         answeredToday
@@ -99,6 +103,14 @@ struct HomeView: View {
                 .readableFrame()
             }
             .background(TetherColor.bg)
+            .overlay(alignment: .top) {
+                if let toast = milestoneToast {
+                    MilestoneToast(text: toast)
+                        .padding(.top, TetherSpace.l)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                        .animation(.spring(response: 0.4, dampingFraction: 0.85), value: milestoneToast)
+                }
+            }
             .navigationBarHidden(true)
             .sheet(isPresented: $showSettings) {
                 SettingsView(profile: profile)
@@ -365,12 +377,14 @@ struct HomeView: View {
     private var recentList: some View {
         if olderEntries.isEmpty {
             TetherCard {
-                VStack(alignment: .leading, spacing: TetherSpace.s) {
+                VStack(alignment: .leading, spacing: TetherSpace.m) {
+                    IconDisc(icon: .journal, size: 40, color: TetherColor.brand)
                     Text("Your recent entries start here")
                         .font(TetherType.label)
                     Text("A day at a time. Past entries will appear here as you go.")
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
         } else {
@@ -430,6 +444,17 @@ struct HomeView: View {
         try? ctx.save()
         reply = ""
         showComposer = false
+        TetherHaptics.success()
+
+        // Celebrate weekly milestones without nagging: only on the day the
+        // streak first reaches a multiple of seven.
+        let newStreak = Streaks.current(from: myEntries.map(\.entryDate)
+                                         + replies.map(\.forDate)
+                                         + [entry.entryDate])
+        if newStreak > 0 && newStreak % 7 == 0 {
+            milestoneToast = "\(newStreak)-day streak"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.6) { milestoneToast = nil }
+        }
 
         // First value moment reached — this is the right time to ask.
         if !notifAsked {

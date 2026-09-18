@@ -91,6 +91,11 @@ enum TetherGradient {
     static let calm = LinearGradient(
         colors: [Color.adaptive("FAF7F2", "15111D"), Color.adaptive("F1EBF5", "1B1526")],
         startPoint: .top, endPoint: .bottom)
+
+    /// Warm rose-to-indigo used for celebratory moments (milestone toasts).
+    static let celebration = LinearGradient(
+        colors: [Color.adaptive("B85A76", "E08FA6"), Color.adaptive("4C3D9E", "9B8BEF")],
+        startPoint: .topLeading, endPoint: .bottomTrailing)
 }
 
 // MARK: - Type
@@ -267,5 +272,28 @@ extension View {
     func readableFrame() -> some View {
         self.frame(maxWidth: 760)
             .frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    /// A gentle lift-and-fade entrance used on hero cards so the screen settles
+    /// in rather than snapping. `delay` staggers sibling cards for a composed feel.
+    func tetherAppear(delay: Double = 0) -> some View {
+        modifier(TetherAppearModifier(delay: delay))
+    }
+}
+
+/// Spring entrance: fades from 0 opacity and a small downward offset.
+struct TetherAppearModifier: ViewModifier {
+    var delay: Double = 0
+    @State private var appeared = false
+
+    func body(content: Content) -> some View {
+        content
+            .opacity(appeared ? 1 : 0)
+            .offset(y: appeared ? 0 : 14)
+            .onAppear {
+                withAnimation(.spring(response: 0.5, dampingFraction: 0.84).delay(delay)) {
+                    appeared = true
+                }
+            }
     }
 }

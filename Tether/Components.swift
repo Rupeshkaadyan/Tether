@@ -1,4 +1,27 @@
 import SwiftUI
+import UIKit
+
+// MARK: - Haptics
+//
+// Light, intentional feedback tied to meaningful moments — saving a moment,
+// tapping a mood, reaching a streak. Kept subtle so it feels alive, not noisy.
+
+enum TetherHaptics {
+    /// A soft tap for selections and toggles.
+    static func tap() {
+        UISelectionFeedbackGenerator().selectionChanged()
+    }
+
+    /// A gentle physical press for primary actions.
+    static func light() {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+    }
+
+    /// A confirming buzz for completed, positive actions (a saved entry, a send).
+    static func success() {
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
+    }
+}
 
 // MARK: - Card container
 
@@ -122,6 +145,7 @@ struct MoodRow: View {
             HStack(spacing: TetherSpace.s) {
                 ForEach(Mood.range, id: \.self) { value in
                     Button {
+                        TetherHaptics.light()
                         withAnimation(.spring(response: 0.3, dampingFraction: 0.72)) {
                             selection = value
                         }
@@ -287,5 +311,35 @@ struct SectionHeader: View {
                     .foregroundStyle(TetherColor.brand)
             }
         }
+    }
+}
+
+// MARK: - Milestone toast
+
+/// A brief, celebratory confirmation shown when a streak crosses a weekly
+/// milestone. The caller owns the dismissal (a timed clear), so this stays
+/// stateless and reusable.
+struct MilestoneToast: View {
+    let text: String
+
+    var body: some View {
+        HStack(spacing: TetherSpace.s) {
+            Image(systemName: "star.fill")
+                .font(.system(size: 14, weight: .bold))
+                .foregroundStyle(.white)
+            Text(text)
+                .font(TetherType.label)
+                .foregroundStyle(.white)
+        }
+        .padding(.horizontal, TetherSpace.l)
+        .padding(.vertical, TetherSpace.m)
+        .background(
+            Capsule()
+                .fill(TetherGradient.celebration)
+                .overlay(Capsule().strokeBorder(.white.opacity(0.3), lineWidth: 1))
+        )
+        .tetherShadow(.floating)
+        .accessibilityElement()
+        .accessibilityLabel(text)
     }
 }

@@ -161,6 +161,7 @@ struct InsightsView: View {
                 }
             }
         }
+        .tetherAppear(delay: 0.1)
     }
 
     // MARK: - Stats
@@ -213,6 +214,7 @@ struct InsightsView: View {
                 }
             }
         }
+        .tetherAppear(delay: 0.2)
     }
 
     // MARK: - Love language
@@ -242,6 +244,7 @@ struct InsightsView: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+        .tetherAppear(delay: 0.3)
     }
 
     private func loveIdea(for love: LoveLanguage) -> String {
@@ -278,6 +281,7 @@ struct InsightsView: View {
                              text: SecureContent.read(low.entry.body))
             }
         }
+        .tetherAppear(delay: 0.35)
     }
 
     private func highlightRow(title: String, color: Color, date: Date, text: String) -> some View {
@@ -307,7 +311,12 @@ struct InsightsView: View {
     private var emptyState: some View {
         VStack(alignment: .leading, spacing: TetherSpace.l) {
             Spacer(minLength: TetherSpace.xl)
-            IconDisc(icon: .pulse, size: 56, color: TetherColor.brand)
+            ZStack {
+                Circle()
+                    .fill(TetherGradient.dawn)
+                    .frame(width: 100, height: 100)
+                IconDisc(icon: .pulse, size: 54, color: TetherColor.brand)
+            }
             Text("Your insights start with one entry")
                 .font(TetherType.title)
                 .foregroundStyle(TetherColor.ink)
@@ -399,6 +408,9 @@ struct InsightsMoodChart: View {
             }
         }
         .frame(height: height)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("Mood trend over \(values.count) days")
+        .accessibilityValue("\(values.compactMap { $0 }.count) day\(values.compactMap { $0 }.count == 1 ? "" : "s") logged")
         .overlay(
             Group {
                 if values.compactMap({ $0 }).isEmpty {
