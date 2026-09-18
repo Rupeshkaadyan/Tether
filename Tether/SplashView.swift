@@ -24,6 +24,7 @@ struct SplashView: View {
                 VStack(spacing: 6) {
                     Text("Tether")
                         .font(.system(size: 38, weight: .bold, design: .rounded))
+                        .tracking(TetherType.displayTracking)
                         .foregroundStyle(.white)
                     Text("Two people. One practice.")
                         .font(TetherType.callout)

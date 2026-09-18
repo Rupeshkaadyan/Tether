@@ -117,6 +117,7 @@ struct WelcomeStep: View {
                 VStack(spacing: 6) {
                     Text("Tether")
                         .font(.system(size: 42, weight: .bold, design: .rounded))
+                        .tracking(-0.9)
                         .foregroundStyle(.white)
                     Text("Two people. One practice.")
                         .font(TetherType.callout)

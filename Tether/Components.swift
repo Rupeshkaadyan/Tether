@@ -118,34 +118,50 @@ struct MoodRow: View {
     var isEnabled = true
 
     var body: some View {
-        HStack(spacing: TetherSpace.m) {
-            ForEach(Mood.range, id: \.self) { value in
-                Button {
-                    selection = value
-                } label: {
-                    Circle()
-                        .fill(value == selection ? Mood.color(for: value) : TetherColor.surface)
-                        .frame(width: 36, height: 36)
-                        .overlay(
+        VStack(spacing: TetherSpace.s) {
+            HStack(spacing: TetherSpace.s) {
+                ForEach(Mood.range, id: \.self) { value in
+                    Button {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.72)) {
+                            selection = value
+                        }
+                    } label: {
+                        // The custom mood glyph rather than a bare number —
+                        // a face reads in a glance, a digit has to be decoded.
+                        ZStack {
                             Circle()
-                                .strokeBorder(
-                                    value == selection ? Mood.color(for: value) : TetherColor.border,
-                                    lineWidth: value == selection ? 0 : 1
+                                .fill(value == selection
+                                      ? AnyShapeStyle(Mood.color(for: value))
+                                      : AnyShapeStyle(TetherColor.surface))
+                                .overlay(
+                                    Circle().strokeBorder(
+                                        value == selection ? Color.clear : TetherColor.border,
+                                        lineWidth: 1)
                                 )
-                        )
-                        .overlay(
-                            Text("\(value)")
-                                .font(TetherType.caption)
-                                .foregroundStyle(value == selection ? .white : TetherColor.muted)
-                        )
-                        .frame(minWidth: 44, minHeight: 44)
+                                .tetherShadow(value == selection ? .soft : .none)
+
+                            Icon(TetherIcon.forMood(value),
+                                 size: 23,
+                                 color: value == selection ? .white : TetherColor.faint)
+                        }
+                        .frame(width: 48, height: 48)
+                        .frame(maxWidth: .infinity)
+                        .frame(minHeight: 56)
                         .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(!isEnabled)
+                    .scaleEffect(value == selection ? 1.07 : 1)
+                    .accessibilityLabel("Mood \(value) of 5, \(Mood.label(for: value))")
+                    .accessibilityAddTraits(value == selection ? [.isSelected] : [])
                 }
-                .buttonStyle(.plain)
-                .disabled(!isEnabled)
-                .accessibilityLabel("Mood \(value) of 5, \(Mood.label(for: value))")
-                .accessibilityAddTraits(value == selection ? [.isSelected] : [])
             }
+
+            Text(Mood.label(for: selection))
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+                .contentTransition(.opacity)
+                .frame(height: 18)
         }
         .frame(maxWidth: .infinity)
     }
@@ -156,24 +172,33 @@ struct MoodRow: View {
 struct StreakRing: View {
     let count: Int
 
+    private var progress: CGFloat { min(CGFloat(count) / 7, 1) }
+
     var body: some View {
         ZStack {
             Circle()
-                .stroke(TetherColor.border, lineWidth: 4)
-                .frame(width: 44, height: 44)
+                .stroke(TetherColor.border, style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .frame(width: 46, height: 46)
+
             Circle()
-                .trim(from: 0, to: min(CGFloat(count) / 7, 1))
-                .stroke(TetherColor.thriving, style: StrokeStyle(lineWidth: 4, lineCap: .round))
-                .frame(width: 44, height: 44)
+                .trim(from: 0, to: progress)
+                .stroke(
+                    LinearGradient(
+                        colors: [TetherColor.thriving, TetherColor.thriving.opacity(0.6)],
+                        startPoint: .top, endPoint: .bottom),
+                    style: StrokeStyle(lineWidth: 4, lineCap: .round)
+                )
+                .frame(width: 46, height: 46)
                 .rotationEffect(.degrees(-90))
-            VStack(spacing: 0) {
-                Text("\(count)")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(TetherColor.text)
-            }
+                .animation(.spring(response: 0.5, dampingFraction: 0.8), value: count)
+
+            Text("\(count)")
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundStyle(count > 0 ? TetherColor.text : TetherColor.faint)
+                .contentTransition(.numericText())
         }
         .accessibilityElement()
-        .accessibilityLabel("Streak \(count) days")
+        .accessibilityLabel("Streak \(count) day\(count == 1 ? "" : "s")")
     }
 }
 
