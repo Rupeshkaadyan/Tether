@@ -443,6 +443,7 @@ struct SettingsView: View {
     @State private var store = PurchaseService.shared
     @State private var notifService = NotificationService.shared
     @State private var showPaywall = false
+    @State private var showLoveQuiz = false
     @State private var showDeleteConfirm = false
 
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var allEntries: [JournalEntry]
@@ -511,10 +512,16 @@ struct SettingsView: View {
                                     .foregroundStyle(TetherColor.muted)
                             }
                         }
+                        Button("Retake the quiz") { showLoveQuiz = true }
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.brand)
                     } else {
-                        Text("Not set yet — you can take the quiz again during onboarding.")
+                        Text("Not set yet — take the quiz to personalise your insights.")
                             .font(TetherType.caption)
                             .foregroundStyle(TetherColor.muted)
+                        Button("Take the quiz") { showLoveQuiz = true }
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.brand)
                     }
                 }
 
@@ -615,6 +622,10 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showPaywall) {
                 PaywallView()
+            }
+            .sheet(isPresented: $showLoveQuiz) {
+                LoveLanguageStep(profile: profile) { showLoveQuiz = false }
+                    .background(TetherColor.bg)
             }
             .alert("Delete all data?", isPresented: $showDeleteConfirm) {
                 Button("Delete", role: .destructive) { deleteEverything() }
