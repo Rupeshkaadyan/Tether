@@ -88,6 +88,8 @@ struct InviteMethodsView: View {
     let onCreate: () -> Void
     let onRedeem: () -> Void
 
+    @State private var selectedID: String?
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: TetherSpace.l) {
@@ -96,12 +98,17 @@ struct InviteMethodsView: View {
                     .foregroundStyle(TetherColor.ink)
                     .padding(.top, TetherSpace.l)
 
-                Text("Pick whichever is easiest. If one does not work, another will.")
+                Text("Pick whichever is easiest. Tap a different one any time to change your mind.")
                     .font(TetherType.callout)
                     .foregroundStyle(TetherColor.muted)
 
-                ForEach(methods, id: \.title) { method in
-                    TetherCard {
+                ForEach(methods) { method in
+                    Button {
+                        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+                            selectedID = method.id
+                        }
+                        TetherHaptics.light()
+                    } label: {
                         HStack(alignment: .top, spacing: TetherSpace.m) {
                             Image(systemName: method.symbol)
                                 .font(.system(size: 18))
@@ -115,13 +122,38 @@ struct InviteMethodsView: View {
                                     .foregroundStyle(TetherColor.muted)
                                     .fixedSize(horizontal: false, vertical: true)
                             }
+                            Spacer(minLength: 0)
+                            if selectedID == method.id {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundStyle(TetherColor.brand)
+                            }
                         }
+                        .padding(TetherSpace.l)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(selectedID == method.id ? TetherColor.brandSoft : TetherColor.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous)
+                                .strokeBorder(selectedID == method.id ? TetherColor.brand : TetherColor.border,
+                                              lineWidth: selectedID == method.id ? 2 : 1)
+                        )
+                        .tetherShadow(selectedID == method.id ? .lifted : .soft)
                     }
+                    .buttonStyle(.plain)
+                    .accessibilityAddTraits(selectedID == method.id ? [.isSelected] : [])
                 }
 
-                Button("Create my invite", action: onCreate)
-                    .tetherButton()
-                    .padding(.top, TetherSpace.s)
+                Button {
+                    TetherHaptics.success()
+                    onCreate()
+                } label: {
+                    Text(selectedID == nil ? "Create my invite" : "Continue")
+                }
+                .tetherButton()
+                .padding(.top, TetherSpace.s)
+                .disabled(selectedID == nil)
+                .opacity(selectedID == nil ? 0.5 : 1)
 
                 Button("I have a code") { onRedeem() }
                     .tetherButton(.tertiary)
@@ -137,15 +169,16 @@ struct InviteMethodsView: View {
     }
 
     private let methods = [
-        Method(symbol: "link", title: "Send a link",
+        Method(id: "link", symbol: "link", title: "Send a link",
                detail: "Send over iMessage or WhatsApp. Works even if they have not installed it yet."),
-        Method(symbol: "qrcode", title: "Scan in person",
+        Method(id: "qrcode", symbol: "qrcode", title: "Scan in person",
                detail: "Sit together and scan. This one always works, no network needed."),
-        Method(symbol: "number", title: "Share a 6-digit code",
+        Method(id: "number", symbol: "number", title: "Share a 6-digit code",
                detail: "They type it in. Good for phone calls or when links get eaten by an app.")
     ]
 
-    private struct Method {
+    private struct Method: Identifiable {
+        let id: String
         let symbol: String
         let title: String
         let detail: String
@@ -331,51 +364,61 @@ struct RedeemCodeView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(alignment: .leading, spacing: TetherSpace.l) {
-                Text("Enter their code")
-                    .font(TetherType.title)
-                    .foregroundStyle(TetherColor.ink)
-                    .padding(.top, TetherSpace.xl)
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.l) {
+                    Text("Enter their code")
+                        .font(TetherType.title)
+                        .foregroundStyle(TetherColor.ink)
+                        .padding(.top, TetherSpace.xl)
 
-                TextField("6-digit code", text: $code)
-                    .font(.system(size: 24, weight: .semibold, design: .monospaced))
-                    .foregroundStyle(TetherColor.text)
-                    .tint(TetherColor.brand)
-                    .keyboardType(.numberPad)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    .background(TetherColor.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous)
-                            .strokeBorder(TetherColor.border, lineWidth: 1)
-                    )
+                    TextField("6-digit code", text: $code)
+                        .font(.system(size: 24, weight: .semibold, design: .monospaced))
+                        .foregroundStyle(TetherColor.text)
+                        .tint(TetherColor.brand)
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .background(TetherColor.surface)
+                        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous)
+                                .strokeBorder(TetherColor.border, lineWidth: 1)
+                        )
 
-                Text("What is your partner's name?")
-                    .font(TetherType.label)
-                    .foregroundStyle(TetherColor.text)
-                TextField("Name", text: $name)
-                    .tetherField()
+                    Text("What is your partner's name?")
+                        .font(TetherType.label)
+                        .foregroundStyle(TetherColor.text)
+                    TextField("Name", text: $name)
+                        .tetherField()
 
-                if let error {
-                    Text(error)
-                        .font(TetherType.caption)
-                        .foregroundStyle(TetherColor.strained)
+                    if let error {
+                        Text(error)
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.strained)
+                    }
+
+                    Button("Connect") { redeem() }
+                        .tetherButton()
+                        .disabled(code.trimmed.count < 6)
+                        .opacity(code.trimmed.count < 6 ? 0.5 : 1)
+
+                    Spacer()
                 }
-
-                Button("Connect") { redeem() }
-                    .tetherButton()
-                    .disabled(code.trimmed.count < 6)
-                    .opacity(code.trimmed.count < 6 ? 0.5 : 1)
-
-                Spacer()
+                .padding(TetherSpace.margin)
             }
-            .padding(TetherSpace.margin)
+            .scrollDismissesKeyboard(.interactively)
             .navigationTitle("Join")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
+                }
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                                       to: nil, from: nil, for: nil)
+                    }
                 }
             }
         }
