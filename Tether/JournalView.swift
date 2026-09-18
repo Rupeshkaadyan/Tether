@@ -127,9 +127,15 @@ struct JournalView: View {
             emptyState
         } else {
             ScrollView {
-                LazyVStack(spacing: TetherSpace.m) {
-                    ForEach(filtered) { entry in
-                        entryCard(entry)
+                VStack(alignment: .leading, spacing: TetherSpace.xl) {
+                    ForEach(grouped, id: \.month) { group in
+                        VStack(alignment: .leading, spacing: TetherSpace.m) {
+                            monthHeader(group.month)
+                            ForEach(group.entries) { entry in
+                                timelineRow(entry,
+                                            isLast: entry.id == group.entries.last?.id)
+                            }
+                        }
                     }
                 }
                 .padding(.horizontal, TetherSpace.margin)
@@ -139,52 +145,94 @@ struct JournalView: View {
         }
     }
 
-    private var emptyState: some View {
-        VStack(spacing: TetherSpace.m) {
-            Spacer()
-            IconDisc(icon: scope == .mine ? .privateEntry : .sharedEntry,
-                     size: 64, color: TetherColor.brand)
-            Text(scope == .mine ? "Your journal starts here" : "Nothing shared yet")
-                .font(TetherType.headline)
-                .foregroundStyle(TetherColor.text)
-            Text(scope == .mine
-                 ? "Mood and one line a day. Entries appear here as you go."
-                 : "Entries you mark as shared with your partner will collect here.")
-                .font(TetherType.callout)
-                .foregroundStyle(TetherColor.muted)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-                .padding(.horizontal, TetherSpace.xl)
-            Spacer()
+    // MARK: - Timeline
+
+    /// Entries grouped by month, newest first. The month headings give the
+    /// journal its rhythm so it does not read as an endless list of identical
+    /// cards.
+    private var grouped: [(month: Date, entries: [JournalEntry])] {
+        let cal = Calendar.current
+        let groups = Dictionary(grouping: filtered) { entry -> Date in
+            let comps = cal.dateComponents([.year, .month], from: entry.entryDate)
+            return cal.date(from: comps) ?? entry.entryDate
         }
-        .frame(maxWidth: .infinity)
-        .readableFrame()
+        return groups
+            .map { (month: $0.key,
+                    entries: $0.value.sorted { $0.entryDate > $1.entryDate }) }
+            .sorted { $0.month > $1.month }
     }
 
-    private func entryCard(_ entry: JournalEntry) -> some View {
-        TetherCard {
-            VStack(alignment: .leading, spacing: TetherSpace.s) {
+    private func monthHeader(_ month: Date) -> some View {
+        Text(month.formatted(.dateTime.month(.wide).year()))
+            .font(TetherType.title)
+            .foregroundStyle(TetherColor.ink)
+            .padding(.top, TetherSpace.s)
+    }
+
+    /// A timeline row: a mood-coloured node on a spine, the date, then the
+    /// entry. Deliberately not a card — the spine carries the structure so the
+    /// writing can breathe.
+    private func timelineRow(_ entry: JournalEntry, isLast: Bool) -> some View {
+        HStack(alignment: .top, spacing: TetherSpace.m) {
+            VStack(spacing: 0) {
+                Circle()
+                    .fill(Mood.color(for: entry.mood))
+                    .frame(width: 12, height: 12)
+                    .overlay(
+                        Circle().stroke(TetherColor.surface, lineWidth: 2)
+                    )
+                if !isLast {
+                    Rectangle()
+                        .fill(TetherColor.border)
+                        .frame(width: 2)
+                        .frame(maxHeight: .infinity)
+                }
+            }
+            .frame(width: 12)
+
+            VStack(alignment: .leading, spacing: TetherSpace.xs) {
                 HStack(spacing: TetherSpace.s) {
-                    Icon(.forMood(entry.mood), size: 18, color: Mood.color(for: entry.mood))
-                    Text(entry.entryDate.shortDisplay)
+                    Text(entry.entryDate.formatted(
+                        .dateTime.weekday(.abbreviated).day().month(.abbreviated)))
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
-                    Spacer()
-                    if scope == .shared, let owner = allProfiles.first(where: { $0.id == entry.userID }) {
-                        Text(owner.displayName)
-                            .font(TetherType.micro)
-                            .foregroundStyle(TetherColor.faint)
-                    }
+                    Spacer(minLength: 0)
                     Icon(entry.visibility == .private ? .privateEntry : .sharedEntry,
-                         size: 14,
+                         size: 13,
                          color: TetherColor.faint)
                 }
+
                 Text(SecureContent.read(entry.body))
                     .font(TetherType.callout)
                     .foregroundStyle(TetherColor.text)
                     .fixedSize(horizontal: false, vertical: true)
+
+                HStack(spacing: TetherSpace.xs) {
+                    Text(Mood.label(for: entry.mood))
+                        .font(TetherType.micro)
+                        .foregroundStyle(TetherColor.faint)
+                    if scope == .shared,
+                       let owner = allProfiles.first(where: { $0.id == entry.userID }) {
+                        Text("·")
+                            .font(TetherType.micro)
+                            .foregroundStyle(TetherColor.faint)
+                        Text(owner.displayName)
+                            .font(TetherType.micro)
+                            .foregroundStyle(TetherColor.faint)
+                    }
+                }
             }
+            .padding(.bottom, TetherSpace.m)
         }
         .accessibilityElement(children: .combine)
+    }
+
+    private var emptyState: some View {
+        TetherEmptyState(
+            title: scope == .mine ? "Your journal starts here" : "Nothing shared yet",
+            message: scope == .mine
+                ? "Mood and one line a day. Entries appear here as you go."
+                : "Entries you mark as shared with your partner will collect here."
+        )
     }
 }
