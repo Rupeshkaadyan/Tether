@@ -3088,6 +3088,226 @@
           }
         }
       }
+    },
+    "When you are stressed, do you want space or company? Does that match what you usually get?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जब आप तनाव में हों, तो आप अकेले रहना चाहते हैं या साथ? और आपको मिलता क्या है?"
+          }
+        }
+      }
+    },
+    "When you are upset, what helps — and what makes it worse?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जब आप परेशान हों, तो क्या मदद करता है — और क्या और बिगाड़ देता है?"
+          }
+        }
+      }
+    },
+    "What did you learn about love from the house you grew up in?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप जिस घर में बड़े हुए, वहाँ से आपने प्रेम के बारे में क्या सीखा?"
+          }
+        }
+      }
+    },
+    "What is something you are afraid to need?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी चीज़ आपको चाहिए, पर माँगने से डर लगता है?"
+          }
+        }
+      }
+    },
+    "How do you know when you are at your limit?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप कैसे जानते हैं कि अब आपकी सीमा हो गई है?"
+          }
+        }
+      }
+    },
+    "What does feeling safe actually feel like for you?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सुरक्षित महसूस करना आपके लिए वास्तव में कैसा होता है?"
+          }
+        }
+      }
+    },
+    "What is a need you have quietly stopped asking for?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी ज़रूरत है जो आपने चुपचाप माँगनी बंद कर दी?"
+          }
+        }
+      }
+    },
+    "When did you last feel truly understood by them?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आख़िरी बार आपने कब महसूस किया कि वे आपको सच में समझे हैं?"
+          }
+        }
+      }
+    },
+    "What is something about your day you never get to tell them?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने दिन की कौन सी बात आप कभी उन्हें बता नहीं पाते?"
+          }
+        }
+      }
+    },
+    "What drains you that they might not realise?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी चीज़ आपकी ऊर्जा खींच लेती है, जिसे वे शायद नहीं समझते?"
+          }
+        }
+      }
+    },
+    "What recharges you that they might not realise?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी चीज़ आपको फिर से ताज़ा कर देती है, जिसे वे शायद नहीं समझते?"
+          }
+        }
+      }
+    },
+    "What small ritual makes you feel close to them?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सा छोटा रिवाज़ आपको उनके करीब महसूस कराता है?"
+          }
+        }
+      }
+    },
+    "When do you feel most like yourself around them?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उनके साथ आपको सबसे ज़्यादा अपने जैसा कब महसूस होता है?"
+          }
+        }
+      }
+    },
+    "What is one thing you wish they asked you about more often?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी एक चीज़ है जिसके बारे में आप चाहते हैं कि वे और पूछें?"
+          }
+        }
+      }
+    },
+    "What is something you have been saying indirectly that you could say plainly?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी बात आप घुमा-फिरा कर कह रहे हैं, जिसे साफ़-साफ़ कहा जा सकता है?"
+          }
+        }
+      }
+    },
+    "When did you reach for them this week and it went unnoticed?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस सप्ताह आपने उनकी तरफ़ हाथ बढ़ाया और यह उनकी नज़र में नहीं आया — कब?"
+          }
+        }
+      }
+    },
+    "What is a conversation the two of you keep postponing?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी बातचीत है जिसे आप दोनों बार-बार टाल रहे हैं?"
+          }
+        }
+      }
+    },
+    "How do you want hard things told to you?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कठिन बातें आपको कैसे बताई जाएँ — क्या आप यही चाहते हैं?"
+          }
+        }
+      }
+    },
+    "What is something they said this week that you have not acknowledged?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस सप्ताह उन्होंने जो कहा, उसमें से किस बात का आपने अभी जवाब नहीं दिया?"
+          }
+        }
+      }
+    },
+    "When do you find it hardest to really listen to them?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उनकी बात सच में सुनना आपको सबसे मुश्किल कब लगता है?"
+          }
+        }
+      }
+    },
+    "What would you want them to understand without you having to explain it?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सी बात आप बिना समझाए उनसे समझना चाहेंगे?"
+          }
+        }
+      }
+    },
+    "What is a question you would like to ask them but have not?": {
+      "localizations": {
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कौन सा सवाल आप उनसे पूछना चाहते हैं पर अब तक नहीं पूछा?"
+          }
+        }
+      }
     }
   },
   "version": "1.0"
