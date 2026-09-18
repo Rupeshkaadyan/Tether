@@ -326,24 +326,19 @@ struct InsightsView: View {
 
 // MARK: - Chart
 
-/// A self-contained area/line chart drawn with Core Graphics paths — no Charts
-/// framework, so it matches the rest of the bespoke UI and stays light.
+/// Drawn with SwiftUI `Canvas` — a single drawing closure rather than a deep
+/// nest of `@ViewBuilder` Path/ForEach expressions, which keeps the compiler from
+/// choking on the expression when the data set is large.
 struct InsightsMoodChart: View {
     let values: [Double?]        // each 1...5, or nil for a day with no entry
     let height: CGFloat = 200
 
-    private struct PlotPoint: Identifiable {
-        let id: Int
-        let x: CGFloat
-        let y: CGFloat
-    }
-
     var body: some View {
-        GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
-            let top: CGFloat = 10
-            let bottom: CGFloat = 10
+        Canvas { context, size in
+            let w = size.width
+            let h = size.height
+            let top: CGFloat = 12
+            let bottom: CGFloat = 12
             let plotH = h - top - bottom
             let n = values.count
             let stepX: CGFloat = n > 1 ? w / CGFloat(n - 1) : 0
@@ -354,62 +349,63 @@ struct InsightsMoodChart: View {
                 return top + plotH * (1 - (c - 1) / 4)
             }
 
-            let points: [PlotPoint] = values.enumerated().compactMap { i, v in
-                guard let vv = v else { return nil }
-                return PlotPoint(id: i, x: x(at: i), y: y(for: vv))
+            // Reference lines for each mood level.
+            for lvl in 1...5 {
+                let yy = y(for: Double(lvl))
+                var grid = Path()
+                grid.move(to: CGPoint(x: 0, y: yy))
+                grid.addLine(to: CGPoint(x: w, y: yy))
+                context.stroke(grid, with: .color(TetherColor.border),
+                               lineWidth: 1, dash: lvl == 3 ? [] : [3, 4])
             }
 
-            ZStack {
-                // Reference lines for each mood level.
-                ForEach(1...5, id: \.self) { lvl in
-                    let yy = y(for: Double(lvl))
-                    Path { p in
-                        p.move(to: CGPoint(x: 0, y: yy))
-                        p.addLine(to: CGPoint(x: w, y: yy))
-                    }
-                    .stroke(TetherColor.border,
-                            style: StrokeStyle(lineWidth: 1,
-                                               dash: lvl == 3 ? [] : [3, 4]))
-                    .opacity(lvl == 3 ? 0.7 : 0.45)
-                }
+            let points: [(Int, CGPoint)] = values.enumerated().compactMap { i, v in
+                guard let vv = v else { return nil }
+                return (i, CGPoint(x: x(at: i), y: y(for: vv)))
+            }
+            guard !points.isEmpty else { return }
 
-                if points.count >= 2 {
-                    let area = Path { p in
-                        p.move(to: CGPoint(x: points[0].x, y: points[0].y))
-                        for pt in points.dropFirst() { p.addLine(to: CGPoint(x: pt.x, y: pt.y)) }
-                        p.addLine(to: CGPoint(x: points.last!.x, y: top + plotH))
-                        p.addLine(to: CGPoint(x: points[0].x, y: top + plotH))
-                        p.closeSubpath()
-                    }
-                    let line = Path { p in
-                        p.move(to: CGPoint(x: points[0].x, y: points[0].y))
-                        for pt in points.dropFirst() { p.addLine(to: CGPoint(x: pt.x, y: pt.y)) }
-                    }
-                    area.fill(LinearGradient(
-                        colors: [TetherColor.brand.opacity(0.30), TetherColor.brand.opacity(0.02)],
-                        startPoint: .top, endPoint: .bottom))
-                    line.stroke(TetherColor.brand,
-                                style: StrokeStyle(lineWidth: 2.5, lineCap: .round, lineJoin: .round))
-                    ForEach(points) { pt in
-                        Circle()
-                            .fill(TetherColor.brand)
-                            .frame(width: 6, height: 6)
-                            .position(x: pt.x, y: pt.y)
-                    }
-                } else if let pt = points.first {
-                    Circle()
-                        .fill(TetherColor.brand)
-                        .frame(width: 9, height: 9)
-                        .position(x: pt.x, y: pt.y)
-                } else {
-                    Text("Log a few days to see your trend")
-                        .font(TetherType.caption)
-                        .foregroundStyle(TetherColor.faint)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            if points.count >= 2 {
+                var line = Path()
+                line.move(to: points[0].1)
+                for pt in points.dropFirst() { line.addLine(to: pt.1) }
+
+                var area = Path()
+                area.move(to: points[0].1)
+                for pt in points.dropFirst() { area.addLine(to: pt.1) }
+                area.addLine(to: CGPoint(x: points.last!.1.x, y: top + plotH))
+                area.addLine(to: CGPoint(x: points[0].1.x, y: top + plotH))
+                area.closeSubpath()
+
+                context.fill(area, with: .linearGradient(
+                    Gradient(colors: [TetherColor.brand.opacity(0.30),
+                                      TetherColor.brand.opacity(0.02)]),
+                    startPoint: CGPoint(x: 0, y: top),
+                    endPoint: CGPoint(x: 0, y: top + plotH)))
+                context.stroke(line, with: .color(TetherColor.brand),
+                               lineWidth: 2.5, lineCap: .round, lineJoin: .round)
+
+                for pt in points {
+                    context.fill(Circle().path(in: CGRect(x: pt.1.x - 3, y: pt.1.y - 3,
+                                                          width: 6, height: 6)),
+                                 with: .color(TetherColor.brand))
                 }
+            } else if let pt = points.first {
+                context.fill(Circle().path(in: CGRect(x: pt.1.x - 4.5, y: pt.1.y - 4.5,
+                                                      width: 9, height: 9)),
+                             with: .color(TetherColor.brand))
             }
         }
         .frame(height: height)
+        .overlay(
+            Group {
+                if values.compactMap({ $0 }).isEmpty {
+                    Text("Log a few days to see your trend")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.faint)
+                }
+            }
+        )
     }
 }
 

@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 struct CoachView: View {
     @Bindable var profile: UserProfile
@@ -66,9 +67,10 @@ struct CoachView: View {
                                 .id("thinking")
                             }
                         }
-                        .padding(TetherSpace.margin)
-                        .readableFrame()
-                    }
+                    .padding(TetherSpace.margin)
+                    .readableFrame()
+                }
+                .scrollDismissesKeyboard(.interactively)
                     .onChange(of: messages.count) { _, _ in
                         scrollToEnd(proxy)
                     }
@@ -186,6 +188,12 @@ struct CoachView: View {
                 .padding(.bottom, TetherSpace.s)
         }
         .background(TetherColor.surface)
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") { dismissKeyboard() }
+            }
+        }
     }
 
     private var privacySheet: some View {
@@ -220,6 +228,13 @@ struct CoachView: View {
 
     private var canSend: Bool {
         !draft.trimmed.isEmpty && !isThinking
+    }
+
+    /// Resigns the first responder so the keyboard can be dismissed from the
+    /// input bar — there is no other "back" affordance while typing in Coach.
+    private func dismissKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder),
+                                        to: nil, from: nil, for: nil)
     }
 
     private func ensureConversation() {
