@@ -67,6 +67,7 @@ struct CoachView: View {
                             }
                         }
                         .padding(TetherSpace.margin)
+                        .readableFrame()
                     }
                     .onChange(of: messages.count) { _, _ in
                         scrollToEnd(proxy)
@@ -184,7 +185,7 @@ struct CoachView: View {
                 .foregroundStyle(TetherColor.muted)
                 .padding(.bottom, TetherSpace.s)
         }
-        .background(.white)
+        .background(TetherColor.surface)
     }
 
     private var privacySheet: some View {
@@ -372,7 +373,7 @@ struct SafetyResourceCard: View {
                 }
                 .padding(TetherSpace.m)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.white)
+                .background(TetherColor.surface)
                 .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small))
             }
 

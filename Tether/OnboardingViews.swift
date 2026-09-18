@@ -46,7 +46,7 @@ struct OnboardingFlow: View {
         switch step {
         case .welcome:       WelcomeStep(profile: profile) { advance() }
         case .track:         TrackStep(profile: profile) { advance() }
-        case .loveLanguages: LoveLanguageStep { advance() }
+        case .loveLanguages: LoveLanguageStep(profile: profile) { advance() }
         case .firstPrompt:   FirstPromptStep(profile: profile) { finish() }
         }
     }
@@ -186,6 +186,7 @@ struct TrackStep: View {
 // MARK: - Step 3: Love languages
 
 struct LoveLanguageStep: View {
+    let profile: UserProfile
     let onNext: () -> Void
 
     @State private var index = 0
@@ -284,8 +285,13 @@ struct LoveLanguageStep: View {
 
             Spacer()
 
-            Button("Continue", action: onNext)
-                .tetherButton()
+            Button {
+                if let result { LoveLanguageStore.set(result, for: profile.id) }
+                onNext()
+            } label: {
+                Text("Continue")
+            }
+            .tetherButton()
         }
     }
 }
@@ -326,13 +332,6 @@ struct FirstPromptStep: View {
                     TextField("One sentence is enough", text: $reply, axis: .vertical)
                         .lineLimit(3...6)
                         .tetherField()
-                        .padding()
-                        .background(TetherColor.surface)
-                        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
-                        .overlay(
-                            RoundedRectangle(cornerRadius: TetherRadius.medium)
-                                .strokeBorder(TetherColor.border, lineWidth: 1)
-                        )
                 }
 
                 Button("Begin") { save() }
@@ -350,13 +349,26 @@ struct FirstPromptStep: View {
     }
 
     private func save() {
+        let text = reply.trimmed
+        let verdict = SafetyClassifier.classify(text)
+
         let entry = JournalEntry(userID: profile.id,
-                                 body: reply.trimmed,
+                                 body: SecureContent.seal(text),
                                  mood: mood,
                                  source: .prompt)
+        entry.safetyFlagged = verdict.isCrisis
         ctx.insert(entry)
-        let log = MoodLog(userID: profile.id, mood: mood)
-        ctx.insert(log)
+        ctx.insert(MoodLog(userID: profile.id, mood: mood))
+
+        // Mirror HomeView.save(): crisis entries are never distilled into memory.
+        if !verdict.isCrisis {
+            ctx.insert(CoachEngine.makeMemory(from: text,
+                                              ownerID: profile.id,
+                                              source: .prompt,
+                                              sourceID: entry.id,
+                                              visibility: entry.visibility))
+        }
+
         try? ctx.save()
         onFinish()
     }

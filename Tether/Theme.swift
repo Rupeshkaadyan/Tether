@@ -260,4 +260,12 @@ extension View {
         -> some View {
         buttonStyle(TetherButtonStyle(variant: variant, isFullWidth: fullWidth))
     }
+
+    /// Caps content to a comfortable reading width and centers it. On iPhone this
+    /// is effectively a no-op (the cap exceeds the screen); on iPad it keeps the
+    /// column from stretching edge to edge into an unreadable band.
+    func readableFrame() -> some View {
+        self.frame(maxWidth: 760)
+            .frame(maxWidth: .infinity, alignment: .center)
+    }
 }

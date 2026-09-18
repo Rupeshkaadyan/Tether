@@ -175,6 +175,7 @@ struct PulseView: View {
                     disclaimer
                 }
                 .padding(TetherSpace.margin)
+                .readableFrame()
             }
             .background(TetherColor.bg)
             .navigationTitle("Relationship Pulse")

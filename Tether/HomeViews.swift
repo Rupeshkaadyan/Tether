@@ -51,6 +51,12 @@ struct HomeView: View {
         entries.filter { $0.userID == profile.id }
     }
 
+    /// Past entries, excluding today's (which is already shown in the composer /
+    /// answered state above) so the feed never duplicates the same day.
+    private var olderEntries: [JournalEntry] {
+        Array(myEntries.dropFirst(todayAnswered ? 1 : 0).prefix(10))
+    }
+
     private var streak: Int {
         Streaks.current(from: myEntries.map(\.entryDate) + replies.map(\.forDate))
     }
@@ -76,6 +82,11 @@ struct HomeView: View {
                         composer
                     }
 
+                    if !olderEntries.isEmpty {
+                        SectionHeader(title: "Recent")
+                        recentList
+                    }
+
                     Button("Ask the coach") { onOpenCoach() }
                         .tetherButton()
                         .padding(.top, TetherSpace.s)
@@ -84,6 +95,7 @@ struct HomeView: View {
                         .tetherButton(.secondary)
                 }
                 .padding(TetherSpace.margin)
+                .readableFrame()
             }
             .background(TetherColor.bg)
             .navigationBarHidden(true)
@@ -184,6 +196,18 @@ struct HomeView: View {
                     Button("Invite your partner") { showPairing = true }
                         .tetherButton(.secondary)
                 }
+
+                if let love = LoveLanguageStore.get(for: profile.id) {
+                    HStack(spacing: TetherSpace.s) {
+                        Image(systemName: love.symbol)
+                            .font(.system(size: 12))
+                            .foregroundStyle(TetherColor.brand)
+                        Text("You feel loved through \(love.displayName.lowercased())")
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                }
             }
         }
     }
@@ -245,8 +269,11 @@ struct HomeView: View {
     private var composer: some View {
         VStack(alignment: .leading, spacing: TetherSpace.l) {
             VStack(alignment: .leading, spacing: TetherSpace.s) {
-                Text("How are you today?")
-                    .font(TetherType.label)
+                HStack(spacing: TetherSpace.s) {
+                    BreathingOrb(size: 26)
+                    Text("How are you today?")
+                        .font(TetherType.label)
+                }
                 MoodRow(selection: $mood)
                 Text(Mood.label(for: mood))
                     .font(TetherType.caption)
@@ -332,18 +359,18 @@ struct HomeView: View {
 
     @ViewBuilder
     private var recentList: some View {
-        if myEntries.isEmpty {
+        if olderEntries.isEmpty {
             TetherCard {
                 VStack(alignment: .leading, spacing: TetherSpace.s) {
-                    Text("Your journal starts here")
+                    Text("Your recent entries start here")
                         .font(TetherType.label)
-                    Text("Mood and one line a day. Entries will appear here as you go.")
+                    Text("A day at a time. Past entries will appear here as you go.")
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
                 }
             }
         } else {
-            ForEach(myEntries.prefix(10)) { entry in
+            ForEach(olderEntries) { entry in
                 TetherCard {
                     VStack(alignment: .leading, spacing: TetherSpace.xs) {
                         HStack {
@@ -466,6 +493,28 @@ struct SettingsView: View {
                                 }
                             }
                         }
+                    }
+                }
+
+                Section("About you") {
+                    if let love = LoveLanguageStore.get(for: profile.id) {
+                        HStack(spacing: TetherSpace.m) {
+                            Image(systemName: love.symbol)
+                                .font(.system(size: 16))
+                                .foregroundStyle(TetherColor.brand)
+                                .frame(width: 24)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("Your love language")
+                                    .font(TetherType.label)
+                                Text(love.displayName)
+                                    .font(TetherType.caption)
+                                    .foregroundStyle(TetherColor.muted)
+                            }
+                        }
+                    } else {
+                        Text("Not set yet — you can take the quiz again during onboarding.")
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.muted)
                     }
                 }
 

@@ -118,3 +118,28 @@ enum PairingService {
         return days == 1 ? "Sent yesterday" : "Sent \(days) days ago"
     }
 }
+
+// MARK: - Love language (local-first, no schema migration)
+
+/// The onboarding love-language quiz result is stored here rather than on the
+/// SwiftData model. It is a stable, optional user preference, and keeping it in
+/// `UserDefaults` keyed by profile id means adding it requires no migration of
+/// the persistent store — important while the schema is still moving.
+enum LoveLanguageStore {
+    private static let keyBase = "tether.loveLanguage"
+
+    static func set(_ language: LoveLanguage, for profileID: UUID) {
+        UserDefaults.standard.set(language.rawValue, forKey: "\(keyBase).\(profileID.uuidString)")
+    }
+
+    static func get(for profileID: UUID) -> LoveLanguage? {
+        guard let raw = UserDefaults.standard.string(forKey: "\(keyBase).\(profileID.uuidString)") else {
+            return nil
+        }
+        return LoveLanguage(rawValue: raw)
+    }
+
+    static func clear(for profileID: UUID) {
+        UserDefaults.standard.removeObject(forKey: "\(keyBase).\(profileID.uuidString)")
+    }
+}

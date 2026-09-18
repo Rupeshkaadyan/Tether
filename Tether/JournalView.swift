@@ -134,6 +134,7 @@ struct JournalView: View {
                 }
                 .padding(.horizontal, TetherSpace.margin)
                 .padding(.bottom, TetherSpace.xxl)
+                .readableFrame()
             }
         }
     }
@@ -157,6 +158,7 @@ struct JournalView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity)
+        .readableFrame()
     }
 
     private func entryCard(_ entry: JournalEntry) -> some View {
