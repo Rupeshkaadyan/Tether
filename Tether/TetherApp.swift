@@ -4,28 +4,24 @@ import SwiftData
 @main
 struct TetherApp: App {
     @State private var session = SessionStore()
+    @State private var sync: any SyncService
 
-    let container: ModelContainer = {
-        let schema = Schema([
-            UserProfile.self,
-            JournalEntry.self,
-            MoodLog.self,
-            PromptReply.self,
-            Invite.self,
-            RelationshipPulse.self,
-            AIConversation.self,
-            AIMessage.self,
-            AIMemory.self
-        ])
-        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        do { return try ModelContainer(for: schema, configurations: [config]) }
-        catch { fatalError("Tether store failed: \(error)") }
-    }()
+    let container: ModelContainer
+
+    init() {
+        let container = Persistence.make()
+        self.container = container
+        let service: any SyncService = Persistence.useCloudKit
+            ? CloudKitSyncService(containerID: Persistence.cloudKitContainerID)
+            : LocalSyncService()
+        _sync = State(initialValue: service)
+    }
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environment(session)
+                .environment(\.syncService, sync)
                 .modelContainer(container)
         }
     }

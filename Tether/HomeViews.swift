@@ -476,6 +476,7 @@ struct SettingsView: View {
     @State private var showPaywall = false
     @State private var showLoveQuiz = false
     @State private var showDeleteConfirm = false
+    @Environment(\.syncService) private var sync
 
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var allEntries: [JournalEntry]
     @Query private var allMessages: [AIMessage]
@@ -493,6 +494,32 @@ struct SettingsView: View {
                                entries: allEntries,
                                messages: allMessages,
                                memories: allMemories)
+    }
+
+    @ViewBuilder
+    private var syncStatusLabel: some View {
+        switch sync.status {
+        case .localOnly:
+            Text("This device only")
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+        case .checking:
+            Text("Checking…")
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+        case .available:
+            Text("iCloud")
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.thriving)
+        case .noAccount:
+            Text("Sign in to iCloud")
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.strained)
+        case .error:
+            Text("Off")
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+        }
     }
 
     var body: some View {
@@ -612,6 +639,23 @@ struct SettingsView: View {
                         }
                     }
                     Text("A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so keep it somewhere safe.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                }
+
+                Section("Sync") {
+                    HStack {
+                        Label("Backup & sync", systemImage: "icloud")
+                            .font(TetherType.label)
+                        Spacer()
+                        syncStatusLabel
+                    }
+                    if case .available(_) = sync.status {
+                        Button("Sync now") { sync.requestSync() }
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.brand)
+                    }
+                    Text("With iCloud on, your entries are mirrored across your own devices. They are sealed before they leave this phone.")
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
                 }
