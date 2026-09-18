@@ -45,6 +45,12 @@
             "state": "translated",
             "value": "%lld दिन%@ दर्ज"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld día%@ registrado"
+          }
         }
       }
     },
@@ -55,6 +61,12 @@
             "state": "translated",
             "value": "%lld दिन"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld días"
+          }
         }
       }
     },
@@ -64,6 +76,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस महीने %lld मुफ़्त संदेश बाकी हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Te quedan %lld mensajes gratis este mes."
           }
         }
       }
@@ -80,6 +98,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld में से %lld पूरे"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld de %lld listos"
           }
         }
       }
@@ -101,6 +125,12 @@
             "state": "translated",
             "value": "1 तनावपूर्ण → 5 फल-फूल रहा"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 Tensionado → 5 Floreciendo"
+          }
         }
       }
     },
@@ -110,6 +140,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "6 अंकों का कोड"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "código de 6 dígitos"
           }
         }
       }
@@ -121,6 +157,12 @@
             "state": "translated",
             "value": "7 दिन"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "7 días"
+          }
         }
       }
     },
@@ -130,6 +172,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "7 दिन की जुड़ाव चुनौती"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "reto de conexión de 7 días"
           }
         }
       }
@@ -141,6 +189,12 @@
             "state": "translated",
             "value": "14 दिन"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "14 días"
+          }
         }
       }
     },
@@ -150,6 +204,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "30 दिन"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "30 días"
           }
         }
       }
@@ -161,6 +221,12 @@
             "state": "translated",
             "value": "एक मार्गदर्शक, चिकित्सक नहीं"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una guía, no un terapeuta"
+          }
         }
       }
     },
@@ -170,6 +236,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "एक-एक दिन। पुरानी प्रविष्टियाँ जैसे-जैसे आप लिखेंगे यहाँ दिखेंगी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un día a la vez. Las entradas anteriores aparecerán aquí según avances."
           }
         }
       }
@@ -247,6 +319,12 @@
             "state": "translated",
             "value": "पिछले दो हफ़्तों की एक झलक, कोई फ़ैसला नहीं। यह तीन चीज़ें देखता है: आपका मन कैसा रहा, आप कितनी बार आए, और कितने नियमित रहे।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una lectura de las últimas dos semanas, no un veredicto. Mira tres cosas: cómo te has sentido, cuánto has aparecido y cuánta constancia ha habido."
+          }
         }
       }
     },
@@ -256,6 +334,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपकी डायरी, मार्गदर्शक की बातचीत और यादों की एक पढ़ने योग्य प्रति। यह सुरक्षित भंडार से बाहर निकलती है, इसलिए इसे संभाल कर रखें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una copia legible de tu diario, conversaciones con la guía y recuerdos. Sale del almacén cifrado, así que guárdala en un lugar seguro."
           }
         }
       }
@@ -267,6 +351,12 @@
             "state": "translated",
             "value": "आप जो भी टाइप करते हैं उस पर एक सुरक्षा जाँच चलती है। यदि संकट मिले, तो ऐप सामान्य उत्तर देना रोक कर सहायता लाइनें दिखाता है। आपके साथी को कभी नहीं बताया जाता।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se ejecuta una revisión de seguridad en todo lo que escribes. Si detecta una crisis, la app deja de generar una respuesta normal y te muestra líneas de apoyo. A tu pareja nunca se le dice."
+          }
         }
       }
     },
@@ -277,6 +367,12 @@
             "state": "translated",
             "value": "साथ निभाने का एक साल"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un año apareciendo"
+          }
         }
       }
     },
@@ -286,6 +382,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपके बारे में"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sobre ti"
           }
         }
       }
@@ -347,6 +449,12 @@
             "state": "translated",
             "value": "सातों पूरे। जब चाहें फिर से शुरू करें।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los siete listos. Empieza de nuevo cuando quieras."
+          }
         }
       }
     },
@@ -356,6 +464,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कुछ भी पूछें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pregunta lo que quieras"
           }
         }
       }
@@ -382,6 +496,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "पूछें: %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pregunta: %@"
           }
         }
       }
@@ -410,6 +530,12 @@
             "state": "translated",
             "value": "बैकअप और सिंक"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copia y sincronización"
+          }
         }
       }
     },
@@ -419,6 +545,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इसलिए, यदि आप अपना हर डिवाइस खो दें तो कुछ वापस नहीं मिल सकता। यह उस कीमत का हिस्सा है जो हम आपके शब्द न पढ़ पाने के लिए चुकाते हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Por eso no hay recuperación si pierdes todos tus dispositivos. Ese es el precio de que no podamos leer tus palabras."
           }
         }
       }
@@ -430,6 +562,12 @@
             "state": "translated",
             "value": "शुरू करें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar"
+          }
         }
       }
     },
@@ -439,6 +577,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अकेले शुरू करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar solo"
           }
         }
       }
@@ -500,6 +644,12 @@
             "state": "translated",
             "value": "जाँच रहे हैं…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprobando…"
+          }
         }
       }
     },
@@ -509,6 +659,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "खोज साफ़ करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borrar búsqueda"
           }
         }
       }
@@ -552,6 +708,12 @@
             "state": "translated",
             "value": "मार्गदर्शक ने कहा: %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La guía dijo: %@"
+          }
         }
       }
     },
@@ -561,6 +723,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "जुड़ें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conectar"
           }
         }
       }
@@ -605,6 +773,12 @@
             "state": "translated",
             "value": "अकेले आगे बढ़ें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Continuar por mi cuenta"
+          }
         }
       }
     },
@@ -614,6 +788,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कॉपी हो गया"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiado"
           }
         }
       }
@@ -625,6 +805,12 @@
             "state": "translated",
             "value": "कॉपी"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar"
+          }
         }
       }
     },
@@ -634,6 +820,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संदेश कॉपी करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copiar mensaje"
           }
         }
       }
@@ -645,6 +837,12 @@
             "state": "translated",
             "value": "दोनों साथियों के लिए"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cubre a ambos"
+          }
         }
       }
     },
@@ -655,6 +853,12 @@
             "state": "translated",
             "value": "निमंत्रण बनाएँ"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Crear mi invitación"
+          }
         }
       }
     },
@@ -664,6 +868,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "संकट सहायता संसाधन"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recursos de apoyo en crisis"
           }
         }
       }
@@ -681,6 +891,12 @@
             "state": "translated",
             "value": "दिन %lld — %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Día %lld — %@"
+          }
         }
       }
     },
@@ -696,6 +912,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "दिन %lld, %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Día %lld, %@"
           }
         }
       }
@@ -755,6 +977,12 @@
             "state": "translated",
             "value": "सारा डेटा हटाएँ?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar todos los datos?"
+          }
         }
       }
     },
@@ -781,6 +1009,12 @@
             "state": "translated",
             "value": "बोलकर लिखें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dictar"
+          }
         }
       }
     },
@@ -790,6 +1024,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपना उत्तर बोलें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dicta tu respuesta"
           }
         }
       }
@@ -851,6 +1091,12 @@
             "state": "translated",
             "value": "अर्जित"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conseguido"
+          }
         }
       }
     },
@@ -877,6 +1123,12 @@
             "state": "translated",
             "value": "उनका कोड दर्ज करें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Introduce su código"
+          }
         }
       }
     },
@@ -886,6 +1138,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इसके बजाय उनका कोड दर्ज करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Introduce su código en su lugar"
           }
         }
       }
@@ -914,6 +1172,12 @@
             "state": "translated",
             "value": "जिन प्रविष्टियों को आप साझा चिह्नित करेंगे वे यहाँ जमा होंगी।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las entradas que marques como compartidas con tu pareja se reunirán aquí."
+          }
         }
       }
     },
@@ -924,6 +1188,12 @@
             "state": "translated",
             "value": "यह सब आपने अपने डिवाइस पर लिखा है। कुछ भी कहीं नहीं भेजा गया।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo esto lo escribiste tú, en tu dispositivo. No se envió nada a ningún sitio."
+          }
         }
       }
     },
@@ -933,6 +1203,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tether की हर चीज़, आप दोनों के लिए, महीने के एक टेकअवे से भी कम में।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo Tether, para los dos, por menos de una comida al mes."
           }
         }
       }
@@ -1026,6 +1302,12 @@
             "state": "translated",
             "value": "ऊँचा बेहतर"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuanto más alto, mejor"
+          }
         }
       }
     },
@@ -1035,6 +1317,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "उतार-चढ़ाव"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Altos y bajos"
           }
         }
       }
@@ -1046,6 +1334,12 @@
             "state": "translated",
             "value": "आज आप कैसे हैं?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo estás hoy?"
+          }
         }
       }
     },
@@ -1055,6 +1349,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप कैसे प्रेम महसूस करते हैं?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo te sientes amado?"
           }
         }
       }
@@ -1066,6 +1366,12 @@
             "state": "translated",
             "value": "आपकी अपनी डायरी से निकाली गई जानकारी।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómo van las cosas, extraído de tu propio diario."
+          }
         }
       }
     },
@@ -1075,6 +1381,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "मेरे पास कोड है"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tengo un código"
           }
         }
       }
@@ -1121,6 +1433,12 @@
             "state": "translated",
             "value": "निमंत्रण कोड %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Código de invitación %@"
+          }
         }
       }
     },
@@ -1130,6 +1448,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "निमंत्रण 7 दिन में समाप्त होगा। आप इसे रद्द कर कभी भी नया बना सकते हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La invitación caduca en 7 días. Puedes cancelarla y crear una nueva cuando quieras."
           }
         }
       }
@@ -1141,6 +1465,12 @@
             "state": "translated",
             "value": "अपने साथी को आमंत्रित करें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Invita a tu pareja"
+          }
         }
       }
     },
@@ -1150,6 +1480,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "तीन दिन हो गए हैं। इंतज़ार ज़रूरी नहीं — जो भी आप लिखेंगे, वे जुड़ते ही मिल जाएगा।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Han pasado tres días. No tienes que esperar: todo lo que escribas se sincroniza en cuanto se unan."
           }
         }
       }
@@ -1161,6 +1497,12 @@
             "state": "translated",
             "value": "यह आपके %@ मार्ग से बोलता है, और जो आपने लिखा है उसे याद रखता है।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Habla desde tu camino %@, y recuerda lo que has escrito."
+          }
         }
       }
     },
@@ -1170,6 +1512,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "जुड़ें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unirse"
           }
         }
       }
@@ -1197,6 +1545,12 @@
             "state": "translated",
             "value": "अभी केवल आप"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo tú, por ahora"
+          }
         }
       }
     },
@@ -1206,6 +1560,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अभ्यास जारी रखें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mantén la práctica"
           }
         }
       }
@@ -1217,6 +1577,12 @@
             "state": "translated",
             "value": "सुन रहे हैं…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escuchando…"
+          }
         }
       }
     },
@@ -1226,6 +1592,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "रुझान देखने के लिए कुछ दिन लिखें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra unos días para ver tu tendencia"
           }
         }
       }
@@ -1275,6 +1647,12 @@
             "state": "translated",
             "value": "मूड ५ में से %lld, %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ánimo %lld de 5, %@"
+          }
         }
       }
     },
@@ -1284,6 +1662,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "मूड और एक पंक्ति रोज़। प्रविष्टियाँ जैसे-जैसे यहाँ दिखेंगी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ánimo y una línea al día. Las entradas aparecen aquí según avances."
           }
         }
       }
@@ -1295,6 +1679,12 @@
             "state": "translated",
             "value": "मूड मिश्रण"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mezcla de ánimo"
+          }
         }
       }
     },
@@ -1304,6 +1694,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld दिनों का मूड रुझान"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tendencia del ánimo en %lld días"
           }
         }
       }
@@ -1315,6 +1711,12 @@
             "state": "translated",
             "value": "नाम"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre"
+          }
         }
       }
     },
@@ -1325,6 +1727,12 @@
             "state": "translated",
             "value": "अभी के लिए कोई प्रेम भाषा नहीं"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ningún lenguaje del amor por ahora"
+          }
         }
       }
     },
@@ -1334,6 +1742,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "पूरा नहीं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin hacer"
           }
         }
       }
@@ -1379,6 +1793,12 @@
             "state": "translated",
             "value": "अभी नहीं"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ahora no"
+          }
         }
       }
     },
@@ -1389,6 +1809,12 @@
             "state": "translated",
             "value": "अभी तय नहीं — अपनी जानकारी बेहतर बनाने के लिए क्विज़ लें।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no definido: haz el test para personalizar tu información."
+          }
         }
       }
     },
@@ -1398,6 +1824,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "क्या कहना है समझ नहीं आ रहा? यह भेजें:"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿No sabes qué decir? Envía esto:"
           }
         }
       }
@@ -1426,6 +1858,12 @@
             "state": "translated",
             "value": "इस सप्ताह कुछ दर्ज नहीं। कोई गिल्ट नहीं — आज से फिर शुरू करें।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada registrado esta semana. Sin culpa: empieza de nuevo hoy."
+          }
         }
       }
     },
@@ -1435,6 +1873,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अभी कुछ साझा नहीं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada compartido aún"
           }
         }
       }
@@ -1446,6 +1890,12 @@
             "state": "translated",
             "value": "बंद"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado"
+          }
         }
       }
     },
@@ -1455,6 +1905,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "डिफ़ॉल्ट रूप से बंद। चालू करने पर केवल गुमनाम गिनती, मूड औसत और विषय भेजे जाते हैं — आपके वास्तविक शब्द कभी नहीं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desactivado por defecto. Al activarlo solo se envían recuentos anónimos, promedios de ánimo y temas, nunca tus palabras reales."
           }
         }
       }
@@ -1466,6 +1922,12 @@
             "state": "translated",
             "value": "ठीक है"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
         }
       }
     },
@@ -1475,6 +1937,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "चालू"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Activado"
           }
         }
       }
@@ -1519,6 +1987,12 @@
             "state": "translated",
             "value": "अगले सप्ताह के लिए एक फ़ोकस"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un objetivo para la próxima semana"
+          }
         }
       }
     },
@@ -1528,6 +2002,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "दिन में एक रिमाइंडर"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un recordatorio al día"
           }
         }
       }
@@ -1539,6 +2019,12 @@
             "state": "translated",
             "value": "एक वाक्य काफ़ी है"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una frase basta"
+          }
         }
       }
     },
@@ -1548,6 +2034,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "एक सदस्यता। दोनों साथी। हमेशा।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una suscripción. Ambos. Siempre."
           }
         }
       }
@@ -1559,6 +2051,12 @@
             "state": "translated",
             "value": "याद रखने लायक"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uno para recordar"
+          }
         }
       }
     },
@@ -1568,6 +2066,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "या यह कोड साझा करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O comparte este código"
           }
         }
       }
@@ -1595,6 +2099,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "जो सबसे आसान हो चुनें। मन बदलने पर कभी भी किसी और पर टैप करें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Elige el que te resulte más fácil. Toca otro en cualquier momento para cambiar de idea."
           }
         }
       }
@@ -1639,6 +2149,12 @@
             "state": "translated",
             "value": "खरीद बहाल"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compras restauradas"
+          }
         }
       }
     },
@@ -1671,6 +2187,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "प्रश्न %lld / %lld"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pregunta %lld de %lld"
           }
         }
       }
@@ -1733,6 +2255,12 @@
             "state": "translated",
             "value": "सोच रहे हैं…"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reflexionando…"
+          }
         }
       }
     },
@@ -1765,6 +2293,12 @@
             "state": "translated",
             "value": "रिश्ते की पल्स. %@. %@."
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pulso de la relación. %@. %@."
+          }
         }
       }
     },
@@ -1774,6 +2308,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "याद रख रहा है"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recordando"
           }
         }
       }
@@ -1801,6 +2341,12 @@
             "state": "translated",
             "value": "खरीद बहाल करें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restaurar compras"
+          }
         }
       }
     },
@@ -1810,6 +2356,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "क्विज़ फिर से लें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repetir el test"
           }
         }
       }
@@ -1838,6 +2390,12 @@
             "state": "translated",
             "value": "आज की प्रविष्टि सहेजें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardar la entrada de hoy"
+          }
         }
       }
     },
@@ -1847,6 +2405,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आज के लिए सहेजा गया"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Guardado para hoy"
           }
         }
       }
@@ -1858,6 +2422,12 @@
             "state": "translated",
             "value": "इसे उनके फ़ोन पर स्कैन करें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escanea esto en su teléfono"
+          }
         }
       }
     },
@@ -1867,6 +2437,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपनी प्रविष्टियाँ खोजें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Busca tus entradas"
           }
         }
       }
@@ -1944,6 +2520,12 @@
             "state": "translated",
             "value": "भेजें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar"
+          }
         }
       }
     },
@@ -1954,6 +2536,12 @@
             "state": "translated",
             "value": "रिमाइंडर भेजें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar un recordatorio"
+          }
         }
       }
     },
@@ -1963,6 +2551,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld:00 बजे भेजें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar a las %lld:00"
           }
         }
       }
@@ -1989,6 +2583,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "iCloud में साइन इन करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Inicia sesión en iCloud"
           }
         }
       }
@@ -2033,6 +2633,12 @@
             "state": "translated",
             "value": "छोटे सबूत कि आप लगातार आते रहे।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pequeñas pruebas de que sigues apareciendo."
+          }
         }
       }
     },
@@ -2042,6 +2648,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ शुरू करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar %@"
           }
         }
       }
@@ -2069,6 +2681,12 @@
             "state": "translated",
             "value": "बोलना शुरू करें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar a dictar"
+          }
         }
       }
     },
@@ -2078,6 +2696,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अकेले शुरू करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empieza por tu cuenta"
           }
         }
       }
@@ -2089,6 +2713,12 @@
             "state": "translated",
             "value": "साथ शुरू करें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezad juntos"
+          }
         }
       }
     },
@@ -2098,6 +2728,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "स्थिति"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estado"
           }
         }
       }
@@ -2132,6 +2768,12 @@
             "state": "translated",
             "value": "चरण %lld / %lld"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Paso %lld de %lld"
+          }
         }
       }
     },
@@ -2141,6 +2783,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "बोलना रोकें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dejar de dictar"
           }
         }
       }
@@ -2192,6 +2840,12 @@
             "state": "translated",
             "value": "लय %lld दिन%@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Racha %lld día%@"
+          }
         }
       }
     },
@@ -2218,6 +2872,12 @@
             "state": "translated",
             "value": "सदस्यताएँ स्वतः नवीनीकृत होती हैं जब तक कि अवधि समाप्त से 24 घंटे पहले रद्द न करें। अपने App Store खाते में प्रबंधित करें।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las suscripciones se renuevan automáticamente salvo que se cancelen al menos 24 horas antes del final del periodo. Gestiona en tu cuenta de App Store."
+          }
         }
       }
     },
@@ -2227,6 +2887,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "सहायता उपलब्ध है"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hay apoyo disponible"
           }
         }
       }
@@ -2270,6 +2936,12 @@
             "state": "translated",
             "value": "क्विज़ लें"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Haz el test"
+          }
         }
       }
     },
@@ -2281,6 +2953,12 @@
             "state": "translated",
             "value": "Tether चिकित्सा नहीं है और न ही संकट सेवा।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether no es terapia ni un servicio de crisis."
+          }
         }
       }
     },
@@ -2290,6 +2968,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tether चिकित्सा नहीं है। यदि चीज़ें असुरक्षित या भारी लगें, तो कृपया किसी योग्य व्यक्ति से बात करें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether no es terapia. Si algo se siente inseguro o abrumador, habla con alguien cualificado."
           }
         }
       }
@@ -2301,6 +2985,12 @@
             "state": "translated",
             "value": "Tether. दो लोग। एक अभ्यास।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether. Dos personas. Una práctica."
+          }
         }
       }
     },
@@ -2311,6 +3001,12 @@
             "state": "translated",
             "value": "इतना ही हम भेजेंगे। कोई लय-शर्मिंदगी, कोई स्पैम, कोई मार्केटिंग नहीं।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eso es todo lo que enviaremos. Sin avergonzar por rachas, sin spam, sin marketing."
+          }
         }
       }
     },
@@ -2320,6 +3016,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "यह बिल्कुल ठीक है। आप सेटिंग्स से कभी भी क्विज़ ले सकते हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Está bien. Puedes hacer el test cuando quieras desde Ajustes."
           }
         }
       }
@@ -2347,6 +3049,12 @@
             "state": "translated",
             "value": "फिर %@. सेटिंग्स में कभी भी रद्द करें।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Luego %@. Cancela cuando quieras en Ajustes."
+          }
         }
       }
     },
@@ -2356,6 +3064,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "सोच रहे हैं…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pensando…"
           }
         }
       }
@@ -2367,6 +3081,12 @@
             "state": "translated",
             "value": "केवल इस डिवाइस पर"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo este dispositivo"
+          }
         }
       }
     },
@@ -2376,6 +3096,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "यह एक दृष्टिकोण है, फ़ैसला नहीं। यह समझने की शुरुआत है कि वास्तव में क्या काम करता है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto es una lente, no un veredicto. Es un punto de partida para notar qué funciona de verdad."
           }
         }
       }
@@ -2387,6 +3113,12 @@
             "state": "translated",
             "value": "यह केवल आपका है। आपका साथी अपना खुद का चुनता है।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto es solo tuyo. Tu pareja elige el suyo."
+          }
         }
       }
     },
@@ -2396,6 +3128,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "यह इस डिवाइस की हर प्रविष्टि हटा देता है और एन्क्रिप्शन कुंजी नष्ट कर देता है। इसे वापस नहीं किया जा सकता।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto elimina todas las entradas del dispositivo y destruye la clave de cifrado. No se puede deshacer."
           }
         }
       }
@@ -2422,6 +3160,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "जुड़ने के तीन तरीके"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tres formas de conectar"
           }
         }
       }
@@ -2467,6 +3211,12 @@
             "state": "translated",
             "value": "आज — %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hoy — %@"
+          }
         }
       }
     },
@@ -2476,6 +3226,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "पूछने की कोशिश करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "PRUEBA A PREGUNTAR"
           }
         }
       }
@@ -2518,6 +3274,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपग्रेड"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejorar"
           }
         }
       }
@@ -2562,6 +3324,12 @@
             "state": "translated",
             "value": "अपने साथी का इंतज़ार"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esperando a tu pareja"
+          }
         }
       }
     },
@@ -2571,6 +3339,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "साप्ताहिक सारांश"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resumen semanal"
           }
         }
       }
@@ -2597,6 +3371,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपके साथी का नाम क्या है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo se llama tu pareja?"
           }
         }
       }
@@ -2640,6 +3420,12 @@
             "state": "translated",
             "value": "कौन सी बुद्धिमत्ता आपसे बात करती है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué sabiduría te habla?"
+          }
         }
       }
     },
@@ -2650,6 +3436,12 @@
             "state": "translated",
             "value": "ज्ञान मार्ग"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camino de sabiduría"
+          }
         }
       }
     },
@@ -2659,6 +3451,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "iCloud चालू होने पर, आपकी प्रविष्टियाँ आपके अपने डिवाइसों पर दिखती हैं। वे इस फ़ोन से निकलने से पहले सुरक्षित कर ली जाती हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Con iCloud activado, tus entradas se reflejan en tus dispositivos. Se cifran antes de salir de este teléfono."
           }
         }
       }
@@ -2687,6 +3485,12 @@
             "state": "translated",
             "value": "आप और %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tú y %@"
+          }
         }
       }
     },
@@ -2696,6 +3500,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप और %@ अब जुड़ गए हैं। आपका अभ्यास आज से शुरू।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tú y %@ ya estáis conectados. Vuestra práctica empieza hoy."
           }
         }
       }
@@ -2707,6 +3517,12 @@
             "state": "translated",
             "value": "आप जुड़े हुए हैं"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estáis conectados"
+          }
         }
       }
     },
@@ -2716,6 +3532,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप इसे सेटिंग्स में कभी भी बदल सकते हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes cambiarlo cuando quieras en Ajustes."
           }
         }
       }
@@ -2727,6 +3549,12 @@
             "state": "translated",
             "value": "यह एक मिनट से कम में हो सकता है। यही असली बात है।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes hacerlo en menos de un minuto. De eso se trata."
+          }
         }
       }
     },
@@ -2736,6 +3564,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप किसी भी समय अकेले शुरू कर सकते हैं। जब वे बाद में जुड़ेंगे, कुछ भी खोया नहीं जाएगा।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Puedes empezar por tu cuenta en cualquier momento. No se pierde nada cuando se una más adelante."
           }
         }
       }
@@ -2747,6 +3581,12 @@
             "state": "translated",
             "value": "आप %@ से प्रेम महसूस करते हैं"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Te sientes amado a través de %@"
+          }
         }
       }
     },
@@ -2756,6 +3596,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपने इस महीने अपने 5 मुफ़्त संदेश उपयोग कर लिए हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Has usado tus 5 mensajes gratis este mes."
           }
         }
       }
@@ -2767,6 +3613,12 @@
             "state": "translated",
             "value": "आपने कहा: %@"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dijiste: %@"
+          }
         }
       }
     },
@@ -2777,6 +3629,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपकी बातचीत निजी है"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus conversaciones son privadas"
           }
         }
       }
@@ -2804,6 +3662,12 @@
             "state": "translated",
             "value": "आपका पहला प्रश्न"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu primera pregunta"
+          }
         }
       }
     },
@@ -2813,6 +3677,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपकी डायरी यहीं शुरू होती है"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu diario empieza aquí"
           }
         }
       }
@@ -2824,6 +3694,12 @@
             "state": "translated",
             "value": "आपकी डायरी, मार्गदर्शक बातचीत और यादें एक कुंजी से सुरक्षित हैं जो केवल इसी डिवाइस की Keychain में रहती है। हम उन्हें नहीं पढ़ सकते।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu diario, las conversaciones con la guía y los recuerdos están sellados con una clave que solo vive en el Keychain de este dispositivo. No podemos leerlos."
+          }
         }
       }
     },
@@ -2834,6 +3710,12 @@
             "state": "translated",
             "value": "आपकी प्रेम भाषा"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu lenguaje del amor"
+          }
         }
       }
     },
@@ -2843,6 +3725,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "समय के साथ आपका मूड"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu ánimo con el tiempo"
           }
         }
       }
@@ -2870,6 +3758,12 @@
             "state": "translated",
             "value": "यह आपके साथी को नहीं दिखाया जाता।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esto no se le muestra a tu pareja."
+          }
         }
       }
     },
@@ -2879,6 +3773,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इसके बारे में आपके साथी को नहीं बताया जाता।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se le cuenta esto a tu pareja."
           }
         }
       }
@@ -2890,6 +3790,12 @@
             "state": "translated",
             "value": "आपकी मुख्य प्रेम भाषा"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu lenguaje del amor principal"
+          }
         }
       }
     },
@@ -2899,6 +3805,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपकी हाल की प्रविष्टियाँ यहीं शुरू होती हैं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus entradas recientes empiezan aquí"
           }
         }
       }
@@ -2910,6 +3822,12 @@
             "state": "translated",
             "value": "आपकी प्रतिक्रिया"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu respuesta"
+          }
         }
       }
     },
@@ -2920,6 +3838,12 @@
             "state": "translated",
             "value": "आपका Tether निर्यात"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu exportación de Tether"
+          }
         }
       }
     },
@@ -2929,6 +3853,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपका सप्ताह साथ"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vuestra semana juntos"
           }
         }
       }
