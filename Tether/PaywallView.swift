@@ -19,7 +19,7 @@ struct PaywallView: View {
                 }
                 .padding(TetherSpace.margin)
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

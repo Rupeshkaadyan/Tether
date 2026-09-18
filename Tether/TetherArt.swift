@@ -61,7 +61,9 @@ struct TetherBackdrop: View {
 
     private var fill: AnyShapeStyle {
         switch style {
-        case .calm:  return AnyShapeStyle(TetherGradient.calm)
+        // The resting screen is warm paper, not a gradient. The atmospheric
+        // layer supplies the depth instead, so #FDFBF8 never looks empty.
+        case .calm:  return AnyShapeStyle(TetherColor.bg)
         case .dawn:  return AnyShapeStyle(TetherGradient.dawn)
         case .dusk:  return AnyShapeStyle(TetherGradient.dusk)
         case .brand: return AnyShapeStyle(TetherGradient.brand)
@@ -71,7 +73,8 @@ struct TetherBackdrop: View {
     private var curveOpacity: Double {
         switch style {
         case .dusk, .brand: return 0.18
-        default: return 0.5
+        case .calm: return 0.05
+        default: return 0.22
         }
     }
 
@@ -85,6 +88,10 @@ struct TetherBackdrop: View {
     var body: some View {
         ZStack {
             Rectangle().fill(fill)
+            // Arcs and haze over the paper, under the content.
+            if style == .calm || style == .dawn {
+                TetherAtmosphere(intensity: style == .calm ? 1 : 0.6)
+            }
             GeometryReader { geo in
                 TetherCurve()
                     .stroke(curveColor.opacity(curveOpacity),

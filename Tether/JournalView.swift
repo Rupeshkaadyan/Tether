@@ -44,7 +44,7 @@ struct JournalView: View {
                 searchField
                 content
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .navigationTitle("Journal")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {

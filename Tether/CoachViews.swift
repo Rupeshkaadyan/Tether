@@ -81,7 +81,7 @@ struct CoachView: View {
 
                 inputBar
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .navigationTitle("Coach")
             .navigationBarTitleDisplayMode(isTab ? .large : .inline)
             .toolbar {

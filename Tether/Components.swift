@@ -88,17 +88,24 @@ struct PromptCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: TetherSpace.m) {
+            // The motif, breathing slowly. This is the emotional centre of the
+            // app, so it is the one place the mark is allowed to be large.
+            TetherHeroMark(width: 84, color: Color.white.opacity(0.85))
+                .tetherBreathing()
+
             HStack {
                 Chip(text: prompt.track.shortName, color: .white)
                 Spacer()
                 if let dayLabel {
-                    Text(dayLabel)
+                    Text(dayLabel.uppercased())
                         .font(TetherType.micro)
                         .foregroundStyle(.white.opacity(0.72))
+                        .tracking(1)
                 }
             }
+
             Text(prompt.body)
-                .font(.system(size: 21, weight: .semibold, design: .rounded))
+                .font(TetherType.prompt)
                 .foregroundStyle(.white)
                 .lineSpacing(4)
                 .fixedSize(horizontal: false, vertical: true)
@@ -107,7 +114,11 @@ struct PromptCard: View {
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(TetherGradient.brand)
         .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
-        .tetherShadow(.lifted)
+        .overlay(
+            RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous)
+                .strokeBorder(.white.opacity(0.16), lineWidth: 1)
+        )
+        .tetherShadow(.floating)
         .accessibilityElement(children: .combine)
     }
 }

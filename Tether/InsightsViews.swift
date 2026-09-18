@@ -93,7 +93,7 @@ struct InsightsView: View {
                 .padding(TetherSpace.margin)
                 .readableFrame()
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .navigationTitle("Insights")
             .navigationBarTitleDisplayMode(.large)
         }

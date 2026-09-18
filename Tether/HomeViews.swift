@@ -103,7 +103,7 @@ struct HomeView: View {
                 .padding(TetherSpace.margin)
                 .readableFrame()
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .overlay(alignment: .top) {
                 if let toast = milestoneToast {
                     MilestoneToast(text: toast)
@@ -721,7 +721,7 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showLoveQuiz) {
                 LoveLanguageStep(profile: profile) { showLoveQuiz = false }
-                    .background(TetherColor.bg)
+                    .background { TetherBackdrop() }
             }
             .alert("Delete all data?", isPresented: $showDeleteConfirm) {
                 Button("Delete", role: .destructive) { deleteEverything() }

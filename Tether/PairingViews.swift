@@ -165,7 +165,7 @@ struct InviteMethodsView: View {
             }
             .padding(TetherSpace.margin)
         }
-        .background(TetherColor.bg)
+        .background { TetherBackdrop() }
     }
 
     private let methods = [
@@ -260,7 +260,7 @@ struct WaitingRoomView: View {
             }
             .padding(TetherSpace.margin)
         }
-        .background(TetherColor.bg)
+        .background { TetherBackdrop() }
     }
 
     private var statusHeader: some View {
@@ -476,7 +476,7 @@ struct PairingSuccessView: View {
                 .tetherButton()
         }
         .padding(TetherSpace.margin)
-        .background(TetherColor.bg)
+        .background { TetherBackdrop() }
         .onAppear {
             withAnimation(.easeOut(duration: 0.6)) { appeared = true }
         }

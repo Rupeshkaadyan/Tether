@@ -49,7 +49,7 @@ struct NotificationPermissionSheet: View {
                 .tetherButton(.tertiary)
             }
             .padding(TetherSpace.margin)
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
         }
     }
 

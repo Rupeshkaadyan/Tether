@@ -177,7 +177,7 @@ struct PulseView: View {
                 .padding(TetherSpace.margin)
                 .readableFrame()
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .navigationTitle("Relationship Pulse")
             .navigationBarTitleDisplayMode(isTab ? .large : .inline)
             .toolbar {
@@ -351,7 +351,7 @@ struct WeeklyRecapView: View {
                 }
                 .padding(TetherSpace.margin)
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .navigationTitle("Weekly recap")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

@@ -235,7 +235,7 @@ struct GrowView: View {
                 .readableFrame()
                 .padding(.bottom, TetherSpace.xl)
             }
-            .background(TetherColor.bg)
+            .background { TetherBackdrop() }
             .navigationTitle("Grow")
         }
         .onAppear { store.startIfNeeded() }

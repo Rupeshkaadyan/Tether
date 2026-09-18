@@ -28,7 +28,7 @@ struct OnboardingFlow: View {
             content
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .background(TetherColor.bg)
+        .background { TetherBackdrop() }
         .animation(.easeOut(duration: 0.25), value: step)
     }
 
@@ -100,7 +100,7 @@ struct WelcomeStep: View {
             }
             .padding(TetherSpace.margin)
         }
-        .background(TetherColor.bg)
+        .background { TetherBackdrop() }
         .ignoresSafeArea(edges: .bottom)
     }
 

@@ -38,46 +38,52 @@ extension Color {
 // neon — the difference between "designed" and "generated".
 
 enum TetherColor {
-    // Surfaces
-    static let bg            = Color.adaptive("FAF7F2", "15111D")
-    static let surface       = Color.adaptive("FFFFFF", "221C2E")
-    static let surfaceSunken = Color.adaptive("F2EDE4", "1B1626")
-    static let border        = Color.adaptive("E8E1D6", "342C44")
-    static let borderStrong  = Color.adaptive("D5CABA", "463B58")
+    // MARK: Brand palette — fixed values.
+    //
+    // These are the product's identity and must not drift. Dark mode is a
+    // deliberate warm-dark counterpart, never an inversion.
 
-    // Text
-    static let text          = Color.adaptive("241F2E", "F2EEF8")
-    static let muted         = Color.adaptive("6B6379", "A79FB5")
+    // Surfaces
+    static let bg            = Color.adaptive("FDFBF8", "171320")
+    static let surface       = Color.adaptive("FFFFFF", "221D2B")
+    static let surfaceSunken = Color.adaptive("F6F2EC", "1C1724")
+    static let border        = Color.adaptive("EAE4DB", "332B3F")
+    static let borderStrong  = Color.adaptive("D8D0C4", "453B54")
+
+    // Text — never pure black
+    static let text          = Color.adaptive("2A2438", "F3EFF7")
+    static let muted         = Color.adaptive("6F6879", "A79FB5")
     static let faint         = Color.adaptive("9A93A6", "7A7189")
 
-    // Brand — deeper and calmer than the default indigo
-    static let ink           = Color.adaptive("2E2557", "D8D2F5")
-    static let brand         = Color.adaptive("4C3D9E", "9B8BEF")
-    static let brandSoft     = Color.adaptive("EDE9FA", "2B2440")
-    static let tint          = Color.adaptive("EDE9FA", "2B2440")
+    // Brand
+    static let ink           = Color.adaptive("2A2438", "D8D2F5")
+    static let brand         = Color.adaptive("5B4BC4", "8B7BE8")
+    static let brandSoft     = Color.adaptive("EFECFB", "2A2440")
+    static let tint          = Color.adaptive("EFECFB", "2A2440")
 
-    // Warmth — burnt orange and a muted rose, not pastel
-    static let warm          = Color.adaptive("C96F3C", "E29A66")
-    static let warmSoft      = Color.adaptive("FBEFE4", "362518")
-    static let rose          = Color.adaptive("B85A76", "E08FA6")
-    static let roseSoft      = Color.adaptive("FAECF0", "33202A")
+    // Warmth
+    static let warm          = Color.adaptive("E08A4B", "E29A66")
+    static let warmSoft      = Color.adaptive("FBEDE3", "362518")
+    static let rose          = Color.adaptive("D96A8A", "E08FA6")
+    static let roseSoft      = Color.adaptive("FAECEF", "33202A")
 
-    // Semantic — natural, slightly desaturated
-    static let thriving      = Color.adaptive("3F7D5C", "6FBF91")
-    static let thrivingSoft  = Color.adaptive("E8F2EB", "1B2E23")
-    static let drifting      = Color.adaptive("B5822E", "DDB05E")
-    static let driftingSoft  = Color.adaptive("FAF1DF", "2E2515")
-    static let strained      = Color.adaptive("B44A42", "E08B84")
-    static let strainedSoft  = Color.adaptive("FAEBE9", "33201E")
+    // Semantic
+    static let thriving      = Color.adaptive("2E9E6B", "6FBF91")
+    static let thrivingSoft  = Color.adaptive("E7F3ED", "1B2E23")
+    static let drifting      = Color.adaptive("D08A28", "DDB05E")
+    static let driftingSoft  = Color.adaptive("FAF1E0", "2E2515")
+    static let strained      = Color.adaptive("C4463F", "E08B84")
+    static let strainedSoft  = Color.adaptive("F9EBE9", "33201E")
 
-    static let accent        = Color.adaptive("C96F3C", "E29A66")
+    static let accent        = Color.adaptive("E08A4B", "E29A66")
 }
 
 // MARK: - Gradient
 
 enum TetherGradient {
+    /// The brand gradient: #6A57D6 → #4A3AA8.
     static let brand = LinearGradient(
-        colors: [Color.adaptive("5B4BB5", "6E5FD0"), Color.adaptive("3D3086", "4A3AA8")],
+        colors: [Color.adaptive("6A57D6", "7E6BE0"), Color.adaptive("4A3AA8", "5B4BC4")],
         startPoint: .topLeading, endPoint: .bottomTrailing)
 
     static let dawn = LinearGradient(
@@ -112,6 +118,9 @@ enum TetherType {
     static let largeTitle = Font.system(.title, design: .rounded, weight: .bold)
     static let title      = Font.system(.title2, design: .rounded, weight: .semibold)
     static let headline   = Font.system(.headline, design: .rounded)
+    /// The daily question — more presence than body copy, never shouting.
+    /// ~21pt semibold at the default size, and it still scales with Dynamic Type.
+    static let prompt     = Font.system(.title3, design: .rounded, weight: .semibold)
     static let body       = Font.system(.body, design: .rounded)
     static let callout    = Font.system(.callout, design: .rounded)
     static let label      = Font.system(.subheadline, design: .rounded, weight: .semibold)
@@ -138,7 +147,7 @@ enum TetherSpace {
 enum TetherRadius {
     static let small: CGFloat = 12
     static let medium: CGFloat = 18
-    static let large: CGFloat = 26
+    static let large: CGFloat = 24
     static let xlarge: CGFloat = 34
 }
 
