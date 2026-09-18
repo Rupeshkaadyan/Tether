@@ -44,7 +44,9 @@ struct OnboardingFlow: View {
     @ViewBuilder
     private var content: some View {
         switch step {
-        case .welcome:       WelcomeStep(profile: profile) { advance() }
+        case .welcome:       WelcomeStep(profile: profile,
+                                       onNext: { advance() },
+                                       onSkip: { advance() })
         case .track:         TrackStep(profile: profile) { advance() }
         case .loveLanguages: LoveLanguageStep(profile: profile) { advance() }
         case .firstPrompt:   FirstPromptStep(profile: profile) { finish() }
@@ -67,71 +69,202 @@ struct OnboardingFlow: View {
 
 // MARK: - Step 1: Welcome
 
+/// The first screen: a quiet, atmospheric landing. The hero carries the
+/// Tether mark with gradient spheres; the wordmark sets the voice; tracked
+/// captions and a serif headline give the page its rhythm.
 struct WelcomeStep: View {
     @Bindable var profile: UserProfile
     let onNext: () -> Void
+    var onSkip: () -> Void = {}
 
     var body: some View {
-        VStack(spacing: 0) {
-            hero
+        ZStack {
+            // Atmospheric backdrop. The illustrated landscape is approximated
+            // by warm paper + atmosphere + a soft "sunrise" glow.
+            TetherBackdrop()
+                .overlay {
+                    // Warm sun at the horizon
+                    Circle()
+                        .fill(TetherGradient.celebration.opacity(0.32))
+                        .frame(width: 320, height: 320)
+                        .blur(radius: 90)
+                        .offset(y: 220)
+                        .allowsHitTesting(false)
 
-            VStack(alignment: .leading, spacing: TetherSpace.xl) {
-                Text("A quiet daily ritual you share with one person. You can begin on your own — everything is here waiting when they join.")
-                    .font(TetherType.body)
-                    .foregroundStyle(TetherColor.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-
-                VStack(alignment: .leading, spacing: TetherSpace.s) {
-                    Text("What should we call you?")
-                        .font(TetherType.label)
-                        .foregroundStyle(TetherColor.text)
-                    TextField("Your name", text: $profile.displayName)
-                        .tetherField()
-                        .textInputAutocapitalization(.words)
-                        .submitLabel(.done)
+                    // Cool dawn wash at the top
+                    Circle()
+                        .fill(Color(hex: "8B7BE8").opacity(0.10))
+                        .frame(width: 360, height: 360)
+                        .blur(radius: 100)
+                        .offset(y: -160)
+                        .allowsHitTesting(false)
                 }
 
-                Spacer(minLength: TetherSpace.l)
-
-                Button("Get started", action: onNext)
-                    .tetherButton()
-                    .disabled(profile.displayName.trimmed.isEmpty)
-                    .opacity(profile.displayName.trimmed.isEmpty ? 0.45 : 1)
+            // Side captions float in the negative space.
+            VStack {
+                Spacer().frame(height: 320)
+                HStack(alignment: .top) {
+                    tracked(["YOUR BELIEFS.", "YOUR WAY."], align: .leading)
+                    Spacer()
+                    tracked(["YOUR JOURNEY.", "TOGETHER."], align: .trailing)
+                }
+                .padding(.horizontal, TetherSpace.l)
+                Spacer()
             }
-            .padding(TetherSpace.margin)
+
+            // Centre content.
+            VStack(spacing: TetherSpace.l) {
+                Spacer(minLength: TetherSpace.xxl)
+                heroMotif
+                wordmark
+headline
+                    introCopy
+                    Spacer()
+                buttons
+            }
+            .padding(.horizontal, TetherSpace.margin)
+            .padding(.bottom, TetherSpace.l)
+
+            // Top bar — tracked annotation on the left, Skip on the right.
+            VStack {
+                HStack(alignment: .top) {
+                    tracked(["A DEEPER", "CONNECTION", "EVERYDAY"], align: .leading,
+                            color: TetherColor.ink)
+                    Spacer()
+                    Button("Skip", action: onSkip)
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.muted)
+                }
+                .padding(.horizontal, TetherSpace.l)
+                .padding(.top, TetherSpace.xxxl)
+                Spacer()
+            }
         }
         .background { TetherBackdrop() }
         .ignoresSafeArea(edges: .bottom)
     }
 
-    private var hero: some View {
+    // MARK: Pieces
+
+    /// Two gradient spheres connected by a slack curve. The line is a little
+    /// softer than the curve we use elsewhere so the hero reads as illustration.
+    private var heroMotif: some View {
         ZStack {
-            TetherBackdrop(style: .dusk)
+            TetherSlackCurve(sag: 22)
+                .stroke(TetherColor.brand.opacity(0.55),
+                        style: StrokeStyle(lineWidth: 4, lineCap: .round))
+                .padding(.horizontal, 28)
+                .frame(height: 70)
 
-            VStack(spacing: TetherSpace.xl) {
-                TetherMark(size: 148,
-                           lineColor: .white.opacity(0.92),
-                           dotColor: .white,
-                           lineWidth: 15)
+            HStack {
+                Circle()
+                    .fill(LinearGradient(colors: [Color(hex: "B3A4F0"), Color(hex: "6A57D6")],
+                                         startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .frame(width: 64, height: 64)
+                    .shadow(color: Color(hex: "4A3AA8").opacity(0.40), radius: 18, y: 12)
+                    .shadow(color: .white.opacity(0.4), radius: 1, y: 1)
 
-                VStack(spacing: 6) {
-                    Text("Tether")
-                        .font(.system(size: 42, weight: .bold, design: .rounded))
-                        .tracking(-0.9)
-                        .foregroundStyle(.white)
-                    Text("Two people. One practice.")
-                        .font(TetherType.callout)
-                        .foregroundStyle(.white.opacity(0.82))
+                Spacer(minLength: 0)
+
+                Circle()
+                    .fill(LinearGradient(colors: [Color(hex: "6A57D6"), Color(hex: "3B2C8A")],
+                                         startPoint: .topLeading, endPoint: .bottomTrailing))
+                    .frame(width: 64, height: 64)
+                    .shadow(color: Color(hex: "3B2C8A").opacity(0.50), radius: 20, y: 14)
+                    .shadow(color: .white.opacity(0.4), radius: 1, y: 1)
+            }
+            .padding(.horizontal, 28)
+        }
+        .frame(width: 280, height: 110)
+        .accessibilityHidden(true)
+    }
+
+    private var wordmark: some View {
+        VStack(spacing: TetherSpace.xs) {
+            Text("Tether")
+                .font(.system(size: 52, weight: .bold, design: .rounded))
+                .tracking(-1.0)
+                .foregroundStyle(TetherColor.ink)
+            Text("Two people. One practice.")
+                .font(TetherType.callout)
+                .foregroundStyle(TetherColor.muted)
+        }
+    }
+
+    /// "Different paths." (serif regular) and "A deeper connection." (serif italic,
+    /// brand colour) — two rhythms on one line break.
+    private var headline: some View {
+        VStack(spacing: -2) {
+            Text("Different paths.")
+                .font(.system(size: 30, weight: .regular, design: .serif))
+                .foregroundStyle(TetherColor.ink)
+            Text("A deeper connection.")
+                .font(.system(size: 30, weight: .regular, design: .serif).italic())
+                .foregroundStyle(TetherColor.brand)
+        }
+        .multilineTextAlignment(.center)
+    }
+
+    private var introCopy: some View {
+        Text("A private space for couples to reflect, understand and grow together — in your own way.")
+            .font(TetherType.callout)
+            .foregroundStyle(TetherColor.muted)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    private var buttons: some View {
+        VStack(spacing: TetherSpace.s) {
+            Button(action: onNext) {
+                HStack {
+                    Text("Get Started")
+                    Spacer(minLength: 0)
+                    Icon(.chevronRight, size: 17, color: .white)
                 }
             }
-            .padding(.top, TetherSpace.xxxl)
-            .padding(.bottom, TetherSpace.xxl)
+            .tetherButton()
+
+            Button(action: onSkip) {
+                Text("I already have a code")
+                    .font(TetherType.callout)
+                    .foregroundStyle(TetherColor.brand)
+                    .frame(maxWidth: .infinity, minHeight: 54)
+            }
+            .buttonStyle(TetherSecondarySurfaceButtonStyle())
         }
-        .frame(height: 400)
-        .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 44,
-                                          bottomTrailingRadius: 44,
-                                          style: .continuous))
-        .ignoresSafeArea(edges: .top)
+    }
+
+    /// Tracked-caps annotation, vertical, used for the corner labels.
+    @ViewBuilder
+    private func tracked(_ lines: [String],
+                          align: HorizontalAlignment,
+                          color: Color = TetherColor.faint) -> some View {
+        VStack(alignment: align, spacing: 2) {
+            ForEach(lines, id: \.self) { line in
+                Text(line)
+            }
+        }
+        .font(TetherType.micro)
+        .tracking(1.6)
+        .foregroundStyle(color)
+    }
+}
+
+/// The "I already have a code" button — a white surface card with a soft border.
+/// Defined here so the two steps that use it share one source of truth.
+private struct TetherSecondarySurfaceButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .background(TetherColor.surface)
+            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
+                                        style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous)
+                    .strokeBorder(TetherColor.border, lineWidth: 1)
+            )
+            .tetherShadow(.soft)
+            .scaleEffect(configuration.isPressed ? 0.975 : 1)
+            .animation(.spring(response: 0.28, dampingFraction: 0.7), value: configuration.isPressed)
     }
 }
 
