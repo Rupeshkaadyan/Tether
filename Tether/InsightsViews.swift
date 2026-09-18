@@ -356,7 +356,7 @@ struct InsightsMoodChart: View {
                 grid.move(to: CGPoint(x: 0, y: yy))
                 grid.addLine(to: CGPoint(x: w, y: yy))
                 context.stroke(grid, with: .color(TetherColor.border),
-                               lineWidth: 1, dash: lvl == 3 ? [] : [3, 4])
+                               style: StrokeStyle(lineWidth: 1, dash: lvl == 3 ? [] : [3, 4]))
             }
 
             let points: [(Int, CGPoint)] = values.enumerated().compactMap { i, v in
