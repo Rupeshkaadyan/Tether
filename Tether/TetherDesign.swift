@@ -267,3 +267,37 @@ struct TetherEmptyState: View {
         .accessibilityElement(children: .combine)
     }
 }
+
+// MARK: - Language
+
+/// Lets someone choose Tether's language inside the app instead of inheriting
+/// the device language. Applied as an environment locale at the root, so it
+/// takes effect immediately — no restart, no AppleLanguages hack.
+@Observable
+final class LanguageManager {
+    static let shared = LanguageManager()
+
+    /// Shown in Settings. Displayed in each language's own script so it is
+    /// readable whether or not you understand the current one.
+    static let available: [(code: String, name: String)] = [
+        ("en", "English"),
+        ("hi", "हिन्दी"),
+        ("es", "Español")
+    ]
+
+    private let key = "tether.language"
+
+    var code: String {
+        didSet { UserDefaults.standard.set(code, forKey: key) }
+    }
+
+    init() {
+        code = UserDefaults.standard.string(forKey: key) ?? "en"
+    }
+
+    var locale: Locale { Locale(identifier: code) }
+
+    var displayName: String {
+        Self.available.first { $0.code == code }?.name ?? "English"
+    }
+}

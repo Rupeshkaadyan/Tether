@@ -477,6 +477,7 @@ struct SettingsView: View {
     @State private var showLoveQuiz = false
     @State private var showDeleteConfirm = false
     @Environment(\.syncService) private var sync
+    @Environment(LanguageManager.self) private var language
     @State private var sharesAnon = ReflectionSettings.sharesAnonymizedSummary
 
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var allEntries: [JournalEntry]
@@ -495,6 +496,23 @@ struct SettingsView: View {
                                entries: allEntries,
                                messages: allMessages,
                                memories: allMemories)
+    }
+
+    /// Kept as its own property: inlining this Picker inside the Settings List
+    /// pushed the body past what the type-checker could resolve in reasonable
+    /// time. Each option is shown in its own script so it stays readable.
+    private var languagePicker: some View {
+        // @Environment does not expose a $ projection for an @Observable
+        // class, so the binding is built by hand.
+        Picker("Language", selection: Binding(
+            get: { language.code },
+            set: { language.code = $0 }
+        )) {
+            ForEach(LanguageManager.available, id: \.code) { option in
+                Text(option.name).tag(option.code)
+            }
+        }
+        .font(TetherType.body)
     }
 
     @ViewBuilder
@@ -671,6 +689,10 @@ struct SettingsView: View {
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
                         .fixedSize(horizontal: false, vertical: true)
+                }
+
+                Section("Language") {
+                    languagePicker
                 }
 
                 Section("Privacy") {

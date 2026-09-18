@@ -6,6 +6,7 @@ import Foundation
 struct TetherApp: App {
     @State private var session = SessionStore()
     @State private var sync: any SyncService
+    @State private var language = LanguageManager.shared
 
     let container: ModelContainer
 
@@ -22,7 +23,11 @@ struct TetherApp: App {
         WindowGroup {
             RootView()
                 .environment(session)
+                .environment(language)
                 .environment(\.syncService, sync)
+                // In-app language choice. Setting the locale here makes every
+                // Text(\"literal\") resolve from the chosen .lproj immediately.
+                .environment(\.locale, language.locale)
                 .modelContainer(container)
         }
     }

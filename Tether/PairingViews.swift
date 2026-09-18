@@ -59,6 +59,11 @@ struct PairingView: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Close") { dismiss() }
                 }
+                if invite != nil {
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Cancel invite", role: .destructive) { cancelInvite() }
+                    }
+                }
             }
             .sheet(isPresented: $showRedeem) {
                 RedeemCodeView(profile: profile) {
@@ -73,6 +78,17 @@ struct PairingView: View {
                 if profile.partnerID != nil { justPaired = true }
             }
         }
+    }
+
+    /// Withdraws the pending invite so you can pick a different way to
+    /// connect. Without this, reopening Pairing reloads the saved invite and
+    /// drops you straight back into the waiting room with no way out.
+    private func cancelInvite() {
+        guard let current = invite else { return }
+        current.status = .revoked
+        try? ctx.save()
+        invite = nil
+        TetherHaptics.tap()
     }
 
     private var partner: UserProfile? {
