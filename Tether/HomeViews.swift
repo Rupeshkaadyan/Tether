@@ -88,6 +88,11 @@ struct HomeView: View {
                         composer
                     }
 
+                    if let echo = memoryEcho {
+                        MemoryEchoCard(entry: echo.entry, monthsBack: echo.months)
+                            .tetherAppear(delay: 0.2)
+                    }
+
                     if !olderEntries.isEmpty {
                         SectionHeader(title: "Recent")
                         recentList
@@ -162,6 +167,9 @@ struct HomeView: View {
                 Text(profile.displayName)
                     .font(TetherType.largeTitle)
                     .foregroundStyle(TetherColor.text)
+                Text(continuitySubtitle)
+                    .font(TetherType.caption)
+                    .foregroundStyle(TetherColor.muted)
             }
             Spacer(minLength: 0)
             StreakRing(count: streak)
@@ -180,6 +188,18 @@ struct HomeView: View {
             .accessibilityLabel("Settings")
         }
         .padding(.top, TetherSpace.s)
+    }
+
+    /// A small continuity line under the name — "Day 12 of your practice"
+    /// or "X-day streak" — so the practice feels like a practice, not a form.
+    private var continuitySubtitle: String {
+        let days = max(1, Calendar.current.dateComponents([.day],
+            from: Calendar.current.startOfDay(for: profile.createdAt),
+            to: Calendar.current.startOfDay(for: Date())).day ?? 1)
+        if streak >= 1 {
+            return "Day \(days) · \(streak)-day streak"
+        }
+        return "Day \(days) of your practice"
     }
 
     private var greetingWord: String {
@@ -389,6 +409,20 @@ struct HomeView: View {
     @AppStorage("tether.revealedOn") private var revealedOn = ""
 
     private var bothAnswered: Bool { todayAnswered && partnerAnsweredToday }
+
+    /// A memory from a while back, if there is one. Shown on Home so the app
+    /// feels like it has a past with you instead of being an empty form.
+    /// Tries one month, then three, six and twelve.
+    private var memoryEcho: (entry: JournalEntry, months: Int)? {
+        for months in [1, 3, 6, 12] {
+            if let entry = MemoryEchoCard.find(in: entries,
+                                               userID: profile.id,
+                                               monthsBack: months) {
+                return (entry, months)
+            }
+        }
+        return nil
+    }
 
     private var partnerTodayEntry: JournalEntry? {
         guard let partner else { return nil }

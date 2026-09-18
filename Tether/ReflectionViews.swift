@@ -195,6 +195,69 @@ struct YearInReviewView: View {
     }
 }
 
+// MARK: - Memory echo
+
+/// Surfaces something written a while back. This is the cure for an app that
+/// feels empty today: it makes Tether feel like it has a past with you, rather
+/// than being a form you fill in each morning.
+struct MemoryEchoCard: View {
+    let entry: JournalEntry
+    let monthsBack: Int
+
+    var body: some View {
+        TetherCard {
+            VStack(alignment: .leading, spacing: TetherSpace.s) {
+                HStack(spacing: TetherSpace.xs) {
+                    TetherHeroMark(width: 26,
+                                   color: TetherColor.brand.opacity(0.5),
+                                   sag: 4,
+                                   lineWidth: 1.5,
+                                   dotRadius: 2)
+                    Text(label)
+                        .font(TetherType.micro)
+                        .foregroundStyle(TetherColor.faint)
+                        .tracking(1)
+                    Spacer(minLength: 0)
+                }
+
+                Text(SecureContent.read(entry.body))
+                    .font(TetherType.callout)
+                    .foregroundStyle(TetherColor.text)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .lineLimit(4)
+
+                Text(entry.entryDate.formatted(date: .abbreviated, time: .omitted))
+                    .font(TetherType.caption)
+                    .foregroundStyle(TetherColor.muted)
+            }
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("\(label). \(SecureContent.read(entry.body))")
+    }
+
+    private var label: String {
+        switch monthsBack {
+        case 1:  return "ONE MONTH AGO"
+        case 12: return "ONE YEAR AGO"
+        default: return "\(monthsBack) MONTHS AGO"
+        }
+    }
+
+    /// Finds an entry written in the window ending `monthsBack` months ago.
+    static func find(in entries: [JournalEntry],
+                     userID: UUID,
+                     monthsBack: Int) -> JournalEntry? {
+        let cal = Calendar.current
+        let now = Date()
+        guard let lower = cal.date(byAdding: .month, value: -(monthsBack + 1), to: now),
+              let upper = cal.date(byAdding: .month, value: -monthsBack, to: now) else { return nil }
+        return entries
+            .filter { $0.userID == userID && $0.entryDate >= lower && $0.entryDate <= upper }
+            .sorted { $0.entryDate > $1.entryDate }
+            .first
+    }
+}
+
 // MARK: - Reveal moment
 
 /// Both partners answered. This is the emotional heart of Tether and the only
