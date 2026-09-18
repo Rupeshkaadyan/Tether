@@ -3,12 +3,12 @@
 Apple requires a **public URL** to your privacy policy before you can submit.
 You cannot host it inside the app. Two free options — pick one.
 
-## Before you host: replace the email
+## Before you host: confirm the email
 
-Open `docs/privacy.html` and replace **both** occurrences of
-`REPLACE_WITH_YOUR_EMAIL` with your real contact address (e.g.
-`privacy@yourdomain.com`). There are two: the `mailto:` link and the visible
-text. Do the same in `docs/PRIVACY_POLICY.md` if you publish that too.
+The contact address is already set to **rupeshjat5@gmail.com** in both
+`docs/privacy.html` and `docs/PRIVACY_POLICY.md`. If you ever want a different
+address, change it in both files — in `privacy.html` there are two spots: the
+`mailto:` link and the visible text.
 
 ---
 

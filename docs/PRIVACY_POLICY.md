@@ -107,7 +107,7 @@ reading or uploading your journal.
 
 ## 12. Contact
 
-Questions about privacy: **[your email here]**
+Questions about privacy: [rupeshjat5@gmail.com](mailto:rupeshjat5@gmail.com)
 
 ---
 
