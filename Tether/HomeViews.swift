@@ -1094,6 +1094,7 @@ struct SettingsView: View {
     @State private var showTrack = false
     @State private var exportUnlocked = false
     @State private var exportMessage: String?
+    @State private var switchingLanguage = false
     @Environment(\.syncService) private var sync
     @Environment(LanguageManager.self) private var language
     @Environment(ThemeManager.self) private var theme
@@ -1168,9 +1169,24 @@ struct SettingsView: View {
     private var languagePicker: some View {
         // @Environment does not expose a $ projection for an @Observable
         // class, so the binding is built by hand.
+        //
+        // Changing locale re-resolves every string in the app and re-lays out
+        // the whole tree, which takes a beat and used to look like a freeze.
+        // The overlay is shown first, given a frame to draw, and only then is
+        // the language changed — so it reads as work being done rather than a
+        // hang.
         Picker("Language", selection: Binding(
             get: { language.code },
-            set: { language.code = $0 }
+            set: { newValue in
+                guard newValue != language.code else { return }
+                Task { @MainActor in
+                    withAnimation(.easeOut(duration: 0.15)) { switchingLanguage = true }
+                    try? await Task.sleep(for: .milliseconds(180))
+                    language.code = newValue
+                    try? await Task.sleep(for: .milliseconds(700))
+                    withAnimation(.easeOut(duration: 0.2)) { switchingLanguage = false }
+                }
+            }
         )) {
             ForEach(LanguageManager.available, id: \.code) { option in
                 Text(option.name).tag(option.code)
@@ -1500,6 +1516,25 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showTrack) {
                 WisdomTrackDetailView(track: profile.track)
+            }
+            .overlay {
+                if switchingLanguage {
+                    ZStack {
+                        TetherColor.bg.opacity(0.92).ignoresSafeArea()
+                        VStack(spacing: TetherSpace.m) {
+                            TetherHeroMark(width: 64,
+                                           color: TetherColor.brand,
+                                           sag: 8,
+                                           lineWidth: 4,
+                                           dotRadius: 5)
+                                .tetherBreathing()
+                            Text("Changing language…")
+                                .font(TetherType.label)
+                                .foregroundStyle(TetherColor.muted)
+                        }
+                    }
+                    .transition(.opacity)
+                }
             }
             .alert("Delete all data?", isPresented: $showDeleteConfirm) {
                 Button("Delete", role: .destructive) { deleteEverything() }
