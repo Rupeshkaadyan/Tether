@@ -115,7 +115,7 @@ struct PromptCard: View {
         }
         .padding(TetherSpace.xl)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(TetherGradient.brand)
+        .background(heroBackground)
         .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous)
@@ -123,6 +123,37 @@ struct PromptCard: View {
         )
         .tetherShadow(.floating)
         .accessibilityElement(children: .combine)
+    }
+
+    /// The brand gradient with the Tether motif swept through it and a soft
+    /// light source in the corner — so the hero reads as designed rather than
+    /// as a flat purple rectangle.
+    private var heroBackground: some View {
+        ZStack {
+            TetherGradient.brand
+
+            // The motif, enlarged and barely visible, filling the card.
+            TetherSlackCurve(sag: 40)
+                .stroke(Color.white.opacity(0.11),
+                        style: StrokeStyle(lineWidth: 1.5, lineCap: .round))
+                .frame(width: 320, height: 130)
+                .offset(y: 26)
+
+            TetherSlackCurve(sag: 22)
+                .stroke(Color.white.opacity(0.07),
+                        style: StrokeStyle(lineWidth: 1, lineCap: .round))
+                .frame(width: 260, height: 100)
+                .offset(x: 40, y: -54)
+
+            // A soft light source, top-right.
+            Circle()
+                .fill(RadialGradient(colors: [Color.white.opacity(0.20), .clear],
+                                     center: .center,
+                                     startRadius: 0,
+                                     endRadius: 130))
+                .frame(width: 260, height: 260)
+                .offset(x: 86, y: -104)
+        }
     }
 }
 
