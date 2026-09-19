@@ -584,6 +584,7 @@ struct MemoryLaneView: View {
     @Environment(\.dismiss) private var dismiss
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
     @Query private var profiles: [UserProfile]
+    @State private var pdfURL: URL?
 
     private var partner: UserProfile? {
         guard let id = profile.partnerID else { return nil }
@@ -611,6 +612,7 @@ struct MemoryLaneView: View {
                         onThisDay
                         bestMoments
                         monthStrip
+                        yearBook
                     }
                 }
                 .padding(TetherSpace.margin)
@@ -805,6 +807,41 @@ struct MemoryLaneView: View {
     }
 
     private var maxCount: Int { max(1, monthBuckets.map(\.count).max() ?? 1) }
+
+    // MARK: Year book
+
+    /// Renders the whole story to a printable PDF and offers it to the share
+    /// sheet. Generated on demand — it is only worth building if they want it.
+    private var yearBook: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.s) {
+            SectionHeader(title: "Keepsake")
+
+            if let pdfURL {
+                ShareLink(item: pdfURL) {
+                    Text("Share your year book")
+                        .font(TetherType.label)
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 50)
+                        .background(TetherGradient.brand)
+                        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                    style: .continuous))
+                }
+            } else {
+                Button("Make a year book") {
+                    pdfURL = YearBook.makePDF(profile: profile,
+                                              partner: partner,
+                                              entries: story)
+                }
+                .tetherButton()
+            }
+
+            Text("A printable PDF of everything you have both written. It leaves the encrypted store, so keep it somewhere safe.")
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
 
     // MARK: Derived
 
