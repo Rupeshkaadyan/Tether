@@ -230,10 +230,17 @@ struct CoachView: View {
                 } label: {
                     ZStack {
                         if voice.isRecording {
+                            // Clamped here as well as at the source. A frame
+                            // width computed from a measurement is the classic
+                            // way to get "Invalid frame dimension (negative or
+                            // non-finite)", and the fix belongs at both ends:
+                            // sanitise the value where it is produced, and
+                            // never let a negative reach `.frame`.
+                            let pulse = min(max(voice.level, 0), 1)
                             Circle()
-                                .fill(TetherColor.strained.opacity(0.14 + voice.level * 0.30))
-                                .frame(width: 40 + voice.level * 10,
-                                       height: 40 + voice.level * 10)
+                                .fill(TetherColor.strained.opacity(0.14 + pulse * 0.30))
+                                .frame(width: 40 + pulse * 10,
+                                       height: 40 + pulse * 10)
                         }
                         Icon(.mic, size: 19,
                              color: voice.isRecording ? TetherColor.strained : TetherColor.muted)

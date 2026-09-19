@@ -45,8 +45,11 @@ struct TetherScene: View {
 
     var body: some View {
         GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
+            // Guarded. A GeometryReader can be handed zero during the first
+            // layout pass, and every dimension below is `h * something` — a
+            // zero or non-finite height propagates straight into `.frame`.
+            let w = geo.size.width.isFinite ? max(0, geo.size.width) : 0
+            let h = geo.size.height.isFinite ? max(0, geo.size.height) : 0
 
             ZStack {
                 LinearGradient(colors: sky, startPoint: .top, endPoint: .bottom)
@@ -103,7 +106,7 @@ struct TetherScene: View {
                 //
                 // Density is low here. The header is a horizon, not an
                 // aquarium; the particles should be noticed, not counted.
-                SceneBackdrop(theme: scene, density: 0.55)
+                SceneBackdrop(theme: scene, density: 0.55, framesPerSecond: 12)
                     .allowsHitTesting(false)
             }
         }
@@ -213,8 +216,11 @@ struct PulseHorizon: View {
 
     var body: some View {
         GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
+            // Guarded. A GeometryReader can be handed zero during the first
+            // layout pass, and every dimension below is `h * something` — a
+            // zero or non-finite height propagates straight into `.frame`.
+            let w = geo.size.width.isFinite ? max(0, geo.size.width) : 0
+            let h = geo.size.height.isFinite ? max(0, geo.size.height) : 0
 
             ZStack {
                 LinearGradient(colors: sky, startPoint: .top, endPoint: .bottom)

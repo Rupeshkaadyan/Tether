@@ -156,6 +156,17 @@ final class VoiceInput {
         var sum: Float = 0
         for i in 0..<count { sum += channel[i] * channel[i] }
         let rms = sqrt(sum / Float(count))
+
+        // isFinite BEFORE the clamp, because the clamp does not work on NaN.
+        //
+        // Swift's min/max compare with <, and every comparison against NaN is
+        // false, so `min(max(NaN, 0), 1)` returns NaN rather than 0 or 1. One
+        // denormal or NaN sample in the audio buffer therefore propagated a
+        // non-finite value into `level`, then into a frame width, and SwiftUI
+        // logged "Invalid frame dimension (negative or non-finite)" on every
+        // frame of the pulse animation.
+        guard rms.isFinite else { return }
+
         let normalised = min(max(Double(rms) * 14, 0), 1)
         Task { @MainActor in self.level = normalised }
     }

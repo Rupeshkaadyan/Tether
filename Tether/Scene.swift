@@ -249,6 +249,17 @@ struct SceneBackdrop: View {
     /// Fraction of the particles to draw. The jar uses 1 (the scene is the
     /// subject); the app-wide backdrop uses less, so it reads as atmosphere.
     var density: Double = 1
+    /// How often to redraw, in frames per second.
+    ///
+    /// THIS IS A THERMAL DECISION, not a visual one. Running at the display's
+    /// native rate meant a Canvas full of radial gradients redrawing 120 times
+    /// a second on every screen, forever — which is what made the phone hot.
+    ///
+    /// The particles drift a few pixels per second. At 15fps they are
+    /// indistinguishable from 120fps, because there is no fast motion for the
+    /// eye to track. The jar gets a little more because it is the focus and
+    /// the draw is the point; the ambient backdrop gets less.
+    var framesPerSecond: Double = 15
 
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.colorScheme) private var systemScheme
@@ -266,8 +277,21 @@ struct SceneBackdrop: View {
         // It DOES pause when the app is not in the foreground. That is where
         // the real waste was: a display link ticking behind a backgrounded app
         // buys nothing and costs battery.
-        TimelineView(.animation(paused: scenePhase != .active)) { timeline in
+        TimelineView(.animation(minimumInterval: 1.0 / framesPerSecond,
+                                paused: scenePhase != .active)) { timeline in
             Canvas { ctx, size in
+                // Guard before ANY arithmetic.
+                //
+                // SwiftUI can hand a Canvas a zero or non-finite size during
+                // the first layout pass, or while a container is collapsing.
+                // Every particle does `r * 2.6` and `size.width * 0.75` from
+                // this value, so a NaN or a negative propagates straight into
+                // CGRect and logs "Invalid frame dimension (negative or
+                // non-finite)" — once per particle, per frame, which is its own
+                // performance problem on top of the visual one.
+                guard size.width.isFinite, size.height.isFinite,
+                      size.width > 0, size.height > 0 else { return }
+
                 let t = timeline.date.timeIntervalSinceReferenceDate
 
                 // Light source, upper-left, breathing very slowly.

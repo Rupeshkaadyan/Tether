@@ -108,7 +108,7 @@ struct WisdomJarView: View {
             LinearGradient(colors: palette.backdrop,
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
-            SceneBackdrop(theme: palette)
+            SceneBackdrop(theme: palette, framesPerSecond: 24)
         }
         .ignoresSafeArea()
         .animation(.easeInOut(duration: 0.6), value: theme.raw)
@@ -556,7 +556,7 @@ struct JarNoteSheet: View {
             LinearGradient(colors: theme.backdrop,
                            startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
-            SceneBackdrop(theme: theme)
+            SceneBackdrop(theme: theme, framesPerSecond: 20)
 
             VStack(alignment: .leading, spacing: TetherSpace.l) {
                 HStack(spacing: TetherSpace.s) {
