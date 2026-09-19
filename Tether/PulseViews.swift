@@ -169,6 +169,7 @@ struct PulseView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: TetherSpace.xl) {
+                    pulseBanner
                     hero
                     explanation
                     disclaimer
@@ -191,18 +192,40 @@ struct PulseView: View {
 
     /// Lead with the state, then the three restrained stats. Describes, never
     /// predicts — the brief is "human, not dashboard".
-    private var hero: some View {
-        VStack(alignment: .leading, spacing: TetherSpace.l) {
-            VStack(alignment: .leading, spacing: TetherSpace.xs) {
+    /// The relationship as a landscape — the sun rises when things are
+    /// thriving and sinks toward the ridge when they are strained.
+    private var pulseBanner: some View {
+        ZStack(alignment: .bottomLeading) {
+            PulseHorizon(state: result.state, score: result.score)
+
+            LinearGradient(colors: [.clear, .black.opacity(0.30)],
+                           startPoint: .center,
+                           endPoint: .bottom)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Relationship pulse".uppercased())
+                    .font(TetherType.micro)
+                    .tracking(1.4)
+                    .foregroundStyle(.white.opacity(0.78))
                 Text(result.state.displayName)
-                    .font(.system(size: 44, weight: .bold, design: .rounded))
-                    .foregroundStyle(result.state.color)
+                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .tracking(-0.8)
+                    .foregroundStyle(.white)
                 Text(stateDescription)
-                    .font(TetherType.callout)
-                    .foregroundStyle(TetherColor.muted)
+                    .font(TetherType.caption)
+                    .foregroundStyle(.white.opacity(0.85))
                     .fixedSize(horizontal: false, vertical: true)
             }
+            .padding(.horizontal, TetherSpace.margin)
+            .padding(.bottom, TetherSpace.l)
+        }
+        .frame(height: 230)
+        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
+        .padding(.horizontal, -TetherSpace.margin)
+    }
 
+    private var hero: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.l) {
             TetherPulseViz(state: result.state)
                 .frame(height: 80)
                 .padding(.vertical, TetherSpace.xs)

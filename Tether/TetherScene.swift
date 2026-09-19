@@ -125,7 +125,7 @@ struct TetherScene: View {
 
 /// A layered mountain silhouette. Peaks are normalised heights; `crest` is how
 /// far up the view the ridge reaches.
-private struct Ridge: Shape {
+struct Ridge: Shape {
     let peaks: [CGFloat]
     let crest: CGFloat
 
@@ -182,5 +182,84 @@ private struct Stars: View {
             }
         }
         .allowsHitTesting(false)
+    }
+}
+
+// MARK: - Pulse horizon
+
+/// The relationship as a landscape. The sun sits high when things are thriving
+/// and sinks toward the ridge when they are strained — so the Pulse reads as a
+/// place rather than a number.
+struct PulseHorizon: View {
+    let state: PulseState
+    /// Composite score, 0...1.
+    let score: Double
+
+    var body: some View {
+        GeometryReader { geo in
+            let w = geo.size.width
+            let h = geo.size.height
+
+            ZStack {
+                LinearGradient(colors: sky, startPoint: .top, endPoint: .bottom)
+
+                Circle()
+                    .fill(
+                        RadialGradient(colors: [orb.opacity(0.95), orb.opacity(0.0)],
+                                       center: .center,
+                                       startRadius: 2,
+                                       endRadius: 86)
+                    )
+                    .frame(width: 160, height: 160)
+                    .position(x: w * 0.5, y: h * (0.82 - 0.54 * score))
+
+                Ridge(peaks: [0.30, 0.46, 0.34, 0.52, 0.38], crest: 0.80)
+                    .fill(ridge)
+                    .frame(height: h)
+
+                VStack {
+                    Spacer()
+                    LinearGradient(colors: [water.opacity(0.0), water],
+                                   startPoint: .top, endPoint: .bottom)
+                        .frame(height: h * 0.16)
+                }
+            }
+        }
+    }
+
+    private var sky: [Color] {
+        switch state {
+        case .thriving: return [Color(hex: "4A6FC4"), Color(hex: "8FA8E0"), Color(hex: "F2C79A")]
+        case .drifting: return [Color(hex: "4A4468"), Color(hex: "7C7499"), Color(hex: "C3A8A0")]
+        case .strained: return [Color(hex: "2E2440"), Color(hex: "5A3F55"), Color(hex: "9C5F63")]
+        case .unknown:  return [Color(hex: "3E3A52"), Color(hex: "6B6684"), Color(hex: "A79FB0")]
+        }
+    }
+
+    private var orb: Color {
+        switch state {
+        case .thriving: return Color(hex: "FFF3CF")
+        case .drifting: return Color(hex: "F0DCC8")
+        case .strained: return Color(hex: "E8A48C")
+        case .unknown:  return Color(hex: "D8D2E0")
+        }
+    }
+
+    private var ridge: Color {
+        switch state {
+        case .thriving: return Color(hex: "2F3E72")
+        case .drifting: return Color(hex: "34304C")
+        case .strained: return Color(hex: "241B33")
+        case .unknown:  return Color(hex: "302C42")
+        }
+    }
+
+    private var water: Color {
+        switch state {
+        case .thriving: return Color(hex: "25315C")
+        case .drifting: return Color(hex: "282441")
+        case .strained: return Color(hex: "1B1428")
+        case .unknown:  return Color(hex: "262338")
+        }
     }
 }
