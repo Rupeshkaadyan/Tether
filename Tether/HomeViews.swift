@@ -16,6 +16,13 @@ struct HomeView: View {
     @Query(sort: \MoodLog.createdAt, order: .reverse) private var moods: [MoodLog]
     @Query private var allProfiles: [UserProfile]
 
+    @State private var scene = SceneManager.shared
+    @Environment(\.colorScheme) private var systemScheme
+
+    /// The RESOLVED scene. The header landscape reads this, so the top of Home
+    /// can no longer be a starfield above Dawn-paper cards.
+    private var palette: AppScene { scene.choice.concrete(system: systemScheme) }
+
     @State private var mood = 3
     @State private var reply = ""
     @State private var showSettings = false
@@ -316,7 +323,7 @@ struct HomeView: View {
     /// it always meets the very top edge. Content scrolls over it.
     private var mastheadSky: some View {
         ZStack(alignment: .bottom) {
-            TetherScene(timeOfDay: .current)
+            TetherScene(timeOfDay: palette.timeOfDay)
             LinearGradient(colors: [.clear, .black.opacity(0.34)],
                            startPoint: .center,
                            endPoint: .bottom)

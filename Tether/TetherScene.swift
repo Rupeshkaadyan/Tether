@@ -1,5 +1,23 @@
 import SwiftUI
 
+extension AppScene {
+    /// The header landscape this scene implies.
+    ///
+    /// The header used to follow the CLOCK while the rest of the screen
+    /// followed the THEME, so at 4am in light mode the top of Home was a
+    /// starfield above Dawn-paper cards. Two sources of truth for one look.
+    /// Now the theme decides both, and the clock only matters for
+    /// `.automatic`, which has already been resolved into a real scene.
+    var timeOfDay: TetherScene.TimeOfDay {
+        switch self {
+        case .automatic, .dawn: return .dawn
+        case .night, .aurora:   return .night
+        case .garden, .jungle:  return .day
+        case .ocean, .dune:     return .dusk
+        }
+    }
+}
+
 /// A hand-drawn landscape for the top of Home. Every line is a `Path` — this
 /// is not an image file, so it stays razor sharp at any size, adapts to light
 /// and dark mode, and can change with the time of day.
