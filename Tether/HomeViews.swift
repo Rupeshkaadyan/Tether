@@ -161,40 +161,64 @@ struct HomeView: View {
 
     // MARK: - Header
 
+    /// The masthead: a drawn landscape with the greeting set over it. The
+    /// scene changes with the time of day, so the app looks different at
+    /// breakfast and at midnight.
     private var header: some View {
-        HStack(alignment: .center, spacing: TetherSpace.m) {
+        ZStack(alignment: .bottomLeading) {
+            TetherScene(timeOfDay: .current)
+
+            // Scrim, so the words hold on any sky.
+            LinearGradient(colors: [.clear, .black.opacity(0.30)],
+                           startPoint: .center,
+                           endPoint: .bottom)
+
             VStack(alignment: .leading, spacing: 2) {
-                // Tracked caps as an eyebrow, then the name set large — the
-                // header reads as a masthead rather than a form label.
                 Text("\(greetingWord) · \(Date().shortDisplay)".uppercased())
                     .font(TetherType.micro)
                     .tracking(1.4)
-                    .foregroundStyle(TetherColor.faint)
+                    .foregroundStyle(.white.opacity(0.75))
                 Text(profile.displayName)
-                    .font(.system(size: 34, weight: .bold, design: .rounded))
-                    .tracking(-0.7)
-                    .foregroundStyle(TetherColor.text)
+                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .tracking(-0.8)
+                    .foregroundStyle(.white)
                 Text(continuitySubtitle)
                     .font(TetherType.caption)
-                    .foregroundStyle(TetherColor.muted)
+                    .foregroundStyle(.white.opacity(0.80))
             }
-            Spacer(minLength: 0)
-            StreakRing(count: streak)
-            Button {
-                showSettings = true
-            } label: {
-                Image(systemName: "gearshape")
-                    .font(.system(size: 17, weight: .medium))
-                    .foregroundStyle(TetherColor.muted)
-                    .frame(width: 42, height: 42)
-                    .background(TetherColor.surface)
-                    .clipShape(Circle())
-                    .tetherShadow(.soft)
+            .padding(.horizontal, TetherSpace.margin)
+            .padding(.bottom, TetherSpace.l)
+
+            VStack {
+                HStack(spacing: TetherSpace.s) {
+                    Spacer(minLength: 0)
+                    StreakRing(count: streak)
+                    Button {
+                        showSettings = true
+                    } label: {
+                        Image(systemName: "gearshape")
+                            .font(.system(size: 17, weight: .medium))
+                            .foregroundStyle(.white)
+                            .frame(width: 42, height: 42)
+                            .background(.ultraThinMaterial, in: Circle())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Settings")
+                }
+                .padding(.horizontal, TetherSpace.margin)
+                // Clears the status bar now that the scene runs behind it.
+                .padding(.top, TetherSpace.m + 58)
+                Spacer()
             }
-            .buttonStyle(.plain)
-            .accessibilityLabel("Settings")
         }
-        .padding(.top, TetherSpace.s)
+        .frame(height: 358)
+        .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 36,
+                                          bottomTrailingRadius: 36,
+                                          style: .continuous))
+        // Bleed out of the scroll content's margins, and up behind the status
+        // bar, so the scene is truly edge to edge.
+        .padding(.horizontal, -TetherSpace.margin)
+        .padding(.top, -(TetherSpace.margin + 58))
     }
 
     /// A small continuity line under the name — "Day 12 of your practice"
