@@ -1171,6 +1171,28 @@
         }
       }
     },
+    "Aurora": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Aurora"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ध्रुवीय ज्योति"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aurora"
+          }
+        }
+      }
+    },
     "Avg Mood": {
       "extractionState": "stale",
       "localizations": {
@@ -1558,6 +1580,28 @@
         }
       }
     },
+    "Cold sky, green light moving.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Cold sky, green light moving."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ठंडा आकाश, हिलती हरी रोशनी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cielo frío, luz verde en movimiento."
+          }
+        }
+      }
+    },
     "Connect": {
       "localizations": {
         "es": {
@@ -1873,6 +1917,28 @@
         }
       }
     },
+    "Deep water, slow bubbles rising.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Deep water, slow bubbles rising."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गहरा पानी, धीरे उठते बुलबुले।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agua profunda, burbujas que suben despacio."
+          }
+        }
+      }
+    },
     "Deeper reflection": {
       "localizations": {
         "es": {
@@ -2075,6 +2141,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "दूर हो रहा"
+          }
+        }
+      }
+    },
+    "Dune": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Dune"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "टीला"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Duna"
           }
         }
       }
@@ -2331,6 +2419,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "मोड़कर रखें"
+          }
+        }
+      }
+    },
+    "Follows your phone. Dark gets Night, light gets Dawn.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Follows your phone. Dark gets Night, light gets Dawn."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके फ़ोन का अनुसरण करता है। डार्क में रात, लाइट में भोर।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sigue tu teléfono. Oscuro usa Noche, claro usa Amanecer."
           }
         }
       }
@@ -3238,6 +3348,28 @@
         }
       }
     },
+    "Match phone": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Match phone"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ोन के अनुसार"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Según el teléfono"
+          }
+        }
+      }
+    },
     "Memory Lane": {
       "localizations": {
         "en": {
@@ -3960,6 +4092,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस दिन"
+          }
+        }
+      }
+    },
+    "Ocean": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Ocean"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "समुद्र"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Océano"
           }
         }
       }
@@ -6054,6 +6208,28 @@
         }
       }
     },
+    "Theme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Theme"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "थीम"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tema"
+          }
+        }
+      }
+    },
     "Then %@. Cancel anytime in Settings.": {
       "localizations": {
         "es": {
@@ -6589,6 +6765,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "गर्म कागज़ और सुबह की रोशनी।"
+          }
+        }
+      }
+    },
+    "Warm sand at dusk, dust on the wind.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Warm sand at dusk, dust on the wind."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शाम को गर्म रेत, हवा में धूल।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Arena cálida al atardecer, polvo en el viento."
           }
         }
       }
