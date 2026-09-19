@@ -46,6 +46,20 @@ print(f"Found {len(privacy_files)} bundle resource file(s)")
 
 all_files = swift_files + asset_dirs + privacy_files
 
+# ---- 1b. Widget extension sources ----
+# Kept in a separate folder and a separate target: an app extension cannot be
+# compiled into the app, and the widget cannot import the app's types.
+WIDGET_NAME = "TetherWidget"
+WIDGET_DIR = DST / WIDGET_NAME
+widget_files = []
+if WIDGET_DIR.exists():
+    widget_files = sorted(
+        (pathlib.Path(fn) for fn in os.listdir(WIDGET_DIR) if fn.endswith(".swift")),
+        key=lambda p: str(p).lower())
+    print(f"Found {len(widget_files)} widget source(s)")
+else:
+    print("No TetherWidget/ folder — building the app alone")
+
 # ---- 2. UUID helpers ----
 _ctr = [0]
 def uid():
@@ -79,10 +93,32 @@ U["projRelease"]= uid()
 U["targDebug"]  = uid()
 U["targRelease"]= uid()
 
+# Widget target. Only allocated when the folder exists, so the generator still
+# produces a valid single-target project without it.
+if widget_files:
+    U["widgetTarget"]  = uid()
+    U["widgetProduct"] = uid()   # .appex file ref
+    U["widgetSrcPhase"]= uid()
+    U["widgetFwPhase"] = uid()
+    U["widgetResPhase"]= uid()
+    U["widgetList"]    = uid()
+    U["widgetDebug"]   = uid()
+    U["widgetRelease"] = uid()
+    U["embedPhase"]    = uid()   # PBXCopyFilesBuildPhase in the app
+    U["embedFile"]     = uid()   # the .appex as a build file
+    U["dep"]           = uid()   # PBXTargetDependency
+    U["proxy"]         = uid()   # PBXContainerItemProxy
+    U["widgetGroup"]   = uid()
+
 file_refs, build_files = {}, {}
 for p in swift_files + asset_dirs + privacy_files:
     file_refs[p] = uid()
     build_files[p] = uid()
+
+widget_refs, widget_builds = {}, {}
+for p in widget_files:
+    widget_refs[p] = uid()
+    widget_builds[p] = uid()
 
 # ---- 4. Build group tree from folders ----
 tree = {}
@@ -202,6 +238,38 @@ targ_debug = targ_common + [("SWIFT_ACTIVE_COMPILATION_CONDITIONS", "DEBUG $(inh
 targ_release = targ_common + [("SWIFT_OPTIMIZATION_LEVEL", "-O"),
                               ("VALIDATE_PRODUCT", "YES")]
 
+# The widget extension. Note there is NO CODE_SIGN_ENTITLEMENTS here and no
+# App Group: free provisioning does not support App Groups, and adding the
+# entitlement would make the whole app fail to sign on a free account.
+widget_common = [
+    ("CODE_SIGN_STYLE", "Automatic"),
+    ("CURRENT_PROJECT_VERSION", "1"),
+    ("GENERATE_INFOPLIST_FILE", "NO"),
+    ("INFOPLIST_FILE", f"{WIDGET_NAME}/Info.plist"),
+    ("IPHONEOS_DEPLOYMENT_TARGET", "17.0"),
+    ("LD_RUNPATH_SEARCH_PATHS", ("$(inherited)",
+                                 "@executable_path/Frameworks",
+                                 "@executable_path/../../Frameworks")),
+    ("MARKETING_VERSION", "1.0"),
+    ("OTHER_SWIFT_FLAGS", "-disable-sandbox"),
+    ("PRODUCT_BUNDLE_IDENTIFIER", "com.tethercouples.app.widget"),
+    ("PRODUCT_NAME", "$(TARGET_NAME)"),
+    ("SDKROOT", "iphoneos"),
+    # An extension is embedded in the app, never installed on its own.
+    ("SKIP_INSTALL", "YES"),
+    ("SWIFT_EMIT_LOC_STRINGS", "YES"),
+    ("SWIFT_VERSION", "5.9"),
+    ("TARGETED_DEVICE_FAMILY", "1"),
+]
+widget_debug = widget_common + [
+    ("SWIFT_ACTIVE_COMPILATION_CONDITIONS", "DEBUG $(inherited)"),
+    ("SWIFT_OPTIMIZATION_LEVEL", "-Onone"),
+]
+widget_release = widget_common + [
+    ("SWIFT_OPTIMIZATION_LEVEL", "-O"),
+    ("VALIDATE_PRODUCT", "YES"),
+]
+
 def settings_block(settings, indent):
     out = [f"{indent}buildSettings = {{"]
     for k, v in settings:
@@ -232,6 +300,11 @@ for p in swift_files:
     a(f"\t\t{build_files[p]} /* {p.name} in Sources */ = {{isa = PBXBuildFile; fileRef = {file_refs[p]} /* {p.name} */; }};")
 for p in asset_dirs + privacy_files:
     a(f"\t\t{build_files[p]} /* {p.name} in Resources */ = {{isa = PBXBuildFile; fileRef = {file_refs[p]} /* {p.name} */; }};")
+if widget_files:
+    for p in widget_files:
+        a(f"\t\t{widget_builds[p]} /* {p.name} in Sources */ = {{isa = PBXBuildFile; fileRef = {widget_refs[p]} /* {p.name} */; }};")
+    # The .appex is copied into the app bundle by the embed phase.
+    a(f"\t\t{U['embedFile']} /* {WIDGET_NAME}.appex in Embed Foundation Extensions */ = {{isa = PBXBuildFile; fileRef = {U['widgetProduct']} /* {WIDGET_NAME}.appex */; settings = {{ATTRIBUTES = (RemoveHeadersOnCopy, ); }}; }};")
 a("/* End PBXBuildFile section */")
 a("")
 
@@ -246,7 +319,28 @@ for p in privacy_files:
     # format if we claim otherwise, and the build fails.
     ftype = "text.json.xcstrings" if str(p).endswith(".xcstrings") else "text.plist.xml"
     a(f"\t\t{file_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = {ftype}; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
+if widget_files:
+    a(f"\t\t{U['widgetProduct']} /* {WIDGET_NAME}.appex */ = {{isa = PBXFileReference; explicitFileType = \"wrapper.app-extension\"; includeInIndex = 0; path = {WIDGET_NAME}.appex; sourceTree = BUILT_PRODUCTS_DIR; }};")
+    for p in widget_files:
+        a(f"\t\t{widget_refs[p]} /* {p.name} */ = {{isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = {q(p.name)}; sourceTree = \"<group>\"; }};")
 a("/* End PBXFileReference section */")
+a("")
+
+if widget_files:
+    a("/* Begin PBXCopyFilesBuildPhase section */")
+    a(f"\t\t{U['embedPhase']} /* Embed Foundation Extensions */ = {{")
+    a("\t\t\tisa = PBXCopyFilesBuildPhase;")
+    a("\t\t\tbuildActionMask = 2147483647;")
+    a("\t\t\tdstPath = \"\";")
+    a("\t\t\tdstSubfolderSpec = 13;")
+    a("\t\t\tfiles = (")
+    a(f"\t\t\t\t{U['embedFile']} /* {WIDGET_NAME}.appex in Embed Foundation Extensions */,")
+    a("\t\t\t);")
+    a(f"\t\t\tname = \"Embed Foundation Extensions\";")
+    a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
+    a("\t\t};")
+    a("/* End PBXCopyFilesBuildPhase section */")
+    a("")
 a("")
 
 a("/* Begin PBXFrameworksBuildPhase section */")
@@ -257,6 +351,14 @@ a("\t\t\tfiles = (")
 a("\t\t\t);")
 a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
 a("\t\t};")
+if widget_files:
+    a(f"\t\t{U['widgetFwPhase']} /* Frameworks */ = {{")
+    a("\t\t\tisa = PBXFrameworksBuildPhase;")
+    a("\t\t\tbuildActionMask = 2147483647;")
+    a("\t\t\tfiles = (")
+    a("\t\t\t);")
+    a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
+    a("\t\t};")
 a("/* End PBXFrameworksBuildPhase section */")
 a("")
 
@@ -272,10 +374,22 @@ a("\t\t\t);")
 a("\t\t\tpath = Tether;")
 a("\t\t\tsourceTree = \"<group>\";")
 a("\t\t};")
+if widget_files:
+    a(f"\t\t{U['widgetGroup']} /* {WIDGET_NAME} */ = {{")
+    a("\t\t\tisa = PBXGroup;")
+    a("\t\t\tchildren = (")
+    for p in widget_files:
+        a(f"\t\t\t\t{widget_refs[p]} /* {p.name} */,")
+    a("\t\t\t);")
+    a(f"\t\t\tpath = {WIDGET_NAME};")
+    a("\t\t\tsourceTree = \"<group>\";")
+    a("\t\t};")
 a(f"\t\t{U['mainGroup']} = {{")
 a("\t\t\tisa = PBXGroup;")
 a("\t\t\tchildren = (")
 a(f"\t\t\t\t{U['srcGroup']} /* Tether */,")
+if widget_files:
+    a(f"\t\t\t\t{U['widgetGroup']} /* {WIDGET_NAME} */,")
 a("\t\t\t);")
 a("\t\t\tsourceTree = \"<group>\";")
 a("\t\t};")
@@ -283,6 +397,8 @@ a(f"\t\t{U['prodGroup']} /* Products */ = {{")
 a("\t\t\tisa = PBXGroup;")
 a("\t\t\tchildren = (")
 a(f"\t\t\t\t{U['product']} /* {NAME}.app */,")
+if widget_files:
+    a(f"\t\t\t\t{U['widgetProduct']} /* {WIDGET_NAME}.appex */,")
 a("\t\t\t);")
 a("\t\t\tname = Products;")
 a("\t\t\tsourceTree = \"<group>\";")
@@ -298,16 +414,38 @@ a("\t\t\tbuildPhases = (")
 a(f"\t\t\t\t{U['srcPhase']} /* Sources */,")
 a(f"\t\t\t\t{U['fwPhase']} /* Frameworks */,")
 a(f"\t\t\t\t{U['resPhase']} /* Resources */,")
+if widget_files:
+    a(f"\t\t\t\t{U['embedPhase']} /* Embed Foundation Extensions */,")
 a("\t\t\t);")
 a("\t\t\tbuildRules = (")
 a("\t\t\t);")
 a("\t\t\tdependencies = (")
+if widget_files:
+    a(f"\t\t\t\t{U['dep']} /* PBXTargetDependency */,")
 a("\t\t\t);")
 a(f"\t\t\tname = {NAME};")
 a(f"\t\t\tproductName = {NAME};")
 a(f"\t\t\tproductReference = {U['product']} /* {NAME}.app */;")
 a("\t\t\tproductType = \"com.apple.product-type.application\";")
 a("\t\t};")
+if widget_files:
+    a(f"\t\t{U['widgetTarget']} /* {WIDGET_NAME} */ = {{")
+    a("\t\t\tisa = PBXNativeTarget;")
+    a(f"\t\t\tbuildConfigurationList = {U['widgetList']} /* Build configuration list for PBXNativeTarget \"{WIDGET_NAME}\" */;")
+    a("\t\t\tbuildPhases = (")
+    a(f"\t\t\t\t{U['widgetSrcPhase']} /* Sources */,")
+    a(f"\t\t\t\t{U['widgetFwPhase']} /* Frameworks */,")
+    a(f"\t\t\t\t{U['widgetResPhase']} /* Resources */,")
+    a("\t\t\t);")
+    a("\t\t\tbuildRules = (")
+    a("\t\t\t);")
+    a("\t\t\tdependencies = (")
+    a("\t\t\t);")
+    a(f"\t\t\tname = {WIDGET_NAME};")
+    a(f"\t\t\tproductName = {WIDGET_NAME};")
+    a(f"\t\t\tproductReference = {U['widgetProduct']} /* {WIDGET_NAME}.appex */;")
+    a("\t\t\tproductType = \"com.apple.product-type.app-extension\";")
+    a("\t\t};")
 a("/* End PBXNativeTarget section */")
 a("")
 
@@ -322,6 +460,10 @@ a("\t\t\t\tTargetAttributes = {")
 a(f"\t\t\t\t\t{U['target']} = {{")
 a("\t\t\t\t\t\tCreatedOnToolsVersion = 15.0;")
 a("\t\t\t\t\t};")
+if widget_files:
+    a(f"\t\t\t\t\t{U['widgetTarget']} = {{")
+    a("\t\t\t\t\t\tCreatedOnToolsVersion = 15.0;")
+    a("\t\t\t\t\t};")
 a("\t\t\t\t};")
 a("\t\t\t};")
 a(f"\t\t\tbuildConfigurationList = {U['projList']} /* Build configuration list for PBXProject \"{NAME}\" */;")
@@ -339,6 +481,8 @@ a("\t\t\tprojectDirPath = \"\";")
 a("\t\t\tprojectRoot = \"\";")
 a("\t\t\ttargets = (")
 a(f"\t\t\t\t{U['target']} /* {NAME} */,")
+if widget_files:
+    a(f"\t\t\t\t{U['widgetTarget']} /* {WIDGET_NAME} */,")
 a("\t\t\t);")
 a("\t\t};")
 a("/* End PBXProject section */")
@@ -354,6 +498,14 @@ for p in asset_dirs + privacy_files:
 a("\t\t\t);")
 a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
 a("\t\t};")
+if widget_files:
+    a(f"\t\t{U['widgetResPhase']} /* Resources */ = {{")
+    a("\t\t\tisa = PBXResourcesBuildPhase;")
+    a("\t\t\tbuildActionMask = 2147483647;")
+    a("\t\t\tfiles = (")
+    a("\t\t\t);")
+    a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
+    a("\t\t};")
 a("/* End PBXResourcesBuildPhase section */")
 a("")
 
@@ -367,16 +519,52 @@ for p in swift_files:
 a("\t\t\t);")
 a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
 a("\t\t};")
+if widget_files:
+    a(f"\t\t{U['widgetSrcPhase']} /* Sources */ = {{")
+    a("\t\t\tisa = PBXSourcesBuildPhase;")
+    a("\t\t\tbuildActionMask = 2147483647;")
+    a("\t\t\tfiles = (")
+    for p in widget_files:
+        a(f"\t\t\t\t{widget_builds[p]} /* {p.name} in Sources */,")
+    a("\t\t\t);")
+    a("\t\t\trunOnlyForDeploymentPostprocessing = 0;")
+    a("\t\t};")
 a("/* End PBXSourcesBuildPhase section */")
 a("")
 
+if widget_files:
+    a("/* Begin PBXTargetDependency section */")
+    a(f"\t\t{U['dep']} /* PBXTargetDependency */ = {{")
+    a("\t\t\tisa = PBXTargetDependency;")
+    a(f"\t\t\ttarget = {U['widgetTarget']} /* {WIDGET_NAME} */;")
+    a(f"\t\t\ttargetProxy = {U['proxy']} /* PBXContainerItemProxy */;")
+    a("\t\t};")
+    a("/* End PBXTargetDependency section */")
+    a("")
+    a("/* Begin PBXContainerItemProxy section */")
+    a(f"\t\t{U['proxy']} /* PBXContainerItemProxy */ = {{")
+    a("\t\t\tisa = PBXContainerItemProxy;")
+    a(f"\t\t\tcontainerPortal = {U['project']} /* Project object */;")
+    a("\t\t\tproxyType = 1;")
+    a(f"\t\t\tremoteGlobalIDString = {U['widgetTarget']};")
+    a(f"\t\t\tremoteInfo = {WIDGET_NAME};")
+    a("\t\t};")
+    a("/* End PBXContainerItemProxy section */")
+    a("")
+
 a("/* Begin XCBuildConfiguration section */")
-for cfg_uuid, cfg_name, cfg_settings in [
+_configs = [
     (U["projDebug"], "Debug", proj_debug),
     (U["projRelease"], "Release", proj_release),
     (U["targDebug"], "Debug", targ_debug),
     (U["targRelease"], "Release", targ_release),
-]:
+]
+if widget_files:
+    _configs += [
+        (U["widgetDebug"], "Debug", widget_debug),
+        (U["widgetRelease"], "Release", widget_release),
+    ]
+for cfg_uuid, cfg_name, cfg_settings in _configs:
     a(f"\t\t{cfg_uuid} /* {cfg_name} */ = {{")
     a("\t\t\tisa = XCBuildConfiguration;")
     for line in settings_block(cfg_settings, "\t\t\t"):
@@ -405,6 +593,16 @@ a("\t\t\t);")
 a("\t\t\tdefaultConfigurationIsVisible = 0;")
 a("\t\t\tdefaultConfigurationName = Release;")
 a("\t\t};")
+if widget_files:
+    a(f"\t\t{U['widgetList']} /* Build configuration list for PBXNativeTarget \"{WIDGET_NAME}\" */ = {{")
+    a("\t\t\tisa = XCConfigurationList;")
+    a("\t\t\tbuildConfigurations = (")
+    a(f"\t\t\t\t{U['widgetDebug']} /* Debug */,")
+    a(f"\t\t\t\t{U['widgetRelease']} /* Release */,")
+    a("\t\t\t);")
+    a("\t\t\tdefaultConfigurationIsVisible = 0;")
+    a("\t\t\tdefaultConfigurationName = Release;")
+    a("\t\t};")
 a("/* End XCConfigurationList section */")
 a("\t};")
 a(f"\trootObject = {U['project']} /* Project object */;")
