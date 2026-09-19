@@ -155,8 +155,17 @@ struct SceneBackdrop: View {
     /// subject); the app-wide backdrop uses less, so it reads as atmosphere.
     var density: Double = 1
 
+    @Environment(\.scenePhase) private var scenePhase
+
     var body: some View {
-        TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
+        // No minimumInterval: the schedule follows the display's native rate,
+        // so a ProMotion iPhone animates at 120 and everything else at 60.
+        // Capping it lower was a false economy — the particles are the point.
+        //
+        // It DOES pause when the app is not in the foreground. That is where
+        // the real waste was: a display link ticking behind a backgrounded app
+        // buys nothing and costs battery.
+        TimelineView(.animation(paused: scenePhase != .active)) { timeline in
             Canvas { ctx, size in
                 let t = timeline.date.timeIntervalSinceReferenceDate
 
