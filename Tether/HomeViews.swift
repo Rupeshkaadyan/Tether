@@ -1174,7 +1174,6 @@ struct SettingsView: View {
     @State private var exportUnlocked = false
     @State private var exportMessage: String?
     @State private var switchingLanguage = false
-    @State private var showScenes = false
     @State private var scene = SceneManager.shared
     @Environment(\.syncService) private var sync
     @Environment(LanguageManager.self) private var language
@@ -1526,8 +1525,19 @@ struct SettingsView: View {
                 }
 
                 Section("Theme") {
-                    Button {
-                        showScenes = true
+                    // A NavigationLink, not a sheet.
+                    //
+                    // This was `.sheet(isPresented: $showScenes)` presented from
+                    // Settings — which is ITSELF a sheet presented from Home.
+                    // A sheet from a sheet is unreliable: the second one
+                    // frequently fails to present after the first has been
+                    // dismissed and re-opened, which is exactly the "change the
+                    // theme, go back, tap again and it is stuck" report.
+                    //
+                    // Settings already has a NavigationStack, so pushing costs
+                    // nothing and cannot deadlock.
+                    NavigationLink {
+                        SceneSheet(theme: scene)
                     } label: {
                         HStack(spacing: TetherSpace.m) {
                             ZStack {
@@ -1643,10 +1653,8 @@ struct SettingsView: View {
             .sheet(isPresented: $showTrack) {
                 WisdomTrackDetailView(track: profile.track)
             }
-            .sheet(isPresented: $showScenes) {
-                SceneSheet(theme: scene)
-                    .presentationDetents([.medium])
-            }
+            // No sheet here: the theme picker is pushed, not presented. See the
+            // NavigationLink in the Theme section.
             .overlay {
                 if switchingLanguage {
                     ZStack {

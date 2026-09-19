@@ -8,12 +8,22 @@ struct JournalView: View {
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
     @Query private var allProfiles: [UserProfile]
 
-    @State private var scope: Scope = .mine
+    @State private var scope: Scope = .onlyMe
     @State private var query = ""
     @State private var showSettings = false
 
+    /// The two tabs are MUTUALLY EXCLUSIVE, and the names now say so.
+    ///
+    /// They used to be "Mine" and "Shared", where Mine meant everything I
+    /// wrote — private AND shared — and Shared meant the shared ones. So a
+    /// single entry appeared in both tabs, and the journal looked like it was
+    /// showing the same thing twice. "Mine" and "Shared" also read as a
+    /// false pair: as if shared entries were somehow not mine.
+    ///
+    /// "Only me" and "Shared" are opposites, which is what they actually are:
+    /// what nobody else can see, and what we both can.
     enum Scope: String, CaseIterable {
-        case mine = "Mine"
+        case onlyMe = "Only me"
         case shared = "Shared"
     }
 
@@ -25,8 +35,12 @@ struct JournalView: View {
     private var filtered: [JournalEntry] {
         let base: [JournalEntry]
         switch scope {
-        case .mine:
-            base = entries.filter { $0.userID == profile.id }
+        case .onlyMe:
+            // Strictly what nobody else can see. A shared entry is NOT here —
+            // it lives in the Shared tab, and appearing in both was the bug.
+            base = entries.filter {
+                $0.userID == profile.id && $0.visibility == .private
+            }
         case .shared:
             base = entries.filter { entry in
                 guard entry.visibility == .shared else { return false }
@@ -40,12 +54,26 @@ struct JournalView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                scopePicker
-                searchField
-                content
+            ZStack {
+                // The backdrop is a SIBLING of the content, not its background.
+                //
+                // As a `.background` it sized to the VStack, and the VStack
+                // shrinks when the keyboard comes up for the search field — so
+                // tapping search collapsed the whole backdrop into a small
+                // block at the top and the screen looked broken.
+                //
+                // As a sibling it fills the ZStack, and ignoring the keyboard's
+                // safe area keeps it filling the screen even while the content
+                // above it moves.
+                TetherBackdrop()
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
+
+                VStack(spacing: 0) {
+                    scopePicker
+                    searchField
+                    content
+                }
             }
-            .background { TetherBackdrop() }
             .navigationTitle("Journal")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
@@ -69,7 +97,7 @@ struct JournalView: View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { scope = option }
                 } label: {
                     HStack(spacing: 6) {
-                        Icon(option == .mine ? .privateEntry : .sharedEntry,
+                        Icon(option == .onlyMe ? .privateEntry : .sharedEntry,
                              size: 15,
                              color: scope == option ? .white : TetherColor.muted)
                         Text(option.rawValue)
@@ -273,8 +301,8 @@ struct JournalView: View {
 
     private var emptyState: some View {
         TetherEmptyState(
-            title: scope == .mine ? "Your journal starts here" : "Nothing shared yet",
-            message: scope == .mine
+            title: scope == .onlyMe ? "Your journal starts here" : "Nothing shared yet",
+            message: scope == .onlyMe
                 ? "Mood and one line a day. Entries appear here as you go."
                 : "Entries you mark as shared with your partner will collect here."
         )

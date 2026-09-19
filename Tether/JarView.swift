@@ -490,34 +490,30 @@ struct SceneSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: TetherSpace.m) {
-                    Text("A place, not a setting. Pick whichever you would want to sit in. This changes the whole app.")
-                        .font(TetherType.caption)
-                        .foregroundStyle(TetherColor.muted)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+        // No NavigationStack and no Done button: this is PUSHED from Settings,
+        // which already supplies both. Nesting a stack here would give the
+        // screen two navigation bars and two back affordances.
+        ScrollView {
+            VStack(spacing: TetherSpace.m) {
+                Text("A place, not a setting. Pick whichever you would want to sit in. This changes the whole app.")
+                    .font(TetherType.caption)
+                    .foregroundStyle(TetherColor.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity, alignment: .leading)
 
-                    ForEach(AppScene.allCases) { option in
-                        SceneRow(option: option,
-                                    selected: theme.choice == option) {
-                            theme.raw = option.rawValue
-                            TetherHaptics.light()
-                        }
+                ForEach(AppScene.allCases) { option in
+                    SceneRow(option: option,
+                             selected: theme.choice == option) {
+                        theme.raw = option.rawValue
+                        TetherHaptics.light()
                     }
                 }
-                .padding(TetherSpace.margin)
             }
-            .background { TetherBackdrop() }
-            .navigationTitle("Scene")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") { dismiss() }
-                }
-            }
+            .padding(TetherSpace.margin)
         }
+        .background { TetherBackdrop() }
+        .navigationTitle("Theme")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
