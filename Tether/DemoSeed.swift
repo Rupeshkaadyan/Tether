@@ -76,6 +76,24 @@ enum DemoSeed {
             ctx.insert(entry)
         }
 
+        // Notes in the Wisdom Jar, from both of us.
+        let jarNotes: [(UUID, String, Int)] = [
+            (partner.id, "You make ordinary days feel like somewhere I want to be.", 4),
+            (me.id, "You are allowed to have a bad week and still be loved.", 6),
+            (partner.id, "I noticed you carried the whole day quietly. Thank you.", 9),
+            (me.id, "We are on the same side. Even when it does not feel like it.", 12),
+            (partner.id, "Your patience with my family is a gift I do not say enough.", 18),
+            (me.id, "Whatever this is, we have survived worse and been kinder after.", 25),
+            (partner.id, "I chose you on purpose, not by accident.", 31),
+            (me.id, "You do not have to be strong today.", 40),
+        ]
+        for (author, text, daysAgo) in jarNotes {
+            let note = JarNote(authorID: author, body: text)
+            let date = Calendar.current.date(byAdding: .day, value: -daysAgo, to: Date()) ?? Date()
+            note.createdAt = date
+            ctx.insert(note)
+        }
+
         try? ctx.save()
     }
 }

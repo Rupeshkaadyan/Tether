@@ -26,6 +26,8 @@ struct HomeView: View {
     @State private var showMemoryLane = false
     @State private var showRitual = false
     @State private var showChat = false
+    @State private var showJar = false
+    @State private var debugOpened = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
     @State private var voiceNotes = VoiceNoteService.shared
@@ -130,6 +132,9 @@ struct HomeView: View {
                             .tetherButton(.secondary)
                     }
 
+                    Button("Wisdom Jar") { showJar = true }
+                        .tetherButton(.secondary)
+
                     Button("Memory Lane") { showMemoryLane = true }
                         .tetherButton(.secondary)
 
@@ -184,6 +189,20 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showChat) {
                 PrivateChatView(profile: profile)
+            }
+            .sheet(isPresented: $showJar) {
+                WisdomJarView(profile: profile)
+            }
+            .onAppear {
+                // DEBUG-only deep link, so a screenshot can reach a sheet that
+                // otherwise needs a tap. Never compiled into a release build.
+                #if DEBUG
+                guard !debugOpened else { return }
+                debugOpened = true
+                let args = ProcessInfo.processInfo.arguments
+                if args.contains("-openJar") { showJar = true }
+                if args.contains("-openMemoryLane") { showMemoryLane = true }
+                #endif
             }
             .sheet(isPresented: $showPairing) {
                 PairingView(profile: profile)

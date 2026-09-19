@@ -196,6 +196,31 @@ final class UserProfile {
     }
 }
 
+/// A folded note kept in the Wisdom Jar.
+///
+/// Written on a good day, drawn on a hard one. The whole point is that the
+/// person who needs it is often not the person who wrote it — and sometimes it
+/// is. Both count.
+@Model
+final class JarNote {
+    var id: UUID
+    var authorID: UUID
+    var body: String
+    var createdAt: Date
+    /// How many times this note has been drawn. Shown as a small crease.
+    var drawnCount: Int
+    var lastDrawnAt: Date?
+
+    init(authorID: UUID, body: String) {
+        self.id = UUID()
+        self.authorID = authorID
+        self.body = body
+        self.createdAt = Date()
+        self.drawnCount = 0
+        self.lastDrawnAt = nil
+    }
+}
+
 /// A message in the couple's private conversation. Separate from the journal:
 /// the journal is a practice, this is just the two of you talking.
 @Model
