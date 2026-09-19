@@ -411,3 +411,75 @@ struct RevealMomentView: View {
         }
     }
 }
+
+// MARK: - Wisdom track detail
+
+/// The person's own track as its own screen. Abstract glyph, colour and words
+/// only — never a religious symbol.
+struct WisdomTrackDetailView: View {
+    let track: WisdomTrack
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.xl) {
+                    header
+                    TetherCard {
+                        VStack(alignment: .leading, spacing: TetherSpace.s) {
+                            Text("This is yours alone")
+                                .font(TetherType.label)
+                                .foregroundStyle(TetherColor.ink)
+                            Text("Your partner chooses their own path. The relationship is shared; the worldview is personal.")
+                                .font(TetherType.callout)
+                                .foregroundStyle(TetherColor.muted)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    promptNote
+                }
+                .padding(TetherSpace.margin)
+                .readableFrame()
+            }
+            .background { TetherBackdrop() }
+            .navigationTitle("Wisdom track")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+        }
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.m) {
+            ZStack {
+                Circle()
+                    .fill(track.accent.opacity(0.12))
+                    .frame(width: 96, height: 96)
+                Icon(track.icon, size: 42, color: track.accent)
+            }
+            Text(track.displayName)
+                .font(TetherType.largeTitle)
+                .foregroundStyle(TetherColor.ink)
+            Text(track.blurb)
+                .font(TetherType.callout)
+                .foregroundStyle(TetherColor.muted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.top, TetherSpace.s)
+    }
+
+    private var promptNote: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.s) {
+            Text("Prompts in this track")
+                .font(TetherType.title)
+                .foregroundStyle(TetherColor.ink)
+            Text("\(PromptLibrary.prompts(for: track).count) questions, written to be answered honestly in one sentence.")
+                .font(TetherType.callout)
+                .foregroundStyle(TetherColor.muted)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+    }
+}

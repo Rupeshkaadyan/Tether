@@ -579,6 +579,7 @@ struct SettingsView: View {
     @State private var showPaywall = false
     @State private var showLoveQuiz = false
     @State private var showDeleteConfirm = false
+    @State private var showTrack = false
     @Environment(\.syncService) private var sync
     @Environment(LanguageManager.self) private var language
     @Environment(ThemeManager.self) private var theme
@@ -810,6 +811,21 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
+                Section("Wisdom track") {
+                    Button {
+                        showTrack = true
+                    } label: {
+                        HStack(spacing: TetherSpace.m) {
+                            Icon(profile.track.icon, size: 20, color: profile.track.accent)
+                            Text(profile.track.displayName)
+                                .font(TetherType.body)
+                                .foregroundStyle(TetherColor.text)
+                            Spacer(minLength: 0)
+                            Icon(.chevronRight, size: 15, color: TetherColor.faint)
+                        }
+                    }
+                }
+
                 Section("Appearance") {
                     themePicker
                 }
@@ -881,6 +897,9 @@ struct SettingsView: View {
             .sheet(isPresented: $showLoveQuiz) {
                 LoveLanguageStep(profile: profile) { showLoveQuiz = false }
                     .background { TetherBackdrop() }
+            }
+            .sheet(isPresented: $showTrack) {
+                WisdomTrackDetailView(track: profile.track)
             }
             .alert("Delete all data?", isPresented: $showDeleteConfirm) {
                 Button("Delete", role: .destructive) { deleteEverything() }
