@@ -656,6 +656,38 @@ struct HomeView: View {
         }
     }
 
+    /// What helped them last time. Finds a past low day immediately followed
+    /// by a better one, and surfaces what THEY wrote once things lifted.
+    ///
+    /// This is the point of the feature: not advice from us, and not a
+    /// template — their own words, handed back at the moment they are useful.
+    /// It gets better the longer a couple uses the app.
+    private var recoveryMemory: (lowDate: Date, nextDate: Date, body: String)? {
+        guard let partner else { return nil }
+        let cal = Calendar.current
+        let theirs = entries
+            .filter { $0.userID == partner.id }
+            .sorted { $0.entryDate < $1.entryDate }
+        guard theirs.count >= 2 else { return nil }
+
+        // Most recent first, so the freshest memory wins.
+        for i in stride(from: theirs.count - 1, through: 1, by: -1) {
+            let later = theirs[i]
+            let earlier = theirs[i - 1]
+            let gap = cal.dateComponents(
+                [.day],
+                from: cal.startOfDay(for: earlier.entryDate),
+                to: cal.startOfDay(for: later.entryDate)
+            ).day ?? 0
+            guard gap == 1 else { continue }
+            guard earlier.mood <= 2, later.mood > earlier.mood else { continue }
+            let text = SecureContent.read(later.body).trimmed
+            guard !text.isEmpty else { continue }
+            return (earlier.entryDate, later.entryDate, text)
+        }
+        return nil
+    }
+
     /// Care nudge: when their mood is low, say so gently and offer one line.
     /// This is what turns the mood data we already collect into care.
     @ViewBuilder
@@ -679,6 +711,26 @@ struct HomeView: View {
                         .font(TetherType.callout)
                         .foregroundStyle(TetherColor.text)
                         .fixedSize(horizontal: false, vertical: true)
+
+                    // Their own words from last time, not advice from us.
+                    if let memory = recoveryMemory {
+                        Divider().overlay(TetherColor.border)
+
+                        VStack(alignment: .leading, spacing: TetherSpace.xs) {
+                            Text("THE DAY AFTER LAST TIME")
+                                .font(TetherType.micro)
+                                .tracking(1)
+                                .foregroundStyle(TetherColor.faint)
+                            Text("“\(memory.body)”")
+                                .font(TetherType.callout)
+                                .foregroundStyle(TetherColor.text)
+                                .italic()
+                                .fixedSize(horizontal: false, vertical: true)
+                            Text(memory.nextDate.formatted(date: .abbreviated, time: .omitted))
+                                .font(TetherType.caption)
+                                .foregroundStyle(TetherColor.muted)
+                        }
+                    }
                 }
             }
         }
