@@ -9,6 +9,7 @@ struct HomeView: View {
     @Bindable var profile: UserProfile
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
     @Query(sort: \Warmth.createdAt, order: .reverse) private var warmths: [Warmth]
+    @Query private var rituals: [Ritual]
     @Query(sort: \PromptReply.createdAt, order: .reverse) private var replies: [PromptReply]
     @Query(sort: \MoodLog.createdAt, order: .reverse) private var moods: [MoodLog]
     @Query private var allProfiles: [UserProfile]
@@ -22,6 +23,7 @@ struct HomeView: View {
     @State private var showTogether = false
     @State private var showCooldown = false
     @State private var showMemoryLane = false
+    @State private var showRitual = false
     @State private var showNotifExplainer = false
     @State private var showComposer = false
     @State private var milestoneToast: String?
@@ -83,6 +85,8 @@ struct HomeView: View {
                         .tetherAppear(delay: 0.05)
                     togetherCard
                         .tetherAppear(delay: 0.08)
+                    ritualCard
+                        .tetherAppear(delay: 0.085)
                     warmthCard
                         .tetherAppear(delay: 0.09)
                     theirReplyCard
@@ -163,6 +167,9 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showMemoryLane) {
                 MemoryLaneView(profile: profile)
+            }
+            .sheet(isPresented: $showRitual) {
+                RitualSheet(existing: ritual)
             }
             .sheet(isPresented: $showPairing) {
                 PairingView(profile: profile)
@@ -604,6 +611,63 @@ struct HomeView: View {
             return "\(partner.displayName) has not answered yet today."
         }
         return "\(partner.displayName) answered today — feeling \(Mood.label(for: entry.mood).lowercased())."
+    }
+
+    // MARK: - Ritual
+
+    private var ritual: Ritual? { rituals.first }
+
+    /// The couple's standing appointment, with a countdown. A recurring
+    /// commitment is what turns a daily habit into something you show up for.
+    private var ritualCard: some View {
+        TetherCard {
+            VStack(alignment: .leading, spacing: TetherSpace.s) {
+                HStack(spacing: TetherSpace.xs) {
+                    TetherHeroMark(width: 26,
+                                   color: TetherColor.brand.opacity(0.55),
+                                   sag: 4,
+                                   lineWidth: 1.5,
+                                   dotRadius: 2)
+                    Text("YOUR RITUAL")
+                        .font(TetherType.micro)
+                        .tracking(1)
+                        .foregroundStyle(TetherColor.faint)
+                    Spacer(minLength: 0)
+                    Button(ritual == nil ? "Set" : "Change") { showRitual = true }
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.brand)
+                        .buttonStyle(.plain)
+                }
+
+                if let ritual {
+                    Text(countdownLine(for: ritual))
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.text)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("\(ritual.weekdayName)s at \(ritual.timeLabel)")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                } else {
+                    Text("Pick a time you will both show up. A standing appointment beats good intentions.")
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.text)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+        }
+    }
+
+    private func countdownLine(for ritual: Ritual) -> String {
+        guard let next = ritual.nextOccurrence() else { return ritual.name }
+        let cal = Calendar.current
+        let days = cal.dateComponents([.day],
+                                      from: cal.startOfDay(for: Date()),
+                                      to: cal.startOfDay(for: next)).day ?? 0
+        switch days {
+        case 0:  return "\(ritual.name) is today."
+        case 1:  return "\(ritual.name) is tomorrow."
+        default: return "\(ritual.name) is in \(days) days."
+        }
     }
 
     // MARK: - Warmth

@@ -196,6 +196,56 @@ final class UserProfile {
     }
 }
 
+/// The couple's own recurring appointment — "Sunday evening check-in". Turns a
+/// daily habit into something you have agreed to show up for together.
+@Model
+final class Ritual {
+    var id: UUID
+    var name: String
+    /// 1 = Sunday … 7 = Saturday, matching Calendar's weekday numbering.
+    var weekday: Int
+    var hour: Int
+    var minute: Int
+    var createdAt: Date
+
+    init(name: String, weekday: Int, hour: Int, minute: Int) {
+        self.id = UUID()
+        self.name = name
+        self.weekday = weekday
+        self.hour = hour
+        self.minute = minute
+        self.createdAt = Date()
+    }
+
+    /// The next time this ritual comes around, from `now`.
+    func nextOccurrence(after now: Date = Date()) -> Date? {
+        let cal = Calendar.current
+        var comps = DateComponents()
+        comps.weekday = weekday
+        comps.hour = hour
+        comps.minute = minute
+        return cal.nextDate(after: now,
+                            matching: comps,
+                            matchingPolicy: .nextTime)
+    }
+
+    var weekdayName: String {
+        let cal = Calendar.current
+        let symbols = cal.weekdaySymbols
+        let index = max(0, min(symbols.count - 1, weekday - 1))
+        return symbols[index]
+    }
+
+    var timeLabel: String {
+        var comps = DateComponents()
+        comps.hour = hour
+        comps.minute = minute
+        let cal = Calendar.current
+        guard let date = cal.date(from: comps) else { return "" }
+        return date.formatted(date: .omitted, time: .shortened)
+    }
+}
+
 /// A note written into a SHARED thread rather than a private journal.
 /// Two threads use it: gratitude (what you appreciate) and "us" (a shared
 /// space belonging to the couple). Both are visible to both partners.

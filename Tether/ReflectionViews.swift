@@ -500,6 +500,80 @@ struct WisdomTrackDetailView: View {
     }
 }
 
+// MARK: - Ritual
+
+/// Set the standing appointment. A recurring commitment is worth more than
+/// good intentions, so the app asks for a day and a time and then counts down.
+struct RitualSheet: View {
+    @Environment(\.modelContext) private var ctx
+    @Environment(\.dismiss) private var dismiss
+    let existing: Ritual?
+
+    @State private var name = "Our check-in"
+    @State private var weekday = 1
+    @State private var time = Date()
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("What do you call it?") {
+                    TextField("Our check-in", text: $name)
+                }
+                Section("When") {
+                    Picker("Day", selection: $weekday) {
+                        ForEach(1...7, id: \.self) { day in
+                            Text(Calendar.current.weekdaySymbols[day - 1]).tag(day)
+                        }
+                    }
+                    DatePicker("Time", selection: $time, displayedComponents: .hourAndMinute)
+                }
+                Section {
+                    Text("Both of you see this countdown. It is an appointment, not a notification.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                }
+            }
+            .navigationTitle(existing == nil ? "Set a ritual" : "Change ritual")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") { save() }
+                }
+            }
+            .onAppear {
+                guard let existing else { return }
+                name = existing.name
+                weekday = existing.weekday
+                var comps = DateComponents()
+                comps.hour = existing.hour
+                comps.minute = existing.minute
+                time = Calendar.current.date(from: comps) ?? Date()
+            }
+        }
+    }
+
+    private func save() {
+        let comps = Calendar.current.dateComponents([.hour, .minute], from: time)
+        let trimmed = name.trimmed.isEmpty ? "Our check-in" : name.trimmed
+        if let existing {
+            existing.name = trimmed
+            existing.weekday = weekday
+            existing.hour = comps.hour ?? 19
+            existing.minute = comps.minute ?? 0
+        } else {
+            ctx.insert(Ritual(name: trimmed,
+                              weekday: weekday,
+                              hour: comps.hour ?? 19,
+                              minute: comps.minute ?? 0))
+        }
+        try? ctx.save()
+        dismiss()
+    }
+}
+
 // MARK: - Memory lane
 
 /// The couple's own history, in one place. Ties the memory echo, on-this-day
