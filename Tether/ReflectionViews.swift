@@ -500,6 +500,266 @@ struct WisdomTrackDetailView: View {
     }
 }
 
+// MARK: - Memory lane
+
+/// The couple's own history, in one place. Ties the memory echo, on-this-day
+/// and the best moments into a single screen, so a long practice feels like it
+/// has accumulated into something rather than just being stored.
+struct MemoryLaneView: View {
+    @Bindable var profile: UserProfile
+    @Environment(\.dismiss) private var dismiss
+    @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
+    @Query private var profiles: [UserProfile]
+
+    private var partner: UserProfile? {
+        guard let id = profile.partnerID else { return nil }
+        return profiles.first { $0.id == id }
+    }
+
+    /// Both partners' entries when paired.
+    private var story: [JournalEntry] {
+        guard let partner else { return entries.filter { $0.userID == profile.id } }
+        return entries.filter { $0.userID == profile.id || $0.userID == partner.id }
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.xl) {
+                    banner
+                    if story.isEmpty {
+                        TetherEmptyState(
+                            title: "Nothing here yet",
+                            message: "Memory Lane fills as you write. Come back in a month."
+                        )
+                    } else {
+                        stats
+                        onThisDay
+                        bestMoments
+                        monthStrip
+                    }
+                }
+                .padding(TetherSpace.margin)
+                .readableFrame()
+                .padding(.bottom, TetherSpace.xxl)
+            }
+            .background { TetherBackdrop() }
+            .navigationTitle("Memory Lane")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+        }
+    }
+
+    // MARK: Banner
+
+    private var banner: some View {
+        ZStack(alignment: .bottomLeading) {
+            TetherScene(timeOfDay: .dusk)
+            LinearGradient(colors: [.clear, .black.opacity(0.32)],
+                           startPoint: .center,
+                           endPoint: .bottom)
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Memory lane".uppercased())
+                    .font(TetherType.micro)
+                    .tracking(1.4)
+                    .foregroundStyle(.white.opacity(0.78))
+                Text("Your story so far")
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .tracking(-0.6)
+                    .foregroundStyle(.white)
+            }
+            .padding(.horizontal, TetherSpace.margin)
+            .padding(.bottom, TetherSpace.l)
+        }
+        .frame(height: 200)
+        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
+        .padding(.horizontal, -TetherSpace.margin)
+    }
+
+    // MARK: Stats
+
+    private var stats: some View {
+        HStack(alignment: .top, spacing: 0) {
+            statBlock("\(story.count)", "entries")
+            statBlock("\(daysWritten)", daysWritten == 1 ? "day" : "days")
+            statBlock("\(longestStreak)", "best streak")
+        }
+    }
+
+    private func statBlock(_ value: String, _ label: String) -> some View {
+        VStack(spacing: 2) {
+            Text(value)
+                .font(.system(size: 24, weight: .bold, design: .rounded))
+                .foregroundStyle(TetherColor.ink)
+            Text(label.uppercased())
+                .font(TetherType.micro)
+                .tracking(1)
+                .foregroundStyle(TetherColor.faint)
+        }
+        .frame(maxWidth: .infinity)
+    }
+
+    // MARK: On this day
+
+    @ViewBuilder
+    private var onThisDay: some View {
+        if !onThisDayEntries.isEmpty {
+            VStack(alignment: .leading, spacing: TetherSpace.m) {
+                SectionHeader(title: "On this day")
+                ForEach(onThisDayEntries) { entry in
+                    echoRow(entry)
+                }
+            }
+        }
+    }
+
+    /// Same day-of-month, one or more months back. The same idea as the memory
+    /// echo, but it can return several at once.
+    private var onThisDayEntries: [JournalEntry] {
+        let cal = Calendar.current
+        let today = cal.dateComponents([.day, .month, .year], from: Date())
+        return story.filter { entry in
+            let c = cal.dateComponents([.day, .month, .year], from: entry.entryDate)
+            guard c.day == today.day else { return false }
+            guard let y = c.year, let ty = today.year, y < ty else { return false }
+            return true
+        }
+        .sorted { $0.entryDate > $1.entryDate }
+        .prefix(3)
+        .map { $0 }
+    }
+
+    private func echoRow(_ entry: JournalEntry) -> some View {
+        TetherCard {
+            VStack(alignment: .leading, spacing: TetherSpace.xs) {
+                Text(entry.entryDate.formatted(.dateTime.month(.wide).year()).uppercased())
+                    .font(TetherType.micro)
+                    .tracking(1)
+                    .foregroundStyle(TetherColor.faint)
+                Text(SecureContent.read(entry.body))
+                    .font(TetherType.callout)
+                    .foregroundStyle(TetherColor.text)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    // MARK: Best moments
+
+    @ViewBuilder
+    private var bestMoments: some View {
+        if !bestMoments_entries.isEmpty {
+            VStack(alignment: .leading, spacing: TetherSpace.m) {
+                SectionHeader(title: "Moments worth keeping")
+                ForEach(bestMoments_entries) { entry in
+                    TetherCard {
+                        VStack(alignment: .leading, spacing: TetherSpace.xs) {
+                            HStack(spacing: TetherSpace.xs) {
+                                Circle()
+                                    .fill(Mood.color(for: entry.mood))
+                                    .frame(width: 8, height: 8)
+                                Text(Mood.label(for: entry.mood))
+                                    .font(TetherType.caption)
+                                    .foregroundStyle(TetherColor.muted)
+                                Spacer(minLength: 0)
+                                Text(entry.entryDate.formatted(date: .abbreviated, time: .omitted))
+                                    .font(TetherType.caption)
+                                    .foregroundStyle(TetherColor.faint)
+                            }
+                            Text(SecureContent.read(entry.body))
+                                .font(TetherType.callout)
+                                .foregroundStyle(TetherColor.text)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+                    .accessibilityElement(children: .combine)
+                }
+            }
+        }
+    }
+
+    /// The brightest entries — mood 5 or 4, most recent first, capped so this
+    /// stays a highlight reel rather than a second journal.
+    private var bestMoments_entries: [JournalEntry] {
+        story.filter { $0.mood >= 4 }
+            .sorted { $0.entryDate > $1.entryDate }
+            .prefix(3)
+            .map { $0 }
+    }
+
+    // MARK: Month strip
+
+    private var monthStrip: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.m) {
+            SectionHeader(title: "Month by month")
+            HStack(alignment: .bottom, spacing: TetherSpace.s) {
+                ForEach(monthBuckets, id: \.month) { bucket in
+                    VStack(spacing: TetherSpace.xs) {
+                        Text("\(bucket.count)")
+                            .font(TetherType.micro)
+                            .foregroundStyle(TetherColor.faint)
+                        RoundedRectangle(cornerRadius: 4, style: .continuous)
+                            .fill(TetherGradient.brand)
+                            .frame(height: max(6, CGFloat(bucket.count) / CGFloat(maxCount) * 74))
+                        Text(bucket.month.formatted(.dateTime.month(.abbreviated)))
+                            .font(TetherType.micro)
+                            .foregroundStyle(TetherColor.muted)
+                    }
+                    .frame(maxWidth: .infinity)
+                }
+            }
+            .frame(height: 116, alignment: .bottom)
+        }
+    }
+
+    private var monthBuckets: [(month: Date, count: Int)] {
+        let cal = Calendar.current
+        let grouped = Dictionary(grouping: story) { entry -> Date in
+            let c = cal.dateComponents([.year, .month], from: entry.entryDate)
+            return cal.date(from: c) ?? entry.entryDate
+        }
+        return grouped
+            .map { (month: $0.key, count: $0.value.count) }
+            .sorted { $0.month < $1.month }
+            .suffix(6)
+            .map { $0 }
+    }
+
+    private var maxCount: Int { max(1, monthBuckets.map(\.count).max() ?? 1) }
+
+    // MARK: Derived
+
+    private var daysWritten: Int {
+        let cal = Calendar.current
+        return Set(story.map { cal.startOfDay(for: $0.entryDate) }).count
+    }
+
+    /// Longest run of consecutive days with at least one entry.
+    private var longestStreak: Int {
+        let cal = Calendar.current
+        let days = Set(story.map { cal.startOfDay(for: $0.entryDate) })
+            .sorted()
+        guard !days.isEmpty else { return 0 }
+        var best = 1
+        var run = 1
+        for i in 1..<days.count {
+            let gap = cal.dateComponents([.day], from: days[i - 1], to: days[i]).day ?? 0
+            if gap == 1 {
+                run += 1
+                best = max(best, run)
+            } else {
+                run = 1
+            }
+        }
+        return best
+    }
+}
+
 // MARK: - Cooldown
 
 /// A guided pause for a hard moment. Not therapy and not mediation — just a

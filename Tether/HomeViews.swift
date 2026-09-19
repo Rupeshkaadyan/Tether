@@ -21,6 +21,7 @@ struct HomeView: View {
     @State private var showRecap = false
     @State private var showTogether = false
     @State private var showCooldown = false
+    @State private var showMemoryLane = false
     @State private var showNotifExplainer = false
     @State private var showComposer = false
     @State private var milestoneToast: String?
@@ -114,6 +115,9 @@ struct HomeView: View {
                         .tetherButton()
                         .padding(.top, TetherSpace.s)
 
+                    Button("Memory Lane") { showMemoryLane = true }
+                        .tetherButton(.secondary)
+
                     Button("Gratitude & Us") { showTogether = true }
                         .tetherButton(.secondary)
 
@@ -156,6 +160,9 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showCooldown) {
                 CooldownView()
+            }
+            .sheet(isPresented: $showMemoryLane) {
+                MemoryLaneView(profile: profile)
             }
             .sheet(isPresented: $showPairing) {
                 PairingView(profile: profile)
