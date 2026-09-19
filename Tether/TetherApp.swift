@@ -38,11 +38,20 @@ struct TetherApp: App {
                 // was never injected, so opening Settings crashed on the
                 // @Environment lookup before the view could draw.
                 .environment(lock)
-                // An explicit Light/Dark choice wins. "System" defers to the
-                // scene, because a dark backdrop rendered with light-mode ink
-                // is unreadable — the scene has to be able to set the scheme
-                // it needs.
-                .preferredColorScheme(theme.colorScheme ?? scene.theme.scheme)
+                // THE root decision, and it used to be wrong.
+                //
+                // Previously: `theme.colorScheme ?? scene.theme.scheme`. With
+                // Appearance on "System" that meant the SCENE decided, so
+                // picking Dawn forced light mode on a phone set to dark. The
+                // phone was being ignored.
+                //
+                // Now there is one control, not two. `.automatic` passes nil
+                // and lets iOS drive, so dark mode gets Night and light mode
+                // gets Dawn. An explicit scene pins the scheme it needs, which
+                // is what makes a dark backdrop readable.
+                .preferredColorScheme(scene.choice == .automatic
+                                      ? nil
+                                      : scene.choice.scheme)
                 .modelContainer(container)
                 // Privacy: cover the app whenever it leaves the foreground.
                 .overlay {

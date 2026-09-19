@@ -1518,7 +1518,7 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
-                Section("Scene") {
+                Section("Theme") {
                     Button {
                         showScenes = true
                     } label: {
@@ -1557,9 +1557,13 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
-                Section("Appearance") {
-                    themePicker
-                }
+                // The old Appearance picker (Light/Dark/System) is gone.
+                //
+                // It fought the Theme picker: with Appearance on "System" the
+                // scene decided the scheme, so choosing Dawn forced light mode
+                // on a phone set to dark. Two controls for one decision, and
+                // the wrong one won. "Match phone" in the Theme picker is what
+                // "System" was supposed to mean, and it is now the default.
 
                 Section("Language") {
                     languagePicker

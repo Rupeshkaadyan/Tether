@@ -58,6 +58,7 @@ enum TetherBackdropStyle { case calm, dawn, dusk, brand }
 
 struct TetherBackdrop: View {
     var style: TetherBackdropStyle = .calm
+    @Environment(\.colorScheme) private var systemScheme
 
     private var fill: AnyShapeStyle {
         switch style {
@@ -66,8 +67,9 @@ struct TetherBackdrop: View {
         // The resting backdrop follows the chosen scene, app-wide. Everything
         // else that uses TetherBackdrop() picks this up for free.
         case .calm:
+            // Resolved, not raw: `.automatic` has no backdrop of its own.
             return AnyShapeStyle(LinearGradient(
-                colors: SceneManager.shared.theme.backdrop,
+                colors: SceneManager.shared.choice.concrete(system: systemScheme).backdrop,
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing))
         case .dawn:  return AnyShapeStyle(TetherGradient.dawn)
@@ -99,8 +101,9 @@ struct TetherBackdrop: View {
             // atmosphere, not a scene. The jar is the only place where the
             // particles are the subject rather than the setting.
             if style == .calm {
-                SceneBackdrop(theme: SceneManager.shared.theme,
-                              density: 0.45)
+                // No theme passed: SceneBackdrop reads the manager itself and
+                // resolves `.automatic` against the device appearance.
+                SceneBackdrop(density: 0.45)
             }
 
             // Arcs and haze over the paper, under the content.

@@ -23,8 +23,13 @@ struct WisdomJarView: View {
     @Query private var profiles: [UserProfile]
 
     @State private var theme = SceneManager.shared
+    @Environment(\.colorScheme) private var systemScheme
     @State private var draft = ""
     @State private var shareThisNote = true
+
+    /// The jar draws its own chrome from the scene, so it needs the RESOLVED
+    /// case — `.automatic` has no backdrop, glow or `isDark` of its own.
+    private var palette: AppScene { theme.choice.concrete(system: systemScheme) }
     @State private var drawn: JarNote?
     @State private var showThemes = false
 
@@ -73,20 +78,20 @@ struct WisdomJarView: View {
                     Button {
                         showThemes = true
                     } label: {
-                        Image(systemName: theme.theme.symbol)
-                            .foregroundStyle(theme.theme.isDark ? .white : TetherColor.brand)
+                        Image(systemName: palette.symbol)
+                            .foregroundStyle(palette.isDark ? .white : TetherColor.brand)
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
-                        .foregroundStyle(theme.theme.isDark ? .white : TetherColor.brand)
+                        .foregroundStyle(palette.isDark ? .white : TetherColor.brand)
                 }
             }
-            .toolbarBackground(theme.theme.isDark ? .hidden : .visible, for: .navigationBar)
+            .toolbarBackground(palette.isDark ? .hidden : .visible, for: .navigationBar)
             .sheet(item: $drawn) { note in
                 JarNoteSheet(note: note,
                              author: authorName(note.authorID),
-                             theme: theme.theme)
+                             theme: palette)
                     .presentationDetents([.medium])
             }
             .sheet(isPresented: $showThemes) {
@@ -100,10 +105,10 @@ struct WisdomJarView: View {
 
     private var scene: some View {
         ZStack {
-            LinearGradient(colors: theme.theme.backdrop,
+            LinearGradient(colors: palette.backdrop,
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
-            SceneBackdrop(theme: theme.theme)
+            SceneBackdrop(theme: palette)
         }
         .ignoresSafeArea()
         .animation(.easeInOut(duration: 0.6), value: theme.raw)
@@ -116,10 +121,10 @@ struct WisdomJarView: View {
             Image(systemName: "sparkles")
             .accessibilityHidden(true)
                 .font(.system(size: 14))
-                .foregroundStyle(theme.theme.glow)
+                .foregroundStyle(palette.glow)
             Text("Something worth keeping? The jar is only full on a hard day if you fill it on a good one.")
                 .font(TetherType.caption)
-                .foregroundStyle(theme.theme.muted)
+                .foregroundStyle(palette.muted)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)
         }
@@ -136,14 +141,14 @@ struct WisdomJarView: View {
     private var jar: some View {
         ZStack {
             Ellipse()
-                .fill(Color.black.opacity(theme.theme.isDark ? 0.42 : 0.14))
+                .fill(Color.black.opacity(palette.isDark ? 0.42 : 0.14))
                 .frame(width: 140, height: 16)
                 .blur(radius: 8)
                 .offset(y: jarH / 2 - 2)
 
             JarGlass()
                 .fill(LinearGradient(
-                    colors: theme.theme.isDark
+                    colors: palette.isDark
                         ? [Color.white.opacity(0.20), Color.white.opacity(0.04),
                            Color.white.opacity(0.12)]
                         : [Color.white.opacity(0.72), TetherColor.brand.opacity(0.07),
@@ -156,7 +161,7 @@ struct WisdomJarView: View {
 
             Capsule()
                 .fill(LinearGradient(
-                    colors: [.white.opacity(theme.theme.isDark ? 0.42 : 0.80),
+                    colors: [.white.opacity(palette.isDark ? 0.42 : 0.80),
                              .white.opacity(0.02)],
                     startPoint: .top, endPoint: .bottom))
                 .frame(width: 11, height: 96)
@@ -166,10 +171,10 @@ struct WisdomJarView: View {
             // Glass edge: white on dark scenes, accent on light ones. Using the
             // accent on a dark backdrop would double up with the lid glow.
             JarGlass()
-                .stroke(Color.white.opacity(theme.theme.isDark ? 0.34 : 0.0), lineWidth: 1.5)
+                .stroke(Color.white.opacity(palette.isDark ? 0.34 : 0.0), lineWidth: 1.5)
                 .frame(width: jarW, height: jarH)
             JarGlass()
-                .stroke(TetherColor.brand.opacity(theme.theme.isDark ? 0.0 : 0.22), lineWidth: 1.5)
+                .stroke(TetherColor.brand.opacity(palette.isDark ? 0.0 : 0.22), lineWidth: 1.5)
                 .frame(width: jarW, height: jarH)
 
             lid
@@ -249,7 +254,7 @@ struct WisdomJarView: View {
             if !myNotes.isEmpty {
                 Text("You won't know which one you'll get.")
                     .font(TetherType.caption)
-                    .foregroundStyle(theme.theme.faint)
+                    .foregroundStyle(palette.faint)
             }
         }
     }
@@ -275,11 +280,11 @@ struct WisdomJarView: View {
             Text("ADD TO THE JAR")
                 .font(TetherType.micro)
                 .tracking(1)
-                .foregroundStyle(theme.theme.faint)
+                .foregroundStyle(palette.faint)
 
             Text("Something true, kind, or useful. For a hard day — theirs or yours.")
                 .font(TetherType.caption)
-                .foregroundStyle(theme.theme.muted)
+                .foregroundStyle(palette.muted)
                 .fixedSize(horizontal: false, vertical: true)
 
             TextField("Write a note…", text: $draft, axis: .vertical)
@@ -298,24 +303,24 @@ struct WisdomJarView: View {
                     HStack(spacing: TetherSpace.s) {
                         Image(systemName: shareThisNote ? "person.2.fill" : "lock.fill")
                             .font(.system(size: 13))
-                            .foregroundStyle(shareThisNote ? TetherColor.brand : theme.theme.faint)
+                            .foregroundStyle(shareThisNote ? TetherColor.brand : palette.faint)
                         VStack(alignment: .leading, spacing: 1) {
                             Text(shareThisNote
                                  ? "Share with \(partner?.displayName ?? "them")"
                                  : "Just for me")
                                 .font(TetherType.caption)
-                                .foregroundStyle(theme.theme.ink)
+                                .foregroundStyle(palette.ink)
                             Text(shareThisNote
                                  ? "They can draw this from the jar."
                                  : "Nobody else will ever see this one.")
                                 .font(TetherType.micro)
-                                .foregroundStyle(theme.theme.faint)
+                                .foregroundStyle(palette.faint)
                         }
                         Spacer(minLength: 0)
                         Image(systemName: "chevron.up.chevron.down")
                         .accessibilityHidden(true)
                             .font(.system(size: 10))
-                            .foregroundStyle(theme.theme.faint)
+                            .foregroundStyle(palette.faint)
                     }
                     .padding(TetherSpace.s)
                     .background(.ultraThinMaterial.opacity(0.45),
@@ -349,11 +354,11 @@ struct WisdomJarView: View {
                 Text("\(myNotes.count) yours")
                     .font(TetherType.caption)
             }
-            .foregroundStyle(theme.theme.faint)
+            .foregroundStyle(palette.faint)
         } else if !notes.isEmpty {
             Text("\(myNotes.count) \(myNotes.count == 1 ? "note" : "notes") in the jar")
                 .font(TetherType.caption)
-                .foregroundStyle(theme.theme.faint)
+                .foregroundStyle(palette.faint)
         }
     }
 
@@ -496,7 +501,7 @@ struct SceneSheet: View {
 
                     ForEach(AppScene.allCases) { option in
                         SceneRow(option: option,
-                                    selected: theme.theme == option) {
+                                    selected: theme.choice == option) {
                             theme.raw = option.rawValue
                             TetherHaptics.light()
                         }

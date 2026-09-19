@@ -17,45 +17,75 @@ import SwiftUI
 // app re-resolves itself correctly.
 
 enum AppScene: String, CaseIterable, Identifiable {
-    case dawn, night, garden, jungle
+    // `.automatic` is the default and the answer to "what should the theme do
+    // when the phone is in dark mode?" — it follows the phone: dark gets
+    // Night, light gets Dawn. Anything else would mean a person who has set
+    // their phone to dark mode opening an app that ignores them.
+    case automatic, dawn, night, garden, jungle, ocean, dune, aurora
 
     var id: String { rawValue }
+
+    /// The scene that actually draws, once `.automatic` has been resolved
+    /// against the device's appearance.
+    ///
+    /// Every visual property on this type must be read from the RESOLVED
+    /// scene, never from `.automatic` directly — `.automatic` has no backdrop
+    /// of its own. `SceneBackdrop` and `TetherBackdrop` resolve first and hand
+    /// the concrete case to everything downstream.
+    func concrete(system: ColorScheme) -> AppScene {
+        guard self == .automatic else { return self }
+        return system == .dark ? .night : .dawn
+    }
 
     // LocalizedStringKey, not String. `Text(someString)` is treated by SwiftUI
     // as VERBATIM and is never looked up in the catalog, so a plain String here
     // would ship these four names in English to every language, silently.
     var title: LocalizedStringKey {
         switch self {
-        case .dawn:   return "Dawn"
-        case .night:  return "Night"
-        case .garden: return "Garden"
-        case .jungle: return "Jungle"
+        case .automatic: return "Match phone"
+        case .dawn:      return "Dawn"
+        case .night:     return "Night"
+        case .garden:    return "Garden"
+        case .jungle:    return "Jungle"
+        case .ocean:     return "Ocean"
+        case .dune:      return "Dune"
+        case .aurora:    return "Aurora"
         }
     }
 
     var blurb: LocalizedStringKey {
         switch self {
-        case .dawn:   return "Warm paper and morning light."
-        case .night:  return "Deep sky, drifting fireflies."
-        case .garden: return "Soft green, butterflies."
-        case .jungle: return "Dense leaves, warm shafts of light."
+        case .automatic: return "Follows your phone. Dark gets Night, light gets Dawn."
+        case .dawn:      return "Warm paper and morning light."
+        case .night:     return "Deep sky, drifting fireflies."
+        case .garden:    return "Soft green, butterflies."
+        case .jungle:    return "Dense leaves, warm shafts of light."
+        case .ocean:     return "Deep water, slow bubbles rising."
+        case .dune:      return "Warm sand at dusk, dust on the wind."
+        case .aurora:    return "Cold sky, green light moving."
         }
     }
 
     var symbol: String {
         switch self {
-        case .dawn:   return "sun.horizon"
-        case .night:  return "moon.stars"
-        case .garden: return "leaf"
-        case .jungle: return "tree"
+        case .automatic: return "circle.lefthalf.filled"
+        case .dawn:      return "sun.horizon"
+        case .night:     return "moon.stars"
+        case .garden:    return "leaf"
+        case .jungle:    return "tree"
+        case .ocean:     return "water.waves"
+        case .dune:      return "sun.dust"
+        case .aurora:    return "sparkles"
         }
     }
 
     /// True when the backdrop is dark, so the jar and its labels can adapt.
     var isDark: Bool {
         switch self {
-        case .dawn: return false
-        case .night, .garden, .jungle: return true
+        // `.automatic` never reaches here — resolve it first. Treated as light
+        // so a missed resolution fails visibly rather than silently dark.
+        case .automatic, .dawn, .dune: return false
+        case .night, .garden, .jungle, .ocean, .aurora: return true
         }
     }
 
@@ -71,17 +101,20 @@ enum AppScene: String, CaseIterable, Identifiable {
     /// particles are the subject.
     var ambientParticleCount: Int {
         switch self {
-        case .dawn:   return 7
-        case .night:  return 9
-        case .garden: return 5
-        case .jungle: return 4
+        case .automatic, .dawn: return 7
+        case .night:            return 9
+        case .garden:           return 5
+        case .jungle:           return 4
+        case .ocean:            return 6
+        case .dune:             return 6
+        case .aurora:           return 5
         }
     }
 
     /// Three stops, top-leading → bottom-trailing.
     var backdrop: [Color] {
         switch self {
-        case .dawn:
+        case .automatic, .dawn:
             return [Color(hex: "FDF6EC"), Color(hex: "F7E9DA"), Color(hex: "F2E3E6")]
         case .night:
             return [Color(hex: "1B1740"), Color(hex: "0E0B22"), Color(hex: "2A1B3D")]
@@ -89,25 +122,37 @@ enum AppScene: String, CaseIterable, Identifiable {
             return [Color(hex: "1F3A2E"), Color(hex: "16281F"), Color(hex: "2C4436")]
         case .jungle:
             return [Color(hex: "12261C"), Color(hex: "0B1712"), Color(hex: "2A3520")]
+        case .ocean:
+            return [Color(hex: "0C2A3E"), Color(hex: "071A28"), Color(hex: "123C4E")]
+        case .dune:
+            return [Color(hex: "FBF1E0"), Color(hex: "F3E0C4"), Color(hex: "EAD3BE")]
+        case .aurora:
+            return [Color(hex: "0B1B2E"), Color(hex: "060F1C"), Color(hex: "14303A")]
         }
     }
 
     /// A soft light source, so the scene is lit rather than flat.
     var glow: Color {
         switch self {
-        case .dawn:   return Color(hex: "FFD9A0")
-        case .night:  return Color(hex: "8FA8FF")
-        case .garden: return Color(hex: "A8E0B0")
-        case .jungle: return Color(hex: "D9C07A")
+        case .automatic, .dawn: return Color(hex: "FFD9A0")
+        case .night:            return Color(hex: "8FA8FF")
+        case .garden:           return Color(hex: "A8E0B0")
+        case .jungle:           return Color(hex: "D9C07A")
+        case .ocean:            return Color(hex: "7FD4E8")
+        case .dune:             return Color(hex: "F0B463")
+        case .aurora:           return Color(hex: "8FF0C4")
         }
     }
 
     var particle: Particle {
         switch self {
-        case .dawn:   return .motes
-        case .night:  return .fireflies
-        case .garden: return .butterflies
-        case .jungle: return .butterflies
+        case .automatic, .dawn: return .motes
+        case .night:            return .fireflies
+        case .garden:           return .butterflies
+        case .jungle:           return .butterflies
+        case .ocean:            return .bubbles
+        case .dune:             return .motes
+        case .aurora:           return .aurora
         }
     }
 
@@ -119,6 +164,10 @@ enum AppScene: String, CaseIterable, Identifiable {
 
 enum Particle {
     case motes, fireflies, butterflies
+    /// Slow bubbles rising — Ocean. Movement is vertical and unhurried.
+    case bubbles
+    /// Vertical ribbons of light that drift and fade — Aurora.
+    case aurora
 }
 
 // MARK: - Persistence
@@ -134,10 +183,17 @@ final class SceneManager {
     }
 
     init() {
-        raw = UserDefaults.standard.string(forKey: key) ?? AppScene.dawn.rawValue
+        // Default is `.automatic`, NOT `.dawn`. Someone who has set their
+        // phone to dark mode must not open the app into a bright morning.
+        raw = UserDefaults.standard.string(forKey: key) ?? AppScene.automatic.rawValue
     }
 
-    var theme: AppScene { AppScene(rawValue: raw) ?? .dawn }
+    /// What the person chose. May be `.automatic`.
+    var choice: AppScene { AppScene(rawValue: raw) ?? .automatic }
+
+    /// Back-compat: the chosen scene. Callers that DRAW must resolve it first
+    /// with `concrete(system:)` — see `SceneBackdrop`.
+    var theme: AppScene { choice }
 }
 
 // MARK: - The living backdrop
@@ -150,12 +206,20 @@ final class SceneManager {
 /// movement, at a fraction of the cost and without breaking the illustrated
 /// style the rest of the app is built on.
 struct SceneBackdrop: View {
-    let theme: AppScene
+    /// The CHOSEN scene. May be `.automatic`, which is resolved below against
+    /// the device appearance before anything is drawn.
+    var theme: AppScene = .automatic
     /// Fraction of the particles to draw. The jar uses 1 (the scene is the
     /// subject); the app-wide backdrop uses less, so it reads as atmosphere.
     var density: Double = 1
 
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.colorScheme) private var systemScheme
+
+    /// Resolving here rather than at every call site means `.automatic` cannot
+    /// leak into a switch that has no case for it — the compiler would catch
+    /// that, but the call sites would all have to change too.
+    private var resolved: AppScene { theme.concrete(system: systemScheme) }
 
     var body: some View {
         // No minimumInterval: the schedule follows the display's native rate,
@@ -179,13 +243,13 @@ struct SceneBackdrop: View {
                         width: size.width * 1.5 * pulse,
                         height: size.width * 1.5 * pulse)),
                     with: .radialGradient(
-                        Gradient(colors: [theme.glow.opacity(0.22),
-                                          theme.glow.opacity(0.0)]),
+                        Gradient(colors: [resolved.glow.opacity(0.22),
+                                          resolved.glow.opacity(0.0)]),
                         center: centre,
                         startRadius: 0,
                         endRadius: size.width * 0.75))
 
-                draw(theme.particle, in: &ctx, size: size, t: t)
+                draw(resolved.particle, in: &ctx, size: size, t: t)
             }
         }
         .allowsHitTesting(false)
@@ -196,9 +260,11 @@ struct SceneBackdrop: View {
                       size: CGSize,
                       t: Double) {
         switch kind {
-        case .motes:      motes(&ctx, size, t)
-        case .fireflies:  fireflies(&ctx, size, t)
+        case .motes:       motes(&ctx, size, t)
+        case .fireflies:   fireflies(&ctx, size, t)
         case .butterflies: butterflies(&ctx, size, t)
+        case .bubbles:     bubbles(&ctx, size, t)
+        case .aurora:      aurora(&ctx, size, t)
         }
     }
 
@@ -268,6 +334,50 @@ struct SceneBackdrop: View {
                 Path(ellipseIn: CGRect(x: x - 0.9, y: y - w * 0.34,
                                        width: 1.8, height: w * 0.68)),
                 with: .color(tint.opacity(0.65)))
+        }
+    }
+
+    /// Bubbles rising. Vertical and unhurried — the opposite of the fireflies,
+    /// which wander. This is what makes Ocean read as water rather than sky.
+    private func bubbles(_ ctx: inout GraphicsContext, _ size: CGSize, _ t: Double) {
+        for i in 0..<max(1, Int(12 * density)) {
+            let s = seed(i, 11)
+            let speed = 12 + s * 22
+            let x = seed(i, 12) * size.width + sin(t * 0.25 + s * 8) * 10
+            // Rise from the bottom, wrap cleanly.
+            let travel = size.height + 60
+            let y = size.height + 30 - (t * speed + s * travel)
+                .truncatingRemainder(dividingBy: travel)
+            let r = 1.5 + s * 3
+
+            ctx.stroke(
+                Path(ellipseIn: CGRect(x: x - r, y: y - r, width: r * 2, height: r * 2)),
+                with: .color(Color(hex: "BFEAF5").opacity(0.16 + s * 0.16)),
+                lineWidth: 1)
+        }
+    }
+
+    /// Vertical ribbons of light that drift sideways and fade — Aurora.
+    /// Drawn as soft vertical strokes rather than points, because the aurora
+    /// is a curtain, not a star field.
+    private func aurora(_ ctx: inout GraphicsContext, _ size: CGSize, _ t: Double) {
+        let tints = [Color(hex: "8FF0C4"), Color(hex: "7FD4E8"), Color(hex: "C9A8F0")]
+        for i in 0..<max(1, Int(6 * density)) {
+            let s = seed(i, 13)
+            let x = seed(i, 14) * size.width + sin(t * 0.12 + s * 7) * 40
+            let h = size.height * (0.30 + s * 0.45)
+            let breathe = 0.5 + 0.5 * abs(sin(t * 0.22 + s * 4))
+            let tint = tints[i % tints.count]
+
+            var path = Path()
+            path.move(to: CGPoint(x: x, y: size.height * 0.10))
+            path.addQuadCurve(
+                to: CGPoint(x: x + 14, y: size.height * 0.10 + h),
+                control: CGPoint(x: x - 20, y: size.height * 0.10 + h * 0.5))
+            ctx.stroke(path,
+                       with: .color(tint.opacity(0.05 + 0.11 * breathe)),
+                       style: StrokeStyle(lineWidth: 18 + s * 22,
+                                          lineCap: .round))
         }
     }
 
