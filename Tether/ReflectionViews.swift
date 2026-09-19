@@ -500,6 +500,113 @@ struct WisdomTrackDetailView: View {
     }
 }
 
+// MARK: - Cooldown
+
+/// A guided pause for a hard moment. Not therapy and not mediation — just a
+/// structured beat before anyone says something they cannot take back.
+struct CooldownView: View {
+    @Environment(\.dismiss) private var dismiss
+    @State private var step = 0
+    @State private var note = ""
+
+    private let steps: [(title: String, body: String)] = [
+        ("Stop here", "You are activated. That is not a failure — it is a body doing its job. Nothing needs to be solved in the next ten minutes."),
+        ("Breathe first", "Four in. Hold for four. Six out. Twice is enough to change what your body is doing."),
+        ("Name the real thing", "Underneath the argument, what is actually at stake for you? Not the topic — the thing the topic is standing in for."),
+        ("Say it plainly", "One sentence, starting with 'I'. No 'you always'. Write it here first so you can hear it before they do."),
+    ]
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.xl) {
+                    progress
+                    content
+                    Spacer(minLength: TetherSpace.l)
+                    controls
+                }
+                .padding(TetherSpace.margin)
+                .readableFrame()
+                .padding(.bottom, TetherSpace.xl)
+            }
+            .background { TetherBackdrop() }
+            .navigationTitle("A pause")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Close") { dismiss() }
+                }
+            }
+        }
+    }
+
+    private var progress: some View {
+        HStack(spacing: TetherSpace.xs) {
+            ForEach(steps.indices, id: \.self) { i in
+                Capsule()
+                    .fill(i <= step ? TetherColor.brand : TetherColor.border)
+                    .frame(height: 3)
+            }
+        }
+        .padding(.top, TetherSpace.s)
+    }
+
+    private var content: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.m) {
+            Text(steps[step].title)
+                .font(.system(size: 28, weight: .bold, design: .rounded))
+                .tracking(-0.5)
+                .foregroundStyle(TetherColor.ink)
+                .fixedSize(horizontal: false, vertical: true)
+
+            Text(steps[step].body)
+                .font(TetherType.body)
+                .foregroundStyle(TetherColor.muted)
+                .fixedSize(horizontal: false, vertical: true)
+
+            if step == 3 {
+                TextField("I feel…", text: $note, axis: .vertical)
+                    .lineLimit(2...5)
+                    .font(TetherType.body)
+                    .foregroundStyle(TetherColor.text)
+                    .tint(TetherColor.brand)
+                    .padding(TetherSpace.m)
+                    .background(TetherColor.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: TetherRadius.small, style: .continuous)
+                            .strokeBorder(TetherColor.border, lineWidth: 1)
+                    )
+            }
+        }
+    }
+
+    private var controls: some View {
+        VStack(spacing: TetherSpace.s) {
+            if step < steps.count - 1 {
+                Button("Next") {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                        step += 1
+                    }
+                }
+                .tetherButton()
+            } else {
+                Button("Done") { dismiss() }
+                    .tetherButton()
+            }
+            if step > 0 {
+                Button("Back") {
+                    withAnimation(.spring(response: 0.35, dampingFraction: 0.85)) {
+                        step -= 1
+                    }
+                }
+                .tetherButton(.tertiary)
+            }
+        }
+    }
+}
+
 // MARK: - Shared threads
 
 /// Gratitude and "us" — the two threads written by either partner and read by
