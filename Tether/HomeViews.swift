@@ -11,6 +11,7 @@ struct HomeView: View {
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
     @Query(sort: \Warmth.createdAt, order: .reverse) private var warmths: [Warmth]
     @Query private var rituals: [Ritual]
+    @Query private var jarNotes: [JarNote]
     @Query(sort: \PromptReply.createdAt, order: .reverse) private var replies: [PromptReply]
     @Query(sort: \MoodLog.createdAt, order: .reverse) private var moods: [MoodLog]
     @Query private var allProfiles: [UserProfile]
@@ -27,6 +28,7 @@ struct HomeView: View {
     @State private var showRitual = false
     @State private var showChat = false
     @State private var showJar = false
+    @State private var showMilestones = false
     @State private var debugOpened = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
@@ -93,6 +95,14 @@ struct HomeView: View {
                         .tetherAppear(delay: 0.05)
                     togetherCard
                         .tetherAppear(delay: 0.08)
+                    Button {
+                        showMilestones = true
+                    } label: {
+                        MilestoneCard(milestones: milestones)
+                    }
+                    .buttonStyle(.plain)
+                    .tetherAppear(delay: 0.082)
+
                     ritualCard
                         .tetherAppear(delay: 0.085)
                     warmthCard
@@ -192,6 +202,9 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showJar) {
                 WisdomJarView(profile: profile)
+            }
+            .sheet(isPresented: $showMilestones) {
+                MilestonesView(milestones: milestones)
             }
             .onAppear {
                 // DEBUG-only deep link, so a screenshot can reach a sheet that
@@ -718,6 +731,18 @@ struct HomeView: View {
             return "\(partner.displayName) has not answered yet today."
         }
         return "\(partner.displayName) answered today — feeling \(Mood.label(for: entry.mood).lowercased())."
+    }
+
+    // MARK: - Milestones
+
+    /// Reuses the existing computation from the Grow tab — there is no second
+    /// definition of what a milestone is. This card only surfaces the next one
+    /// on Home, where it will actually be seen.
+    private var milestones: [Milestone] {
+        Milestones.compute(profile: profile,
+                           entries: entries,
+                           replies: replies,
+                           isPaired: isPaired)
     }
 
     // MARK: - Ritual
