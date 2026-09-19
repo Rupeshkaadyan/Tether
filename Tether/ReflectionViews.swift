@@ -746,6 +746,7 @@ struct MemoryLaneView: View {
                         stats
                         onThisDay
                         bestMoments
+                        photoTimeline
                         monthStrip
                         yearBook
                     }
@@ -942,6 +943,62 @@ struct MemoryLaneView: View {
     }
 
     private var maxCount: Int { max(1, monthBuckets.map(\.count).max() ?? 1) }
+
+    // MARK: Photo timeline
+
+    /// Entries with a photo, newest first. Photos and Memory Lane already both
+    /// existed — this is the seam between them, which was missing.
+    private var photoEntries: [JournalEntry] {
+        story.filter { $0.photoData != nil }
+             .sorted { $0.entryDate > $1.entryDate }
+    }
+
+    @ViewBuilder
+    private var photoTimeline: some View {
+        if !photoEntries.isEmpty {
+            VStack(alignment: .leading, spacing: TetherSpace.s) {
+                SectionHeader(title: "In pictures")
+                    .padding(.horizontal, TetherSpace.margin)
+
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(alignment: .top, spacing: TetherSpace.m) {
+                        ForEach(photoEntries) { entry in
+                            photoCard(entry)
+                        }
+                    }
+                    .padding(.horizontal, TetherSpace.margin)
+                }
+            }
+        }
+    }
+
+    private func photoCard(_ entry: JournalEntry) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            if let data = entry.photoData, let image = UIImage(data: data) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 156, height: 196)
+                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: TetherRadius.small,
+                                        style: .continuous)
+                            .strokeBorder(TetherColor.border, lineWidth: 1)
+                    )
+            }
+
+            Text(entry.entryDate.formatted(date: .abbreviated, time: .omitted))
+                .font(TetherType.micro)
+                .foregroundStyle(TetherColor.faint)
+
+            Text(Mood.label(for: entry.mood))
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+        }
+        .frame(width: 156, alignment: .leading)
+        .accessibilityElement(children: .combine)
+    }
 
     // MARK: Year book
 
