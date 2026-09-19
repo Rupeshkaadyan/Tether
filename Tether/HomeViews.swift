@@ -281,7 +281,9 @@ struct HomeView: View {
                     onAllow: {
                         Task {
                             if await NotificationService.shared.requestAuthorization() {
-                                await NotificationService.shared.reschedule(for: profile)
+                                await NotificationService.shared.reschedule(
+                                        for: profile,
+                                        paused: pauses.contains { $0.isActive })
                             }
                         }
                     },
@@ -1189,6 +1191,8 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var ctx
     @State private var store = PurchaseService.shared
     @State private var notifService = NotificationService.shared
+    /// Needed so a reminder-time change does not quietly undo a Quiet week.
+    @Query(sort: \Pause.createdAt, order: .reverse) private var pauses: [Pause]
     @State private var showPaywall = false
     @State private var showLoveQuiz = false
     @State private var showDeleteConfirm = false
@@ -1399,7 +1403,9 @@ struct SettingsView: View {
                         Button("Turn on reminders") {
                             Task {
                                 if await NotificationService.shared.requestAuthorization() {
-                                    await NotificationService.shared.reschedule(for: profile)
+                                    await NotificationService.shared.reschedule(
+                                        for: profile,
+                                        paused: pauses.contains { $0.isActive })
                                 }
                             }
                         }
@@ -1409,7 +1415,9 @@ struct SettingsView: View {
                 }
                 .task { await notifService.refreshStatus() }
                 .onChange(of: profile.notifyHour) { _, _ in
-                    Task { await NotificationService.shared.reschedule(for: profile) }
+                    Task { await NotificationService.shared.reschedule(
+                                        for: profile,
+                                        paused: pauses.contains { $0.isActive }) }
                 }
 
                 Section("Subscription") {

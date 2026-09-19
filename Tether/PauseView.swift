@@ -220,12 +220,17 @@ struct PauseView: View {
         try? ctx.save()
         note = ""
         TetherHaptics.success()
+        // Silence the app for both of them. This is the whole point — a pause
+        // that still nudges is not a pause.
+        Task { await NotificationService.shared.reschedule(for: profile, paused: true) }
         dismiss()
     }
 
     private func end(_ pause: Pause) {
         pause.endsOn = Date()
         try? ctx.save()
+        // Coming back early brings the reminders back with it.
+        Task { await NotificationService.shared.reschedule(for: profile, paused: false) }
     }
 }
 

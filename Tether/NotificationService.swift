@@ -52,9 +52,19 @@ final class NotificationService {
 
     // MARK: - Scheduling
 
-    func reschedule(for profile: UserProfile) async {
+    /// `paused` means a Quiet week is active for either partner.
+    ///
+    /// When it is, everything is cancelled and NOTHING is scheduled. A
+    /// reminder to "show up for each other" is the last thing either of them
+    /// needs, and the whole point of the pause is that the app stops asking.
+    func reschedule(for profile: UserProfile, paused: Bool = false) async {
         await refreshStatus()
         guard isAuthorized else { return }
+
+        if paused {
+            center.removeAllPendingNotificationRequests()
+            return
+        }
 
         // The daily prompt is now seven separate requests, one per day, so the
         // removal has to clear all of them — leaving stale ones behind would
