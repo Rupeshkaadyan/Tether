@@ -59,8 +59,23 @@ enum TetherColor {
 
     // Brand
     static let ink           = Color.adaptive("2A2438", "D8D2F5")
-    static let brand         = Color.adaptive("5B4BC4", "8B7BE8")
-    static let brandSoft     = Color.adaptive("EFECFB", "2A2440")
+
+    /// The accent follows the chosen Feel. Not a gender switch — a tone
+    /// preference anyone can set, whichever way they answer the (optional)
+    /// gender question.
+    static var brand: Color {
+        switch FeelManager.shared.feel {
+        case .classic: return Color.adaptive("5B4BC4", "8B7BE8")
+        case .warm:    return Color.adaptive("B0486E", "E08FA8")
+        }
+    }
+
+    static var brandSoft: Color {
+        switch FeelManager.shared.feel {
+        case .classic: return Color.adaptive("EFECFB", "2A2440")
+        case .warm:    return Color.adaptive("FBEDF1", "34202A")
+        }
+    }
     static let tint          = Color.adaptive("EFECFB", "2A2440")
 
     // Warmth
@@ -83,10 +98,20 @@ enum TetherColor {
 // MARK: - Gradient
 
 enum TetherGradient {
-    /// The brand gradient: #6A57D6 → #4A3AA8.
-    static let brand = LinearGradient(
-        colors: [Color.adaptive("6A57D6", "7E6BE0"), Color.adaptive("4A3AA8", "5B4BC4")],
-        startPoint: .topLeading, endPoint: .bottomTrailing)
+    /// The brand gradient, following the chosen Feel.
+    /// Classic: #6A57D6 → #4A3AA8. Warm: rose → plum.
+    static var brand: LinearGradient {
+        switch FeelManager.shared.feel {
+        case .classic:
+            return LinearGradient(
+                colors: [Color.adaptive("6A57D6", "7E6BE0"), Color.adaptive("4A3AA8", "5B4BC4")],
+                startPoint: .topLeading, endPoint: .bottomTrailing)
+        case .warm:
+            return LinearGradient(
+                colors: [Color.adaptive("C4608A", "D98BA8"), Color.adaptive("8E3A61", "A85B7E")],
+                startPoint: .topLeading, endPoint: .bottomTrailing)
+        }
+    }
 
     static let dawn = LinearGradient(
         colors: [Color.adaptive("FBF1E6", "241B26"), Color.adaptive("F7E3E9", "2A1D2C")],

@@ -91,6 +91,56 @@ struct WelcomeStep: View {
                         .submitLabel(.done)
                 }
 
+                // The tone, not the gender. It is what actually drives the UI,
+                // it includes people who do not fit either box, and nobody has
+                // to be sorted into a category to pick a colour they like.
+                VStack(alignment: .leading, spacing: TetherSpace.s) {
+                    Text("How should it feel?")
+                        .font(TetherType.label)
+                        .foregroundStyle(TetherColor.text)
+                    Text("You can change this any time in Settings.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    HStack(spacing: TetherSpace.s) {
+                        ForEach(FeelManager.Feel.allCases) { option in
+                            let selected = FeelManager.shared.feel == option
+                            Button {
+                                FeelManager.shared.raw = option.rawValue
+                            } label: {
+                                VStack(spacing: 6) {
+                                    Circle()
+                                        .fill(option == .warm
+                                              ? AnyShapeStyle(LinearGradient(
+                                                    colors: [Color(hex: "C4608A"), Color(hex: "8E3A61")],
+                                                    startPoint: .topLeading, endPoint: .bottomTrailing))
+                                              : AnyShapeStyle(LinearGradient(
+                                                    colors: [Color(hex: "6A57D6"), Color(hex: "4A3AA8")],
+                                                    startPoint: .topLeading, endPoint: .bottomTrailing)))
+                                        .frame(width: 28, height: 28)
+                                    Text(option.title)
+                                        .font(TetherType.label)
+                                        .foregroundStyle(selected ? TetherColor.text : TetherColor.muted)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, TetherSpace.m)
+                                .background(TetherColor.surface)
+                                .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                            style: .continuous))
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                    style: .continuous)
+                                        .strokeBorder(selected ? TetherColor.brand : TetherColor.border,
+                                                      lineWidth: selected ? 2 : 1)
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityAddTraits(selected ? [.isSelected] : [])
+                        }
+                    }
+                }
+
                 Spacer(minLength: TetherSpace.l)
 
                 Button("Get started", action: onNext)

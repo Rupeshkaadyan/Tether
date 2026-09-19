@@ -1114,6 +1114,21 @@ struct SettingsView: View {
     /// Kept as its own property: inlining this Picker inside the Settings List
     /// pushed the body past what the type-checker could resolve in reasonable
     /// time. Each option is shown in its own script so it stays readable.
+    /// A preview dot of each Feel's gradient, so the choice is visible rather
+    /// than described.
+    private func swatch(for feel: FeelManager.Feel) -> AnyShapeStyle {
+        switch feel {
+        case .classic:
+            return AnyShapeStyle(LinearGradient(
+                colors: [Color(hex: "6A57D6"), Color(hex: "4A3AA8")],
+                startPoint: .topLeading, endPoint: .bottomTrailing))
+        case .warm:
+            return AnyShapeStyle(LinearGradient(
+                colors: [Color(hex: "C4608A"), Color(hex: "8E3A61")],
+                startPoint: .topLeading, endPoint: .bottomTrailing))
+        }
+    }
+
     /// Light / dark / system. Same manual-binding approach as the language
     /// picker — @Environment has no $ projection for an @Observable class.
     private var themePicker: some View {
@@ -1331,6 +1346,39 @@ struct SettingsView: View {
                             Icon(.chevronRight, size: 15, color: TetherColor.faint)
                         }
                     }
+                }
+
+                Section("Feel") {
+                    ForEach(FeelManager.Feel.allCases) { option in
+                        Button {
+                            FeelManager.shared.raw = option.rawValue
+                        } label: {
+                            HStack(spacing: TetherSpace.m) {
+                                Circle()
+                                    .fill(swatch(for: option))
+                                    .frame(width: 26, height: 26)
+                                VStack(alignment: .leading, spacing: 1) {
+                                    Text(option.title)
+                                        .font(TetherType.body)
+                                        .foregroundStyle(TetherColor.text)
+                                    Text(option.blurb)
+                                        .font(TetherType.caption)
+                                        .foregroundStyle(TetherColor.muted)
+                                }
+                                Spacer(minLength: 0)
+                                if FeelManager.shared.feel == option {
+                                    Image(systemName: "checkmark")
+                                        .font(.system(size: 14, weight: .semibold))
+                                        .foregroundStyle(TetherColor.brand)
+                                }
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    Text("A tone, not a rule. Pick whichever feels like you — you can change it any time.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Section("Appearance") {

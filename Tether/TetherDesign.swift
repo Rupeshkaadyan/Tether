@@ -348,6 +348,51 @@ final class ThemeManager {
     }
 }
 
+// MARK: - Feel
+
+/// How the app should feel.
+///
+/// Deliberately a *preference*, not a gender switch. The optional gender
+/// question in onboarding only picks a sensible default — anyone can change
+/// this at any time, and the app never assumes a woman wants rose or a man
+/// wants indigo. Couples who do not fit either answer are not left out.
+@Observable
+final class FeelManager {
+    static let shared = FeelManager()
+
+    enum Feel: String, CaseIterable, Identifiable {
+        case classic, warm
+
+        var id: String { rawValue }
+
+        var title: String {
+            switch self {
+            case .classic: return "Classic"
+            case .warm:    return "Warm"
+            }
+        }
+
+        var blurb: String {
+            switch self {
+            case .classic: return "Cool indigo. Even-toned and direct."
+            case .warm:    return "Rose and plum. Softer, more reflective."
+            }
+        }
+    }
+
+    private let key = "tether.feel"
+
+    var raw: String {
+        didSet { UserDefaults.standard.set(raw, forKey: key) }
+    }
+
+    init() {
+        raw = UserDefaults.standard.string(forKey: key) ?? Feel.classic.rawValue
+    }
+
+    var feel: Feel { Feel(rawValue: raw) ?? .classic }
+}
+
 // MARK: - App lock
 
 /// For an app holding someone's private journal this is table stakes: lock it
