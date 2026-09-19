@@ -483,3 +483,160 @@ struct WisdomTrackDetailView: View {
         }
     }
 }
+
+// MARK: - Shared threads
+
+/// Gratitude and "us" — the two threads written by either partner and read by
+/// both. Everywhere else in Tether a note is private unless you choose to
+/// share it; these are shared by design.
+struct TogetherThreadView: View {
+    @Bindable var profile: UserProfile
+    @Environment(\.modelContext) private var ctx
+    @Environment(\.dismiss) private var dismiss
+    @Query(sort: \SharedNote.createdAt, order: .reverse) private var notes: [SharedNote]
+    @Query private var profiles: [UserProfile]
+
+    @State private var kind: SharedNoteKind = .gratitude
+    @State private var draft = ""
+
+    private var partner: UserProfile? {
+        guard let id = profile.partnerID else { return nil }
+        return profiles.first { $0.id == id }
+    }
+
+    private var thread: [SharedNote] { notes.filter { $0.kind == kind } }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                kindPicker
+                composer
+                content
+            }
+            .background { TetherBackdrop() }
+            .navigationTitle("Together")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+        }
+    }
+
+    private var kindPicker: some View {
+        HStack(spacing: TetherSpace.s) {
+            ForEach(SharedNoteKind.allCases) { option in
+                Button {
+                    withAnimation(.spring(response: 0.3, dampingFraction: 0.85)) {
+                        kind = option
+                    }
+                } label: {
+                    Text(option.title)
+                        .font(TetherType.label)
+                        .foregroundStyle(kind == option ? .white : TetherColor.muted)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 40)
+                        .background(kind == option
+                                    ? AnyShapeStyle(TetherGradient.brand)
+                                    : AnyShapeStyle(TetherColor.surface))
+                        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                    style: .continuous))
+                }
+                .buttonStyle(.plain)
+                .accessibilityAddTraits(kind == option ? [.isSelected] : [])
+            }
+        }
+        .padding(.horizontal, TetherSpace.margin)
+        .padding(.top, TetherSpace.m)
+    }
+
+    private var composer: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.s) {
+            Text(kind.blurb)
+                .font(TetherType.caption)
+                .foregroundStyle(TetherColor.muted)
+                .fixedSize(horizontal: false, vertical: true)
+
+            HStack(alignment: .bottom, spacing: TetherSpace.s) {
+                TextField(kind.placeholder, text: $draft, axis: .vertical)
+                    .lineLimit(1...5)
+                    .font(TetherType.body)
+                    .foregroundStyle(TetherColor.text)
+                    .tint(TetherColor.brand)
+                    .padding(TetherSpace.m)
+                    .background(TetherColor.surface)
+                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: TetherRadius.small, style: .continuous)
+                            .strokeBorder(TetherColor.border, lineWidth: 1)
+                    )
+
+                Button {
+                    add()
+                } label: {
+                    Icon(.send, size: 18, color: .white)
+                        .frame(width: 44, height: 44)
+                        .background(draft.trimmed.isEmpty
+                                    ? AnyShapeStyle(TetherColor.faint)
+                                    : AnyShapeStyle(TetherGradient.brand))
+                        .clipShape(Circle())
+                }
+                .buttonStyle(.plain)
+                .disabled(draft.trimmed.isEmpty)
+                .accessibilityLabel("Add to thread")
+            }
+        }
+        .padding(TetherSpace.margin)
+    }
+
+    @ViewBuilder
+    private var content: some View {
+        if thread.isEmpty {
+            TetherEmptyState(title: "Nothing yet", message: kind.emptyLine)
+        } else {
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.m) {
+                    ForEach(thread) { note in
+                        noteRow(note)
+                    }
+                }
+                .padding(.horizontal, TetherSpace.margin)
+                .padding(.bottom, TetherSpace.xxl)
+                .readableFrame()
+            }
+        }
+    }
+
+    private func noteRow(_ note: SharedNote) -> some View {
+        let mine = note.authorID == profile.id
+        return TetherCard {
+            VStack(alignment: .leading, spacing: TetherSpace.xs) {
+                HStack(spacing: TetherSpace.xs) {
+                    Text(mine ? "You" : (partner?.displayName ?? "Your partner"))
+                        .font(TetherType.caption)
+                        .foregroundStyle(mine ? TetherColor.brand : TetherColor.muted)
+                    Spacer(minLength: 0)
+                    Text(note.createdAt.formatted(date: .abbreviated, time: .omitted))
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.faint)
+                }
+                Text(note.body)
+                    .font(TetherType.callout)
+                    .foregroundStyle(TetherColor.text)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func add() {
+        let text = draft.trimmed
+        guard !text.isEmpty else { return }
+        ctx.insert(SharedNote(authorID: profile.id, body: text, kind: kind))
+        try? ctx.save()
+        draft = ""
+        TetherHaptics.success()
+    }
+}

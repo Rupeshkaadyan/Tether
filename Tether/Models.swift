@@ -196,6 +196,67 @@ final class UserProfile {
     }
 }
 
+/// A note written into a SHARED thread rather than a private journal.
+/// Two threads use it: gratitude (what you appreciate) and "us" (a shared
+/// space belonging to the couple). Both are visible to both partners.
+@Model
+final class SharedNote {
+    var id: UUID
+    var authorID: UUID
+    var body: String
+    var kindRaw: String
+    var createdAt: Date
+
+    init(authorID: UUID, body: String, kind: SharedNoteKind) {
+        self.id = UUID()
+        self.authorID = authorID
+        self.body = body
+        self.kindRaw = kind.rawValue
+        self.createdAt = Date()
+    }
+
+    var kind: SharedNoteKind {
+        get { SharedNoteKind(rawValue: kindRaw) ?? .gratitude }
+        set { kindRaw = newValue.rawValue }
+    }
+}
+
+enum SharedNoteKind: String, CaseIterable, Identifiable {
+    case gratitude, us
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .gratitude: return "Gratitude"
+        case .us:        return "Us"
+        }
+    }
+
+    var blurb: String {
+        switch self {
+        case .gratitude:
+            return "One thing you appreciate about them. Small and specific beats grand."
+        case .us:
+            return "A space that belongs to the two of you. Anything at all — no prompt, no shape."
+        }
+    }
+
+    var placeholder: String {
+        switch self {
+        case .gratitude: return "One thing I appreciate…"
+        case .us:        return "Write something for the two of us…"
+        }
+    }
+
+    var emptyLine: String {
+        switch self {
+        case .gratitude: return "Nothing here yet. The first thank-you starts the thread."
+        case .us:        return "Nothing here yet. Write the first line of your shared story."
+        }
+    }
+}
+
 /// A one-tap signal from one partner to the other — "thinking of you",
 /// "proud of you". No writing required, which is the point: it is the
 /// smallest possible act of care.

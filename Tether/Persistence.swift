@@ -29,7 +29,7 @@ enum Persistence {
             UserProfile.self, JournalEntry.self, MoodLog.self,
             PromptReply.self, Invite.self, RelationshipPulse.self,
             AIConversation.self, AIMessage.self, AIMemory.self,
-            Warmth.self
+            Warmth.self, SharedNote.self
         ])
 
         if useCloudKit {
