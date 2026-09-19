@@ -56,27 +56,55 @@ final class NotificationService {
         await refreshStatus()
         guard isAuthorized else { return }
 
-        center.removePendingNotificationRequests(withIdentifiers: [ID.dailyPrompt, ID.streakRisk])
+        // The daily prompt is now seven separate requests, one per day, so the
+        // removal has to clear all of them — leaving stale ones behind would
+        // fire yesterday's question tomorrow.
+        let dailyIDs = (0..<7).map { "\(ID.dailyPrompt).\($0)" }
+        center.removePendingNotificationRequests(withIdentifiers: dailyIDs + [ID.streakRisk])
 
-        await scheduleDailyPrompt(hour: profile.notifyHour)
+        await scheduleDailyPrompt(hour: profile.notifyHour, profile: profile)
         await scheduleStreakRisk(hour: profile.notifyHour)
     }
 
-    private func scheduleDailyPrompt(hour: Int) async {
-        let content = UNMutableNotificationContent()
-        content.title = "Today's prompt is ready"
-        content.body = "One question. Under a minute."
-        content.sound = .default
+    /// Carries the actual question, not a nudge to go and find it.
+    ///
+    /// "Today's prompt is ready" is a nag: it asks you to open an app to find
+    /// out what it wants. The question itself is a gift — you can read it,
+    /// answer it in your head, or reply straight from the lock screen.
+    ///
+    /// The prompts are deterministic by day index, so the next week can be
+    /// scheduled up front with each day's real question. This replaces a
+    /// single repeating trigger, which could only ever say the same thing
+    /// every day forever.
+    private func scheduleDailyPrompt(hour: Int, profile: UserProfile) async {
+        let today = PromptLibrary.dayIndex(since: profile.createdAt)
 
-        var components = DateComponents()
-        components.hour = hour
-        components.minute = 0
+        for offset in 0..<7 {
+            guard let day = Calendar.current.date(byAdding: .day,
+                                                  value: offset,
+                                                  to: Date()) else { continue }
+            let prompt = PromptLibrary.prompt(for: profile.track,
+                                              dayIndex: today + offset)
 
-        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
-        let request = UNNotificationRequest(identifier: ID.dailyPrompt,
-                                            content: content,
-                                            trigger: trigger)
-        try? await center.add(request)
+            let content = UNMutableNotificationContent()
+            content.title = prompt.body
+            content.body = "One question. Under a minute."
+            content.sound = .default
+            content.userInfo = ["dayIndex": today + offset]
+
+            var components = Calendar.current.dateComponents([.year, .month, .day],
+                                                             from: day)
+            components.hour = hour
+            components.minute = 0
+
+            let trigger = UNCalendarNotificationTrigger(dateMatching: components,
+                                                        repeats: false)
+            let request = UNNotificationRequest(
+                identifier: "\(ID.dailyPrompt).\(offset)",
+                content: content,
+                trigger: trigger)
+            try? await center.add(request)
+        }
     }
 
     /// Evening nudge, only fires when nothing has been logged. Offers the freeze
