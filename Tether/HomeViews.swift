@@ -77,6 +77,8 @@ struct HomeView: View {
                     if session.safetyBanner != nil { safetyBannerCard }
                     connectionCard
                         .tetherAppear(delay: 0.05)
+                    togetherCard
+                        .tetherAppear(delay: 0.08)
                     PulseCard(result: pulse) { onOpenPulse() }
                         .tetherAppear(delay: 0.1)
                     PromptCard(prompt: todayPrompt, dayLabel: Date().weekdayDisplay)
@@ -468,6 +470,99 @@ struct HomeView: View {
         return entries.first {
             $0.userID == partner.id && Calendar.current.isDateInToday($0.entryDate)
         }
+    }
+
+    /// Consecutive days, counting back from today, where BOTH of you wrote.
+    /// Today being unfinished does not break it — the day is not over yet.
+    private var sharedStreak: Int {
+        guard isPaired, let partner else { return 0 }
+        let cal = Calendar.current
+        let mine = Set(myEntries.map { cal.startOfDay(for: $0.entryDate) })
+        let theirs = Set(entries.filter { $0.userID == partner.id }
+                                .map { cal.startOfDay(for: $0.entryDate) })
+        let both = mine.intersection(theirs)
+
+        var day = cal.startOfDay(for: Date())
+        if !both.contains(day),
+           let yesterday = cal.date(byAdding: .day, value: -1, to: day) {
+            day = yesterday
+        }
+        var count = 0
+        while both.contains(day) {
+            count += 1
+            guard let prev = cal.date(byAdding: .day, value: -1, to: day) else { break }
+            day = prev
+        }
+        return count
+    }
+
+    /// Days since the earlier of the two of you started.
+    private var daysTogether: Int {
+        guard isPaired, let partner else { return 0 }
+        let cal = Calendar.current
+        let start = min(profile.createdAt, partner.createdAt)
+        let days = cal.dateComponents([.day],
+                                      from: cal.startOfDay(for: start),
+                                      to: cal.startOfDay(for: Date())).day ?? 0
+        return max(1, days + 1)
+    }
+
+    /// The couple's shared state — the "we", which the rest of Home does not
+    /// really show. Both streaks, how long you have been at this, and what
+    /// today looks like on their side.
+    @ViewBuilder
+    private var togetherCard: some View {
+        if isPaired, let partner {
+            TetherCard {
+                VStack(alignment: .leading, spacing: TetherSpace.m) {
+                    HStack(spacing: TetherSpace.xs) {
+                        TetherHeroMark(width: 26,
+                                       color: TetherColor.brand.opacity(0.55),
+                                       sag: 4,
+                                       lineWidth: 1.5,
+                                       dotRadius: 2)
+                        Text("TOGETHER")
+                            .font(TetherType.micro)
+                            .tracking(1)
+                            .foregroundStyle(TetherColor.faint)
+                        Spacer(minLength: 0)
+                    }
+
+                    Text(sharedStreakLine(partner: partner))
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.text)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    HStack(spacing: TetherSpace.s) {
+                        Circle()
+                            .fill(partnerTodayEntry.map { Mood.color(for: $0.mood) } ?? TetherColor.faint)
+                            .frame(width: 8, height: 8)
+                        Text(partnerTodayLine(partner: partner))
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+
+                    Text("\(daysTogether) day\(daysTogether == 1 ? "" : "s") of showing up together.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.faint)
+                }
+            }
+        }
+    }
+
+    private func sharedStreakLine(partner: UserProfile) -> String {
+        if sharedStreak == 0 {
+            return "You have not both written on the same day yet. Today could be the first."
+        }
+        return "You have both shown up \(sharedStreak) day\(sharedStreak == 1 ? "" : "s") in a row."
+    }
+
+    private func partnerTodayLine(partner: UserProfile) -> String {
+        guard let entry = partnerTodayEntry else {
+            return "\(partner.displayName) has not answered yet today."
+        }
+        return "\(partner.displayName) answered today — feeling \(Mood.label(for: entry.mood).lowercased())."
     }
 
     /// Care nudge: when their mood is low, say so gently and offer one line.
