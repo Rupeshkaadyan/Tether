@@ -53,7 +53,9 @@ enum TetherColor {
     // Text — never pure black
     static let text          = Color.adaptive("2A2438", "F3EFF7")
     static let muted         = Color.adaptive("6F6879", "A79FB5")
-    static let faint         = Color.adaptive("9A93A6", "7A7189")
+    // Lifted in dark mode: at #7A7189 the tertiary labels (mood names under
+    // journal entries) sat too close to the surface to read comfortably.
+    static let faint         = Color.adaptive("9A93A6", "8A8299")
 
     // Brand
     static let ink           = Color.adaptive("2A2438", "D8D2F5")
