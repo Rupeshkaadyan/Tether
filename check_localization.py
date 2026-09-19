@@ -9,9 +9,19 @@ is the one that keeps slipping through:
    these completely.
 
 2. UI string literals in the Swift sources that are NOT in the catalog at all.
-   xcodebuild does NOT auto-extract strings — only Xcode's IDE does. So a new
-   Text("...") is invisible to translation until someone adds it by hand, and
-   the app silently shows English in every language.
+
+   CORRECTION, because an earlier version of this note was wrong: xcodebuild
+   DOES extract strings, provided SWIFT_EMIT_LOC_STRINGS is YES. It writes
+   .stringsdata during compilation and merges it into the catalog at the end
+   of the build.
+
+   But it extracts them with an EMPTY localizations dict — no English, no
+   Hindi, no Spanish. Extraction is not translation. So a new Text("...") lands
+   in the catalog looking accounted-for and renders in English in every
+   language until somebody writes the translations.
+
+   Which is why check (1) matters more than it looks: the entries a build adds
+   are exactly the ones that need translating.
 
 Usage:  python3 check_localization.py
 Exit code 1 if anything needs attention, so it can gate a commit.

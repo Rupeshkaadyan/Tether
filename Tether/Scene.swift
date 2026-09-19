@@ -1,16 +1,22 @@
 import SwiftUI
 
-// MARK: - Jar themes
+// MARK: - Scenes
 //
-// The theme owns the SCENE. The Feel owns the ACCENT. They never overlap, and
-// that is deliberate: the Warm (rose) accent has to sit on every one of these
-// backdrops without turning muddy, so no theme is allowed to use the accent's
-// hue in its own background. Night is deep blue, Garden is green, Jungle is
-// dark green-gold, Dawn is warm paper. Rose lands cleanly on all four.
+// The scene owns the BACKDROP. The Feel owns the ACCENT. They never overlap,
+// and that is deliberate: the Warm (rose) accent has to sit on every one of
+// these backdrops without turning muddy, so no scene is allowed to use the
+// accent's hue in its own background. Night is deep blue, Garden green, Jungle
+// dark green-gold, Dawn warm paper. Rose lands cleanly on all four.
 //
-// Themes are chosen, never assigned. There is no "female jar".
+// Scenes are chosen, never assigned. There is no "female theme".
+//
+// A scene applies across the whole app, not just the jar, so it also carries
+// the COLOUR SCHEME. That is not decoration — a dark backdrop with the app's
+// light-mode ink would be unreadable. Because every colour in TetherColor is
+// already adaptive, setting the scheme is all that is needed: the rest of the
+// app re-resolves itself correctly.
 
-enum JarTheme: String, CaseIterable, Identifiable {
+enum AppScene: String, CaseIterable, Identifiable {
     case dawn, night, garden, jungle
 
     var id: String { rawValue }
@@ -50,6 +56,25 @@ enum JarTheme: String, CaseIterable, Identifiable {
         switch self {
         case .dawn: return false
         case .night, .garden, .jungle: return true
+        }
+    }
+
+    /// The appearance this scene requires to stay readable.
+    ///
+    /// Dawn is a light backdrop and needs light-mode ink; the other three are
+    /// dark and need dark-mode ink. Applied app-wide, so every adaptive colour
+    /// in TetherColor resolves to the legible half of its pair.
+    var scheme: ColorScheme { isDark ? .dark : .light }
+
+    /// Ambient particle density for the whole app. Lower than the jar's, so it
+    /// reads as atmosphere rather than a scene — the jar is the only place the
+    /// particles are the subject.
+    var ambientParticleCount: Int {
+        switch self {
+        case .dawn:   return 7
+        case .night:  return 9
+        case .garden: return 5
+        case .jungle: return 4
         }
     }
 
@@ -99,20 +124,20 @@ enum Particle {
 // MARK: - Persistence
 
 @Observable
-final class JarThemeManager {
-    static let shared = JarThemeManager()
+final class SceneManager {
+    static let shared = SceneManager()
 
-    private let key = "tether.jarTheme"
+    private let key = "tether.scene"
 
     var raw: String {
         didSet { UserDefaults.standard.set(raw, forKey: key) }
     }
 
     init() {
-        raw = UserDefaults.standard.string(forKey: key) ?? JarTheme.dawn.rawValue
+        raw = UserDefaults.standard.string(forKey: key) ?? AppScene.dawn.rawValue
     }
 
-    var theme: JarTheme { JarTheme(rawValue: raw) ?? .dawn }
+    var theme: AppScene { AppScene(rawValue: raw) ?? .dawn }
 }
 
 // MARK: - The living backdrop
@@ -124,8 +149,11 @@ final class JarThemeManager {
 /// This is where the "wow" comes from instead of a 3D model: depth, light and
 /// movement, at a fraction of the cost and without breaking the illustrated
 /// style the rest of the app is built on.
-struct JarScene: View {
-    let theme: JarTheme
+struct SceneBackdrop: View {
+    let theme: AppScene
+    /// Fraction of the particles to draw. The jar uses 1 (the scene is the
+    /// subject); the app-wide backdrop uses less, so it reads as atmosphere.
+    var density: Double = 1
 
     var body: some View {
         TimelineView(.animation(minimumInterval: 1.0 / 30.0, paused: false)) { timeline in
@@ -169,7 +197,7 @@ struct JarScene: View {
 
     /// Slow dust in warm light. Barely there, which is the point.
     private func motes(_ ctx: inout GraphicsContext, _ size: CGSize, _ t: Double) {
-        for i in 0..<14 {
+        for i in 0..<Int(14 * density) {
             let s = seed(i, 1)
             let x = (seed(i, 2) * size.width + sin(t * 0.18 + s * 6) * 16)
             let y = (seed(i, 3) * size.height - (t * (6 + s * 8)).truncatingRemainder(dividingBy: size.height + 40)) + size.height
@@ -183,7 +211,7 @@ struct JarScene: View {
 
     /// Warm points that drift and fade in and out, each on its own rhythm.
     private func fireflies(_ ctx: inout GraphicsContext, _ size: CGSize, _ t: Double) {
-        for i in 0..<16 {
+        for i in 0..<Int(16 * density) {
             let s = seed(i, 4)
             let speed = 0.10 + s * 0.16
             let x = seed(i, 5) * size.width + sin(t * speed + s * 9) * 34
@@ -209,7 +237,7 @@ struct JarScene: View {
     private func butterflies(_ ctx: inout GraphicsContext, _ size: CGSize, _ t: Double) {
         let tints = [Color(hex: "F6C7D8"), Color(hex: "F2D79A"), Color(hex: "CFE3F5"),
                      Color(hex: "E8D3F0")]
-        for i in 0..<7 {
+        for i in 0..<max(1, Int(7 * density)) {
             let s = seed(i, 7)
             let speed = 0.07 + s * 0.10
             let x = seed(i, 8) * size.width + sin(t * speed + s * 7) * 52

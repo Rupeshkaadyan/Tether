@@ -22,25 +22,25 @@
 		000000000000000000000036 /* GrowthViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000035 /* GrowthViews.swift */; };
 		000000000000000000000038 /* HomeViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000037 /* HomeViews.swift */; };
 		00000000000000000000003A /* InsightsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000039 /* InsightsViews.swift */; };
-		00000000000000000000003C /* JarTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003B /* JarTheme.swift */; };
-		00000000000000000000003E /* JarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003D /* JarView.swift */; };
-		000000000000000000000040 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003F /* JournalView.swift */; };
-		000000000000000000000042 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000041 /* MainTabView.swift */; };
-		000000000000000000000044 /* MilestonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000043 /* MilestonesView.swift */; };
-		000000000000000000000046 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000045 /* Models.swift */; };
-		000000000000000000000048 /* MoodGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000047 /* MoodGraph.swift */; };
-		00000000000000000000004A /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000049 /* NotificationService.swift */; };
-		00000000000000000000004C /* NotificationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004B /* NotificationViews.swift */; };
-		00000000000000000000004E /* OnboardingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004D /* OnboardingViews.swift */; };
-		000000000000000000000050 /* PairingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004F /* PairingViews.swift */; };
-		000000000000000000000052 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000051 /* PaywallView.swift */; };
-		000000000000000000000054 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000053 /* Persistence.swift */; };
-		000000000000000000000056 /* PulseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000055 /* PulseViews.swift */; };
-		000000000000000000000058 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000057 /* Purchases.swift */; };
-		00000000000000000000005A /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000059 /* QuizView.swift */; };
-		00000000000000000000005C /* ReflectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005B /* ReflectionService.swift */; };
-		00000000000000000000005E /* ReflectionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005D /* ReflectionViews.swift */; };
-		000000000000000000000060 /* Safety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005F /* Safety.swift */; };
+		00000000000000000000003C /* JarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003B /* JarView.swift */; };
+		00000000000000000000003E /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003D /* JournalView.swift */; };
+		000000000000000000000040 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003F /* MainTabView.swift */; };
+		000000000000000000000042 /* MilestonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000041 /* MilestonesView.swift */; };
+		000000000000000000000044 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000043 /* Models.swift */; };
+		000000000000000000000046 /* MoodGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000045 /* MoodGraph.swift */; };
+		000000000000000000000048 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000047 /* NotificationService.swift */; };
+		00000000000000000000004A /* NotificationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000049 /* NotificationViews.swift */; };
+		00000000000000000000004C /* OnboardingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004B /* OnboardingViews.swift */; };
+		00000000000000000000004E /* PairingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004D /* PairingViews.swift */; };
+		000000000000000000000050 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004F /* PaywallView.swift */; };
+		000000000000000000000052 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000051 /* Persistence.swift */; };
+		000000000000000000000054 /* PulseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000053 /* PulseViews.swift */; };
+		000000000000000000000056 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000055 /* Purchases.swift */; };
+		000000000000000000000058 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000057 /* QuizView.swift */; };
+		00000000000000000000005A /* ReflectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000059 /* ReflectionService.swift */; };
+		00000000000000000000005C /* ReflectionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005B /* ReflectionViews.swift */; };
+		00000000000000000000005E /* Safety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005D /* Safety.swift */; };
+		000000000000000000000060 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005F /* Scene.swift */; };
 		000000000000000000000062 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000061 /* SplashView.swift */; };
 		000000000000000000000064 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000063 /* Store.swift */; };
 		000000000000000000000066 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000065 /* SyncService.swift */; };
@@ -79,25 +79,25 @@
 		000000000000000000000035 /* GrowthViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowthViews.swift; sourceTree = "<group>"; };
 		000000000000000000000037 /* HomeViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViews.swift; sourceTree = "<group>"; };
 		000000000000000000000039 /* InsightsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsViews.swift; sourceTree = "<group>"; };
-		00000000000000000000003B /* JarTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JarTheme.swift; sourceTree = "<group>"; };
-		00000000000000000000003D /* JarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JarView.swift; sourceTree = "<group>"; };
-		00000000000000000000003F /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
-		000000000000000000000041 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
-		000000000000000000000043 /* MilestonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesView.swift; sourceTree = "<group>"; };
-		000000000000000000000045 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		000000000000000000000047 /* MoodGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodGraph.swift; sourceTree = "<group>"; };
-		000000000000000000000049 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		00000000000000000000004B /* NotificationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViews.swift; sourceTree = "<group>"; };
-		00000000000000000000004D /* OnboardingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViews.swift; sourceTree = "<group>"; };
-		00000000000000000000004F /* PairingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingViews.swift; sourceTree = "<group>"; };
-		000000000000000000000051 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
-		000000000000000000000053 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		000000000000000000000055 /* PulseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseViews.swift; sourceTree = "<group>"; };
-		000000000000000000000057 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
-		000000000000000000000059 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
-		00000000000000000000005B /* ReflectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionService.swift; sourceTree = "<group>"; };
-		00000000000000000000005D /* ReflectionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionViews.swift; sourceTree = "<group>"; };
-		00000000000000000000005F /* Safety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safety.swift; sourceTree = "<group>"; };
+		00000000000000000000003B /* JarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JarView.swift; sourceTree = "<group>"; };
+		00000000000000000000003D /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
+		00000000000000000000003F /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		000000000000000000000041 /* MilestonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesView.swift; sourceTree = "<group>"; };
+		000000000000000000000043 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		000000000000000000000045 /* MoodGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodGraph.swift; sourceTree = "<group>"; };
+		000000000000000000000047 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		000000000000000000000049 /* NotificationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViews.swift; sourceTree = "<group>"; };
+		00000000000000000000004B /* OnboardingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViews.swift; sourceTree = "<group>"; };
+		00000000000000000000004D /* PairingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingViews.swift; sourceTree = "<group>"; };
+		00000000000000000000004F /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		000000000000000000000051 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		000000000000000000000053 /* PulseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseViews.swift; sourceTree = "<group>"; };
+		000000000000000000000055 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
+		000000000000000000000057 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		000000000000000000000059 /* ReflectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionService.swift; sourceTree = "<group>"; };
+		00000000000000000000005B /* ReflectionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionViews.swift; sourceTree = "<group>"; };
+		00000000000000000000005D /* Safety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safety.swift; sourceTree = "<group>"; };
+		00000000000000000000005F /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		000000000000000000000061 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		000000000000000000000063 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		000000000000000000000065 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
@@ -171,27 +171,27 @@
 				000000000000000000000035 /* GrowthViews.swift */,
 				000000000000000000000037 /* HomeViews.swift */,
 				000000000000000000000039 /* InsightsViews.swift */,
-				00000000000000000000003B /* JarTheme.swift */,
-				00000000000000000000003D /* JarView.swift */,
-				00000000000000000000003F /* JournalView.swift */,
+				00000000000000000000003B /* JarView.swift */,
+				00000000000000000000003D /* JournalView.swift */,
 				00000000000000000000007F /* Localizable.xcstrings */,
-				000000000000000000000041 /* MainTabView.swift */,
-				000000000000000000000043 /* MilestonesView.swift */,
-				000000000000000000000045 /* Models.swift */,
-				000000000000000000000047 /* MoodGraph.swift */,
-				000000000000000000000049 /* NotificationService.swift */,
-				00000000000000000000004B /* NotificationViews.swift */,
-				00000000000000000000004D /* OnboardingViews.swift */,
-				00000000000000000000004F /* PairingViews.swift */,
-				000000000000000000000051 /* PaywallView.swift */,
-				000000000000000000000053 /* Persistence.swift */,
+				00000000000000000000003F /* MainTabView.swift */,
+				000000000000000000000041 /* MilestonesView.swift */,
+				000000000000000000000043 /* Models.swift */,
+				000000000000000000000045 /* MoodGraph.swift */,
+				000000000000000000000047 /* NotificationService.swift */,
+				000000000000000000000049 /* NotificationViews.swift */,
+				00000000000000000000004B /* OnboardingViews.swift */,
+				00000000000000000000004D /* PairingViews.swift */,
+				00000000000000000000004F /* PaywallView.swift */,
+				000000000000000000000051 /* Persistence.swift */,
 				000000000000000000000081 /* PrivacyInfo.xcprivacy */,
-				000000000000000000000055 /* PulseViews.swift */,
-				000000000000000000000057 /* Purchases.swift */,
-				000000000000000000000059 /* QuizView.swift */,
-				00000000000000000000005B /* ReflectionService.swift */,
-				00000000000000000000005D /* ReflectionViews.swift */,
-				00000000000000000000005F /* Safety.swift */,
+				000000000000000000000053 /* PulseViews.swift */,
+				000000000000000000000055 /* Purchases.swift */,
+				000000000000000000000057 /* QuizView.swift */,
+				000000000000000000000059 /* ReflectionService.swift */,
+				00000000000000000000005B /* ReflectionViews.swift */,
+				00000000000000000000005D /* Safety.swift */,
+				00000000000000000000005F /* Scene.swift */,
 				000000000000000000000061 /* SplashView.swift */,
 				000000000000000000000063 /* Store.swift */,
 				000000000000000000000065 /* SyncService.swift */,
@@ -352,25 +352,25 @@
 				000000000000000000000036 /* GrowthViews.swift in Sources */,
 				000000000000000000000038 /* HomeViews.swift in Sources */,
 				00000000000000000000003A /* InsightsViews.swift in Sources */,
-				00000000000000000000003C /* JarTheme.swift in Sources */,
-				00000000000000000000003E /* JarView.swift in Sources */,
-				000000000000000000000040 /* JournalView.swift in Sources */,
-				000000000000000000000042 /* MainTabView.swift in Sources */,
-				000000000000000000000044 /* MilestonesView.swift in Sources */,
-				000000000000000000000046 /* Models.swift in Sources */,
-				000000000000000000000048 /* MoodGraph.swift in Sources */,
-				00000000000000000000004A /* NotificationService.swift in Sources */,
-				00000000000000000000004C /* NotificationViews.swift in Sources */,
-				00000000000000000000004E /* OnboardingViews.swift in Sources */,
-				000000000000000000000050 /* PairingViews.swift in Sources */,
-				000000000000000000000052 /* PaywallView.swift in Sources */,
-				000000000000000000000054 /* Persistence.swift in Sources */,
-				000000000000000000000056 /* PulseViews.swift in Sources */,
-				000000000000000000000058 /* Purchases.swift in Sources */,
-				00000000000000000000005A /* QuizView.swift in Sources */,
-				00000000000000000000005C /* ReflectionService.swift in Sources */,
-				00000000000000000000005E /* ReflectionViews.swift in Sources */,
-				000000000000000000000060 /* Safety.swift in Sources */,
+				00000000000000000000003C /* JarView.swift in Sources */,
+				00000000000000000000003E /* JournalView.swift in Sources */,
+				000000000000000000000040 /* MainTabView.swift in Sources */,
+				000000000000000000000042 /* MilestonesView.swift in Sources */,
+				000000000000000000000044 /* Models.swift in Sources */,
+				000000000000000000000046 /* MoodGraph.swift in Sources */,
+				000000000000000000000048 /* NotificationService.swift in Sources */,
+				00000000000000000000004A /* NotificationViews.swift in Sources */,
+				00000000000000000000004C /* OnboardingViews.swift in Sources */,
+				00000000000000000000004E /* PairingViews.swift in Sources */,
+				000000000000000000000050 /* PaywallView.swift in Sources */,
+				000000000000000000000052 /* Persistence.swift in Sources */,
+				000000000000000000000054 /* PulseViews.swift in Sources */,
+				000000000000000000000056 /* Purchases.swift in Sources */,
+				000000000000000000000058 /* QuizView.swift in Sources */,
+				00000000000000000000005A /* ReflectionService.swift in Sources */,
+				00000000000000000000005C /* ReflectionViews.swift in Sources */,
+				00000000000000000000005E /* Safety.swift in Sources */,
+				000000000000000000000060 /* Scene.swift in Sources */,
 				000000000000000000000062 /* SplashView.swift in Sources */,
 				000000000000000000000064 /* Store.swift in Sources */,
 				000000000000000000000066 /* SyncService.swift in Sources */,

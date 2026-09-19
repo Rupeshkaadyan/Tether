@@ -1163,6 +1163,8 @@ struct SettingsView: View {
     @State private var exportUnlocked = false
     @State private var exportMessage: String?
     @State private var switchingLanguage = false
+    @State private var showScenes = false
+    @State private var scene = SceneManager.shared
     @Environment(\.syncService) private var sync
     @Environment(LanguageManager.self) private var language
     @Environment(ThemeManager.self) private var theme
@@ -1510,6 +1512,44 @@ struct SettingsView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
+                Section("Scene") {
+                    Button {
+                        showScenes = true
+                    } label: {
+                        HStack(spacing: TetherSpace.m) {
+                            ZStack {
+                                LinearGradient(colors: scene.theme.backdrop,
+                                               startPoint: .topLeading,
+                                               endPoint: .bottomTrailing)
+                                Image(systemName: scene.theme.symbol)
+                                    .font(.system(size: 14))
+                                    .foregroundStyle(.white.opacity(0.92))
+                            }
+                            .frame(width: 38, height: 38)
+                            .clipShape(RoundedRectangle(cornerRadius: 9, style: .continuous))
+
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text("Scene")
+                                    .font(TetherType.body)
+                                    .foregroundStyle(TetherColor.text)
+                                Text(scene.theme.title)
+                                    .font(TetherType.caption)
+                                    .foregroundStyle(TetherColor.muted)
+                            }
+                            Spacer(minLength: 0)
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundStyle(TetherColor.faint)
+                        }
+                    }
+                    .buttonStyle(.plain)
+
+                    Text("Changes the backdrop and light across the whole app. Your accent stays yours.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
                 Section("Appearance") {
                     themePicker
                 }
@@ -1584,6 +1624,10 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showTrack) {
                 WisdomTrackDetailView(track: profile.track)
+            }
+            .sheet(isPresented: $showScenes) {
+                SceneSheet(theme: scene)
+                    .presentationDetents([.medium])
             }
             .overlay {
                 if switchingLanguage {

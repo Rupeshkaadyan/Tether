@@ -9,6 +9,7 @@ struct TetherApp: App {
     @State private var language = LanguageManager.shared
     @State private var theme = ThemeManager.shared
     @State private var lock = AppLockManager.shared
+    @State private var scene = SceneManager.shared
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -37,7 +38,11 @@ struct TetherApp: App {
                 // was never injected, so opening Settings crashed on the
                 // @Environment lookup before the view could draw.
                 .environment(lock)
-                .preferredColorScheme(theme.colorScheme)
+                // An explicit Light/Dark choice wins. "System" defers to the
+                // scene, because a dark backdrop rendered with light-mode ink
+                // is unreadable — the scene has to be able to set the scheme
+                // it needs.
+                .preferredColorScheme(theme.colorScheme ?? scene.theme.scheme)
                 .modelContainer(container)
                 // Privacy: cover the app whenever it leaves the foreground.
                 .overlay {

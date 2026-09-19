@@ -63,7 +63,13 @@ struct TetherBackdrop: View {
         switch style {
         // The resting screen is warm paper, not a gradient. The atmospheric
         // layer supplies the depth instead, so #FDFBF8 never looks empty.
-        case .calm:  return AnyShapeStyle(TetherColor.bg)
+        // The resting backdrop follows the chosen scene, app-wide. Everything
+        // else that uses TetherBackdrop() picks this up for free.
+        case .calm:
+            return AnyShapeStyle(LinearGradient(
+                colors: SceneManager.shared.theme.backdrop,
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing))
         case .dawn:  return AnyShapeStyle(TetherGradient.dawn)
         case .dusk:  return AnyShapeStyle(TetherGradient.dusk)
         case .brand: return AnyShapeStyle(TetherGradient.brand)
@@ -88,6 +94,15 @@ struct TetherBackdrop: View {
     var body: some View {
         ZStack {
             Rectangle().fill(fill)
+
+            // Ambient particles, app-wide. Deliberately sparse — this is
+            // atmosphere, not a scene. The jar is the only place where the
+            // particles are the subject rather than the setting.
+            if style == .calm {
+                SceneBackdrop(theme: SceneManager.shared.theme,
+                              density: 0.45)
+            }
+
             // Arcs and haze over the paper, under the content.
             if style == .calm || style == .dawn {
                 TetherAtmosphere(intensity: style == .calm ? 1 : 0.6)

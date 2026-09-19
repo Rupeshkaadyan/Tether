@@ -22,7 +22,7 @@ struct WisdomJarView: View {
     @Query(sort: \JarNote.createdAt, order: .reverse) private var notes: [JarNote]
     @Query private var profiles: [UserProfile]
 
-    @State private var theme = JarThemeManager.shared
+    @State private var theme = SceneManager.shared
     @State private var draft = ""
     @State private var shareThisNote = true
     @State private var drawn: JarNote?
@@ -90,7 +90,7 @@ struct WisdomJarView: View {
                     .presentationDetents([.medium])
             }
             .sheet(isPresented: $showThemes) {
-                JarThemeSheet(theme: theme)
+                SceneSheet(theme: theme)
                     .presentationDetents([.medium])
             }
         }
@@ -103,7 +103,7 @@ struct WisdomJarView: View {
             LinearGradient(colors: theme.theme.backdrop,
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
-            JarScene(theme: theme.theme)
+            SceneBackdrop(theme: theme.theme)
         }
         .ignoresSafeArea()
         .animation(.easeInOut(duration: 0.6), value: theme.raw)
@@ -427,8 +427,8 @@ struct TicketShape: Shape {
 /// Inlined, the gradient + overlay + conditional checkmark pushed this
 /// expression past what the type-checker could resolve in reasonable time.
 /// Naming it is the fix, and it reads better besides.
-struct JarThemeRow: View {
-    let option: JarTheme
+struct SceneRow: View {
+    let option: AppScene
     let selected: Bool
     let onTap: () -> Void
 
@@ -476,22 +476,22 @@ struct JarThemeRow: View {
     }
 }
 
-struct JarThemeSheet: View {
-    @Bindable var theme: JarThemeManager
+struct SceneSheet: View {
+    @Bindable var theme: SceneManager
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(spacing: TetherSpace.m) {
-                    Text("A place, not a setting. Pick whichever you would want to sit in.")
+                    Text("A place, not a setting. Pick whichever you would want to sit in. This changes the whole app.")
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
                         .fixedSize(horizontal: false, vertical: true)
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    ForEach(JarTheme.allCases) { option in
-                        JarThemeRow(option: option,
+                    ForEach(AppScene.allCases) { option in
+                        SceneRow(option: option,
                                     selected: theme.theme == option) {
                             theme.raw = option.rawValue
                             TetherHaptics.light()
@@ -501,7 +501,7 @@ struct JarThemeSheet: View {
                 .padding(TetherSpace.margin)
             }
             .background { TetherBackdrop() }
-            .navigationTitle("Jar theme")
+            .navigationTitle("Scene")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -517,7 +517,7 @@ struct JarThemeSheet: View {
 struct JarNoteSheet: View {
     let note: JarNote
     let author: String
-    let theme: JarTheme
+    let theme: AppScene
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
@@ -525,7 +525,7 @@ struct JarNoteSheet: View {
             LinearGradient(colors: theme.backdrop,
                            startPoint: .topLeading, endPoint: .bottomTrailing)
                 .ignoresSafeArea()
-            JarScene(theme: theme)
+            SceneBackdrop(theme: theme)
 
             VStack(alignment: .leading, spacing: TetherSpace.l) {
                 HStack(spacing: TetherSpace.s) {
