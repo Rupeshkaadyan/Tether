@@ -587,6 +587,10 @@ struct HomeView: View {
     /// feels like it has a past with you instead of being an empty form.
     /// Tries one month, then three, six and twelve.
     private var memoryEcho: (entry: JournalEntry, months: Int)? {
+        // Cheap guard first: this is evaluated on every body pass, including
+        // every keystroke in the composer, and there is nothing to find
+        // without history.
+        guard entries.count >= 2 else { return nil }
         for months in [1, 3, 6, 12] {
             if let entry = MemoryEchoCard.find(in: entries,
                                                userID: profile.id,
@@ -849,7 +853,8 @@ struct HomeView: View {
     /// template — their own words, handed back at the moment they are useful.
     /// It gets better the longer a couple uses the app.
     private var recoveryMemory: (lowDate: Date, nextDate: Date, body: String)? {
-        guard let partner else { return nil }
+        // Evaluated on every body pass, so bail before sorting anything.
+        guard entries.count >= 2, let partner else { return nil }
         let cal = Calendar.current
         let theirs = entries
             .filter { $0.userID == partner.id }

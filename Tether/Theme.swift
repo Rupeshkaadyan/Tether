@@ -60,21 +60,32 @@ enum TetherColor {
     // Brand
     static let ink           = Color.adaptive("2A2438", "D8D2F5")
 
-    /// The accent follows the chosen Feel. Not a gender switch — a tone
-    /// preference anyone can set, whichever way they answer the (optional)
-    /// gender question.
+    // The two Feel palettes, built ONCE and cached.
+    //
+    // This matters more than it looks. Color.adaptive builds a UIColor with a
+    // dynamic-provider closure, and resolving it parses two hex strings
+    // (trimmingCharacters + Scanner). When brand was a computed property it
+    // created a fresh Color — and a fresh closure — on every single access,
+    // hundreds of times per render pass. Typing re-renders constantly, so the
+    // app crawled. Building them once here removes that entirely.
+    private static let classicBrand     = Color.adaptive("5B4BC4", "8B7BE8")
+    private static let warmBrand        = Color.adaptive("B0486E", "E08FA8")
+    private static let classicBrandSoft = Color.adaptive("EFECFB", "2A2440")
+    private static let warmBrandSoft    = Color.adaptive("FBEDF1", "34202A")
+
+    /// The accent for the current Feel.
+    ///
+    /// Reading the @Observable here is deliberate: it makes every view that
+    /// draws a brand colour re-render when the Feel changes, so the switch is
+    /// instant and nothing has to be torn down. That is only safe because the
+    /// colours above are cached — previously this created a fresh Color, and a
+    /// fresh hex parse, on every access.
     static var brand: Color {
-        switch FeelManager.shared.feel {
-        case .classic: return Color.adaptive("5B4BC4", "8B7BE8")
-        case .warm:    return Color.adaptive("B0486E", "E08FA8")
-        }
+        FeelManager.shared.feel == .warm ? warmBrand : classicBrand
     }
 
     static var brandSoft: Color {
-        switch FeelManager.shared.feel {
-        case .classic: return Color.adaptive("EFECFB", "2A2440")
-        case .warm:    return Color.adaptive("FBEDF1", "34202A")
-        }
+        FeelManager.shared.feel == .warm ? warmBrandSoft : classicBrandSoft
     }
     static let tint          = Color.adaptive("EFECFB", "2A2440")
 
@@ -98,19 +109,19 @@ enum TetherColor {
 // MARK: - Gradient
 
 enum TetherGradient {
+    // Built once, for the same reason the brand colours are cached.
+    private static let classicBrand = LinearGradient(
+        colors: [Color.adaptive("6A57D6", "7E6BE0"), Color.adaptive("4A3AA8", "5B4BC4")],
+        startPoint: .topLeading, endPoint: .bottomTrailing)
+
+    private static let warmBrand = LinearGradient(
+        colors: [Color.adaptive("C4608A", "D98BA8"), Color.adaptive("8E3A61", "A85B7E")],
+        startPoint: .topLeading, endPoint: .bottomTrailing)
+
     /// The brand gradient, following the chosen Feel.
     /// Classic: #6A57D6 → #4A3AA8. Warm: rose → plum.
     static var brand: LinearGradient {
-        switch FeelManager.shared.feel {
-        case .classic:
-            return LinearGradient(
-                colors: [Color.adaptive("6A57D6", "7E6BE0"), Color.adaptive("4A3AA8", "5B4BC4")],
-                startPoint: .topLeading, endPoint: .bottomTrailing)
-        case .warm:
-            return LinearGradient(
-                colors: [Color.adaptive("C4608A", "D98BA8"), Color.adaptive("8E3A61", "A85B7E")],
-                startPoint: .topLeading, endPoint: .bottomTrailing)
-        }
+        FeelManager.shared.feel == .warm ? warmBrand : classicBrand
     }
 
     static let dawn = LinearGradient(

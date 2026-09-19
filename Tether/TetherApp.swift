@@ -9,7 +9,6 @@ struct TetherApp: App {
     @State private var language = LanguageManager.shared
     @State private var theme = ThemeManager.shared
     @State private var lock = AppLockManager.shared
-    @State private var feel = FeelManager.shared
 
     @Environment(\.scenePhase) private var scenePhase
 
@@ -27,11 +26,6 @@ struct TetherApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()
-                // The accent colours are read from FeelManager rather than
-                // injected, so SwiftUI has no dependency to observe. Keying
-                // the tree on the Feel forces a full rebuild when it changes.
-                // Rare enough that losing navigation state is a fair trade.
-                .id(feel.raw)
                 .environment(session)
                 .environment(language)
                 .environment(\.syncService, sync)
