@@ -111,6 +111,9 @@ struct HomeView: View {
                 .padding(TetherSpace.margin)
                 .readableFrame()
             }
+            // Sky first so it sits in front of the paper backdrop, pinned to
+            // the top edge. This is what removes the gap.
+            .background(alignment: .top) { mastheadSky }
             .background { TetherBackdrop() }
             .overlay(alignment: .top) {
                 if let toast = milestoneToast {
@@ -164,61 +167,56 @@ struct HomeView: View {
     /// The masthead: a drawn landscape with the greeting set over it. The
     /// scene changes with the time of day, so the app looks different at
     /// breakfast and at midnight.
+    /// Just the words. The sky behind them is a fixed layer on the screen
+    /// itself (see `mastheadSky`), which is what guarantees no gap at the top.
     private var header: some View {
-        ZStack(alignment: .bottomLeading) {
-            TetherScene(timeOfDay: .current)
-
-            // Scrim, so the words hold on any sky.
-            LinearGradient(colors: [.clear, .black.opacity(0.30)],
-                           startPoint: .center,
-                           endPoint: .bottom)
+        VStack(alignment: .leading, spacing: TetherSpace.m) {
+            HStack(spacing: TetherSpace.s) {
+                Spacer(minLength: 0)
+                StreakRing(count: streak)
+                Button {
+                    showSettings = true
+                } label: {
+                    Image(systemName: "gearshape")
+                        .font(.system(size: 17, weight: .medium))
+                        .foregroundStyle(.white)
+                        .frame(width: 42, height: 42)
+                        .background(.ultraThinMaterial, in: Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Settings")
+            }
 
             VStack(alignment: .leading, spacing: 2) {
                 Text("\(greetingWord) · \(Date().shortDisplay)".uppercased())
                     .font(TetherType.micro)
                     .tracking(1.4)
-                    .foregroundStyle(.white.opacity(0.75))
+                    .foregroundStyle(.white.opacity(0.78))
                 Text(profile.displayName)
                     .font(.system(size: 36, weight: .bold, design: .rounded))
                     .tracking(-0.8)
                     .foregroundStyle(.white)
                 Text(continuitySubtitle)
                     .font(TetherType.caption)
-                    .foregroundStyle(.white.opacity(0.80))
-            }
-            .padding(.horizontal, TetherSpace.margin)
-            .padding(.bottom, TetherSpace.l)
-
-            VStack {
-                HStack(spacing: TetherSpace.s) {
-                    Spacer(minLength: 0)
-                    StreakRing(count: streak)
-                    Button {
-                        showSettings = true
-                    } label: {
-                        Image(systemName: "gearshape")
-                            .font(.system(size: 17, weight: .medium))
-                            .foregroundStyle(.white)
-                            .frame(width: 42, height: 42)
-                            .background(.ultraThinMaterial, in: Circle())
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Settings")
-                }
-                .padding(.horizontal, TetherSpace.margin)
-                // Clears the status bar now that the scene runs behind it.
-                .padding(.top, TetherSpace.m + 58)
-                Spacer()
+                    .foregroundStyle(.white.opacity(0.82))
             }
         }
-        .frame(height: 358)
-        .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 36,
-                                          bottomTrailingRadius: 36,
-                                          style: .continuous))
-        // Bleed out of the scroll content's margins, and up behind the status
-        // bar, so the scene is truly edge to edge.
-        .padding(.horizontal, -TetherSpace.margin)
-        .padding(.top, -(TetherSpace.margin + 58))
+        // Clears the status bar, which the sky now runs behind.
+        .padding(.top, 52)
+        .padding(.bottom, TetherSpace.m)
+    }
+
+    /// The sky, pinned to the top of the screen and ignoring the safe area, so
+    /// it always meets the very top edge. Content scrolls over it.
+    private var mastheadSky: some View {
+        ZStack(alignment: .bottom) {
+            TetherScene(timeOfDay: .current)
+            LinearGradient(colors: [.clear, .black.opacity(0.34)],
+                           startPoint: .center,
+                           endPoint: .bottom)
+        }
+        .frame(height: 330)
+        .ignoresSafeArea(edges: .top)
     }
 
     /// A small continuity line under the name — "Day 12 of your practice"
