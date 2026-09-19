@@ -171,6 +171,7 @@ struct PulseView: View {
                 VStack(alignment: .leading, spacing: TetherSpace.xl) {
                     pulseBanner
                     hero
+                    suggestion
                     explanation
                     disclaimer
                 }
@@ -224,20 +225,66 @@ struct PulseView: View {
         .padding(.horizontal, -TetherSpace.margin)
     }
 
+    /// The one thing worth doing next, taken straight from the engine.
+    ///
+    /// This was computed and then never shown anywhere. The screen reported a
+    /// state and stopped, which is the difference between a dashboard and
+    /// something that actually helps: a number tells you where you are, a
+    /// suggestion tells you what to do about it. The app already had the
+    /// sentence; it just wasn't saying it.
+    private var suggestion: some View {
+        HStack(alignment: .top, spacing: TetherSpace.m) {
+            ZStack {
+                Circle()
+                    .fill(TetherColor.brand.opacity(0.14))
+                    .frame(width: 34, height: 34)
+                Image(systemName: "arrow.turn.down.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(TetherColor.brand)
+            }
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text("WHAT MIGHT HELP")
+                    .font(TetherType.micro)
+                    .tracking(1)
+                    .foregroundStyle(TetherColor.faint)
+                Text(PulseEngine.focusSuggestion(for: result))
+                    .font(TetherType.body)
+                    .foregroundStyle(TetherColor.text)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Spacer(minLength: 0)
+        }
+        .padding(TetherSpace.m)
+        .background(TetherColor.surface)
+        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: TetherRadius.medium, style: .continuous)
+                .strokeBorder(TetherColor.brand.opacity(0.22), lineWidth: 1)
+        )
+    }
+
     private var hero: some View {
         VStack(alignment: .leading, spacing: TetherSpace.l) {
             TetherPulseViz(state: result.state)
                 .frame(height: 80)
                 .padding(.vertical, TetherSpace.xs)
 
+            // Plain sentences, not dashboard figures.
+            //
+            // "Avg Mood 3.4" and "Consistency 64%" are numbers a person has to
+            // translate before they mean anything, and this app's whole brief
+            // is human rather than dashboard. "Mostly good days" and "9 of the
+            // last 14 days" say the same thing and land immediately.
             HStack(alignment: .top, spacing: 0) {
-                statColumn("Avg Mood", value: avgMoodText, color: result.state.color)
+                statColumn("Mood", value: moodWord, color: result.state.color)
                 verticalDivider
-                statColumn("Consistency",
-                          value: "\(Int(result.consistency * 100))%",
+                statColumn("Showing up",
+                          value: showingUpText,
                           color: result.state.color)
                 verticalDivider
-                statColumn("Active Days", value: "\(result.daysOfData)", color: result.state.color)
+                statColumn("Days written", value: "\(result.daysOfData)", color: result.state.color)
             }
         }
         .padding(TetherSpace.xl)
@@ -260,24 +307,62 @@ struct PulseView: View {
         }
     }
 
-    /// Average mood on the 1–5 scale across the last two weeks of entries.
-    private var avgMoodText: String {
-        let mine = entries.filter { $0.userID == profile.id }
-        guard !mine.isEmpty else { return "—" }
-        let recent = mine.suffix(14)
-        let avg = Double(recent.map(\.mood).reduce(0, +)) / Double(recent.count)
-        return String(format: "%.1f", avg)
+    /// The mood in words, derived from the ENGINE's own score.
+    ///
+    /// This deliberately reads `result.mood` rather than recomputing an
+    /// average. It used to average the last 14 entries while the engine looked
+    /// at the last 7, so the two disagreed on screen — the card could read
+    /// "Good" directly above "Your mood has been low", which is exactly the
+    /// kind of contradiction that makes a person stop trusting the numbers.
+    ///
+    /// One source of truth, so they can never argue.
+    private var moodWord: String {
+        guard result.daysOfData >= 3 else { return "—" }
+        switch result.mood {
+        case ..<0.2: return "Hard"
+        case ..<0.4: return "Low"
+        case ..<0.6: return "Steady"
+        case ..<0.8: return "Good"
+        default:     return "Bright"
+        }
     }
 
-    private func statColumn(_ label: String, value: String, color: Color) -> some View {
+    /// How many of the last fourteen days hold an entry.
+    ///
+    /// Counted as distinct days, not entries — writing four times on Tuesday
+    /// is still one day you showed up.
+    private var showingUpText: String {
+        let cal = Calendar.current
+        let mine = entries.filter { $0.userID == profile.id }
+        let cutoff = cal.date(byAdding: .day, value: -14, to: Date()) ?? Date()
+        let days = Set(mine
+            .filter { $0.entryDate >= cutoff }
+            .map { cal.startOfDay(for: $0.entryDate) })
+        return "\(days.count) of 14"
+    }
+
+    /// `label` is a LocalizedStringKey, not a String.
+    ///
+    /// It used to take a String and render `Text(label.uppercased())` — and
+    /// `Text(_: String)` is VERBATIM in SwiftUI, never looked up in the
+    /// catalog. So every stat label in this row was permanently English in
+    /// Hindi and Spanish, and no scan of the source could see it because the
+    /// strings were literals at the CALL site, not here.
+    ///
+    /// `.textCase(.uppercase)` does the shouting instead, which keeps the
+    /// catalog keys readable ("Mood", not "MOOD").
+    private func statColumn(_ label: LocalizedStringKey,
+                            value: String,
+                            color: Color) -> some View {
         VStack(alignment: .center, spacing: TetherSpace.xs) {
             Text(value)
                 .font(.system(size: 28, weight: .semibold, design: .rounded))
                 .foregroundStyle(TetherColor.ink)
-            Text(label.uppercased())
+            Text(label)
                 .font(TetherType.micro)
                 .foregroundStyle(TetherColor.muted)
                 .tracking(0.8)
+                .textCase(.uppercase)
         }
         .frame(maxWidth: .infinity)
     }

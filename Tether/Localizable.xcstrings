@@ -1829,6 +1829,28 @@
         }
       }
     },
+    "Days written": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Days written"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "लिखे दिन"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Días escritos"
+          }
+        }
+      }
+    },
     "Deep sky, drifting fireflies.": {
       "localizations": {
         "en": {
@@ -5221,6 +5243,28 @@
         }
       }
     },
+    "Showing up": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Showing up"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आना"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estar presente"
+          }
+        }
+      }
+    },
     "Sign in to iCloud": {
       "localizations": {
         "es": {
@@ -6463,6 +6507,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आवाज़ नोट"
+          }
+        }
+      }
+    },
+    "WHAT MIGHT HELP": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "WHAT MIGHT HELP"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्या मदद कर सकता है"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "QUÉ PODRÍA AYUDAR"
           }
         }
       }
