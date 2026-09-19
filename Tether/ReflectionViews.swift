@@ -500,6 +500,141 @@ struct WisdomTrackDetailView: View {
     }
 }
 
+// MARK: - Private chat
+
+/// A private conversation between the two of you. Separate from the journal:
+/// the journal is a practice with a shape, this is just talking. Local and
+/// offline like everything else.
+struct PrivateChatView: View {
+    @Bindable var profile: UserProfile
+    @Environment(\.modelContext) private var ctx
+    @Environment(\.dismiss) private var dismiss
+    @Query(sort: \ChatMessage.createdAt, order: .forward) private var messages: [ChatMessage]
+    @Query private var profiles: [UserProfile]
+
+    @State private var draft = ""
+
+    private var partner: UserProfile? {
+        guard let id = profile.partnerID else { return nil }
+        return profiles.first { $0.id == id }
+    }
+
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 0) {
+                if messages.isEmpty {
+                    TetherEmptyState(
+                        title: "Just the two of you",
+                        message: "Nothing here yet. Say anything — this is your private conversation."
+                    )
+                } else {
+                    thread
+                }
+                composer
+            }
+            .background { TetherBackdrop() }
+            .navigationTitle(partner?.displayName ?? "Chat")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Done") { dismiss() }
+                }
+            }
+        }
+    }
+
+    private var thread: some View {
+        ScrollViewReader { proxy in
+            ScrollView {
+                VStack(spacing: TetherSpace.s) {
+                    ForEach(messages) { message in
+                        bubble(message).id(message.id)
+                    }
+                }
+                .padding(.horizontal, TetherSpace.margin)
+                .padding(.vertical, TetherSpace.m)
+                .readableFrame()
+            }
+            .onChange(of: messages.count) { _, _ in
+                guard let last = messages.last else { return }
+                withAnimation(.easeOut(duration: 0.2)) {
+                    proxy.scrollTo(last.id, anchor: .bottom)
+                }
+            }
+        }
+    }
+
+    private func bubble(_ message: ChatMessage) -> some View {
+        let mine = message.senderID == profile.id
+        return HStack {
+            if mine { Spacer(minLength: 48) }
+            VStack(alignment: mine ? .trailing : .leading, spacing: 2) {
+                Text(message.body)
+                    .font(TetherType.callout)
+                    .foregroundStyle(mine ? Color.white : TetherColor.text)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(message.createdAt.formatted(date: .omitted, time: .shortened))
+                    .font(TetherType.micro)
+                    .foregroundStyle(mine ? Color.white.opacity(0.7) : TetherColor.faint)
+            }
+            .padding(.horizontal, TetherSpace.m)
+            .padding(.vertical, TetherSpace.s)
+            .background(mine ? AnyShapeStyle(TetherGradient.brand)
+                             : AnyShapeStyle(TetherColor.surface))
+            .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .strokeBorder(mine ? Color.clear : TetherColor.border, lineWidth: 1)
+            )
+            if !mine { Spacer(minLength: 48) }
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private var composer: some View {
+        HStack(alignment: .bottom, spacing: TetherSpace.s) {
+            TextField("Message…", text: $draft, axis: .vertical)
+                .lineLimit(1...5)
+                .font(TetherType.body)
+                .foregroundStyle(TetherColor.text)
+                .tint(TetherColor.brand)
+                .padding(TetherSpace.m)
+                .background(TetherColor.surface)
+                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .strokeBorder(TetherColor.border, lineWidth: 1)
+                )
+
+            Button {
+                send()
+            } label: {
+                Icon(.send, size: 18, color: .white)
+                    .frame(width: 44, height: 44)
+                    .background(draft.trimmed.isEmpty
+                                ? AnyShapeStyle(TetherColor.faint)
+                                : AnyShapeStyle(TetherGradient.brand))
+                    .clipShape(Circle())
+            }
+            .buttonStyle(.plain)
+            .disabled(draft.trimmed.isEmpty)
+            .accessibilityLabel("Send message")
+        }
+        .padding(.horizontal, TetherSpace.margin)
+        .padding(.vertical, TetherSpace.m)
+        .background(.ultraThinMaterial)
+    }
+
+    private func send() {
+        let text = draft.trimmed
+        guard !text.isEmpty else { return }
+        ctx.insert(ChatMessage(senderID: profile.id, body: text))
+        try? ctx.save()
+        draft = ""
+        TetherHaptics.success()
+    }
+}
+
 // MARK: - Ritual
 
 /// Set the standing appointment. A recurring commitment is worth more than

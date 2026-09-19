@@ -196,6 +196,25 @@ final class UserProfile {
     }
 }
 
+/// A message in the couple's private conversation. Separate from the journal:
+/// the journal is a practice, this is just the two of you talking.
+@Model
+final class ChatMessage {
+    var id: UUID
+    var senderID: UUID
+    var body: String
+    var createdAt: Date
+    var readAt: Date?
+
+    init(senderID: UUID, body: String) {
+        self.id = UUID()
+        self.senderID = senderID
+        self.body = body
+        self.createdAt = Date()
+        self.readAt = nil
+    }
+}
+
 /// The couple's own recurring appointment — "Sunday evening check-in". Turns a
 /// daily habit into something you have agreed to show up for together.
 @Model

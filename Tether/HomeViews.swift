@@ -25,6 +25,7 @@ struct HomeView: View {
     @State private var showCooldown = false
     @State private var showMemoryLane = false
     @State private var showRitual = false
+    @State private var showChat = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
     @State private var voiceNotes = VoiceNoteService.shared
@@ -124,6 +125,11 @@ struct HomeView: View {
                         .tetherButton()
                         .padding(.top, TetherSpace.s)
 
+                    if isPaired {
+                        Button("Private chat") { showChat = true }
+                            .tetherButton(.secondary)
+                    }
+
                     Button("Memory Lane") { showMemoryLane = true }
                         .tetherButton(.secondary)
 
@@ -175,6 +181,9 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showRitual) {
                 RitualSheet(existing: ritual)
+            }
+            .sheet(isPresented: $showChat) {
+                PrivateChatView(profile: profile)
             }
             .sheet(isPresented: $showPairing) {
                 PairingView(profile: profile)
@@ -554,14 +563,14 @@ struct HomeView: View {
                 showComposer = true
             } label: {
                 HStack(spacing: TetherSpace.xs) {
-                    Text("Add another note")
+                    Text("Add a note, photo or voice")
                     Icon(.chevronRight, size: 14, color: TetherColor.brand)
                 }
                 .font(TetherType.label)
                 .foregroundStyle(TetherColor.brand)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Add another note")
+            .accessibilityLabel("Add a note, photo or voice")
         }
     }
 
