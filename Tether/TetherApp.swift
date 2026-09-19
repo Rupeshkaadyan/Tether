@@ -33,6 +33,10 @@ struct TetherApp: App {
                 // Text(\"literal\") resolve from the chosen .lproj immediately.
                 .environment(\.locale, language.locale)
                 .environment(theme)
+                // SettingsView reads AppLockManager from the environment. It
+                // was never injected, so opening Settings crashed on the
+                // @Environment lookup before the view could draw.
+                .environment(lock)
                 .preferredColorScheme(theme.colorScheme)
                 .modelContainer(container)
                 // Privacy: cover the app whenever it leaves the foreground.

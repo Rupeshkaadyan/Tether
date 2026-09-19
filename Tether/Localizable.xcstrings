@@ -4,7 +4,16 @@
     "·" : {
 
     },
+    "“%@”" : {
+
+    },
     "%@ had a hard day. One line from you might land." : {
+
+    },
+    "%@ REPLIED" : {
+
+    },
+    "%@ sent you something" : {
 
     },
     "%@, %@" : {
@@ -23,6 +32,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@. %2$@"
+          }
+        }
+      }
+    },
+    "%@s at %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@s at %2$@"
           }
         }
       }
@@ -303,6 +322,12 @@
         }
       }
     },
+    "A pause" : {
+
+    },
+    "A printable PDF of everything you have both written. It leaves the encrypted store, so keep it somewhere safe." : {
+
+    },
     "A private space for couples to reflect, understand and grow together — in your own way." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -466,6 +491,12 @@
         }
       }
     },
+    "Add to thread" : {
+
+    },
+    "Added" : {
+
+    },
     "All seven done. Start again whenever you like." : {
       "localizations" : {
         "es" : {
@@ -533,6 +564,9 @@
         }
       }
     },
+    "Attach a photo" : {
+
+    },
     "Avg Mood" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -549,6 +583,9 @@
           }
         }
       }
+    },
+    "Back" : {
+
     },
     "Backup & sync" : {
       "localizations" : {
@@ -648,6 +685,9 @@
         }
       }
     },
+    "Both of you see this countdown. It is an appointment, not a notification." : {
+
+    },
     "Cancel" : {
       "localizations" : {
         "es" : {
@@ -665,6 +705,12 @@
       }
     },
     "Cancel invite" : {
+
+    },
+    "Change" : {
+
+    },
+    "Change ritual" : {
 
     },
     "Checking…" : {
@@ -907,6 +953,9 @@
           }
         }
       }
+    },
+    "Day" : {
+
     },
     "Day %lld — %@" : {
       "localizations" : {
@@ -1313,6 +1362,9 @@
         }
       }
     },
+    "Gratitude & Us" : {
+
+    },
     "Grow" : {
       "localizations" : {
         "es" : {
@@ -1441,6 +1493,9 @@
           }
         }
       }
+    },
+    "I feel…" : {
+
     },
     "I have a code" : {
       "localizations" : {
@@ -1690,6 +1745,12 @@
         }
       }
     },
+    "Make a year book" : {
+
+    },
+    "Memory Lane" : {
+
+    },
     "Milestones" : {
       "localizations" : {
         "es" : {
@@ -1830,6 +1891,9 @@
           }
         }
       }
+    },
+    "Next" : {
+
     },
     "No love language for now" : {
       "localizations" : {
@@ -2092,6 +2156,9 @@
         }
       }
     },
+    "On: %@" : {
+
+    },
     "One focus for next week" : {
       "localizations" : {
         "es" : {
@@ -2188,6 +2255,12 @@
         }
       }
     },
+    "Our check-in" : {
+
+    },
+    "Photo" : {
+
+    },
     "Physical Touch" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2205,6 +2278,9 @@
         }
       }
     },
+    "Pick a time you will both show up. A standing appointment beats good intentions." : {
+
+    },
     "Pick whichever is easiest. Tap a different one any time to change your mind." : {
       "localizations" : {
         "es" : {
@@ -2220,6 +2296,12 @@
           }
         }
       }
+    },
+    "Play voice note" : {
+
+    },
+    "Playing…" : {
+
     },
     "Privacy" : {
       "localizations" : {
@@ -2363,6 +2445,12 @@
         }
       }
     },
+    "Record a voice note" : {
+
+    },
+    "Recorded" : {
+
+    },
     "Reflecting…" : {
       "localizations" : {
         "es" : {
@@ -2449,6 +2537,9 @@
         }
       }
     },
+    "Remove" : {
+
+    },
     "Requires your device passcode or Face ID when Tether is opened. Nobody else can read your journal." : {
 
     },
@@ -2485,7 +2576,6 @@
       }
     },
     "Save" : {
-      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -2653,6 +2743,9 @@
         }
       }
     },
+    "Send %@ something. No words needed." : {
+
+    },
     "Send a reminder" : {
       "localizations" : {
         "es" : {
@@ -2685,6 +2778,12 @@
         }
       }
     },
+    "Set" : {
+
+    },
+    "Set a ritual" : {
+
+    },
     "Settings" : {
       "localizations" : {
         "es" : {
@@ -2700,6 +2799,9 @@
           }
         }
       }
+    },
+    "Share your year book" : {
+
     },
     "Sign in to iCloud" : {
       "localizations" : {
@@ -2901,6 +3003,9 @@
         }
       }
     },
+    "Stop" : {
+
+    },
     "Stop dictation" : {
       "localizations" : {
         "es" : {
@@ -2916,6 +3021,9 @@
           }
         }
       }
+    },
+    "Stop recording" : {
+
     },
     "Strained" : {
       "extractionState" : "stale",
@@ -3120,6 +3228,9 @@
         }
       }
     },
+    "Thanks" : {
+
+    },
     "That is all we will send. No streaks shaming, no re-engagement spam, no marketing." : {
       "localizations" : {
         "es" : {
@@ -3151,6 +3262,9 @@
           }
         }
       }
+    },
+    "THE DAY AFTER LAST TIME" : {
+
     },
     "The seven days" : {
       "localizations" : {
@@ -3316,6 +3430,9 @@
         }
       }
     },
+    "Time" : {
+
+    },
     "Today" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -3350,6 +3467,9 @@
       }
     },
     "Today's answers, together." : {
+
+    },
+    "Together" : {
 
     },
     "TOGETHER" : {
@@ -3455,6 +3575,15 @@
         }
       }
     },
+    "Voice" : {
+
+    },
+    "Voice note" : {
+
+    },
+    "Waiting for %@" : {
+
+    },
     "Waiting for your partner" : {
       "localizations" : {
         "es" : {
@@ -3470,6 +3599,9 @@
           }
         }
       }
+    },
+    "We're in a hard moment" : {
+
     },
     "Weekly recap" : {
       "localizations" : {
@@ -3535,6 +3667,9 @@
           }
         }
       }
+    },
+    "What do you call it?" : {
+
     },
     "What do you do when you feel attacked?" : {
       "extractionState" : "stale",
@@ -3952,6 +4087,9 @@
         }
       }
     },
+    "When" : {
+
+    },
     "When did you feel proud of them this week?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -4313,6 +4451,9 @@
         }
       }
     },
+    "You sent: %@" : {
+
+    },
     "Your coach conversations are never shown to your partner, and never sent to analytics. Encryption is on the roadmap and ships before any sync exists." : {
 
     },
@@ -4531,7 +4672,13 @@
         }
       }
     },
+    "YOUR RITUAL" : {
+
+    },
     "Your sky fills with the first one." : {
+
+    },
+    "Your story so far" : {
 
     },
     "Your Tether export" : {
