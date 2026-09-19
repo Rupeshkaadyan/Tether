@@ -1,5 +1,6 @@
-import SwiftUI
 import SwiftData
+import SwiftUI
+import UIKit
 
 struct JournalView: View {
     @Bindable var profile: UserProfile
@@ -218,6 +219,16 @@ struct JournalView: View {
                     .font(TetherType.callout)
                     .foregroundStyle(TetherColor.text)
                     .fixedSize(horizontal: false, vertical: true)
+
+                if let data = entry.photoData, let image = UIImage(data: data) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 190)
+                        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
+                                                    style: .continuous))
+                }
 
                 HStack(spacing: TetherSpace.xs) {
                     Text(Mood.label(for: entry.mood))

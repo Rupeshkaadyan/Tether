@@ -410,6 +410,11 @@ final class JournalEntry {
     var replyBy: UUID?
     var replyAt: Date?
 
+    /// An optional photo kept with the entry. External storage keeps the
+    /// database small — SwiftData writes the bytes to a separate file and
+    /// stores only a reference.
+    @Attribute(.externalStorage) var photoData: Data?
+
     init(userID: UUID, body: String, mood: Int, source: EntrySource = .journal) {
         self.id = UUID()
         self.userID = userID

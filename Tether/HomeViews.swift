@@ -1,3 +1,4 @@
+import PhotosUI
 import SwiftUI
 import SwiftData
 import UIKit
@@ -24,6 +25,8 @@ struct HomeView: View {
     @State private var showCooldown = false
     @State private var showMemoryLane = false
     @State private var showRitual = false
+    @State private var photoItem: PhotosPickerItem?
+    @State private var photoData: Data?
     @State private var showNotifExplainer = false
     @State private var showComposer = false
     @State private var milestoneToast: String?
@@ -410,10 +413,50 @@ struct HomeView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityLabel(voice.isRecording ? "Stop dictation" : "Dictate your response")
+
+                    PhotosPicker(selection: $photoItem, matching: .images) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "photo")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundStyle(TetherColor.muted)
+                            Text(photoData == nil ? "Photo" : "Added")
+                                .font(TetherType.micro)
+                                .foregroundStyle(TetherColor.muted)
+                        }
+                        .padding(.horizontal, TetherSpace.m)
+                        .padding(.vertical, 5)
+                        .background(TetherColor.surfaceSunken)
+                        .clipShape(Capsule())
+                    }
+                    .accessibilityLabel("Attach a photo")
                 }
                 TextField("One sentence is enough", text: $reply, axis: .vertical)
                     .lineLimit(2...6)
                     .tetherField()
+                    .onChange(of: photoItem) { _, item in
+                        guard let item else { return }
+                        Task {
+                            photoData = try? await item.loadTransferable(type: Data.self)
+                        }
+                    }
+                if let photoData, let image = UIImage(data: photoData) {
+                    HStack(spacing: TetherSpace.s) {
+                        Image(uiImage: image)
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 76, height: 76)
+                            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                                        style: .continuous))
+                        Button("Remove") {
+                            self.photoData = nil
+                            photoItem = nil
+                        }
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .buttonStyle(.plain)
+                        Spacer(minLength: 0)
+                    }
+                }
                 if let message = voice.errorMessage {
                     Text(message)
                         .font(TetherType.caption)
@@ -945,6 +988,7 @@ struct HomeView: View {
                                  mood: mood,
                                  source: .prompt)
         entry.safetyFlagged = verdict.isCrisis
+        entry.photoData = photoData
         ctx.insert(entry)
         ctx.insert(MoodLog(userID: profile.id, mood: mood))
 
@@ -962,6 +1006,8 @@ struct HomeView: View {
 
         try? ctx.save()
         reply = ""
+        photoData = nil
+        photoItem = nil
         showComposer = false
         TetherHaptics.success()
 
