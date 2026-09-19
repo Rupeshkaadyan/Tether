@@ -164,11 +164,15 @@ struct HomeView: View {
     private var header: some View {
         HStack(alignment: .center, spacing: TetherSpace.m) {
             VStack(alignment: .leading, spacing: 2) {
-                Text("\(greetingWord) · \(Date().shortDisplay)")
-                    .font(TetherType.caption)
-                    .foregroundStyle(TetherColor.muted)
+                // Tracked caps as an eyebrow, then the name set large — the
+                // header reads as a masthead rather than a form label.
+                Text("\(greetingWord) · \(Date().shortDisplay)".uppercased())
+                    .font(TetherType.micro)
+                    .tracking(1.4)
+                    .foregroundStyle(TetherColor.faint)
                 Text(profile.displayName)
-                    .font(TetherType.largeTitle)
+                    .font(.system(size: 34, weight: .bold, design: .rounded))
+                    .tracking(-0.7)
                     .foregroundStyle(TetherColor.text)
                 Text(continuitySubtitle)
                     .font(TetherType.caption)
@@ -396,11 +400,21 @@ struct HomeView: View {
                     }
                 }
             }
-            Button("Add another note") {
+            // A light text action rather than another bordered box — the
+            // screen already has enough card chrome.
+            Button {
                 reply = ""
                 showComposer = true
+            } label: {
+                HStack(spacing: TetherSpace.xs) {
+                    Text("Add another note")
+                    Icon(.chevronRight, size: 14, color: TetherColor.brand)
+                }
+                .font(TetherType.label)
+                .foregroundStyle(TetherColor.brand)
             }
-            .tetherButton(.tertiary)
+            .buttonStyle(.plain)
+            .accessibilityLabel("Add another note")
         }
     }
 
