@@ -31,6 +31,7 @@ struct HomeView: View {
     @State private var showMilestones = false
     @State private var showUnsent = false
     @State private var showQuiz = false
+    @State private var showWrapped = false
     @State private var debugOpened = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
@@ -150,6 +151,9 @@ struct HomeView: View {
                     Button("How well do you know them?") { showQuiz = true }
                         .tetherButton(.secondary)
 
+                    Button("Your year") { showWrapped = true }
+                        .tetherButton(.secondary)
+
                     Button("Wisdom Jar") { showJar = true }
                         .tetherButton(.secondary)
 
@@ -219,6 +223,12 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showQuiz) {
                 QuizView(profile: profile)
+            }
+            .sheet(isPresented: $showWrapped) {
+                WrappedView(profile: profile,
+                            stats: WrappedBuilder.stats(profile: profile,
+                                                        partner: partner,
+                                                        entries: entries))
             }
             .onAppear {
                 // DEBUG-only deep link, so a screenshot can reach a sheet that
