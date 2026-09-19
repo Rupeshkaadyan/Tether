@@ -1080,6 +1080,28 @@
         }
       }
     },
+    "Anything they should know?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Anything they should know?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कुछ जो उन्हें पता होना चाहिए?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Algo que deba saber?"
+          }
+        }
+      }
+    },
     "Appearance": {
       "localizations": {
         "en": {
@@ -1114,6 +1136,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "कुछ भी पूछें"
+          }
+        }
+      }
+    },
+    "Ask for a quiet week": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Ask for a quiet week"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शांत सप्ताह माँगें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pedir una semana tranquila"
           }
         }
       }
@@ -2244,6 +2288,28 @@
         }
       }
     },
+    "End it early": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "End it early"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जल्दी खत्म करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Terminarla antes"
+          }
+        }
+      }
+    },
     "Enter their code": {
       "localizations": {
         "es": {
@@ -2733,6 +2799,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "कठिन बातें आपको कैसे बताई जाएँ — क्या आप यही चाहते हैं?"
+          }
+        }
+      }
+    },
+    "How long": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "How long"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कितने दिन"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuánto tiempo"
           }
         }
       }
@@ -3918,6 +4006,28 @@
         }
       }
     },
+    "Not a fight. Not silence.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Not a fight. Not silence."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "झगड़ा नहीं। चुप्पी नहीं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No es una pelea. Ni silencio."
+          }
+        }
+      }
+    },
     "Not done": {
       "localizations": {
         "es": {
@@ -4073,6 +4183,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "जार अभी खाली है"
+          }
+        }
+      }
+    },
+    "Nothing is expected of you until this ends. No reminders, no streaks at risk, nothing to catch up on.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Nothing is expected of you until this ends. No reminders, no streaks at risk, nothing to catch up on."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जब तक यह खत्म न हो, आपसे कुछ अपेक्षित नहीं। कोई याद दिलाना नहीं, कोई श्रृंखला जोखिम में नहीं, कुछ भरपाई नहीं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se espera nada de ti hasta que termine. Sin recordatorios, sin rachas en riesgo, nada que recuperar."
           }
         }
       }
@@ -4419,6 +4551,50 @@
         }
       }
     },
+    "Optional. \"Work is heavy.\" \"I'm not well.\"": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Optional. \"Work is heavy.\" \"I'm not well.\""
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "वैकल्पिक। \"काम बहुत है।\" \"मेरी तबीयत ठीक नहीं।\""
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcional. \"El trabajo pesa.\" \"No estoy bien.\""
+          }
+        }
+      }
+    },
+    "Optional. \\\"Work is heavy.\\\" \\\"I'm not well.\\\"": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Optional. \\\"Work is heavy.\\\" \\\"I'm not well.\\\""
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "वैकल्पिक। \\\"काम बहुत है।\\\" \\\"मेरी तबीयत ठीक नहीं।\\\""
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcional. \\\"El trabajo pesa.\\\" \\\"No estoy bien.\\\""
+          }
+        }
+      }
+    },
     "Or share this code": {
       "localizations": {
         "es": {
@@ -4750,6 +4926,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "प्रश्न %lld / %lld"
+          }
+        }
+      }
+    },
+    "Quiet week": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Quiet week"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शांत सप्ताह"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Semana tranquila"
           }
         }
       }
@@ -5531,6 +5729,28 @@
         }
       }
     },
+    "Shown to them. Keep it to what you want them to hold.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Shown to them. Keep it to what you want them to hold."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उन्हें दिखाया जाएगा। वही लिखें जो आप चाहते हैं वे सँभालें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se le mostrará. Escribe solo lo que quieras que sostenga."
+          }
+        }
+      }
+    },
     "Sign in to iCloud": {
       "localizations": {
         "es": {
@@ -5707,6 +5927,28 @@
         }
       }
     },
+    "Sometimes a week is just too much. Saying so is kinder than disappearing — the other person gets to know it is not about them, instead of guessing.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Sometimes a week is just too much. Saying so is kinder than disappearing — the other person gets to know it is not about them, instead of guessing."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कभी कभी एक सप्ताह बहुत भारी होता है। चुप हो जाने से बेहतर है कह देना — सामने वाले को पता रहता है कि बात उसकी नहीं है, अंदाज़ा लगाने की ज़रूरत नहीं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A veces una semana es demasiado. Decirlo es más amable que desaparecer: la otra persona sabe que no es por ella, en vez de imaginarlo."
+          }
+        }
+      }
+    },
     "Start %@": {
       "localizations": {
         "es": {
@@ -5751,6 +5993,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "बोलना शुरू करें"
+          }
+        }
+      }
+    },
+    "Start it": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Start it"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शुरू करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar"
           }
         }
       }
@@ -6212,6 +6476,28 @@
         }
       }
     },
+    "Tether will not remind either of you until then.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Tether will not remind either of you until then."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तब तक Tether आप दोनों को याद नहीं दिलाएगा।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tether no os recordará nada a ninguno hasta entonces."
+          }
+        }
+      }
+    },
     "Tether. Two people. One practice.": {
       "localizations": {
         "es": {
@@ -6424,6 +6710,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "यह एक दृष्टिकोण है, फ़ैसला नहीं। यह समझने की शुरुआत है कि वास्तव में क्या काम करता है।"
+          }
+        }
+      }
+    },
+    "This is not about you. They asked for space, and told you so — which is the opposite of disappearing.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "This is not about you. They asked for space, and told you so — which is the opposite of disappearing."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह आपके बारे में नहीं है। उन्होंने जगह माँगी और बता दिया — जो चुप हो जाने से उलटा है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No es por ti. Pidió espacio y te lo dijo, que es lo contrario de desaparecer."
           }
         }
       }
@@ -8163,6 +8471,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप जुड़े हुए हैं"
+          }
+        }
+      }
+    },
+    "You asked for quiet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You asked for quiet"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपने शांत रहने को कहा"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pediste tranquilidad"
           }
         }
       }

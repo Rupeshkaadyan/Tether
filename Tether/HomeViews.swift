@@ -12,6 +12,7 @@ struct HomeView: View {
     @Query(sort: \Warmth.createdAt, order: .reverse) private var warmths: [Warmth]
     @Query private var rituals: [Ritual]
     @Query private var jarNotes: [JarNote]
+    @Query(sort: \Pause.createdAt, order: .reverse) private var pauses: [Pause]
     @Query(sort: \PromptReply.createdAt, order: .reverse) private var replies: [PromptReply]
     @Query(sort: \MoodLog.createdAt, order: .reverse) private var moods: [MoodLog]
     @Query private var allProfiles: [UserProfile]
@@ -39,6 +40,7 @@ struct HomeView: View {
     @State private var showUnsent = false
     @State private var showQuiz = false
     @State private var showWrapped = false
+    @State private var showPause = false
     @State private var debugOpened = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
@@ -103,6 +105,20 @@ struct HomeView: View {
                     if session.safetyBanner != nil { safetyBannerCard }
                     connectionCard
                         .tetherAppear(delay: 0.05)
+
+                    // Directly under the connection card, because when a pause
+                    // is active it reframes everything below it: nothing on
+                    // this screen is expected of anyone right now.
+                    if let activePause = pauses.first(where: { $0.isActive }) {
+                        Button { showPause = true } label: {
+                            PauseCard(pause: activePause,
+                                      isMine: activePause.startedByID == profile.id,
+                                      partnerName: partner?.displayName)
+                        }
+                        .buttonStyle(.plain)
+                        .tetherAppear(delay: 0.06)
+                    }
+
                     togetherCard
                         .tetherAppear(delay: 0.08)
                     Button {
@@ -159,6 +175,9 @@ struct HomeView: View {
                         .tetherButton(.secondary)
 
                     Button("Your year") { showWrapped = true }
+                        .tetherButton(.secondary)
+
+                    Button("Quiet week") { showPause = true }
                         .tetherButton(.secondary)
 
                     Button("Wisdom Jar") { showJar = true }
@@ -230,6 +249,9 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showQuiz) {
                 QuizView(profile: profile)
+            }
+            .sheet(isPresented: $showPause) {
+                PauseView(profile: profile)
             }
             .sheet(isPresented: $showWrapped) {
                 WrappedView(profile: profile,

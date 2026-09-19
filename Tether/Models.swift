@@ -196,6 +196,46 @@ final class UserProfile {
     }
 }
 
+/// A stated pause. "I need a quiet week."
+///
+/// Every other couples app is built to maximise engagement, which is exactly
+/// why none of them has this: a pause button works against the business model.
+/// But the alternative is what already happens everywhere — one person quietly
+/// goes silent, and the other spends the week not knowing why.
+///
+/// This turns a withdrawal into a message. Nothing is broken; something was
+/// simply said. The app stops nudging BOTH people, because a reminder to
+/// "show up for each other" is the last thing either of them needs.
+@Model
+final class Pause {
+    var id: UUID = UUID()
+    /// Who asked for it. Never shown as blame — just as whose request it is.
+    var startedByID: UUID = UUID()
+    var startsOn: Date = Date()
+    var endsOn: Date = Date()
+    var createdAt: Date = Date()
+    /// Optional, and shown to the partner. "Work is heavy." "I'm not well."
+    var note: String = ""
+
+    init(startedByID: UUID, days: Int = 7, note: String = "") {
+        self.id = UUID()
+        self.startedByID = startedByID
+        let now = Date()
+        self.startsOn = now
+        self.endsOn = Calendar.current.date(byAdding: .day, value: days, to: now) ?? now
+        self.createdAt = now
+        self.note = note
+    }
+
+    var isActive: Bool { Date() < endsOn }
+
+    var daysRemaining: Int {
+        max(0, Calendar.current.dateComponents([.day],
+                                               from: Date(),
+                                               to: endsOn).day ?? 0)
+    }
+}
+
 /// Something written but not sent. A private place to think before speaking.
 ///
 /// The category leader is criticised for exactly this gap: answers are shared,
