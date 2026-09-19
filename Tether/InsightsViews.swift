@@ -26,8 +26,15 @@ struct InsightsView: View {
     @State private var window: Int = 30
     @State private var showYearInReview = false
 
+    @Query private var profiles: [UserProfile]
+
     private var mine: [JournalEntry] { entries.filter { $0.userID == profile.id } }
     private var hasData: Bool { !mine.isEmpty }
+
+    private var partner: UserProfile? {
+        guard let id = profile.partnerID else { return nil }
+        return profiles.first { $0.id == id }
+    }
 
     /// The last `window` calendar days, oldest first.
     private var windowDays: [Date] {
@@ -92,8 +99,11 @@ struct InsightsView: View {
                     if hasData {
                         header
                         rangeToggle
-                        trendCard
-                        statsRow
+                trendCard
+                MoodGraphCard(profile: profile,
+                              partner: partner,
+                              entries: entries)
+                statsRow
                         distributionCard
                         if let love = LoveLanguageStore.get(for: profile.id) { loveCard(love) }
                         highsAndLows

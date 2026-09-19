@@ -27,34 +27,35 @@
 		000000000000000000000033 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000032 /* MainTabView.swift */; };
 		000000000000000000000035 /* MilestonesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000034 /* MilestonesView.swift */; };
 		000000000000000000000037 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000036 /* Models.swift */; };
-		000000000000000000000039 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000038 /* NotificationService.swift */; };
-		00000000000000000000003B /* NotificationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003A /* NotificationViews.swift */; };
-		00000000000000000000003D /* OnboardingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003C /* OnboardingViews.swift */; };
-		00000000000000000000003F /* PairingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003E /* PairingViews.swift */; };
-		000000000000000000000041 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000040 /* PaywallView.swift */; };
-		000000000000000000000043 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000042 /* Persistence.swift */; };
-		000000000000000000000045 /* PulseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000044 /* PulseViews.swift */; };
-		000000000000000000000047 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000046 /* Purchases.swift */; };
-		000000000000000000000049 /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000048 /* QuizView.swift */; };
-		00000000000000000000004B /* ReflectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004A /* ReflectionService.swift */; };
-		00000000000000000000004D /* ReflectionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004C /* ReflectionViews.swift */; };
-		00000000000000000000004F /* Safety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004E /* Safety.swift */; };
-		000000000000000000000051 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000050 /* SplashView.swift */; };
-		000000000000000000000053 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000052 /* Store.swift */; };
-		000000000000000000000055 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000054 /* SyncService.swift */; };
-		000000000000000000000057 /* TetherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000056 /* TetherApp.swift */; };
-		000000000000000000000059 /* TetherArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000058 /* TetherArt.swift */; };
-		00000000000000000000005B /* TetherDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005A /* TetherDesign.swift */; };
-		00000000000000000000005D /* TetherIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005C /* TetherIcons.swift */; };
-		00000000000000000000005F /* TetherScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005E /* TetherScene.swift */; };
-		000000000000000000000061 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000060 /* Theme.swift */; };
-		000000000000000000000063 /* UnsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000062 /* UnsentView.swift */; };
-		000000000000000000000065 /* VoiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000064 /* VoiceInput.swift */; };
-		000000000000000000000067 /* VoiceNoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000066 /* VoiceNoteService.swift */; };
-		000000000000000000000069 /* YearBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000068 /* YearBookService.swift */; };
-		00000000000000000000006B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000006A /* Assets.xcassets */; };
-		00000000000000000000006D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000006C /* Localizable.xcstrings */; };
-		00000000000000000000006F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000006E /* PrivacyInfo.xcprivacy */; };
+		000000000000000000000039 /* MoodGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000038 /* MoodGraph.swift */; };
+		00000000000000000000003B /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003A /* NotificationService.swift */; };
+		00000000000000000000003D /* NotificationViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003C /* NotificationViews.swift */; };
+		00000000000000000000003F /* OnboardingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000003E /* OnboardingViews.swift */; };
+		000000000000000000000041 /* PairingViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000040 /* PairingViews.swift */; };
+		000000000000000000000043 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000042 /* PaywallView.swift */; };
+		000000000000000000000045 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000044 /* Persistence.swift */; };
+		000000000000000000000047 /* PulseViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000046 /* PulseViews.swift */; };
+		000000000000000000000049 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000048 /* Purchases.swift */; };
+		00000000000000000000004B /* QuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004A /* QuizView.swift */; };
+		00000000000000000000004D /* ReflectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004C /* ReflectionService.swift */; };
+		00000000000000000000004F /* ReflectionViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004E /* ReflectionViews.swift */; };
+		000000000000000000000051 /* Safety.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000050 /* Safety.swift */; };
+		000000000000000000000053 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000052 /* SplashView.swift */; };
+		000000000000000000000055 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000054 /* Store.swift */; };
+		000000000000000000000057 /* SyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000056 /* SyncService.swift */; };
+		000000000000000000000059 /* TetherApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000058 /* TetherApp.swift */; };
+		00000000000000000000005B /* TetherArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005A /* TetherArt.swift */; };
+		00000000000000000000005D /* TetherDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005C /* TetherDesign.swift */; };
+		00000000000000000000005F /* TetherIcons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000005E /* TetherIcons.swift */; };
+		000000000000000000000061 /* TetherScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000060 /* TetherScene.swift */; };
+		000000000000000000000063 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000062 /* Theme.swift */; };
+		000000000000000000000065 /* UnsentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000064 /* UnsentView.swift */; };
+		000000000000000000000067 /* VoiceInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000066 /* VoiceInput.swift */; };
+		000000000000000000000069 /* VoiceNoteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000068 /* VoiceNoteService.swift */; };
+		00000000000000000000006B /* YearBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000006A /* YearBookService.swift */; };
+		00000000000000000000006D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000006C /* Assets.xcassets */; };
+		00000000000000000000006F /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000006E /* Localizable.xcstrings */; };
+		000000000000000000000071 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000070 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -79,34 +80,35 @@
 		000000000000000000000032 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 		000000000000000000000034 /* MilestonesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MilestonesView.swift; sourceTree = "<group>"; };
 		000000000000000000000036 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
-		000000000000000000000038 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		00000000000000000000003A /* NotificationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViews.swift; sourceTree = "<group>"; };
-		00000000000000000000003C /* OnboardingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViews.swift; sourceTree = "<group>"; };
-		00000000000000000000003E /* PairingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingViews.swift; sourceTree = "<group>"; };
-		000000000000000000000040 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
-		000000000000000000000042 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		000000000000000000000044 /* PulseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseViews.swift; sourceTree = "<group>"; };
-		000000000000000000000046 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
-		000000000000000000000048 /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
-		00000000000000000000004A /* ReflectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionService.swift; sourceTree = "<group>"; };
-		00000000000000000000004C /* ReflectionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionViews.swift; sourceTree = "<group>"; };
-		00000000000000000000004E /* Safety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safety.swift; sourceTree = "<group>"; };
-		000000000000000000000050 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
-		000000000000000000000052 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
-		000000000000000000000054 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
-		000000000000000000000056 /* TetherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherApp.swift; sourceTree = "<group>"; };
-		000000000000000000000058 /* TetherArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherArt.swift; sourceTree = "<group>"; };
-		00000000000000000000005A /* TetherDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherDesign.swift; sourceTree = "<group>"; };
-		00000000000000000000005C /* TetherIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherIcons.swift; sourceTree = "<group>"; };
-		00000000000000000000005E /* TetherScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherScene.swift; sourceTree = "<group>"; };
-		000000000000000000000060 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
-		000000000000000000000062 /* UnsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsentView.swift; sourceTree = "<group>"; };
-		000000000000000000000064 /* VoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceInput.swift; sourceTree = "<group>"; };
-		000000000000000000000066 /* VoiceNoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceNoteService.swift; sourceTree = "<group>"; };
-		000000000000000000000068 /* YearBookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearBookService.swift; sourceTree = "<group>"; };
-		00000000000000000000006A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		00000000000000000000006C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		00000000000000000000006E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		000000000000000000000038 /* MoodGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoodGraph.swift; sourceTree = "<group>"; };
+		00000000000000000000003A /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		00000000000000000000003C /* NotificationViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViews.swift; sourceTree = "<group>"; };
+		00000000000000000000003E /* OnboardingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViews.swift; sourceTree = "<group>"; };
+		000000000000000000000040 /* PairingViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairingViews.swift; sourceTree = "<group>"; };
+		000000000000000000000042 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		000000000000000000000044 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		000000000000000000000046 /* PulseViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseViews.swift; sourceTree = "<group>"; };
+		000000000000000000000048 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
+		00000000000000000000004A /* QuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuizView.swift; sourceTree = "<group>"; };
+		00000000000000000000004C /* ReflectionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionService.swift; sourceTree = "<group>"; };
+		00000000000000000000004E /* ReflectionViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReflectionViews.swift; sourceTree = "<group>"; };
+		000000000000000000000050 /* Safety.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Safety.swift; sourceTree = "<group>"; };
+		000000000000000000000052 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		000000000000000000000054 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		000000000000000000000056 /* SyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncService.swift; sourceTree = "<group>"; };
+		000000000000000000000058 /* TetherApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherApp.swift; sourceTree = "<group>"; };
+		00000000000000000000005A /* TetherArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherArt.swift; sourceTree = "<group>"; };
+		00000000000000000000005C /* TetherDesign.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherDesign.swift; sourceTree = "<group>"; };
+		00000000000000000000005E /* TetherIcons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherIcons.swift; sourceTree = "<group>"; };
+		000000000000000000000060 /* TetherScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TetherScene.swift; sourceTree = "<group>"; };
+		000000000000000000000062 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		000000000000000000000064 /* UnsentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsentView.swift; sourceTree = "<group>"; };
+		000000000000000000000066 /* VoiceInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceInput.swift; sourceTree = "<group>"; };
+		000000000000000000000068 /* VoiceNoteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoiceNoteService.swift; sourceTree = "<group>"; };
+		00000000000000000000006A /* YearBookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearBookService.swift; sourceTree = "<group>"; };
+		00000000000000000000006C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		00000000000000000000006E /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		000000000000000000000070 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,7 +125,7 @@
 		000000000000000000000006 /* Tether */ = {
 			isa = PBXGroup;
 			children = (
-				00000000000000000000006A /* Assets.xcassets */,
+				00000000000000000000006C /* Assets.xcassets */,
 				000000000000000000000010 /* CoachEngine.swift */,
 				000000000000000000000012 /* CoachModels.swift */,
 				000000000000000000000014 /* CoachViews.swift */,
@@ -141,36 +143,37 @@
 				00000000000000000000002C /* InsightsViews.swift */,
 				00000000000000000000002E /* JarView.swift */,
 				000000000000000000000030 /* JournalView.swift */,
-				00000000000000000000006C /* Localizable.xcstrings */,
+				00000000000000000000006E /* Localizable.xcstrings */,
 				000000000000000000000032 /* MainTabView.swift */,
 				000000000000000000000034 /* MilestonesView.swift */,
 				000000000000000000000036 /* Models.swift */,
-				000000000000000000000038 /* NotificationService.swift */,
-				00000000000000000000003A /* NotificationViews.swift */,
-				00000000000000000000003C /* OnboardingViews.swift */,
-				00000000000000000000003E /* PairingViews.swift */,
-				000000000000000000000040 /* PaywallView.swift */,
-				000000000000000000000042 /* Persistence.swift */,
-				00000000000000000000006E /* PrivacyInfo.xcprivacy */,
-				000000000000000000000044 /* PulseViews.swift */,
-				000000000000000000000046 /* Purchases.swift */,
-				000000000000000000000048 /* QuizView.swift */,
-				00000000000000000000004A /* ReflectionService.swift */,
-				00000000000000000000004C /* ReflectionViews.swift */,
-				00000000000000000000004E /* Safety.swift */,
-				000000000000000000000050 /* SplashView.swift */,
-				000000000000000000000052 /* Store.swift */,
-				000000000000000000000054 /* SyncService.swift */,
-				000000000000000000000056 /* TetherApp.swift */,
-				000000000000000000000058 /* TetherArt.swift */,
-				00000000000000000000005A /* TetherDesign.swift */,
-				00000000000000000000005C /* TetherIcons.swift */,
-				00000000000000000000005E /* TetherScene.swift */,
-				000000000000000000000060 /* Theme.swift */,
-				000000000000000000000062 /* UnsentView.swift */,
-				000000000000000000000064 /* VoiceInput.swift */,
-				000000000000000000000066 /* VoiceNoteService.swift */,
-				000000000000000000000068 /* YearBookService.swift */,
+				000000000000000000000038 /* MoodGraph.swift */,
+				00000000000000000000003A /* NotificationService.swift */,
+				00000000000000000000003C /* NotificationViews.swift */,
+				00000000000000000000003E /* OnboardingViews.swift */,
+				000000000000000000000040 /* PairingViews.swift */,
+				000000000000000000000042 /* PaywallView.swift */,
+				000000000000000000000044 /* Persistence.swift */,
+				000000000000000000000070 /* PrivacyInfo.xcprivacy */,
+				000000000000000000000046 /* PulseViews.swift */,
+				000000000000000000000048 /* Purchases.swift */,
+				00000000000000000000004A /* QuizView.swift */,
+				00000000000000000000004C /* ReflectionService.swift */,
+				00000000000000000000004E /* ReflectionViews.swift */,
+				000000000000000000000050 /* Safety.swift */,
+				000000000000000000000052 /* SplashView.swift */,
+				000000000000000000000054 /* Store.swift */,
+				000000000000000000000056 /* SyncService.swift */,
+				000000000000000000000058 /* TetherApp.swift */,
+				00000000000000000000005A /* TetherArt.swift */,
+				00000000000000000000005C /* TetherDesign.swift */,
+				00000000000000000000005E /* TetherIcons.swift */,
+				000000000000000000000060 /* TetherScene.swift */,
+				000000000000000000000062 /* Theme.swift */,
+				000000000000000000000064 /* UnsentView.swift */,
+				000000000000000000000066 /* VoiceInput.swift */,
+				000000000000000000000068 /* VoiceNoteService.swift */,
+				00000000000000000000006A /* YearBookService.swift */,
 			);
 			path = Tether;
 			sourceTree = "<group>";
@@ -249,9 +252,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00000000000000000000006B /* Assets.xcassets in Resources */,
-				00000000000000000000006D /* Localizable.xcstrings in Resources */,
-				00000000000000000000006F /* PrivacyInfo.xcprivacy in Resources */,
+				00000000000000000000006D /* Assets.xcassets in Resources */,
+				00000000000000000000006F /* Localizable.xcstrings in Resources */,
+				000000000000000000000071 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,31 +285,32 @@
 				000000000000000000000033 /* MainTabView.swift in Sources */,
 				000000000000000000000035 /* MilestonesView.swift in Sources */,
 				000000000000000000000037 /* Models.swift in Sources */,
-				000000000000000000000039 /* NotificationService.swift in Sources */,
-				00000000000000000000003B /* NotificationViews.swift in Sources */,
-				00000000000000000000003D /* OnboardingViews.swift in Sources */,
-				00000000000000000000003F /* PairingViews.swift in Sources */,
-				000000000000000000000041 /* PaywallView.swift in Sources */,
-				000000000000000000000043 /* Persistence.swift in Sources */,
-				000000000000000000000045 /* PulseViews.swift in Sources */,
-				000000000000000000000047 /* Purchases.swift in Sources */,
-				000000000000000000000049 /* QuizView.swift in Sources */,
-				00000000000000000000004B /* ReflectionService.swift in Sources */,
-				00000000000000000000004D /* ReflectionViews.swift in Sources */,
-				00000000000000000000004F /* Safety.swift in Sources */,
-				000000000000000000000051 /* SplashView.swift in Sources */,
-				000000000000000000000053 /* Store.swift in Sources */,
-				000000000000000000000055 /* SyncService.swift in Sources */,
-				000000000000000000000057 /* TetherApp.swift in Sources */,
-				000000000000000000000059 /* TetherArt.swift in Sources */,
-				00000000000000000000005B /* TetherDesign.swift in Sources */,
-				00000000000000000000005D /* TetherIcons.swift in Sources */,
-				00000000000000000000005F /* TetherScene.swift in Sources */,
-				000000000000000000000061 /* Theme.swift in Sources */,
-				000000000000000000000063 /* UnsentView.swift in Sources */,
-				000000000000000000000065 /* VoiceInput.swift in Sources */,
-				000000000000000000000067 /* VoiceNoteService.swift in Sources */,
-				000000000000000000000069 /* YearBookService.swift in Sources */,
+				000000000000000000000039 /* MoodGraph.swift in Sources */,
+				00000000000000000000003B /* NotificationService.swift in Sources */,
+				00000000000000000000003D /* NotificationViews.swift in Sources */,
+				00000000000000000000003F /* OnboardingViews.swift in Sources */,
+				000000000000000000000041 /* PairingViews.swift in Sources */,
+				000000000000000000000043 /* PaywallView.swift in Sources */,
+				000000000000000000000045 /* Persistence.swift in Sources */,
+				000000000000000000000047 /* PulseViews.swift in Sources */,
+				000000000000000000000049 /* Purchases.swift in Sources */,
+				00000000000000000000004B /* QuizView.swift in Sources */,
+				00000000000000000000004D /* ReflectionService.swift in Sources */,
+				00000000000000000000004F /* ReflectionViews.swift in Sources */,
+				000000000000000000000051 /* Safety.swift in Sources */,
+				000000000000000000000053 /* SplashView.swift in Sources */,
+				000000000000000000000055 /* Store.swift in Sources */,
+				000000000000000000000057 /* SyncService.swift in Sources */,
+				000000000000000000000059 /* TetherApp.swift in Sources */,
+				00000000000000000000005B /* TetherArt.swift in Sources */,
+				00000000000000000000005D /* TetherDesign.swift in Sources */,
+				00000000000000000000005F /* TetherIcons.swift in Sources */,
+				000000000000000000000061 /* TetherScene.swift in Sources */,
+				000000000000000000000063 /* Theme.swift in Sources */,
+				000000000000000000000065 /* UnsentView.swift in Sources */,
+				000000000000000000000067 /* VoiceInput.swift in Sources */,
+				000000000000000000000069 /* VoiceNoteService.swift in Sources */,
+				00000000000000000000006B /* YearBookService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
