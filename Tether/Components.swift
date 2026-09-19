@@ -70,7 +70,22 @@ struct TetherCard<Content: View>: View {
         content
             .padding(padded ? TetherSpace.l : 0)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(TetherColor.surface)
+            // A material, not a fixed fill.
+            //
+            // TetherColor.surface is one hard-coded dark purple, so on a green
+            // Jungle the cards stayed purple: the body was Jungle and the
+            // cards were "dark mode". A material samples what is behind it, so
+            // the same card reads green on Jungle, blue at Night and warm on
+            // Dawn, with no per-scene colour table to maintain.
+            //
+            // Tinted with the surface colour on top rather than left bare, so
+            // the card still reads as a raised surface and not a hole.
+            .background(.regularMaterial,
+                        in: RoundedRectangle(cornerRadius: TetherRadius.large,
+                                             style: .continuous))
+            .background(TetherColor.surface.opacity(0.55),
+                        in: RoundedRectangle(cornerRadius: TetherRadius.large,
+                                             style: .continuous))
             .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous)
