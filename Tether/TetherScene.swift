@@ -132,7 +132,12 @@ struct Ridge: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let n = peaks.count
-        guard n > 1 else { return path }
+        // Guard against a transient zero or non-finite geometry pass. SwiftUI
+        // can hand a shape an undefined rect mid-transition, and multiplying
+        // that out produced 'Invalid frame dimension' warnings.
+        guard n > 1,
+              rect.width.isFinite, rect.height.isFinite,
+              rect.width > 0, rect.height > 0 else { return path }
 
         func point(_ i: Int) -> CGPoint {
             let x = rect.width * CGFloat(i) / CGFloat(n - 1)

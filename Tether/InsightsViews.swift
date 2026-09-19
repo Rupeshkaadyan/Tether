@@ -1,6 +1,16 @@
 import SwiftUI
 import SwiftData
 
+/// A bar width that can never be negative or non-finite.
+///
+/// Dividing by a zero maximum yields infinity, and a transient zero-width
+/// geometry pass yields nonsense — both surface as 'Invalid frame dimension'
+/// warnings. Clamping here removes the whole class.
+private func barWidth(count: Int, available: CGFloat, maxCount: Int) -> CGFloat {
+    guard count > 0, maxCount > 0, available.isFinite, available > 0 else { return 0 }
+    return max(6, available * CGFloat(count) / CGFloat(maxCount))
+}
+
 // MARK: - Insights tab
 //
 // A look back, not a verdict. Everything here is computed locally from the
@@ -212,9 +222,9 @@ struct InsightsView: View {
                                     Capsule().fill(TetherColor.border)
                                     Capsule()
                                         .fill(Mood.color(for: lvl))
-                                        .frame(width: count > 0
-                                               ? max(geo.size.width * CGFloat(count) / CGFloat(maxCount), 6)
-                                               : 0)
+                                        .frame(width: barWidth(count: count,
+                                                               available: geo.size.width,
+                                                               maxCount: maxCount))
                                 }
                             }
                             .frame(height: 8)

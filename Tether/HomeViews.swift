@@ -1092,6 +1092,8 @@ struct SettingsView: View {
     @State private var showLoveQuiz = false
     @State private var showDeleteConfirm = false
     @State private var showTrack = false
+    @State private var exportUnlocked = false
+    @State private var exportMessage: String?
     @Environment(\.syncService) private var sync
     @Environment(LanguageManager.self) private var language
     @Environment(ThemeManager.self) private var theme
@@ -1106,6 +1108,21 @@ struct SettingsView: View {
     private var partner: UserProfile? {
         guard let id = profile.partnerID else { return nil }
         return allProfiles.first { $0.id == id }
+    }
+
+    /// Face ID before the export. If the device has no passcode set, this
+    /// refuses rather than quietly allowing it — an unguarded export of every
+    /// entry is the single worst thing this app could do.
+    private func unlockExport() async {
+        exportMessage = nil
+        let granted = await AppLockManager.shared.authenticate(
+            reason: "Confirm it is you before exporting your journal"
+        )
+        if granted {
+            exportUnlocked = true
+        } else {
+            exportMessage = "Export locked. Set a device passcode to enable it."
+        }
     }
 
     private var exportDocument: String {
@@ -1295,6 +1312,10 @@ struct SettingsView: View {
                 }
 
                 Section("Your data") {
+                    // Gated behind Face ID. The export is plain text and leaves
+                    // the encrypted store, so it is the one action in the app
+                    // that can leak everything at once.
+                    if exportUnlocked {
                     ShareLink(item: exportDocument,
                               preview: SharePreview("Your Tether export")) {
                         HStack {
@@ -1304,9 +1325,28 @@ struct SettingsView: View {
                             Icon(.download, size: 17, color: TetherColor.faint)
                         }
                     }
-                    Text("A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so keep it somewhere safe.")
+                    } else {
+                        Button {
+                            Task { await unlockExport() }
+                        } label: {
+                            HStack {
+                                Label("Export everything", systemImage: "square.and.arrow.up")
+                                    .font(TetherType.label)
+                                Spacer()
+                                Icon(.download, size: 17, color: TetherColor.faint)
+                            }
+                        }
+                    }
+
+                    Text("A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so it is locked behind Face ID.")
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
+
+                    if let exportMessage {
+                        Text(exportMessage)
+                            .font(TetherType.caption)
+                            .foregroundStyle(TetherColor.strained)
+                    }
                 }
 
                 Section("Sync") {

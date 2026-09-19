@@ -177,6 +177,10 @@ targ_common = [
     ("IPHONEOS_DEPLOYMENT_TARGET", "17.0"),
     ("LD_RUNPATH_SEARCH_PATHS", ("$(inherited)", "@executable_path/Frameworks")),
     ("MARKETING_VERSION", "1.0"),
+    # Required. Without this key iOS refuses to evaluate biometrics at all, so
+    # the App Lock toggle silently did nothing on a device with Face ID.
+    ("INFOPLIST_KEY_NSFaceIDUsageDescription",
+     "Tether uses Face ID to lock your journal. Your face data never leaves your device and is never seen by the app."),
     ("INFOPLIST_KEY_NSMicrophoneUsageDescription",
      "Tether uses the microphone only when you tap Dictate or Voice. Dictation is transcribed on this device; a voice note is stored on this device with your entry. Nothing is ever uploaded."),
     ("INFOPLIST_KEY_NSSpeechRecognitionUsageDescription",

@@ -420,6 +420,22 @@ final class AppLockManager {
         isLocked = true
     }
 
+    /// Asks for Face ID / passcode for a sensitive action, independent of the
+    /// lock state. Used before an export, because the exported file is plain
+    /// text and leaves the encrypted store.
+    ///
+    /// Returns false — never true — when the device has no passcode or
+    /// biometrics configured. A gate that opens by default is not a gate.
+    func authenticate(reason: String) async -> Bool {
+        let context = LAContext()
+        var error: NSError?
+        guard context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) else {
+            return false
+        }
+        return (try? await context.evaluatePolicy(.deviceOwnerAuthentication,
+                                                  localizedReason: reason)) ?? false
+    }
+
     /// Prompts for device authentication. If the device has no passcode or
     /// biometrics configured we unlock rather than trapping the person out of
     /// their own journal.
