@@ -258,6 +258,7 @@ struct GrowView: View {
                 VStack(alignment: .leading, spacing: TetherSpace.m) {
                     HStack(spacing: TetherSpace.s) {
                         Image(systemName: "text.quote")
+                        .accessibilityHidden(true)
                             .font(.system(size: 16))
                             .foregroundStyle(TetherColor.brand)
                         Text("This week")
@@ -421,6 +422,7 @@ struct GrowView: View {
         } label: {
             HStack(spacing: TetherSpace.m) {
                 Image(systemName: "chart.line.uptrend.xyaxis")
+                .accessibilityHidden(true)
                     .font(.system(size: 16))
                     .foregroundStyle(TetherColor.brand)
                 Text("See your insights")
@@ -428,6 +430,7 @@ struct GrowView: View {
                     .foregroundStyle(TetherColor.ink)
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
+                .accessibilityHidden(true)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(TetherColor.faint)
             }

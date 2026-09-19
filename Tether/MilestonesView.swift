@@ -162,6 +162,7 @@ struct MilestonesView: View {
 
                 if milestone.isEarned {
                     Image(systemName: "checkmark")
+                    .accessibilityHidden(true)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(TetherColor.brand)
                 } else {

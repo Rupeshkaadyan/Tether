@@ -251,6 +251,7 @@ struct QuizView: View {
                        mineA.guessIndex != theirsA.guessIndex {
                         HStack(alignment: .top, spacing: TetherSpace.s) {
                             Image(systemName: "arrow.left.arrow.right")
+                            .accessibilityHidden(true)
                                 .font(.system(size: 12))
                                 .foregroundStyle(TetherColor.drifting)
                             Text(q.prompt)

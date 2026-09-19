@@ -166,6 +166,7 @@ struct UnsentView: View {
             TetherColor.bg.opacity(0.94).ignoresSafeArea()
             VStack(spacing: TetherSpace.m) {
                 Image(systemName: "wind")
+                .accessibilityHidden(true)
                     .font(.system(size: 34, weight: .light))
                     .foregroundStyle(TetherColor.brand)
                 Text("Gone.")

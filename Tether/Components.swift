@@ -370,6 +370,7 @@ struct MilestoneToast: View {
     var body: some View {
         HStack(spacing: TetherSpace.s) {
             Image(systemName: "star.fill")
+            .accessibilityHidden(true)
                 .font(.system(size: 14, weight: .bold))
                 .foregroundStyle(.white)
             Text(text)

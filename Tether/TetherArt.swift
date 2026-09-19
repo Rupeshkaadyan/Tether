@@ -197,6 +197,7 @@ struct PairedAvatars: View {
                     Circle().strokeBorder(style: StrokeStyle(lineWidth: 1.5, dash: [4, 3]))
                         .foregroundStyle(TetherColor.borderStrong)
                     Image(systemName: "plus")
+                    .accessibilityHidden(true)
                         .font(.system(size: size * 0.3, weight: .medium))
                         .foregroundStyle(TetherColor.faint)
                 }

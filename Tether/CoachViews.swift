@@ -408,6 +408,7 @@ struct CoachBubble: View {
                 if message.role == .assistant && message.usedMemory {
                     HStack(spacing: 4) {
                         Image(systemName: "clock.arrow.circlepath")
+                        .accessibilityHidden(true)
                             .font(.system(size: 10))
                         Text("Remembering")
                             .font(.system(size: 11))

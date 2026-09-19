@@ -15,6 +15,7 @@ struct NotificationPermissionSheet: View {
                 Spacer(minLength: TetherSpace.l)
 
                 Image(systemName: "bell.badge")
+                .accessibilityHidden(true)
                     .font(.system(size: 36))
                     .foregroundStyle(TetherColor.brand)
 

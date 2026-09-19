@@ -239,6 +239,7 @@ struct PulseView: View {
                     .fill(TetherColor.brand.opacity(0.14))
                     .frame(width: 34, height: 34)
                 Image(systemName: "arrow.turn.down.right")
+                .accessibilityHidden(true)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(TetherColor.brand)
             }

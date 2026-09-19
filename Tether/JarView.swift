@@ -114,6 +114,7 @@ struct WisdomJarView: View {
     private var invitation: some View {
         HStack(alignment: .top, spacing: TetherSpace.s) {
             Image(systemName: "sparkles")
+            .accessibilityHidden(true)
                 .font(.system(size: 14))
                 .foregroundStyle(theme.theme.glow)
             Text("Something worth keeping? The jar is only full on a hard day if you fill it on a good one.")
@@ -312,6 +313,7 @@ struct WisdomJarView: View {
                         }
                         Spacer(minLength: 0)
                         Image(systemName: "chevron.up.chevron.down")
+                        .accessibilityHidden(true)
                             .font(.system(size: 10))
                             .foregroundStyle(theme.theme.faint)
                     }
@@ -339,6 +341,7 @@ struct WisdomJarView: View {
         if partner != nil, !notes.isEmpty {
             HStack(spacing: TetherSpace.s) {
                 Image(systemName: "person.2")
+                .accessibilityHidden(true)
                     .font(.system(size: 11))
                 Text("\(sharedCount) shared · \(privateCount) private")
                     .font(TetherType.caption)
@@ -450,6 +453,7 @@ struct SceneRow: View {
 
                 if selected {
                     Image(systemName: "checkmark")
+                    .accessibilityHidden(true)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(TetherColor.brand)
                 }
@@ -542,6 +546,7 @@ struct JarNoteSheet: View {
                     Spacer()
                     if !note.sharedWithPartner {
                         Image(systemName: "lock.fill")
+                        .accessibilityHidden(true)
                             .font(.system(size: 11))
                             .foregroundStyle(theme.faint)
                     }

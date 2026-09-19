@@ -283,6 +283,7 @@ struct HomeView: View {
                     showSettings = true
                 } label: {
                     Image(systemName: "gearshape")
+                    .accessibilityLabel("Settings")
                         .font(.system(size: 17, weight: .medium))
                         .foregroundStyle(.white)
                         .frame(width: 42, height: 42)
@@ -484,6 +485,7 @@ struct HomeView: View {
                     PhotosPicker(selection: $photoItem, matching: .images) {
                         HStack(spacing: 5) {
                             Image(systemName: "photo")
+                            .accessibilityHidden(true)
                                 .font(.system(size: 14, weight: .medium))
                                 .foregroundStyle(TetherColor.muted)
                             Text(photoData == nil ? "Photo" : "Added")
@@ -574,6 +576,7 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: TetherSpace.m) {
             HStack(spacing: TetherSpace.s) {
                 Image(systemName: "checkmark.circle.fill")
+                .accessibilityHidden(true)
                     .foregroundStyle(TetherColor.thriving)
                 Text("Saved for today")
                     .font(TetherType.label)
@@ -1077,6 +1080,7 @@ struct HomeView: View {
                             Spacer()
                             if entry.visibility == .private {
                                 Image(systemName: "lock")
+                                .accessibilityHidden(true)
                                     .font(.system(size: 11))
                                     .foregroundStyle(TetherColor.muted)
                             }
@@ -1317,6 +1321,7 @@ struct SettingsView: View {
                                 Spacer()
                                 if profile.track == track {
                                     Image(systemName: "checkmark")
+                                    .accessibilityHidden(true)
                                         .foregroundStyle(TetherColor.brand)
                                 }
                             }
@@ -1499,6 +1504,7 @@ struct SettingsView: View {
                                 Spacer(minLength: 0)
                                 if FeelManager.shared.feel == option {
                                     Image(systemName: "checkmark")
+                                    .accessibilityHidden(true)
                                         .font(.system(size: 14, weight: .semibold))
                                         .foregroundStyle(TetherColor.brand)
                                 }
@@ -1538,6 +1544,7 @@ struct SettingsView: View {
                             }
                             Spacer(minLength: 0)
                             Image(systemName: "chevron.right")
+                            .accessibilityHidden(true)
                                 .font(.system(size: 12, weight: .semibold))
                                 .foregroundStyle(TetherColor.faint)
                         }

@@ -52,6 +52,7 @@ struct PaywallView: View {
     private var sharedLine: some View {
         HStack(spacing: TetherSpace.s) {
             Image(systemName: "person.2.fill")
+            .accessibilityHidden(true)
                 .font(.system(size: 14))
             Text("One subscription. Both partners. Always.")
                 .font(TetherType.label)

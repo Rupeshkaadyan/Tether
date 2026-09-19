@@ -380,6 +380,7 @@ struct LoveLanguageStep: View {
             Spacer(minLength: TetherSpace.xxl)
 
             Image(systemName: "heart")
+            .accessibilityHidden(true)
                 .font(.system(size: 40))
                 .foregroundStyle(TetherColor.brand)
 

@@ -141,6 +141,7 @@ struct InviteMethodsView: View {
                             Spacer(minLength: 0)
                             if selectedID == method.id {
                                 Image(systemName: "checkmark.circle.fill")
+                                .accessibilityHidden(true)
                                     .font(.system(size: 20))
                                     .foregroundStyle(TetherColor.brand)
                             }
@@ -470,6 +471,7 @@ struct PairingSuccessView: View {
                     .fill(TetherColor.tint)
                     .frame(width: 120, height: 120)
                 Image(systemName: "person.2.fill")
+                .accessibilityHidden(true)
                     .font(.system(size: 44))
                     .foregroundStyle(TetherColor.brand)
                     .scaleEffect(appeared ? 1 : 0.6)
