@@ -159,6 +159,7 @@ struct PulseView: View {
 
     @Environment(\.modelContext) private var ctx
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.dynamicTypeSize) private var typeSize
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
 
     private var result: PulseResult {
@@ -220,7 +221,10 @@ struct PulseView: View {
             .padding(.horizontal, TetherSpace.margin)
             .padding(.bottom, TetherSpace.l)
         }
-        .frame(height: 230)
+        // minHeight, not height. This banner carries the state name and a full
+        // sentence; at accessibility text sizes that sentence wraps to four or
+        // five lines and a fixed 230 would cut it off mid-word.
+        .frame(minHeight: 230)
         .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
         .padding(.horizontal, -TetherSpace.margin)
     }
@@ -278,14 +282,25 @@ struct PulseView: View {
             // translate before they mean anything, and this app's whole brief
             // is human rather than dashboard. "Mostly good days" and "9 of the
             // last 14 days" say the same thing and land immediately.
-            HStack(alignment: .top, spacing: 0) {
-                statColumn("Mood", value: moodWord, color: result.state.color)
-                verticalDivider
-                statColumn("Showing up",
-                          value: showingUpText,
-                          color: result.state.color)
-                verticalDivider
-                statColumn("Days written", value: "\(result.daysOfData)", color: result.state.color)
+            // Three columns only work while the labels are short. At
+            // accessibility sizes each one wraps to several lines and the row
+            // becomes a wall of clipped words, so it stacks instead.
+            if typeSize.isAccessibilitySize {
+                VStack(alignment: .leading, spacing: TetherSpace.m) {
+                    statColumn("Mood", value: moodWord, color: result.state.color)
+                    statColumn("Showing up", value: showingUpText, color: result.state.color)
+                    statColumn("Days written", value: "\(result.daysOfData)", color: result.state.color)
+                }
+            } else {
+                HStack(alignment: .top, spacing: 0) {
+                    statColumn("Mood", value: moodWord, color: result.state.color)
+                    verticalDivider
+                    statColumn("Showing up",
+                              value: showingUpText,
+                              color: result.state.color)
+                    verticalDivider
+                    statColumn("Days written", value: "\(result.daysOfData)", color: result.state.color)
+                }
             }
         }
         .padding(TetherSpace.xl)

@@ -787,7 +787,9 @@ struct MemoryLaneView: View {
             .padding(.horizontal, TetherSpace.margin)
             .padding(.bottom, TetherSpace.l)
         }
-        .frame(height: 200)
+        // minHeight, not height — the title inside grows at accessibility
+        // sizes and must be allowed to push the banner taller.
+        .frame(minHeight: 200)
         .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
         .padding(.horizontal, -TetherSpace.margin)
     }
@@ -1014,7 +1016,7 @@ struct MemoryLaneView: View {
                         .font(TetherType.label)
                         .foregroundStyle(.white)
                         .frame(maxWidth: .infinity)
-                        .frame(height: 50)
+                        .frame(minHeight: 50)
                         .background(TetherGradient.brand)
                         .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
                                                     style: .continuous))
@@ -1222,7 +1224,7 @@ struct TogetherThreadView: View {
                         .font(TetherType.label)
                         .foregroundStyle(kind == option ? .white : TetherColor.muted)
                         .frame(maxWidth: .infinity)
-                        .frame(height: 40)
+                        .frame(minHeight: 40)
                         .background(kind == option
                                     ? AnyShapeStyle(TetherGradient.brand)
                                     : AnyShapeStyle(TetherColor.surface))

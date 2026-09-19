@@ -77,7 +77,9 @@ struct JournalView: View {
                             .foregroundStyle(scope == option ? .white : TetherColor.muted)
                     }
                     .frame(maxWidth: .infinity)
-                    .frame(height: 42)
+                    // minHeight: the label inside grows at accessibility text
+                    // sizes, and a hard 42 would slice it off.
+                    .frame(minHeight: 42)
                     .background(scope == option ? AnyShapeStyle(TetherGradient.brand)
                                                 : AnyShapeStyle(TetherColor.surface))
                     .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small, style: .continuous))

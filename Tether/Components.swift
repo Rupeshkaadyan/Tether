@@ -230,7 +230,9 @@ struct MoodRow: View {
                 .font(TetherType.caption)
                 .foregroundStyle(TetherColor.muted)
                 .contentTransition(.opacity)
-                .frame(height: 18)
+                // minHeight, not height: at large accessibility sizes the
+                // label needs to grow rather than be clipped to a fixed box.
+                .frame(minHeight: 18)
         }
         .frame(maxWidth: .infinity)
     }
