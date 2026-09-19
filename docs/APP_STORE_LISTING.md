@@ -15,29 +15,40 @@ Tether: Couples Journal
 ## Subtitle (30 max)
 
 ```
-One minute a day, together
+One ritual, two traditions
 ```
 *(26 characters)*
+
+**Why this subtitle.** The category leader's subtitle is generic. This one
+names the thing nobody else offers — two people, two traditions, one shared
+practice — without the word "religion", so it also reads true for a
+secular-and-religious couple. It is the whole differentiator in 26 characters.
 
 ## Promotional text (170 max — editable without review)
 
 ```
-A private daily ritual for two. Answer one question, see each other's answer, reply in a line. Offline, encrypted, and yours alone.
+A private daily ritual for two. Each of you keeps your own tradition — secular, Vedic, Quranic or Biblical — and answers one question a day. Nothing is ever uploaded.
 ```
-*(131 characters)*
+*(167 characters)*
 
 ---
 
 ## Keywords (100 max, comma-separated, no spaces)
 
 ```
-couples,journal,relationship,marriage,daily,prompt,private,diary,gratitude,partner,reflection,faith,intimacy
+interfaith,couples,marriage,faith,religion,christian,muslim,hindu,jewish,daily,ritual,private
 ```
-*(110 — trim to fit)*
+*(94 characters)*
 
-Trimmed to 100:
-```
-couples,journal,relationship,marriage,daily,prompt,private,diary,gratitude,partner,faith,intimacy
+**Why these keywords.** "Relationship" and "couples" are the most contested
+terms in the store — a new app will not rank for them. Every tradition name
+here is a term a real couple actually types, and the category leader targets
+none of them. Interfaith is the one search where Tether can rank first, so the
+keyword field spends its whole budget there.
+
+Deliberately dropped: `relationship`, `journal`, `diary`, `gratitude`,
+`intimacy`. They are unwinnable and they eat characters that belong to the
+niche.
 ```
 *(97 characters)*
 
