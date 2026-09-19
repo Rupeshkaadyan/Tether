@@ -52,6 +52,16 @@
         }
       }
     },
+    "%lld day%@ of showing up together." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld day%2$@ of showing up together."
+          }
+        }
+      }
+    },
     "%lld days" : {
       "localizations" : {
         "es" : {
@@ -3340,6 +3350,9 @@
       }
     },
     "Today's answers, together." : {
+
+    },
+    "TOGETHER" : {
 
     },
     "TRY ASKING" : {

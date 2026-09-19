@@ -8,6 +8,7 @@ struct HomeView: View {
 
     @Bindable var profile: UserProfile
     @Query(sort: \JournalEntry.createdAt, order: .reverse) private var entries: [JournalEntry]
+    @Query(sort: \Warmth.createdAt, order: .reverse) private var warmths: [Warmth]
     @Query(sort: \PromptReply.createdAt, order: .reverse) private var replies: [PromptReply]
     @Query(sort: \MoodLog.createdAt, order: .reverse) private var moods: [MoodLog]
     @Query private var allProfiles: [UserProfile]
@@ -79,6 +80,8 @@ struct HomeView: View {
                         .tetherAppear(delay: 0.05)
                     togetherCard
                         .tetherAppear(delay: 0.08)
+                    warmthCard
+                        .tetherAppear(delay: 0.09)
                     PulseCard(result: pulse) { onOpenPulse() }
                         .tetherAppear(delay: 0.1)
                     PromptCard(prompt: todayPrompt, dayLabel: Date().weekdayDisplay)
@@ -563,6 +566,94 @@ struct HomeView: View {
             return "\(partner.displayName) has not answered yet today."
         }
         return "\(partner.displayName) answered today — feeling \(Mood.label(for: entry.mood).lowercased())."
+    }
+
+    // MARK: - Warmth
+
+    /// The most recent signal they sent that you have not acknowledged.
+    private var unseenWarmth: Warmth? {
+        guard let partner else { return nil }
+        return warmths.first { $0.fromID == partner.id && !$0.seen }
+    }
+
+    /// What you already sent today, so the row can reflect it.
+    private var sentToday: WarmthKind? {
+        let cal = Calendar.current
+        return warmths.first {
+            $0.fromID == profile.id && cal.isDateInToday($0.createdAt)
+        }?.kind
+    }
+
+    private func sendWarmth(_ kind: WarmthKind) {
+        guard let partner else { return }
+        ctx.insert(Warmth(fromID: profile.id, toID: partner.id, kind: kind))
+        try? ctx.save()
+        TetherHaptics.success()
+    }
+
+    /// One tap, no writing required — the smallest possible act of care, and
+    /// the thing that makes Home feel like it is about two people.
+    @ViewBuilder
+    private var warmthCard: some View {
+        if isPaired, let partner {
+            TetherCard {
+                VStack(alignment: .leading, spacing: TetherSpace.m) {
+                    if let received = unseenWarmth {
+                        HStack(alignment: .top, spacing: TetherSpace.s) {
+                            TetherHeroMark(width: 26,
+                                           color: TetherColor.brand,
+                                           sag: 3,
+                                           lineWidth: 1.5,
+                                           dotRadius: 2)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("\(partner.displayName) sent you something")
+                                    .font(TetherType.label)
+                                    .foregroundStyle(TetherColor.text)
+                                Text(received.kind.label)
+                                    .font(TetherType.callout)
+                                    .foregroundStyle(TetherColor.brand)
+                            }
+                            Spacer(minLength: 0)
+                            Button {
+                                received.seen = true
+                                try? ctx.save()
+                            } label: {
+                                Text("Thanks")
+                                    .font(TetherType.caption)
+                                    .foregroundStyle(TetherColor.muted)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+
+                    Text(sentToday == nil
+                         ? "Send \(partner.displayName) something. No words needed."
+                         : "You sent: \(sentToday!.label)")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(spacing: TetherSpace.s) {
+                            ForEach(WarmthKind.allCases) { kind in
+                                Button {
+                                    sendWarmth(kind)
+                                } label: {
+                                    Text(kind.short)
+                                        .font(TetherType.caption)
+                                        .foregroundStyle(TetherColor.brand)
+                                        .padding(.horizontal, TetherSpace.m)
+                                        .padding(.vertical, TetherSpace.s)
+                                        .background(TetherColor.brandSoft)
+                                        .clipShape(Capsule())
+                                }
+                                .buttonStyle(.plain)
+                            }
+                        }
+                        .padding(.vertical, 1)
+                    }
+                }
+            }
+        }
     }
 
     /// Care nudge: when their mood is low, say so gently and offer one line.

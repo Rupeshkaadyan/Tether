@@ -196,6 +196,71 @@ final class UserProfile {
     }
 }
 
+/// A one-tap signal from one partner to the other — "thinking of you",
+/// "proud of you". No writing required, which is the point: it is the
+/// smallest possible act of care.
+@Model
+final class Warmth {
+    var id: UUID
+    var fromID: UUID
+    var toID: UUID
+    var kindRaw: String
+    var createdAt: Date
+    var seen: Bool
+
+    init(fromID: UUID, toID: UUID, kind: WarmthKind) {
+        self.id = UUID()
+        self.fromID = fromID
+        self.toID = toID
+        self.kindRaw = kind.rawValue
+        self.createdAt = Date()
+        self.seen = false
+    }
+
+    var kind: WarmthKind {
+        get { WarmthKind(rawValue: kindRaw) ?? .thinking }
+        set { kindRaw = newValue.rawValue }
+    }
+}
+
+enum WarmthKind: String, CaseIterable, Identifiable {
+    case thinking, proud, miss, grateful, here
+
+    var id: String { rawValue }
+
+    /// Written in the first person — these are the words the sender means.
+    var label: String {
+        switch self {
+        case .thinking: return "Thinking of you"
+        case .proud:    return "Proud of you"
+        case .miss:     return "Missing you"
+        case .grateful: return "Grateful for you"
+        case .here:     return "Here if you need me"
+        }
+    }
+
+    /// Shown as the chip on the button.
+    var short: String {
+        switch self {
+        case .thinking: return "Thinking of you"
+        case .proud:    return "Proud of you"
+        case .miss:     return "Missing you"
+        case .grateful: return "Grateful"
+        case .here:     return "I'm here"
+        }
+    }
+
+    var symbol: String {
+        switch self {
+        case .thinking: return "sparkles"
+        case .proud:    return "star.fill"
+        case .miss:     return "moon.stars.fill"
+        case .grateful: return "heart.fill"
+        case .here:     return "hand.raised.fill"
+        }
+    }
+}
+
 @Model
 final class MoodLog {
     var id: UUID
