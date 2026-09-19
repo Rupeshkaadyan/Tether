@@ -323,7 +323,7 @@ struct HomeView: View {
     /// it always meets the very top edge. Content scrolls over it.
     private var mastheadSky: some View {
         ZStack(alignment: .bottom) {
-            TetherScene(timeOfDay: palette.timeOfDay)
+            TetherScene(timeOfDay: palette.timeOfDay, scene: palette)
             LinearGradient(colors: [.clear, .black.opacity(0.34)],
                            startPoint: .center,
                            endPoint: .bottom)

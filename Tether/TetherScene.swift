@@ -10,10 +10,10 @@ extension AppScene {
     /// `.automatic`, which has already been resolved into a real scene.
     var timeOfDay: TetherScene.TimeOfDay {
         switch self {
-        case .automatic, .dawn: return .dawn
-        case .night, .aurora:   return .night
-        case .garden, .jungle:  return .day
-        case .ocean, .dune:     return .dusk
+        case .automatic, .dawn:  return .dawn
+        case .night, .aurora:    return .night
+        case .day, .garden, .jungle, .meadow: return .day
+        case .ocean, .dune:      return .dusk
         }
     }
 }
@@ -26,6 +26,9 @@ extension AppScene {
 /// water, and a light on the horizon. It is the brand's landscape, drawn.
 struct TetherScene: View {
     let timeOfDay: TimeOfDay
+    /// Which scene's weather to move through the header. `.automatic` resolves
+    /// itself inside SceneBackdrop, so callers can pass the raw choice.
+    var scene: AppScene = .automatic
 
     enum TimeOfDay {
         case dawn, day, dusk, night
@@ -87,6 +90,19 @@ struct TetherScene: View {
                     )
                     .frame(height: h * 0.20)
                 }
+
+                // The scene's own weather, in front of the landscape.
+                //
+                // The header used to be static art while the backdrop behind
+                // the cards had fireflies — so Night had drifting lights below
+                // the fold and a dead sky above it. Now the same particles
+                // move through the header: fireflies at Night, butterflies in
+                // Garden and Jungle, bubbles in Ocean, seed in Meadow.
+                //
+                // Density is low here. The header is a horizon, not an
+                // aquarium; the particles should be noticed, not counted.
+                SceneBackdrop(theme: scene, density: 0.55)
+                    .allowsHitTesting(false)
             }
         }
     }

@@ -438,6 +438,10 @@ struct TicketShape: Shape {
 struct SceneRow: View {
     let option: AppScene
     let selected: Bool
+    /// Locked when the scene is paid and this person has not paid. The row
+    /// still shows the scene, its swatch and its name — hiding it entirely
+    /// would mean nobody knows what they are missing.
+    var isLocked: Bool = false
     let onTap: () -> Void
 
     var body: some View {
@@ -456,11 +460,16 @@ struct SceneRow: View {
 
                 Spacer(minLength: 0)
 
-                if selected {
+                if isLocked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 12, weight: .semibold))
+                        .foregroundStyle(TetherColor.faint)
+                        .accessibilityHidden(true)
+                } else if selected {
                     Image(systemName: "checkmark")
-                    .accessibilityHidden(true)
                         .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(TetherColor.brand)
+                        .accessibilityHidden(true)
                 }
             }
             .padding(TetherSpace.s)
@@ -487,7 +496,8 @@ struct SceneRow: View {
 
 struct SceneSheet: View {
     @Bindable var theme: SceneManager
-    @Environment(\.dismiss) private var dismiss
+    @State private var store = PurchaseService.shared
+    @State private var showPaywall = false
 
     var body: some View {
         // No NavigationStack and no Done button: this is PUSHED from Settings,
@@ -502,11 +512,26 @@ struct SceneSheet: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 ForEach(AppScene.allCases) { option in
+                    let locked = !option.isFree && !store.hasAccess
                     SceneRow(option: option,
-                             selected: theme.choice == option) {
+                             selected: theme.choice == option,
+                             isLocked: locked) {
+                        guard !locked else {
+                            showPaywall = true
+                            return
+                        }
                         theme.raw = option.rawValue
                         TetherHaptics.light()
                     }
+                }
+
+                if !store.hasAccess {
+                    Text("Night and Day are free. The rest come with Tether Plus.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.faint)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, TetherSpace.s)
                 }
             }
             .padding(TetherSpace.margin)
@@ -514,6 +539,7 @@ struct SceneSheet: View {
         .background { TetherBackdrop() }
         .navigationTitle("Theme")
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $showPaywall) { PaywallView() }
     }
 }
 

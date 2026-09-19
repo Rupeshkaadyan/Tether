@@ -21,7 +21,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     // when the phone is in dark mode?" — it follows the phone: dark gets
     // Night, light gets Dawn. Anything else would mean a person who has set
     // their phone to dark mode opening an app that ignores them.
-    case automatic, dawn, night, garden, jungle, ocean, dune, aurora
+    case automatic, day, dawn, night, garden, jungle, ocean, dune, aurora, meadow
 
     var id: String { rawValue }
 
@@ -32,9 +32,14 @@ enum AppScene: String, CaseIterable, Identifiable {
     /// scene, never from `.automatic` directly — `.automatic` has no backdrop
     /// of its own. `SceneBackdrop` and `TetherBackdrop` resolve first and hand
     /// the concrete case to everything downstream.
+    ///
+    /// Light mode resolves to DAY, not Dawn. Dawn is a specific moment —
+    /// low warm light, a sunrise — and it was wrong as the resting look for
+    /// someone whose phone is simply in light mode at noon. Day is the
+    /// neutral bright counterpart to Night.
     func concrete(system: ColorScheme) -> AppScene {
         guard self == .automatic else { return self }
-        return system == .dark ? .night : .dawn
+        return system == .dark ? .night : .day
     }
 
     // LocalizedStringKey, not String. `Text(someString)` is treated by SwiftUI
@@ -43,6 +48,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     var title: LocalizedStringKey {
         switch self {
         case .automatic: return "Match phone"
+        case .day:       return "Day"
         case .dawn:      return "Dawn"
         case .night:     return "Night"
         case .garden:    return "Garden"
@@ -50,12 +56,14 @@ enum AppScene: String, CaseIterable, Identifiable {
         case .ocean:     return "Ocean"
         case .dune:      return "Dune"
         case .aurora:    return "Aurora"
+        case .meadow:    return "Meadow"
         }
     }
 
     var blurb: LocalizedStringKey {
         switch self {
-        case .automatic: return "Follows your phone. Dark gets Night, light gets Dawn."
+        case .automatic: return "Follows your phone. Dark gets Night, light gets Day."
+        case .day:       return "Bright sky, soft cloud, clear light."
         case .dawn:      return "Warm paper and morning light."
         case .night:     return "Deep sky, drifting fireflies."
         case .garden:    return "Soft green, butterflies."
@@ -63,12 +71,14 @@ enum AppScene: String, CaseIterable, Identifiable {
         case .ocean:     return "Deep water, slow bubbles rising."
         case .dune:      return "Warm sand at dusk, dust on the wind."
         case .aurora:    return "Cold sky, green light moving."
+        case .meadow:    return "Open grass, seed drifting on a warm breeze."
         }
     }
 
     var symbol: String {
         switch self {
         case .automatic: return "circle.lefthalf.filled"
+        case .day:       return "sun.max"
         case .dawn:      return "sun.horizon"
         case .night:     return "moon.stars"
         case .garden:    return "leaf"
@@ -76,6 +86,22 @@ enum AppScene: String, CaseIterable, Identifiable {
         case .ocean:     return "water.waves"
         case .dune:      return "sun.dust"
         case .aurora:    return "sparkles"
+        case .meadow:    return "camera.macro"
+        }
+    }
+
+    /// Night and Day are free; everything else is part of the subscription.
+    ///
+    /// The reasoning: a free user must still get a complete, working app, and
+    /// the two that matter most are the ones the phone would pick anyway.
+    /// Locking a person into Dawn because they have not paid would make the
+    /// free version feel like a demo of itself.
+    ///
+    /// `.automatic` is free because it only ever resolves to Night or Day.
+    var isFree: Bool {
+        switch self {
+        case .automatic, .day, .night: return true
+        default: return false
         }
     }
 
@@ -84,7 +110,7 @@ enum AppScene: String, CaseIterable, Identifiable {
         switch self {
         // `.automatic` never reaches here — resolve it first. Treated as light
         // so a missed resolution fails visibly rather than silently dark.
-        case .automatic, .dawn, .dune: return false
+        case .automatic, .day, .dawn, .dune, .meadow: return false
         case .night, .garden, .jungle, .ocean, .aurora: return true
         }
     }
@@ -102,6 +128,8 @@ enum AppScene: String, CaseIterable, Identifiable {
     var ambientParticleCount: Int {
         switch self {
         case .automatic, .dawn: return 7
+        case .day:              return 6
+        case .meadow:           return 8
         case .night:            return 9
         case .garden:           return 5
         case .jungle:           return 4
@@ -114,6 +142,10 @@ enum AppScene: String, CaseIterable, Identifiable {
     /// Three stops, top-leading → bottom-trailing.
     var backdrop: [Color] {
         switch self {
+        case .day:
+            return [Color(hex: "EAF4FD"), Color(hex: "DCEBF7"), Color(hex: "F3F7FB")]
+        case .meadow:
+            return [Color(hex: "F2F7E8"), Color(hex: "E4F0D6"), Color(hex: "FAF6E6")]
         case .automatic, .dawn:
             return [Color(hex: "FDF6EC"), Color(hex: "F7E9DA"), Color(hex: "F2E3E6")]
         case .night:
@@ -134,6 +166,8 @@ enum AppScene: String, CaseIterable, Identifiable {
     /// A soft light source, so the scene is lit rather than flat.
     var glow: Color {
         switch self {
+        case .day:              return Color(hex: "FFE9B8")
+        case .meadow:           return Color(hex: "D6E8A0")
         case .automatic, .dawn: return Color(hex: "FFD9A0")
         case .night:            return Color(hex: "8FA8FF")
         case .garden:           return Color(hex: "A8E0B0")
@@ -146,13 +180,13 @@ enum AppScene: String, CaseIterable, Identifiable {
 
     var particle: Particle {
         switch self {
-        case .automatic, .dawn: return .motes
-        case .night:            return .fireflies
-        case .garden:           return .butterflies
-        case .jungle:           return .butterflies
-        case .ocean:            return .bubbles
-        case .dune:             return .motes
-        case .aurora:           return .aurora
+        case .automatic, .dawn, .day, .dune: return .motes
+        case .night:                         return .fireflies
+        case .garden:                        return .butterflies
+        case .jungle:                        return .butterflies
+        case .ocean:                         return .bubbles
+        case .aurora:                        return .aurora
+        case .meadow:                        return .seed
         }
     }
 
@@ -168,6 +202,9 @@ enum Particle {
     case bubbles
     /// Vertical ribbons of light that drift and fade — Aurora.
     case aurora
+    /// Dandelion seed on a breeze — Meadow. Carried sideways, unlike the
+    /// bubbles which only rise.
+    case seed
 }
 
 // MARK: - Persistence
@@ -265,6 +302,34 @@ struct SceneBackdrop: View {
         case .butterflies: butterflies(&ctx, size, t)
         case .bubbles:     bubbles(&ctx, size, t)
         case .aurora:      aurora(&ctx, size, t)
+        case .seed:        seed(&ctx, size, t)
+        }
+    }
+
+    /// Dandelion seed carried on a breeze. Horizontal drift with a slow bob —
+    /// the sideways motion is what separates it from the bubbles.
+    private func seed(_ ctx: inout GraphicsContext, _ size: CGSize, _ t: Double) {
+        for i in 0..<max(1, Int(11 * density)) {
+            let s = seed(i, 15)
+            let speed = 14 + s * 20
+            let travel = size.width + 70
+            let x = (t * speed + s * travel).truncatingRemainder(dividingBy: travel) - 35
+            let y = seed(i, 16) * size.height + sin(t * 0.45 + s * 9) * 14
+            let r = 1.4 + s * 2.2
+
+            // A soft halo reads as fluff rather than a hard dot.
+            ctx.fill(
+                Path(ellipseIn: CGRect(x: x - r * 2.6, y: y - r * 2.6,
+                                       width: r * 5.2, height: r * 5.2)),
+                with: .radialGradient(
+                    Gradient(colors: [Color(hex: "FFFFFF").opacity(0.34),
+                                      Color(hex: "FFFFFF").opacity(0)]),
+                    center: CGPoint(x: x, y: y), startRadius: 0, endRadius: r * 2.6))
+
+            ctx.fill(
+                Path(ellipseIn: CGRect(x: x - r * 0.5, y: y - r * 0.5,
+                                       width: r, height: r)),
+                with: .color(Color(hex: "FFFFFF").opacity(0.55)))
         }
     }
 
