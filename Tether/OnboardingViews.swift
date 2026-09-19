@@ -75,7 +75,11 @@ struct WelcomeStep: View {
         VStack(spacing: 0) {
             hero
 
-            VStack(alignment: .leading, spacing: TetherSpace.xl) {
+            // Scrollable, because a fixed VStack here overflowed: the 400pt
+            // hero plus the form exceeded the screen and 'Get started' fell
+            // off the bottom edge entirely.
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.xl) {
                 Text("A quiet daily ritual you share with one person. You can begin on your own — everything is here waiting when they join.")
                     .font(TetherType.body)
                     .foregroundStyle(TetherColor.muted)
@@ -141,17 +145,18 @@ struct WelcomeStep: View {
                     }
                 }
 
-                Spacer(minLength: TetherSpace.l)
-
                 Button("Get started", action: onNext)
                     .tetherButton()
                     .disabled(profile.displayName.trimmed.isEmpty)
                     .opacity(profile.displayName.trimmed.isEmpty ? 0.45 : 1)
+                    .padding(.top, TetherSpace.s)
+                }
+                .padding(TetherSpace.margin)
+                .padding(.bottom, TetherSpace.xl)
+                .readableFrame()
             }
-            .padding(TetherSpace.margin)
         }
         .background { TetherBackdrop() }
-        .ignoresSafeArea(edges: .bottom)
     }
 
     private var hero: some View {
@@ -184,7 +189,9 @@ struct WelcomeStep: View {
             .padding(.top, TetherSpace.xxxl)
             .padding(.bottom, TetherSpace.xxl)
         }
-        .frame(height: 400)
+        // Shorter than it was: at 400pt the hero alone ate half the screen,
+        // which is what pushed the form off the bottom.
+        .frame(height: 288)
         .clipShape(UnevenRoundedRectangle(bottomLeadingRadius: 44,
                                           bottomTrailingRadius: 44,
                                           style: .continuous))
@@ -201,7 +208,10 @@ struct TrackStep: View {
     @State private var selection: WisdomTrack?
 
     var body: some View {
-        VStack(alignment: .leading, spacing: TetherSpace.l) {
+        // Scrollable: four track cards plus the header exceeded a short screen
+        // and clipped the Continue button.
+        ScrollView {
+            VStack(alignment: .leading, spacing: TetherSpace.l) {
             VStack(alignment: .leading, spacing: TetherSpace.s) {
                 Text("What wisdom speaks to you?")
                     .font(TetherType.title)
@@ -234,8 +244,11 @@ struct TrackStep: View {
             .tetherButton()
             .disabled(selection == nil)
             .opacity(selection == nil ? 0.5 : 1)
+            }
+            .padding(TetherSpace.margin)
+            .padding(.bottom, TetherSpace.xl)
+            .readableFrame()
         }
-        .padding(TetherSpace.margin)
         .onAppear { selection = profile.track }
     }
 }
@@ -254,16 +267,22 @@ struct LoveLanguageStep: View {
     private let questions = LoveLanguageQuiz.questions
 
     var body: some View {
-        Group {
-            if skipped {
-                skipView
-            } else if let result {
-                resultView(result)
-            } else {
-                questionView
+        // Scrollable: the question view carries five answer rows plus its own
+        // button, which did not fit on a short screen.
+        ScrollView {
+            Group {
+                if skipped {
+                    skipView
+                } else if let result {
+                    resultView(result)
+                } else {
+                    questionView
+                }
             }
+            .padding(TetherSpace.margin)
+            .padding(.bottom, TetherSpace.xl)
+            .readableFrame()
         }
-        .padding(TetherSpace.margin)
         .animation(.easeOut(duration: 0.25), value: result != nil)
     }
 

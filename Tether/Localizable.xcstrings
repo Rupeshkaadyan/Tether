@@ -409,6 +409,9 @@
         }
       }
     },
+    "A tone, not a rule. Pick whichever feels like you — you can change it any time." : {
+
+    },
     "A year of showing up" : {
       "localizations" : {
         "es" : {
@@ -1316,6 +1319,9 @@
         }
       }
     },
+    "Feel" : {
+
+    },
     "Get started" : {
       "localizations" : {
         "es" : {
@@ -1481,6 +1487,9 @@
           }
         }
       }
+    },
+    "How should it feel?" : {
+
     },
     "How things have been going, drawn from your own journal." : {
       "localizations" : {
@@ -4366,6 +4375,9 @@
       }
     },
     "You both showed up" : {
+
+    },
+    "You can change this any time in Settings." : {
 
     },
     "You can change this anytime in Settings." : {
