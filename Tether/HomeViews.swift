@@ -88,6 +88,9 @@ struct HomeView: View {
                         composer
                     }
 
+                    careNudgeCard
+                        .tetherAppear(delay: 0.18)
+
                     if let echo = memoryEcho {
                         MemoryEchoCard(entry: echo.entry, monthsBack: echo.months)
                             .tetherAppear(delay: 0.2)
@@ -428,6 +431,34 @@ struct HomeView: View {
         guard let partner else { return nil }
         return entries.first {
             $0.userID == partner.id && Calendar.current.isDateInToday($0.entryDate)
+        }
+    }
+
+    /// Care nudge: when their mood is low, say so gently and offer one line.
+    /// This is what turns the mood data we already collect into care.
+    @ViewBuilder
+    private var careNudgeCard: some View {
+        if let entry = partnerTodayEntry, entry.mood <= 2, let name = partner?.displayName {
+            TetherCard {
+                VStack(alignment: .leading, spacing: TetherSpace.s) {
+                    HStack(spacing: TetherSpace.xs) {
+                        TetherHeroMark(width: 26,
+                                       color: TetherColor.rose,
+                                       sag: 4,
+                                       lineWidth: 1.5,
+                                       dotRadius: 2)
+                        Text("A HARD DAY")
+                            .font(TetherType.micro)
+                            .foregroundStyle(TetherColor.rose)
+                            .tracking(1)
+                        Spacer(minLength: 0)
+                    }
+                    Text("\(name) had a hard day. One line from you might land.")
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.text)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
         }
     }
 
