@@ -1,8 +1,21 @@
 import SwiftUI
 import SwiftData
 
+/// The order matters more than it looks.
+///
+/// It used to run welcome → track → loveLanguages → firstPrompt, which meant a
+/// new person answered a love-language quiz BEFORE they ever saw the product
+/// do its one job. Four steps of setup to reach the first moment of value.
+///
+/// Now the first real question comes as soon as it honestly can — it needs the
+/// wisdom track, so it cannot precede that — and the optional quiz moves to
+/// the end, where skipping it costs nothing.
+///
+/// Note: reordering shifts the raw values, and `onboardingStep` is persisted.
+/// Only affects someone mid-onboarding at upgrade time, which at this point is
+/// nobody.
 enum OnboardingStep: Int, CaseIterable {
-    case welcome, track, loveLanguages, firstPrompt
+    case welcome, track, firstPrompt, loveLanguages
 
     var title: String {
         switch self {
@@ -44,10 +57,13 @@ struct OnboardingFlow: View {
     @ViewBuilder
     private var content: some View {
         switch step {
+        // firstPrompt now advances rather than finishing, because the optional
+        // quiz follows it. Leaving it as finish() would have skipped the last
+        // step entirely — the reorder would have silently dropped a screen.
         case .welcome:       WelcomeStep(profile: profile) { advance() }
         case .track:         TrackStep(profile: profile) { advance() }
-        case .loveLanguages: LoveLanguageStep(profile: profile) { advance() }
-        case .firstPrompt:   FirstPromptStep(profile: profile) { finish() }
+        case .firstPrompt:   FirstPromptStep(profile: profile) { advance() }
+        case .loveLanguages: LoveLanguageStep(profile: profile) { finish() }
         }
     }
 
