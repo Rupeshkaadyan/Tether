@@ -30,6 +30,7 @@ struct HomeView: View {
     @State private var showJar = false
     @State private var showMilestones = false
     @State private var showUnsent = false
+    @State private var showQuiz = false
     @State private var debugOpened = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
@@ -146,6 +147,9 @@ struct HomeView: View {
                     Button("Unsent") { showUnsent = true }
                         .tetherButton(.secondary)
 
+                    Button("How well do you know them?") { showQuiz = true }
+                        .tetherButton(.secondary)
+
                     Button("Wisdom Jar") { showJar = true }
                         .tetherButton(.secondary)
 
@@ -212,6 +216,9 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showUnsent) {
                 UnsentView(profile: profile)
+            }
+            .sheet(isPresented: $showQuiz) {
+                QuizView(profile: profile)
             }
             .onAppear {
                 // DEBUG-only deep link, so a screenshot can reach a sheet that
