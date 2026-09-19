@@ -74,6 +74,18 @@
             "state": "new",
             "value": "%1$@, %2$@"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, %@"
+          }
         }
       }
     },
@@ -84,6 +96,18 @@
             "state": "new",
             "value": "%1$@. %2$@"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@। %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@. %@"
+          }
         }
       }
     },
@@ -93,6 +117,18 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$@s at %2$@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ को %@ पर"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@s a las %@"
           }
         }
       }
@@ -126,6 +162,18 @@
             "state": "new",
             "value": "%1$lld %2$@ in the jar"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जार में %lld %@"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %@ en el frasco"
+          }
         }
       }
     },
@@ -157,6 +205,18 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$lld day%2$@ of showing up together."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साथ आने के %lld दिन%@।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld día%@ de estar presentes."
           }
         }
       }
@@ -200,6 +260,18 @@
             "state": "new",
             "value": "%1$lld of %2$lld"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld में से %lld"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld de %lld"
+          }
         }
       }
     },
@@ -231,6 +303,18 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$lld of %2$lld milestones"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld में से %lld पड़ाव"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld de %lld hitos"
           }
         }
       }
@@ -285,6 +369,18 @@
           "stringUnit": {
             "state": "new",
             "value": "%1$lld/%2$lld"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld/%lld"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld/%lld"
           }
         }
       }
@@ -2003,6 +2099,28 @@
         }
       }
     },
+    "Gone.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Gone."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "चला गया।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se fue."
+          }
+        }
+      }
+    },
     "Gratitude & Us": {
       "localizations": {
         "en": {
@@ -2113,6 +2231,12 @@
             "state": "translated",
             "value": "आप कैसे जानते हैं कि अब आपकी सीमा हो गई है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo sabes cuándo estás al límite?"
+          }
         }
       }
     },
@@ -2124,6 +2248,12 @@
             "state": "translated",
             "value": "आप कैसे जानते हैं कि अब बातचीत से हट जाना चाहिए?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo sabes cuándo necesitas apartarte de una conversación?"
+          }
         }
       }
     },
@@ -2134,6 +2264,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कठिन बातें आपको कैसे बताई जाएँ — क्या आप यही चाहते हैं?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo quieres que te digan las cosas difíciles?"
           }
         }
       }
@@ -2172,6 +2308,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपकी अपनी डायरी से निकाली गई जानकारी।"
+          }
+        }
+      }
+    },
+    "How well do you know them?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "How well do you know them?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप उन्हें कितना जानते हैं?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuánto les conoces?"
           }
         }
       }
@@ -2260,6 +2418,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "असहमति में आप उनकी तरफ़ बढ़ते हैं या दूर हटते हैं? आप क्या करना चाहेंगे?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En un desacuerdo, ¿te acercas o te alejas? ¿Qué desearías hacer?"
+          }
+        }
+      }
+    },
+    "In pictures": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "In pictures"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तस्वीरों में"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En imágenes"
           }
         }
       }
@@ -2446,6 +2632,28 @@
         }
       }
     },
+    "Keepsake": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Keepsake"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्मृति-चिह्न"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recuerdo"
+          }
+        }
+      }
+    },
     "Language": {
       "localizations": {
         "en": {
@@ -2464,6 +2672,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Idioma"
+          }
+        }
+      }
+    },
+    "Let it go": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Let it go"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जाने दें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déjalo ir"
           }
         }
       }
@@ -2588,6 +2818,28 @@
         }
       }
     },
+    "Memory lane": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Memory lane"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यादों की गली"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Camino de recuerdos"
+          }
+        }
+      }
+    },
     "Message…": {
       "localizations": {
         "en": {
@@ -2638,6 +2890,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "संजोने लायक पल"
+          }
+        }
+      }
+    },
+    "Month by month": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Month by month"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "महीने दर महीने"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mes a mes"
           }
         }
       }
@@ -2697,6 +2971,28 @@
         }
       }
     },
+    "Mood over the last 30 days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mood over the last 30 days"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पिछले 30 दिनों का मनोभाव"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ánimo de los últimos 30 días"
+          }
+        }
+      }
+    },
     "Mood trend over %lld days": {
       "localizations": {
         "es": {
@@ -2709,6 +3005,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "%lld दिनों का मूड रुझान"
+          }
+        }
+      }
+    },
+    "Mood, last 30 days": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Mood, last 30 days"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "मनोभाव, पिछले 30 दिन"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ánimo, últimos 30 días"
+          }
+        }
+      }
+    },
+    "Move to journal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Move to journal"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जर्नल में ले जाएँ"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mover al diario"
           }
         }
       }
@@ -2737,6 +3077,12 @@
             "state": "translated",
             "value": "आज के किसी एक पल का नाम लें जब आपको ख़ुशी हुई कि साथ में वही हैं।"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombra un momento de hoy en que te alegró estar con esa persona."
+          }
         }
       }
     },
@@ -2747,6 +3093,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "उनमें आप जिस एक बात की कद्र करते हैं और कभी ज़बान से कही नहीं — उसका नाम लें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombra algo que valoras de esa persona y que nunca le has dicho en voz alta."
           }
         }
       }
@@ -2785,6 +3137,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "अभी के लिए कोई प्रेम भाषा नहीं"
+          }
+        }
+      }
+    },
+    "Nobody reads this. Not your partner, not us.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Nobody reads this. Not your partner, not us."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इसे कोई नहीं पढ़ता। न आपका साथी, न हम।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nadie lee esto. Ni tu pareja, ni nosotros."
           }
         }
       }
@@ -2887,6 +3261,28 @@
         }
       }
     },
+    "Nothing either of you wrote is on this card.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Nothing either of you wrote is on this card."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस कार्ड पर आप दोनों का लिखा कुछ भी नहीं है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada de lo que escribisteis está en esta tarjeta."
+          }
+        }
+      }
+    },
     "Nothing here yet.": {
       "extractionState": "stale",
       "localizations": {
@@ -2955,6 +3351,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "अभी कुछ साझा नहीं"
+          }
+        }
+      }
+    },
+    "Nothing to chart yet. A few days of entries and this fills in.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Nothing to chart yet. A few days of entries and this fills in."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी दिखाने के लिए कुछ नहीं। कुछ दिनों की प्रविष्टियों के बाद यह भर जाएगा।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay nada que mostrar. Con unos días de entradas se llenará."
+          }
+        }
+      }
+    },
+    "Numbers only. Not one word either of you wrote is on this card — that is the point.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Numbers only. Not one word either of you wrote is on this card — that is the point."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "केवल आँकड़े। आप दोनों का लिखा एक शब्द भी इस कार्ड पर नहीं है — यही बात है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo números. Ni una palabra de lo que escribisteis está aquí — de eso se trata."
           }
         }
       }
@@ -3196,6 +3636,28 @@
         }
       }
     },
+    "Our Tether year": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Our Tether year"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "हमारा Tether वर्ष"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuestro año en Tether"
+          }
+        }
+      }
+    },
     "Our check-in": {
       "localizations": {
         "en": {
@@ -3432,6 +3894,28 @@
         }
       }
     },
+    "Put it here": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Put it here"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यहाँ रख दें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ponlo aquí"
+          }
+        }
+      }
+    },
     "Quality Time": {
       "extractionState": "stale",
       "localizations": {
@@ -3616,6 +4100,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "रिश्ते की पल्स. %@. %@."
+          }
+        }
+      }
+    },
+    "Relationship pulse": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Relationship pulse"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रिश्ते की धड़कन"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pulso de la relación"
           }
         }
       }
@@ -3988,6 +4494,28 @@
         }
       }
     },
+    "Send it": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Send it"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "भेजें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Enviar"
+          }
+        }
+      }
+    },
     "Send message": {
       "localizations": {
         "en": {
@@ -4070,6 +4598,50 @@
         }
       }
     },
+    "Settled": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Settled"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तय हो गया"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Resuelto"
+          }
+        }
+      }
+    },
+    "Share as an image": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Share as an image"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "छवि के रूप में साझा करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartir como imagen"
+          }
+        }
+      }
+    },
     "Share your year book": {
       "localizations": {
         "en": {
@@ -4104,6 +4676,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "iCloud में साइन इन करें"
+          }
+        }
+      }
+    },
+    "Sitting here": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Sitting here"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यहाँ रखा है"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aquí guardado"
           }
         }
       }
@@ -4153,6 +4747,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "छोटे सबूत कि आप लगातार आते रहे।"
+          }
+        }
+      }
+    },
+    "Some things need to be said out loud. Others just need to be written down first. This is for the second kind.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Some things need to be said out loud. Others just need to be written down first. This is for the second kind."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कुछ बातें कहनी पड़ती हैं। कुछ को बस पहले लिख लेना होता है। यह दूसरी तरह के लिए है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algunas cosas hay que decirlas. Otras solo necesitan escribirse primero. Esto es para las segundas."
           }
         }
       }
@@ -4239,6 +4855,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "अकेले शुरू करें"
+          }
+        }
+      }
+    },
+    "Start over": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Start over"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फिर से शुरू करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Empezar de nuevo"
           }
         }
       }
@@ -4510,6 +5148,28 @@
         }
       }
     },
+    "TETHER": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "TETHER"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TETHER"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TETHER"
+          }
+        }
+      }
+    },
     "THE DAY AFTER LAST TIME": {
       "localizations": {
         "en": {
@@ -4722,6 +5382,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "सात दिन"
+          }
+        }
+      }
+    },
+    "The words will be deleted for good. You keep only the fact that you wrote them.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "The words will be deleted for good. You keep only the fact that you wrote them."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "शब्द हमेशा के लिए मिट जाएँगे। केवल यह रहेगा कि आपने लिखा था।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las palabras se borrarán del todo. Solo conservas el hecho de haberlas escrito."
           }
         }
       }
@@ -5046,6 +5728,28 @@
         }
       }
     },
+    "Unsent": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Unsent"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अनकहा"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin enviar"
+          }
+        }
+      }
+    },
     "Upgrade": {
       "localizations": {
         "es": {
@@ -5239,6 +5943,12 @@
             "state": "translated",
             "value": "आज उनसे मिलने की किस बात का आपको इंतज़ार है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué esperas con ganas de verle hoy?"
+          }
         }
       }
     },
@@ -5250,6 +5960,12 @@
             "state": "translated",
             "value": "हाल ही में उन्होंने ऐसा क्या किया जिससे आपका दिन थोड़ा आसान हो गया?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué hizo hace poco que te facilitó el día?"
+          }
         }
       }
     },
@@ -5260,6 +5976,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप जिस घर में बड़े हुए, वहाँ से आपने प्रेम के बारे में क्या सीखा?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué aprendiste sobre el amor en la casa donde creciste?"
           }
         }
       }
@@ -5294,6 +6016,12 @@
             "state": "translated",
             "value": "जब लगता है कि हमला हुआ है, तो आप क्या करते हैं?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué haces cuando te sientes atacado?"
+          }
         }
       }
     },
@@ -5304,6 +6032,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "असहमति के पहले मिनट में आपको क्या चाहिए?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué necesitas en el primer minuto de un desacuerdo?"
           }
         }
       }
@@ -5316,6 +6050,12 @@
             "state": "translated",
             "value": "कौन सी बात आपको ज़ोर से कहनी है, भले ही उससे कुछ बदले नहीं?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué necesitas decir en voz alta, aunque nada cambie?"
+          }
         }
       }
     },
@@ -5326,6 +6066,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "हाल के किसी झगड़े में आप क्या कहना चाहते थे?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué desearías haber dicho en una discusión reciente?"
           }
         }
       }
@@ -5338,6 +6084,12 @@
             "state": "translated",
             "value": "सुरक्षित महसूस करना आपके लिए वास्तव में कैसा होता है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo se siente realmente sentirse a salvo para ti?"
+          }
         }
       }
     },
@@ -5348,6 +6100,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कौन सी चीज़ आपकी ऊर्जा खींच लेती है, जिसे वे शायद नहीं समझते?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué te agota y quizá esa persona no nota?"
           }
         }
       }
@@ -5360,6 +6118,12 @@
             "state": "translated",
             "value": "कौन सी बातचीत है जिसे आप दोनों बार-बार टाल रहे हैं?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué conversación seguís posponiendo?"
+          }
         }
       }
     },
@@ -5370,6 +6134,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपने कौन सी आलोचना की जो असल में किसी और बात के बारे में थी?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué crítica has hecho que en realidad era sobre otra cosa?"
           }
         }
       }
@@ -5382,6 +6152,12 @@
             "state": "translated",
             "value": "कौन सी ज़रूरत है जो आपने चुपचाप माँगनी बंद कर दी?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué necesidad has dejado de pedir en silencio?"
+          }
         }
       }
     },
@@ -5392,6 +6168,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कौन सा सवाल आप उनसे पूछना चाहते हैं पर अब तक नहीं पूछा?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué pregunta te gustaría hacerle y aún no has hecho?"
           }
         }
       }
@@ -5404,6 +6186,12 @@
             "state": "translated",
             "value": "वे जो एक साधारण सी बात करते हैं, उसकी आपको सबसे ज़्यादा कमी खलेगी?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué cosa cotidiana hace que echarías de menos?"
+          }
         }
       }
     },
@@ -5414,6 +6202,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "वे कौन सी छोटी बात करें जिससे लगे कि आपकी बात सुनी गई?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué pequeña cosa podría hacer para que te sientas escuchado?"
           }
         }
       }
@@ -5426,6 +6220,12 @@
             "state": "translated",
             "value": "आज आपके साथी ने जो छोटी सी बात की, आपने देखी पर कही नहीं — वह क्या थी?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué pequeña cosa hizo hoy tu pareja que notaste y no mencionaste?"
+          }
         }
       }
     },
@@ -5436,6 +6236,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "हाल ही में उन्होंने जो कुछ कहा, उसमें से एक बात जो आपके मन में बस गई?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué dijo hace poco que se te quedó grabado?"
           }
         }
       }
@@ -5448,6 +6254,12 @@
             "state": "translated",
             "value": "अगले झगड़े में आप कौन सी एक बात मान सकते हैं, और वह क्यों मायने रखती है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué podrías ceder en la próxima discusión, y por qué importa?"
+          }
         }
       }
     },
@@ -5458,6 +6270,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप कैसे झगड़ते हैं — इस बारे में एक बात आप उन्हें बताना चाहते हैं?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué quieres que sepa sobre cómo discutes?"
           }
         }
       }
@@ -5470,6 +6288,12 @@
             "state": "translated",
             "value": "कौन सी एक चीज़ है जिसके बारे में आप चाहते हैं कि वे और पूछें?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Sobre qué te gustaría que preguntara más a menudo?"
+          }
         }
       }
     },
@@ -5480,6 +6304,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कौन सी एक बात है जिसके बारे में आप चाहते हैं कि वे मानना बंद कर दें?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué te gustaría que dejara de asumir sobre ti?"
           }
         }
       }
@@ -5492,6 +6322,12 @@
             "state": "translated",
             "value": "उनमें ऐसी कौन सी बात है जो हमेशा रहती है, इसलिए आपने उसे देखना बंद कर दिया?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué has dejado de notar porque siempre está ahí?"
+          }
         }
       }
     },
@@ -5502,6 +6338,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपने दिन की कौन सी बात आप कभी उन्हें बता नहीं पाते?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué parte de tu día nunca llegas a contarle?"
           }
         }
       }
@@ -5514,6 +6356,12 @@
             "state": "translated",
             "value": "कौन सी चीज़ में वे आपसे बेहतर हैं, और आप ख़ुश हैं कि वे हैं?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿En qué es mejor que tú, y te alegra que lo sea?"
+          }
         }
       }
     },
@@ -5524,6 +6372,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस सप्ताह उन्होंने जो कहा, उसमें से किस बात का आपने अभी जवाब नहीं दिया?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué dijo esta semana que no has reconocido?"
           }
         }
       }
@@ -5536,6 +6390,12 @@
             "state": "translated",
             "value": "कौन सी चीज़ आपको चाहिए, पर माँगने से डर लगता है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué te da miedo necesitar?"
+          }
         }
       }
     },
@@ -5546,6 +6406,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कौन सी बात आप घुमा-फिरा कर कह रहे हैं, जिसे साफ़-साफ़ कहा जा सकता है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué has estado diciendo de forma indirecta y podrías decir claro?"
           }
         }
       }
@@ -5558,6 +6424,12 @@
             "state": "translated",
             "value": "कौन सी बात आपने कभी पूरी तरह माफ़ नहीं की, चाहे कह दिया हो?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué nunca has perdonado del todo, aunque dijiste que sí?"
+          }
         }
       }
     },
@@ -5568,6 +6440,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "गुस्से में कही कौन सी बात पर आपको पछतावा है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué has dicho con rabia que lamentas?"
           }
         }
       }
@@ -5580,6 +6458,12 @@
             "state": "translated",
             "value": "वह कौन सा झगड़ा है जो आप दोनों बार-बार करते हैं? आपके हिसाब से असल बात क्या है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuál es la discusión que repetís? ¿Sobre qué crees que es en realidad?"
+          }
         }
       }
     },
@@ -5590,6 +6474,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपके लिए पहला संकेत क्या है कि बातचीत बिगड़ रही है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuál es tu primera señal de que una conversación va mal?"
           }
         }
       }
@@ -5618,6 +6508,12 @@
             "state": "translated",
             "value": "कौन सी चीज़ आपको फिर से ताज़ा कर देती है, जिसे वे शायद नहीं समझते?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué te recarga y quizá no lo nota?"
+          }
         }
       }
     },
@@ -5644,6 +6540,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "कौन सा छोटा रिवाज़ आपको उनके करीब महसूस कराता है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué pequeño ritual te hace sentir cerca de esa persona?"
           }
         }
       }
@@ -5688,6 +6590,12 @@
             "state": "translated",
             "value": "कठिन बातचीत के बाद अच्छी भरपाई कैसी दिखेगी?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo sería una buena reparación tras una conversación difícil?"
+          }
         }
       }
     },
@@ -5698,6 +6606,34 @@
           "stringUnit": {
             "state": "translated",
             "value": "कौन सी बात आप बिना समझाए उनसे समझना चाहेंगे?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué querrías que entendiera sin tener que explicarlo?"
+          }
+        }
+      }
+    },
+    "What you haven't said…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "What you haven't said…"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जो आपने नहीं कहा…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lo que no has dicho…"
           }
         }
       }
@@ -5732,6 +6668,12 @@
             "state": "translated",
             "value": "इस सप्ताह आपको उन पर गर्व कब हुआ?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo te sentiste orgulloso de esa persona esta semana?"
+          }
         }
       }
     },
@@ -5742,6 +6684,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "असहमति के दौरान आख़िरी बार कब लगा कि आप एक टीम हैं?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo te sentiste por última vez un equipo en un desacuerdo?"
           }
         }
       }
@@ -5754,6 +6702,12 @@
             "state": "translated",
             "value": "आख़िरी बार आपने कब महसूस किया कि वे आपको सच में समझे हैं?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo te sentiste por última vez realmente comprendido?"
+          }
         }
       }
     },
@@ -5764,6 +6718,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "आप दोनों ने आख़िरी बार साथ में कब हँसे? किस बात ने?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo os reísteis por última vez? ¿Qué lo provocó?"
           }
         }
       }
@@ -5776,6 +6736,12 @@
             "state": "translated",
             "value": "आख़िरी बार आपने उन्हें कोई सच्ची और कठिन बात कब बताई? कैसा रहा?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo le dijiste por última vez algo verdadero y difícil? ¿Cómo fue?"
+          }
         }
       }
     },
@@ -5786,6 +6752,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस सप्ताह आपने उनकी तरफ़ हाथ बढ़ाया और यह उनकी नज़र में नहीं आया — कब?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo buscaste a esa persona esta semana y pasó desapercibido?"
           }
         }
       }
@@ -5798,6 +6770,12 @@
             "state": "translated",
             "value": "उनके साथ आपको सबसे ज़्यादा अपने जैसा कब महसूस होता है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo te sientes más tú mismo a su lado?"
+          }
         }
       }
     },
@@ -5808,6 +6786,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "उनकी बात सच में सुनना आपको सबसे मुश्किल कब लगता है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cuándo te cuesta más escucharle de verdad?"
           }
         }
       }
@@ -5820,6 +6804,12 @@
             "state": "translated",
             "value": "जब आप तनाव में हों, तो आप अकेले रहना चाहते हैं या साथ? और आपको मिलता क्या है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuando estás estresado, ¿quieres espacio o compañía? ¿Coincide con lo que sueles recibir?"
+          }
         }
       }
     },
@@ -5830,6 +6820,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "जब आप परेशान हों, तो क्या मदद करता है — और क्या और बिगाड़ देता है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuando estás mal, ¿qué ayuda y qué lo empeora?"
           }
         }
       }
@@ -5842,6 +6838,12 @@
             "state": "translated",
             "value": "इस सप्ताह आपने उनके साथ सबसे ज़्यादा सुकून कहाँ महसूस किया?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Dónde te sentiste más a gusto con esa persona esta semana?"
+          }
         }
       }
     },
@@ -5852,6 +6854,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस सप्ताह आपने उन्हें कोशिश करते कहाँ देखा, चाहे बात बन न पाई हो?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Dónde le viste intentarlo esta semana, aunque no saliera bien?"
           }
         }
       }
@@ -5864,6 +6872,12 @@
             "state": "translated",
             "value": "कहाँ आपको सही होने का दावा छोड़ना सबसे मुश्किल लगता है?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Dónde te cuesta más dejar de tener razón?"
+          }
         }
       }
     },
@@ -5875,6 +6889,34 @@
             "state": "translated",
             "value": "कहाँ आप शांति बनाए रखने के लिए अपनी असली भावना दबा देते हैं?"
           }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Dónde suavizas un sentimiento real solo por mantener la paz?"
+          }
+        }
+      }
+    },
+    "Where you differed": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Where you differed"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जहाँ आप अलग थे"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Donde diferisteis"
+          }
         }
       }
     },
@@ -5885,6 +6927,12 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस सप्ताह वे किसके लिए मौजूद रहे — आपके लिए, या किसी और के? आपको कैसा लगा?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Para quién estuvo esta semana: para ti o para otro? ¿Cómo te sentó?"
           }
         }
       }
@@ -5917,6 +6965,18 @@
           "stringUnit": {
             "state": "new",
             "value": "Wisdom jar with %1$lld %2$@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld %@ वाला ज्ञान जार"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Frasco de sabiduría con %lld %@"
           }
         }
       }
@@ -6268,6 +7328,28 @@
         }
       }
     },
+    "You wrote it. That was the part that mattered.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You wrote it. That was the part that mattered."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपने लिखा। यही मायने रखता था।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lo escribiste. Eso era lo que importaba."
+          }
+        }
+      }
+    },
     "Your Tether export": {
       "localizations": {
         "es": {
@@ -6280,6 +7362,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपका Tether निर्यात"
+          }
+        }
+      }
+    },
+    "Your answers": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Your answers"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके उत्तर"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus respuestas"
           }
         }
       }
@@ -6511,6 +7615,28 @@
         }
       }
     },
+    "Your practice": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Your practice"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपका अभ्यास"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu práctica"
+          }
+        }
+      }
+    },
     "Your primary love language": {
       "localizations": {
         "es": {
@@ -6523,6 +7649,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपकी मुख्य प्रेम भाषा"
+          }
+        }
+      }
+    },
+    "Your read on them": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Your read on them"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी उनकी समझ"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu lectura de ellos"
           }
         }
       }
@@ -6653,6 +7801,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "iCloud"
+          }
+        }
+      }
+    },
+    "you showed up for each other.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "you showed up for each other."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप एक-दूसरे के लिए आए।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "estuvisteis el uno para el otro."
           }
         }
       }
