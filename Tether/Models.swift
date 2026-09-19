@@ -196,6 +196,48 @@ final class UserProfile {
     }
 }
 
+/// Something written but not sent. A private place to think before speaking.
+///
+/// The category leader is criticised for exactly this gap: answers are shared,
+/// so there is nowhere to work out a feeling before raising it. This is that
+/// place. Nothing here is ever shown to anyone.
+@Model
+final class UnsentNote {
+    var id: UUID
+    var authorID: UUID
+    var body: String
+    var createdAt: Date
+    /// Set when the person decides what to do with it.
+    var resolvedAt: Date?
+    /// "kept", "released", or "journalled" — see `Resolution`.
+    var resolutionRaw: String?
+
+    init(authorID: UUID, body: String) {
+        self.id = UUID()
+        self.authorID = authorID
+        self.body = body
+        self.createdAt = Date()
+        self.resolvedAt = nil
+        self.resolutionRaw = nil
+    }
+
+    enum Resolution: String {
+        /// Still sitting here, unread by anyone.
+        case open
+        /// Decided it did not need saying. Kept as a record.
+        case kept
+        /// Let go. The text is gone; the fact of it remains.
+        case released
+        /// Moved into the private journal as an entry.
+        case journalled
+    }
+
+    var resolution: Resolution {
+        get { Resolution(rawValue: resolutionRaw ?? "") ?? .open }
+        set { resolutionRaw = newValue.rawValue }
+    }
+}
+
 /// A folded note kept in the Wisdom Jar.
 ///
 /// Written on a good day, drawn on a hard one. The whole point is that the

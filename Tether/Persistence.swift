@@ -30,7 +30,7 @@ enum Persistence {
             PromptReply.self, Invite.self, RelationshipPulse.self,
             AIConversation.self, AIMessage.self, AIMemory.self,
             Warmth.self, SharedNote.self, Ritual.self, ChatMessage.self,
-            JarNote.self
+            JarNote.self, UnsentNote.self
         ])
 
         if useCloudKit {
