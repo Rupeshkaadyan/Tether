@@ -15,6 +15,20 @@ is the one that keeps slipping through:
 
 Usage:  python3 check_localization.py
 Exit code 1 if anything needs attention, so it can gate a commit.
+
+WHAT THIS CANNOT SEE, and you must check by hand:
+
+`Text(someString)` — passing a String VARIABLE — is treated by SwiftUI as
+verbatim and is NEVER looked up in the catalog. The text renders in English in
+every language, and no static scan of the source will notice, because the
+string was never a literal at the call site.
+
+So any computed or enumerated label needs `LocalizedStringKey` (or
+`LocalizedStringResource`) as its return type, and its values added to the
+catalog by hand. Examples in this codebase: JarTheme.title / .blurb.
+
+If you add a switch that returns user-facing text, make it return
+LocalizedStringKey, then add every branch to Localizable.xcstrings manually.
 """
 
 import glob
