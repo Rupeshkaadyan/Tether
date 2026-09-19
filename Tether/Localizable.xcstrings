@@ -475,7 +475,11 @@
         }
       }
     },
+    "Add a note, photo or voice" : {
+
+    },
     "Add another note" : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -1751,6 +1755,9 @@
     "Memory Lane" : {
 
     },
+    "Message…" : {
+
+    },
     "Milestones" : {
       "localizations" : {
         "es" : {
@@ -2319,6 +2326,9 @@
         }
       }
     },
+    "Private chat" : {
+
+    },
     "Prompts in this track" : {
 
     },
@@ -2777,6 +2787,9 @@
           }
         }
       }
+    },
+    "Send message" : {
+
     },
     "Set" : {
 
