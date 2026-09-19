@@ -162,18 +162,18 @@ enum Mood {
 
 @Model
 final class UserProfile {
-    var id: UUID
-    var displayName: String
-    var trackRaw: String
-    var locale: String
-    var timeZoneID: String
-    var notifyHour: Int
-    var onboardingStep: Int
-    var onboardingDone: Bool
-    var isSolo: Bool
+    var id: UUID = UUID()
+    var displayName: String = ""
+    var trackRaw: String = ""
+    var locale: String = ""
+    var timeZoneID: String = ""
+    var notifyHour: Int = 0
+    var onboardingStep: Int = 0
+    var onboardingDone: Bool = false
+    var isSolo: Bool = false
     var partnerID: UUID?
     var pairedAt: Date?
-    var createdAt: Date
+    var createdAt: Date = Date()
 
     init(displayName: String, track: WisdomTrack) {
         self.id = UUID()
@@ -203,10 +203,10 @@ final class UserProfile {
 /// place. Nothing here is ever shown to anyone.
 @Model
 final class UnsentNote {
-    var id: UUID
-    var authorID: UUID
-    var body: String
-    var createdAt: Date
+    var id: UUID = UUID()
+    var authorID: UUID = UUID()
+    var body: String = ""
+    var createdAt: Date = Date()
     /// Set when the person decides what to do with it.
     var resolvedAt: Date?
     /// "kept", "released", or "journalled" — see `Resolution`.
@@ -245,12 +245,12 @@ final class UnsentNote {
 /// is. Both count.
 @Model
 final class JarNote {
-    var id: UUID
-    var authorID: UUID
-    var body: String
-    var createdAt: Date
+    var id: UUID = UUID()
+    var authorID: UUID = UUID()
+    var body: String = ""
+    var createdAt: Date = Date()
     /// How many times this note has been drawn. Shown as a small crease.
-    var drawnCount: Int
+    var drawnCount: Int = 0
     var lastDrawnAt: Date?
 
     /// Whether this note is visible to the other person.
@@ -261,7 +261,7 @@ final class JarNote {
     /// that feel like a betrayal. Nothing is shared silently in either
     /// direction: the choice is made at the moment of writing, and it is
     /// stated on the note afterwards.
-    var sharedWithPartner: Bool
+    var sharedWithPartner: Bool = false
 
     init(authorID: UUID, body: String, sharedWithPartner: Bool = true) {
         self.id = UUID()
@@ -278,10 +278,10 @@ final class JarNote {
 /// the journal is a practice, this is just the two of you talking.
 @Model
 final class ChatMessage {
-    var id: UUID
-    var senderID: UUID
-    var body: String
-    var createdAt: Date
+    var id: UUID = UUID()
+    var senderID: UUID = UUID()
+    var body: String = ""
+    var createdAt: Date = Date()
     var readAt: Date?
 
     init(senderID: UUID, body: String) {
@@ -297,13 +297,13 @@ final class ChatMessage {
 /// daily habit into something you have agreed to show up for together.
 @Model
 final class Ritual {
-    var id: UUID
-    var name: String
+    var id: UUID = UUID()
+    var name: String = ""
     /// 1 = Sunday … 7 = Saturday, matching Calendar's weekday numbering.
-    var weekday: Int
-    var hour: Int
-    var minute: Int
-    var createdAt: Date
+    var weekday: Int = 0
+    var hour: Int = 0
+    var minute: Int = 0
+    var createdAt: Date = Date()
 
     init(name: String, weekday: Int, hour: Int, minute: Int) {
         self.id = UUID()
@@ -348,11 +348,11 @@ final class Ritual {
 /// space belonging to the couple). Both are visible to both partners.
 @Model
 final class SharedNote {
-    var id: UUID
-    var authorID: UUID
-    var body: String
-    var kindRaw: String
-    var createdAt: Date
+    var id: UUID = UUID()
+    var authorID: UUID = UUID()
+    var body: String = ""
+    var kindRaw: String = ""
+    var createdAt: Date = Date()
 
     init(authorID: UUID, body: String, kind: SharedNoteKind) {
         self.id = UUID()
@@ -409,12 +409,12 @@ enum SharedNoteKind: String, CaseIterable, Identifiable {
 /// smallest possible act of care.
 @Model
 final class Warmth {
-    var id: UUID
-    var fromID: UUID
-    var toID: UUID
-    var kindRaw: String
-    var createdAt: Date
-    var seen: Bool
+    var id: UUID = UUID()
+    var fromID: UUID = UUID()
+    var toID: UUID = UUID()
+    var kindRaw: String = ""
+    var createdAt: Date = Date()
+    var seen: Bool = false
 
     init(fromID: UUID, toID: UUID, kind: WarmthKind) {
         self.id = UUID()
@@ -471,11 +471,11 @@ enum WarmthKind: String, CaseIterable, Identifiable {
 
 @Model
 final class MoodLog {
-    var id: UUID
-    var userID: UUID
-    var loggedDate: Date
-    var mood: Int
-    var createdAt: Date
+    var id: UUID = UUID()
+    var userID: UUID = UUID()
+    var loggedDate: Date = Date()
+    var mood: Int = 0
+    var createdAt: Date = Date()
 
     init(userID: UUID, mood: Int, loggedDate: Date = Date()) {
         self.id = UUID()
@@ -488,16 +488,16 @@ final class MoodLog {
 
 @Model
 final class JournalEntry {
-    var id: UUID
-    var userID: UUID
-    var entryDate: Date
+    var id: UUID = UUID()
+    var userID: UUID = UUID()
+    var entryDate: Date = Date()
     /// Holds ciphertext once the encryption layer ships. Plaintext for now.
-    var body: String
-    var mood: Int
-    var visibilityRaw: String
-    var sourceRaw: String
-    var safetyFlagged: Bool
-    var createdAt: Date
+    var body: String = ""
+    var mood: Int = 0
+    var visibilityRaw: String = ""
+    var sourceRaw: String = ""
+    var safetyFlagged: Bool = false
+    var createdAt: Date = Date()
 
     /// An optional one-line response from the other person — the thing that
     /// turns Tether from a monologue into a conversation.
@@ -541,15 +541,15 @@ final class JournalEntry {
 
 @Model
 final class PromptReply {
-    var id: UUID
-    var userID: UUID
-    var promptID: String
-    var forDate: Date
+    var id: UUID = UUID()
+    var userID: UUID = UUID()
+    var promptID: String = ""
+    var forDate: Date = Date()
     /// Holds ciphertext once the encryption layer ships.
-    var body: String
-    var mood: Int
-    var isVoice: Bool
-    var createdAt: Date
+    var body: String = ""
+    var mood: Int = 0
+    var isVoice: Bool = false
+    var createdAt: Date = Date()
 
     init(userID: UUID, promptID: String, body: String, mood: Int, isVoice: Bool = false) {
         self.id = UUID()
@@ -571,14 +571,14 @@ enum InviteStatus: String, Codable {
 
 @Model
 final class Invite {
-    var id: UUID
-    var inviterID: UUID
-    var code: String
-    var token: UUID
-    var statusRaw: String
-    var createdAt: Date
-    var expiresAt: Date
-    var nudgeCount: Int
+    var id: UUID = UUID()
+    var inviterID: UUID = UUID()
+    var code: String = ""
+    var token: UUID = UUID()
+    var statusRaw: String = ""
+    var createdAt: Date = Date()
+    var expiresAt: Date = Date()
+    var nudgeCount: Int = 0
     var lastNudgedAt: Date?
 
     init(inviterID: UUID) {
@@ -647,15 +647,15 @@ enum PulseTrend: String, Codable {
 
 @Model
 final class RelationshipPulse {
-    var id: UUID
-    var ownerID: UUID
-    var computedOn: Date
-    var stateRaw: String
-    var score: Double
-    var trendRaw: String
-    var cadenceScore: Double
-    var moodScore: Double
-    var consistencyScore: Double
+    var id: UUID = UUID()
+    var ownerID: UUID = UUID()
+    var computedOn: Date = Date()
+    var stateRaw: String = ""
+    var score: Double = 0
+    var trendRaw: String = ""
+    var cadenceScore: Double = 0
+    var moodScore: Double = 0
+    var consistencyScore: Double = 0
 
     init(ownerID: UUID,
          state: PulseState,

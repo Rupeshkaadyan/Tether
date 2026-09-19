@@ -77,12 +77,12 @@ enum QuizBank {
 /// One person's answer to one question.
 @Model
 final class QuizAnswer {
-    var id: UUID
-    var userID: UUID
-    var questionID: String
+    var id: UUID = UUID()
+    var userID: UUID = UUID()
+    var questionID: String = ""
     /// The option THEY would pick.
-    var guessIndex: Int
-    var createdAt: Date
+    var guessIndex: Int = 0
+    var createdAt: Date = Date()
 
     init(userID: UUID, questionID: String, guessIndex: Int) {
         self.id = UUID()

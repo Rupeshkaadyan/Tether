@@ -7,11 +7,11 @@ enum CoachRole: String, Codable {
 
 @Model
 final class AIConversation {
-    var id: UUID
-    var ownerID: UUID
-    var title: String
-    var createdAt: Date
-    var lastMessageAt: Date
+    var id: UUID = UUID()
+    var ownerID: UUID = UUID()
+    var title: String = ""
+    var createdAt: Date = Date()
+    var lastMessageAt: Date = Date()
 
     init(ownerID: UUID, title: String = "New conversation") {
         self.id = UUID()
@@ -24,14 +24,14 @@ final class AIConversation {
 
 @Model
 final class AIMessage {
-    var id: UUID
-    var conversationID: UUID
-    var roleRaw: String
+    var id: UUID = UUID()
+    var conversationID: UUID = UUID()
+    var roleRaw: String = ""
     /// Holds ciphertext once CryptoKit lands. Plaintext on device for now.
-    var body: String
-    var usedMemory: Bool
-    var safetyFlagged: Bool
-    var createdAt: Date
+    var body: String = ""
+    var usedMemory: Bool = false
+    var safetyFlagged: Bool = false
+    var createdAt: Date = Date()
 
     init(conversationID: UUID,
          role: CoachRole,
@@ -62,14 +62,14 @@ final class AIMessage {
 /// callers.
 @Model
 final class AIMemory {
-    var id: UUID
-    var ownerID: UUID
-    var sourceRaw: String
-    var sourceID: UUID
-    var text: String
-    var keywords: String
-    var visibilityRaw: String
-    var createdAt: Date
+    var id: UUID = UUID()
+    var ownerID: UUID = UUID()
+    var sourceRaw: String = ""
+    var sourceID: UUID = UUID()
+    var text: String = ""
+    var keywords: String = ""
+    var visibilityRaw: String = ""
+    var createdAt: Date = Date()
 
     init(ownerID: UUID,
          source: EntrySource,
