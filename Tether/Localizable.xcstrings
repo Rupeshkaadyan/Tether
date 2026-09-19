@@ -377,7 +377,11 @@
         }
       }
     },
+    "A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so it is locked behind Face ID." : {
+
+    },
     "A readable copy of your journal, coach conversations, and memories. It leaves the encrypted store, so keep it somewhere safe." : {
+      "extractionState" : "stale",
       "localizations" : {
         "es" : {
           "stringUnit" : {
@@ -718,6 +722,9 @@
 
     },
     "Change ritual" : {
+
+    },
+    "Changing language…" : {
 
     },
     "Checking…" : {
