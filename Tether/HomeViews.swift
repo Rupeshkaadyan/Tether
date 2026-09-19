@@ -82,6 +82,8 @@ struct HomeView: View {
                         .tetherAppear(delay: 0.08)
                     warmthCard
                         .tetherAppear(delay: 0.09)
+                    theirReplyCard
+                        .tetherAppear(delay: 0.11)
                     PulseCard(result: pulse) { onOpenPulse() }
                         .tetherAppear(delay: 0.1)
                     PromptCard(prompt: todayPrompt, dayLabel: Date().weekdayDisplay)
@@ -409,6 +411,21 @@ struct HomeView: View {
                     .font(TetherType.label)
                     .foregroundStyle(TetherColor.thriving)
             }
+
+            // Waiting indicator: you are done, they are not. Gentle, and it
+            // disappears the moment they answer.
+            if isPaired, !partnerAnsweredToday, let partner {
+                HStack(spacing: TetherSpace.xs) {
+                    TetherHeroMark(width: 22,
+                                   color: TetherColor.faint,
+                                   sag: 3,
+                                   lineWidth: 1.5,
+                                   dotRadius: 2)
+                    Text("Waiting for \(partner.displayName)")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                }
+            }
             if let entry = myEntries.first {
                 TetherCard {
                     VStack(alignment: .leading, spacing: TetherSpace.s) {
@@ -686,6 +703,48 @@ struct HomeView: View {
             return (earlier.entryDate, later.entryDate, text)
         }
         return nil
+    }
+
+    /// The most recent line they left in reply to something you wrote — so it
+    /// is not buried in the journal.
+    private var theirLastReply: (entry: JournalEntry, text: String)? {
+        guard let partner else { return nil }
+        let replied = myEntries
+            .filter { $0.replyBy == partner.id && !($0.replyBody ?? "").trimmed.isEmpty }
+            .sorted { ($0.replyAt ?? $0.entryDate) > ($1.replyAt ?? $1.entryDate) }
+        guard let latest = replied.first, let text = latest.replyBody else { return nil }
+        return (latest, text)
+    }
+
+    @ViewBuilder
+    private var theirReplyCard: some View {
+        if let reply = theirLastReply, let partner {
+            TetherCard {
+                VStack(alignment: .leading, spacing: TetherSpace.s) {
+                    HStack(spacing: TetherSpace.xs) {
+                        TetherHeroMark(width: 26,
+                                       color: TetherColor.brand.opacity(0.55),
+                                       sag: 4,
+                                       lineWidth: 1.5,
+                                       dotRadius: 2)
+                        Text("\(partner.displayName.uppercased()) REPLIED")
+                            .font(TetherType.micro)
+                            .tracking(1)
+                            .foregroundStyle(TetherColor.faint)
+                        Spacer(minLength: 0)
+                    }
+                    Text("“\(reply.text)”")
+                        .font(TetherType.callout)
+                        .foregroundStyle(TetherColor.text)
+                        .italic()
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text("On: \(SecureContent.read(reply.entry.body))")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .lineLimit(2)
+                }
+            }
+        }
     }
 
     /// Care nudge: when their mood is low, say so gently and offer one line.
