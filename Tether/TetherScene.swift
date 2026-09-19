@@ -155,17 +155,21 @@ struct Ridge: Shape {
 
 /// A scatter of small dots. Positions are deterministic so the sky does not
 /// shimmer when the view redraws.
-private struct Stars: View {
-    private let points: [(x: CGFloat, y: CGFloat, r: CGFloat)] = {
+struct Stars: View {
+    /// How many stars to scatter. Grow uses this to light one star per
+    /// milestone earned, so the sky fills as the practice deepens.
+    var count: Int = 34
+
+    private var points: [(x: CGFloat, y: CGFloat, r: CGFloat)] {
         var seed: UInt64 = 0x9E3779B97F4A7C15
         func next() -> CGFloat {
             seed = seed &* 6364136223846793005 &+ 1442695040888963407
             return CGFloat((seed >> 33) % 1000) / 1000
         }
-        return (0..<34).map { _ in
+        return (0..<max(0, count)).map { _ in
             (x: next(), y: next() * 0.55, r: 0.7 + next() * 1.1)
         }
-    }()
+    }
 
     var body: some View {
         GeometryReader { geo in

@@ -220,6 +220,7 @@ struct GrowView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: TetherSpace.l) {
+                    growBanner
                     weekCard
                         .tetherAppear(delay: 0.03)
                     challengeCard
@@ -443,6 +444,46 @@ struct GrowView: View {
     }
 
     // MARK: Milestones
+
+    /// A night sky that fills with stars as milestones are earned — so the
+    /// practice looks like it is accumulating rather than merely being counted.
+    private var growBanner: some View {
+        let earned = milestones.filter { $0.progress >= 1 }.count
+
+        return ZStack(alignment: .bottomLeading) {
+            LinearGradient(colors: [Color(hex: "141126"),
+                                    Color(hex: "2A2350"),
+                                    Color(hex: "4A3A78")],
+                           startPoint: .top,
+                           endPoint: .bottom)
+
+            Stars(count: 10 + earned * 5)
+
+            Ridge(peaks: [0.34, 0.50, 0.36, 0.54, 0.40], crest: 0.84)
+                .fill(Color(hex: "1C1738"))
+                .frame(height: 230)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Your practice".uppercased())
+                    .font(TetherType.micro)
+                    .tracking(1.4)
+                    .foregroundStyle(.white.opacity(0.75))
+                Text("\(earned) of \(milestones.count) milestones")
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .tracking(-0.6)
+                    .foregroundStyle(.white)
+                Text(earned == 0 ? "Your sky fills with the first one."
+                                 : "Each one lights another star.")
+                    .font(TetherType.caption)
+                    .foregroundStyle(.white.opacity(0.80))
+            }
+            .padding(.horizontal, TetherSpace.margin)
+            .padding(.bottom, TetherSpace.l)
+        }
+        .frame(height: 230)
+        .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))
+        .padding(.horizontal, -TetherSpace.margin)
+    }
 
     private var milestonesSection: some View {
         VStack(alignment: .leading, spacing: TetherSpace.m) {
