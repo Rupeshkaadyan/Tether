@@ -415,6 +415,10 @@ final class JournalEntry {
     /// stores only a reference.
     @Attribute(.externalStorage) var photoData: Data?
 
+    /// An optional voice note. Also external storage, for the same reason —
+    /// audio is far bigger than the text it accompanies.
+    @Attribute(.externalStorage) var voiceData: Data?
+
     init(userID: UUID, body: String, mood: Int, source: EntrySource = .journal) {
         self.id = UUID()
         self.userID = userID

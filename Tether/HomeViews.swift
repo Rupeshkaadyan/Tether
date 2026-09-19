@@ -27,6 +27,8 @@ struct HomeView: View {
     @State private var showRitual = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
+    @State private var voiceNotes = VoiceNoteService.shared
+    @State private var voiceData: Data?
     @State private var showNotifExplainer = false
     @State private var showComposer = false
     @State private var milestoneToast: String?
@@ -429,6 +431,36 @@ struct HomeView: View {
                         .clipShape(Capsule())
                     }
                     .accessibilityLabel("Attach a photo")
+
+                    Button {
+                        Task {
+                            if voiceNotes.isRecording {
+                                voiceData = voiceNotes.stopRecording()
+                            } else {
+                                await voiceNotes.toggleRecording()
+                            }
+                        }
+                    } label: {
+                        HStack(spacing: 5) {
+                            Image(systemName: voiceNotes.isRecording ? "stop.circle.fill" : "waveform")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundStyle(voiceNotes.isRecording ? TetherColor.strained
+                                                                        : TetherColor.muted)
+                            Text(voiceNotes.isRecording ? "Stop"
+                                                        : (voiceData == nil ? "Voice" : "Recorded"))
+                                .font(TetherType.micro)
+                                .foregroundStyle(voiceNotes.isRecording ? TetherColor.strained
+                                                                        : TetherColor.muted)
+                        }
+                        .padding(.horizontal, TetherSpace.m)
+                        .padding(.vertical, 5)
+                        .background(voiceNotes.isRecording ? TetherColor.strainedSoft
+                                                           : TetherColor.surfaceSunken)
+                        .clipShape(Capsule())
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(voiceNotes.isRecording ? "Stop recording"
+                                                               : "Record a voice note")
                 }
                 TextField("One sentence is enough", text: $reply, axis: .vertical)
                     .lineLimit(2...6)
@@ -989,6 +1021,7 @@ struct HomeView: View {
                                  source: .prompt)
         entry.safetyFlagged = verdict.isCrisis
         entry.photoData = photoData
+        entry.voiceData = voiceData
         ctx.insert(entry)
         ctx.insert(MoodLog(userID: profile.id, mood: mood))
 
@@ -1008,6 +1041,7 @@ struct HomeView: View {
         reply = ""
         photoData = nil
         photoItem = nil
+        voiceData = nil
         showComposer = false
         TetherHaptics.success()
 

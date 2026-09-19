@@ -178,7 +178,7 @@ targ_common = [
     ("LD_RUNPATH_SEARCH_PATHS", ("$(inherited)", "@executable_path/Frameworks")),
     ("MARKETING_VERSION", "1.0"),
     ("INFOPLIST_KEY_NSMicrophoneUsageDescription",
-     "Tether uses the microphone only when you tap the mic to dictate. Your voice is transcribed on this device and is never uploaded."),
+     "Tether uses the microphone only when you tap Dictate or Voice. Dictation is transcribed on this device; a voice note is stored on this device with your entry. Nothing is ever uploaded."),
     ("INFOPLIST_KEY_NSSpeechRecognitionUsageDescription",
      "Tether uses speech recognition to turn your dictation into text. Recognition runs on this device."),
     ("ASSETCATALOG_COMPILER_APPICON_NAME", "AppIcon"),

@@ -220,6 +220,25 @@ struct JournalView: View {
                     .foregroundStyle(TetherColor.text)
                     .fixedSize(horizontal: false, vertical: true)
 
+                if let audio = entry.voiceData {
+                    Button {
+                        VoiceNoteService.shared.togglePlayback(audio, id: entry.id)
+                    } label: {
+                        HStack(spacing: TetherSpace.xs) {
+                            Image(systemName: VoiceNoteService.shared.playingID == entry.id
+                                  ? "stop.circle.fill" : "play.circle.fill")
+                                .font(.system(size: 19))
+                                .foregroundStyle(TetherColor.brand)
+                            Text(VoiceNoteService.shared.playingID == entry.id
+                                 ? "Playing…" : "Voice note")
+                                .font(TetherType.caption)
+                                .foregroundStyle(TetherColor.brand)
+                        }
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Play voice note")
+                }
+
                 if let data = entry.photoData, let image = UIImage(data: data) {
                     Image(uiImage: image)
                         .resizable()
