@@ -106,7 +106,14 @@ struct WelcomeStep: View {
 
     private var hero: some View {
         ZStack {
-            TetherBackdrop(style: .dusk)
+            // The real landscape, so the first thing anyone sees is the world
+            // the app actually lives in — not a flat backdrop.
+            TetherScene(timeOfDay: .dusk)
+
+            // Scrim, so the mark and the wordmark hold against the sky.
+            LinearGradient(colors: [.black.opacity(0.18), .clear, .black.opacity(0.28)],
+                           startPoint: .top,
+                           endPoint: .bottom)
 
             VStack(spacing: TetherSpace.xl) {
                 TetherMark(size: 148,
