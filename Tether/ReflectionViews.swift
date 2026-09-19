@@ -279,6 +279,22 @@ struct RevealMomentView: View {
         ZStack {
             TetherBackdrop(style: .dusk).ignoresSafeArea()
 
+            // Two ridges rising from opposite sides and meeting in the middle.
+            // The two of you, in one gesture.
+            VStack {
+                Spacer()
+                HStack(spacing: 0) {
+                    Ridge(peaks: [0.66, 0.38, 0.18, 0.06], crest: 0.94)
+                        .fill(Color.white.opacity(0.11))
+                    Ridge(peaks: [0.06, 0.18, 0.38, 0.66], crest: 0.94)
+                        .fill(Color.white.opacity(0.11))
+                }
+                .frame(height: 168)
+                .opacity(revealed ? 1 : 0)
+                .animation(.easeOut(duration: 1.6), value: revealed)
+            }
+            .ignoresSafeArea()
+
             VStack(spacing: TetherSpace.xl) {
                 Spacer(minLength: TetherSpace.xxl)
 

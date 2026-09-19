@@ -162,6 +162,17 @@ struct JournalView: View {
             .sorted { $0.month > $1.month }
     }
 
+    /// When the entry was written. Shown beside the date so the timeline has
+    /// the texture of a day, not just a sequence of records.
+    private func timeOfDayLabel(_ date: Date) -> String {
+        switch Calendar.current.component(.hour, from: date) {
+        case 5..<12:  return "morning"
+        case 12..<17: return "afternoon"
+        case 17..<21: return "evening"
+        default:      return "night"
+        }
+    }
+
     private func monthHeader(_ month: Date) -> some View {
         Text(month.formatted(.dateTime.month(.wide).year()))
             .font(TetherType.title)
@@ -193,7 +204,8 @@ struct JournalView: View {
             VStack(alignment: .leading, spacing: TetherSpace.xs) {
                 HStack(spacing: TetherSpace.s) {
                     Text(entry.entryDate.formatted(
-                        .dateTime.weekday(.abbreviated).day().month(.abbreviated)))
+                        .dateTime.weekday(.abbreviated).day().month(.abbreviated))
+                         + " · " + timeOfDayLabel(entry.entryDate))
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
                     Spacer(minLength: 0)
