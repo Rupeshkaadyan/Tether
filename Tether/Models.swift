@@ -253,13 +253,24 @@ final class JarNote {
     var drawnCount: Int
     var lastDrawnAt: Date?
 
-    init(authorID: UUID, body: String) {
+    /// Whether this note is visible to the other person.
+    ///
+    /// Defaults to TRUE — a jar nobody can see is a diary, and the whole point
+    /// is that the person who needs the note is usually not the one who wrote
+    /// it. But a note can always be kept back, and the app must never make
+    /// that feel like a betrayal. Nothing is shared silently in either
+    /// direction: the choice is made at the moment of writing, and it is
+    /// stated on the note afterwards.
+    var sharedWithPartner: Bool
+
+    init(authorID: UUID, body: String, sharedWithPartner: Bool = true) {
         self.id = UUID()
         self.authorID = authorID
         self.body = body
         self.createdAt = Date()
         self.drawnCount = 0
         self.lastDrawnAt = nil
+        self.sharedWithPartner = sharedWithPartner
     }
 }
 

@@ -590,6 +590,28 @@
         }
       }
     },
+    "A place, not a setting. Pick whichever you would want to sit in.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "A place, not a setting. Pick whichever you would want to sit in."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक जगह, कोई सेटिंग नहीं। जहाँ आप बैठना चाहें वह चुनें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un lugar, no un ajuste. Elige aquel en el que querrías sentarte."
+          }
+        }
+      }
+    },
     "A printable PDF of everything you have both written. It leaves the encrypted store, so keep it somewhere safe.": {
       "localizations": {
         "en": {
@@ -1543,6 +1565,28 @@
         }
       }
     },
+    "Dawn": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Dawn"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "भोर"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Amanecer"
+          }
+        }
+      }
+    },
     "Day": {
       "localizations": {
         "en": {
@@ -1605,6 +1649,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "दिन %lld, %@"
+          }
+        }
+      }
+    },
+    "Deep sky, drifting fireflies.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Deep sky, drifting fireflies."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गहरा आसमान, तैरती जुगनू।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cielo profundo, luciérnagas a la deriva."
           }
         }
       }
@@ -1685,6 +1751,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "मेरा सारा डेटा हटाएँ"
+          }
+        }
+      }
+    },
+    "Dense leaves, warm shafts of light.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Dense leaves, warm shafts of light."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "घने पत्ते, रोशनी की गर्म किरणें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hojas densas, haces de luz cálida."
           }
         }
       }
@@ -2045,6 +2133,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Doblarla y guardarla"
+          }
+        }
+      }
+    },
+    "Garden": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Garden"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बग़ीचा"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jardín"
           }
         }
       }
@@ -2546,6 +2656,28 @@
         }
       }
     },
+    "Jar theme": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Jar theme"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जार का रूप"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tema del frasco"
+          }
+        }
+      }
+    },
     "Join": {
       "localizations": {
         "es": {
@@ -2574,6 +2706,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "डायरी"
+          }
+        }
+      }
+    },
+    "Jungle": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Jungle"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जंगल"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Selva"
           }
         }
       }
@@ -3121,6 +3275,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Siguiente"
+          }
+        }
+      }
+    },
+    "Night": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Night"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रात"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noche"
           }
         }
       }
@@ -4751,6 +4927,28 @@
         }
       }
     },
+    "Soft green, butterflies.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Soft green, butterflies."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कोमल हरा, तितलियाँ।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Verde suave, mariposas."
+          }
+        }
+      }
+    },
     "Some things need to be said out loud. Others just need to be written down first. This is for the second kind.": {
       "localizations": {
         "en": {
@@ -4791,6 +4989,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Algo verdadero, amable o útil. Para un día difícil — el suyo o el tuyo."
+          }
+        }
+      }
+    },
+    "Something worth keeping? The jar is only full on a hard day if you fill it on a good one.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Something worth keeping? The jar is only full on a hard day if you fill it on a good one."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रखने लायक कुछ? कठिन दिन में जार तभी भरा मिलेगा जब अच्छे दिन में भरेंगे।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Algo que merezca guardarse? El frasco solo estará lleno en un día difícil si lo llenas en uno bueno."
           }
         }
       }
@@ -5877,6 +6097,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "अपने साथी का इंतज़ार"
+          }
+        }
+      }
+    },
+    "Warm paper and morning light.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Warm paper and morning light."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गर्म कागज़ और सुबह की रोशनी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Papel cálido y luz de la mañana."
           }
         }
       }
