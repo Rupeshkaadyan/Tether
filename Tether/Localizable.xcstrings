@@ -119,16 +119,16 @@
             "value": "%@'s picture"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%@ की तस्वीर"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Foto de %@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ की तस्वीर"
           }
         }
       }
@@ -1005,16 +1005,16 @@
             "value": "About you"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आपके बारे में"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Sobre ti"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपके बारे में"
           }
         }
       }
@@ -3771,16 +3771,16 @@
             "value": "Man"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "पुरुष"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Hombre"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "पुरुष"
           }
         }
       }
@@ -4361,16 +4361,16 @@
             "value": "Non-binary"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "नॉन-बाइनरी"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "No binario"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नॉन-बाइनरी"
           }
         }
       }
@@ -4966,6 +4966,28 @@
         }
       }
     },
+    "Only mine": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Only mine"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सिर्फ़ मेरा"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo mía"
+          }
+        }
+      }
+    },
     "Open grass, seed drifting on a warm breeze.": {
       "localizations": {
         "en": {
@@ -5245,16 +5267,16 @@
             "value": "Prefer not to say"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "बताना नहीं चाहते"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Prefiero no decirlo"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बताना नहीं चाहते"
           }
         }
       }
@@ -5305,16 +5327,16 @@
             "value": "Profile picture"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "प्रोफ़ाइल तस्वीर"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Foto de perfil"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "प्रोफ़ाइल तस्वीर"
           }
         }
       }
@@ -5783,16 +5805,16 @@
             "value": "Save privately"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "निजी रूप से सहेजें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Guardar en privado"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "निजी रूप से सहेजें"
           }
         }
       }
@@ -5805,16 +5827,16 @@
             "value": "Save to Shared"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "साझा में सहेजें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Guardar en compartido"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साझा में सहेजें"
           }
         }
       }
@@ -6208,6 +6230,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "तय हो गया"
+          }
+        }
+      }
+    },
+    "Share": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Share"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साझा करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compartir"
           }
         }
       }
@@ -7419,16 +7463,16 @@
             "value": "This only picks your starting colour. Change it any time."
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "यह केवल आपका शुरुआती रंग चुनता है। कभी भी बदलें।"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Solo elige tu color inicial. Cámbialo cuando quieras."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह केवल आपका शुरुआती रंग चुनता है। कभी भी बदलें।"
           }
         }
       }
@@ -9146,16 +9190,16 @@
             "value": "Woman"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "महिला"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Mujer"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "महिला"
           }
         }
       }
@@ -9283,16 +9327,16 @@
             "value": "You and %@, connected"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आप और %@, जुड़े हुए"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Tú y %@, conectados"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप और %@, जुड़े हुए"
           }
         }
       }
@@ -9615,16 +9659,16 @@
             "value": "You, not connected yet"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आप, अभी नहीं जुड़े"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Tú, aún sin conectar"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप, अभी नहीं जुड़े"
           }
         }
       }

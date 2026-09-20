@@ -42,6 +42,9 @@ struct HomeView: View {
     @State private var showWrapped = false
     @State private var showPause = false
     @State private var showTwoVersions = false
+    /// Set by a Home Screen quick action.
+    @State private var pendingQuickAction: QuickAction?
+    @State private var showJournal = false
 
     /// Days both people wrote about, where at least one found it hard.
     private var twoVersions: [TwoVersions] {
@@ -309,6 +312,19 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showPause) {
                 PauseView(profile: profile)
+            }
+            // Home Screen quick actions. Without this the shortcut only ever
+            // opened the app, because nothing was listening for it.
+            .sheet(isPresented: $showJournal) {
+                JournalView(profile: profile)
+            }
+            .onReceive(NotificationCenter.default.publisher(for: .tetherQuickAction)) { note in
+                guard let action = note.userInfo?["action"] as? QuickAction else { return }
+                switch action {
+                case .newEntry:    showJournal = true
+                case .todayPrompt: showComposer = true
+                case .quietWeek:   showPause = true
+                }
             }
             .sheet(isPresented: $showTwoVersions) {
                 TwoVersionsView(versions: twoVersions,

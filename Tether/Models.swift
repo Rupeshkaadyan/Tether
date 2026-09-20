@@ -77,7 +77,9 @@ enum Visibility: String, Codable {
 /// what most people who pick it turn out to want, and expecting them to go and
 /// find it in Settings is expecting them to know it exists.
 enum Gender: String, CaseIterable, Identifiable {
-    case woman, man, nonbinary, undisclosed
+    // Declaration order IS display order — CaseIterable follows it. Man,
+    // Woman, then the rest.
+    case man, woman, nonbinary, undisclosed
 
     var id: String { rawValue }
 

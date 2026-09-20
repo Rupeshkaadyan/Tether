@@ -51,6 +51,32 @@ enum QuickAction: String {
     }
 }
 
+/// Bridges the UIKit shortcut callback into SwiftUI.
+///
+/// Installing the items is only half of it — without this the shortcut opens
+/// the app and nothing else happens, which is exactly what was reported.
+/// SwiftUI's lifecycle has no built-in hook for `performActionFor`, so the
+/// delegate adaptor is the supported way to receive it.
+final class ShortcutDelegate: NSObject, UIApplicationDelegate {
+    func application(_ application: UIApplication,
+                     performActionFor shortcutItem: UIApplicationShortcutItem,
+                     completionHandler: @escaping (Bool) -> Void) {
+        guard let action = AppShortcuts.handle(shortcutItem) else {
+            completionHandler(false)
+            return
+        }
+        NotificationCenter.default.post(
+            name: .tetherQuickAction,
+            object: nil,
+            userInfo: ["action": action])
+        completionHandler(true)
+    }
+}
+
+extension Notification.Name {
+    static let tetherQuickAction = Notification.Name("tether.quickAction")
+}
+
 enum AppShortcuts {
 
     static func install() {

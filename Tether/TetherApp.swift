@@ -12,6 +12,9 @@ struct TetherApp: App {
     @State private var scene = SceneManager.shared
 
     @Environment(\.scenePhase) private var scenePhase
+    // Required for Home Screen quick actions to do anything. Installing the
+    // items alone just opens the app — the tap has to be received here.
+    @UIApplicationDelegateAdaptor(ShortcutDelegate.self) private var shortcutDelegate
 
     let container: ModelContainer
 

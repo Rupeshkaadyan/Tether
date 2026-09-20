@@ -350,20 +350,31 @@ struct JournalView: View {
             .padding(.bottom, TetherSpace.m)
         }
         .accessibilityElement(children: .combine)
-        // Swipe, as well as long-press. On a list of things you wrote, swipe
-        // is the gesture people actually try first; a context menu is what
-        // they find afterwards when the swipe did nothing.
-        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+        // A hit area for the WHOLE row.
+        //
+        // Long-press only registered on the text itself, so pressing the gap
+        // beside it or the date above it did nothing and the gesture felt
+        // unreliable. contentShape gives the entire row a rectangular hit
+        // target, which is what "hold the message" actually means.
+        .contentShape(Rectangle())
+        // Swipe from EITHER side: leading toggles sharing, trailing deletes.
+        // Three actions crowded onto one edge is why the trailing-only
+        // version felt cramped and hard to hit.
+        .swipeActions(edge: .leading, allowsFullSwipe: false) {
             if entry.userID == profile.id {
-                Button(role: .destructive) { delete(entry) } label: {
-                    Label("Delete", systemImage: "trash")
-                }
                 Button { toggleShare(entry) } label: {
                     Label(entry.visibility == .shared ? "Only mine" : "Share",
                           systemImage: entry.visibility == .shared
                                        ? "lock.fill" : "person.2.fill")
                 }
                 .tint(TetherColor.brand)
+            }
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            if entry.userID == profile.id {
+                Button(role: .destructive) { delete(entry) } label: {
+                    Label("Delete", systemImage: "trash")
+                }
             }
         }
         // Long-press for the same actions. Previously there was no way to do
