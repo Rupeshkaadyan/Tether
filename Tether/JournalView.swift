@@ -84,11 +84,8 @@ struct JournalView: View {
                 // which most people do not know exists — so the search field
                 // stayed focused and the screen stayed half-covered.
                 ToolbarItem(placement: .keyboard) {
-                    HStack {
-                        Spacer()
-                        Button("Done") { searchFocused = false }
-                    }
-                }
+                Button("Done") { searchFocused = false }
+            }
                 ToolbarItem(placement: .confirmationAction) {
                     // A plain button. This was briefly a Menu with a single
                     // item, which is strictly worse: an extra tap to reach the

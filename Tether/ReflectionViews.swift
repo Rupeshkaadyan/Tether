@@ -908,6 +908,13 @@ struct MemoryLaneView: View {
 
     // MARK: Month strip
 
+    private func barHeight(for count: Int) -> CGFloat {
+        guard maxCount > 0 else { return 6 }
+        let ratio = CGFloat(count) / CGFloat(maxCount)
+        guard ratio.isFinite else { return 6 }
+        return max(6, ratio * 74)
+    }
+
     private var monthStrip: some View {
         VStack(alignment: .leading, spacing: TetherSpace.m) {
             SectionHeader(title: "Month by month")
@@ -919,7 +926,11 @@ struct MemoryLaneView: View {
                             .foregroundStyle(TetherColor.faint)
                         RoundedRectangle(cornerRadius: 4, style: .continuous)
                             .fill(TetherGradient.brand)
-                            .frame(height: max(6, CGFloat(bucket.count) / CGFloat(maxCount) * 74))
+                            // maxCount is guarded. The only division in any
+                            // .frame() in the app, and 0/0 is NaN — which
+                            // propagates into the height and logs "Invalid
+                            // frame dimension (negative or non-finite)".
+                            .frame(height: barHeight(for: bucket.count))
                         Text(bucket.month.formatted(.dateTime.month(.abbreviated)))
                             .font(TetherType.micro)
                             .foregroundStyle(TetherColor.muted)

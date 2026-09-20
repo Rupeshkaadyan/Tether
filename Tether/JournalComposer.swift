@@ -80,11 +80,8 @@ struct JournalComposer: View {
                 // zero-width bar item — which is the "ItemWrapperView.width ==
                 // 0" constraint break. Inside an HStack it is just layout.
                 ToolbarItem(placement: .keyboard) {
-                    HStack {
-                        Spacer()
-                        Button("Done") { focused = false }
-                    }
-                }
+                Button("Done") { focused = false }
+            }
                 ToolbarItem(placement: .confirmationAction) {
                     // The button names the destination. "Save" alone gave no
                     // confirmation of where the entry was about to go, so a
