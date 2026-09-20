@@ -4059,6 +4059,28 @@
         }
       }
     },
+    "Neither of you has seen the other's side.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Neither of you has seen the other's side."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "किसी ने दूसरे का पक्ष नहीं देखा।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ninguno ha visto el lado del otro."
+          }
+        }
+      }
+    },
     "New entry": {
       "localizations": {
         "en": {
@@ -4461,6 +4483,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "अभी दिखाने के लिए कुछ नहीं। कुछ दिनों की प्रविष्टियों के बाद यह भर जाएगा।"
+          }
+        }
+      }
+    },
+    "Nothing to compare yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Nothing to compare yet"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी तुलना के लिए कुछ नहीं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay nada que comparar"
           }
         }
       }
@@ -5167,6 +5211,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "कुरान आधारित"
+          }
+        }
+      }
+    },
+    "Read both": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Read both"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दोनों पढ़ें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Leer ambas"
           }
         }
       }
@@ -7200,6 +7266,28 @@
         }
       }
     },
+    "Two accounts of the same day, both true. This is what it is like to be two people.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Two accounts of the same day, both true. This is what it is like to be two people."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक ही दिन के दो विवरण, दोनों सच। दो लोग होना ऐसा ही होता है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos relatos del mismo día, ambos ciertos. Así es ser dos personas."
+          }
+        }
+      }
+    },
     "Two people. One practice.": {
       "localizations": {
         "es": {
@@ -7212,6 +7300,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "दो लोग। एक अभ्यास।"
+          }
+        }
+      }
+    },
+    "Two versions": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Two versions"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "दो संस्करण"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dos versiones"
           }
         }
       }
@@ -8428,6 +8538,28 @@
         }
       }
     },
+    "When you have both written about the same day, you will be able to read both sides here.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "When you have both written about the same day, you will be able to read both sides here."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जब आप दोनों ने एक ही दिन के बारे में लिखा होगा, तो यहाँ दोनों पक्ष पढ़ सकेंगे।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuando ambos hayáis escrito sobre el mismo día, podréis leer aquí las dos versiones."
+          }
+        }
+      }
+    },
     "Where did you feel most at ease with them this week?": {
       "extractionState": "stale",
       "localizations": {
@@ -8831,6 +8963,28 @@
         }
       }
     },
+    "You both wrote about %@": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You both wrote about %@"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तुम दोनों ने %@ के बारे में लिखा"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ambos escribisteis sobre el %@"
+          }
+        }
+      }
+    },
     "You can change this any time in Settings.": {
       "localizations": {
         "en": {
@@ -8989,6 +9143,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपने भेजा: %@"
+          }
+        }
+      }
+    },
+    "You were both having a hard day, and neither of you knew the other was too. Neither of you is wrong.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You were both having a hard day, and neither of you knew the other was too. Neither of you is wrong."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "तुम दोनों का दिन कठिन था, और किसी को पता नहीं था कि दूसरे का भी। दोनों में से कोई ग़लत नहीं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los dos tuvisteis un día difícil y ninguno sabía que el otro también. Ninguno está equivocado."
           }
         }
       }

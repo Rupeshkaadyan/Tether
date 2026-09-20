@@ -41,6 +41,14 @@ struct HomeView: View {
     @State private var showQuiz = false
     @State private var showWrapped = false
     @State private var showPause = false
+    @State private var showTwoVersions = false
+
+    /// Days both people wrote about, where at least one found it hard.
+    private var twoVersions: [TwoVersions] {
+        TwoVersionsEngine.find(entries: entries,
+                               meID: profile.id,
+                               partnerID: partner?.id)
+    }
     @State private var debugOpened = false
     @State private var photoItem: PhotosPickerItem?
     @State private var photoData: Data?
@@ -143,6 +151,15 @@ struct HomeView: View {
                         .tetherAppear(delay: 0.11)
                     PulseCard(result: pulse) { onOpenPulse() }
                         .tetherAppear(delay: 0.1)
+
+                    // Only appears when there is something real to see — a day
+                    // both people wrote about and neither has read the other's
+                    // side of. Otherwise Home would gain another permanent card
+                    // for a feature that usually has nothing to say.
+                    if let first = twoVersions.first {
+                        TwoVersionsTeaser(day: first.day) { showTwoVersions = true }
+                            .tetherAppear(delay: 0.11)
+                    }
                     PromptCard(prompt: todayPrompt, dayLabel: Date().weekdayDisplay)
                         .tetherAppear(delay: 0.15)
 
@@ -258,6 +275,11 @@ struct HomeView: View {
             }
             .sheet(isPresented: $showPause) {
                 PauseView(profile: profile)
+            }
+            .sheet(isPresented: $showTwoVersions) {
+                TwoVersionsView(versions: twoVersions,
+                                myName: profile.displayName,
+                                theirName: partner?.displayName ?? "")
             }
             .sheet(isPresented: $showWrapped) {
                 WrappedView(profile: profile,
