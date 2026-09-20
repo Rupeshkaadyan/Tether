@@ -103,7 +103,7 @@ struct TetherBackdrop: View {
             if style == .calm {
                 // No theme passed: SceneBackdrop reads the manager itself and
                 // resolves `.automatic` against the device appearance.
-                SceneBackdrop(density: 0.45, framesPerSecond: 12)
+                SceneBackdrop(density: 0.45, framesPerSecond: 8)
             }
 
             // Arcs and haze over the paper, under the content.

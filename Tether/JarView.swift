@@ -108,7 +108,7 @@ struct WisdomJarView: View {
             LinearGradient(colors: palette.backdrop,
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
-            SceneBackdrop(theme: palette, framesPerSecond: 24)
+            SceneBackdrop(theme: palette, framesPerSecond: 16)
         }
         .ignoresSafeArea()
         .animation(.easeInOut(duration: 0.6), value: theme.raw)

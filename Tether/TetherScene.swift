@@ -107,7 +107,7 @@ struct TetherScene: View {
                 //
                 // Density is low here. The header is a horizon, not an
                 // aquarium; the particles should be noticed, not counted.
-                SceneBackdrop(theme: scene, density: 0.55, framesPerSecond: 12)
+                SceneBackdrop(theme: scene, density: 0.55, framesPerSecond: 8)
                     .allowsHitTesting(false)
             }
         }
