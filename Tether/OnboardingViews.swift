@@ -522,6 +522,18 @@ struct FirstPromptStep: View {
                     .disabled(reply.trimmed.isEmpty)
                     .opacity(reply.trimmed.isEmpty ? 0.5 : 1)
 
+                // An exit. Requiring a first answer with no way past it is a
+                // dead end for anyone staring at a blank field and not knowing
+                // what to say — and that is a large share of people on the
+                // first screen of a journal.
+                if reply.trimmed.isEmpty {
+                    Button("Skip for now") { save() }
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .underline()
+                        .buttonStyle(.plain)
+                }
+
                 Text("You can do this in under a minute. That is the whole point.")
                     .font(TetherType.caption)
                     .foregroundStyle(TetherColor.muted)
@@ -535,21 +547,28 @@ struct FirstPromptStep: View {
         let text = reply.trimmed
         let verdict = SafetyClassifier.classify(text)
 
-        let entry = JournalEntry(userID: profile.id,
-                                 body: SecureContent.seal(text),
-                                 mood: mood,
-                                 source: .prompt)
-        entry.safetyFlagged = verdict.isCrisis
-        ctx.insert(entry)
         ctx.insert(MoodLog(userID: profile.id, mood: mood))
 
-        // Mirror HomeView.save(): crisis entries are never distilled into memory.
-        if !verdict.isCrisis {
-            ctx.insert(CoachEngine.makeMemory(from: text,
-                                              ownerID: profile.id,
-                                              source: .prompt,
-                                              sourceID: entry.id,
-                                              visibility: entry.visibility))
+        // Only written when there is something to write. Skipping must not
+        // leave an empty entry behind — an empty card in your journal is
+        // worse than no card, and it would count toward your streak.
+        if !text.isEmpty {
+            let entry = JournalEntry(userID: profile.id,
+                                     body: SecureContent.seal(text),
+                                     mood: mood,
+                                     source: .prompt)
+            entry.safetyFlagged = verdict.isCrisis
+            ctx.insert(entry)
+
+            // Mirror HomeView.save(): crisis entries are never distilled into
+            // retrievable memory.
+            if !verdict.isCrisis {
+                ctx.insert(CoachEngine.makeMemory(from: text,
+                                                  ownerID: profile.id,
+                                                  source: .prompt,
+                                                  sourceID: entry.id,
+                                                  visibility: entry.visibility))
+            }
         }
 
         try? ctx.save()

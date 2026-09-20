@@ -59,9 +59,11 @@ enum YearBook {
             .foregroundColor: ink
         ])
 
-        let names = partner == nil
-            ? profile.displayName
-            : "\(profile.displayName) & \(partner!.displayName)"
+        // Bound rather than force-unwrapped. The ternary proves partner is
+        // non-nil on this branch, but a `!` here is one refactor away from a
+        // crash, and this runs while rendering a PDF the person is waiting on.
+        let names = partner.map { "\(profile.displayName) & \($0.displayName)" }
+                    ?? profile.displayName
         names.draw(at: CGPoint(x: margin, y: 208), withAttributes: [
             .font: UIFont.systemFont(ofSize: 22, weight: .semibold),
             .foregroundColor: UIColor(red: 0.42, green: 0.34, blue: 0.85, alpha: 1)

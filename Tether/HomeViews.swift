@@ -779,7 +779,43 @@ struct HomeView: View {
                         Spacer(minLength: 0)
                     }
                 }
-                if let message = voice.errorMessage {
+                // A recorded note is shown the way a photo is shown: visible,
+                // playable and removable. Before this the button label changed
+                // to "Recorded" and nothing else happened, so there was no way
+                // to tell whether anything had actually been captured.
+                if let audio = voiceData {
+                    HStack(spacing: TetherSpace.s) {
+                        Button {
+                            voiceNotes.togglePlayback(audio, id: UUID())
+                        } label: {
+                            HStack(spacing: 6) {
+                                Image(systemName: "play.fill")
+                                    .font(.system(size: 12))
+                                Text("Play your note")
+                                    .font(TetherType.caption)
+                            }
+                            .foregroundStyle(TetherColor.brand)
+                            .padding(.horizontal, TetherSpace.m)
+                            .padding(.vertical, 6)
+                            .background(TetherColor.brandSoft)
+                            .clipShape(Capsule())
+                        }
+                        .buttonStyle(.plain)
+
+                        Button("Remove") {
+                            voiceData = nil
+                            voiceNotes.stopPlayback()
+                        }
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .buttonStyle(.plain)
+                        Spacer(minLength: 0)
+                    }
+                }
+                // The voice note service has its own errors; the dictation
+                // service has its own. Both need saying.
+                ForEach([voice.errorMessage, voiceNotes.errorMessage].compactMap { $0 },
+                        id: \.self) { message in
                     Text(message)
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.strained)
@@ -792,10 +828,17 @@ struct HomeView: View {
             // so the only way to write something private was to not write it.
             VisibilityPicker(isShared: $shareWithPartner, partnerName: partner?.displayName)
 
+            // Enabled by a photo or a voice note too, not only by text.
+            //
+            // `.disabled(reply.trimmed.isEmpty)` meant a voice-only entry
+            // could be recorded and then never saved — the button stayed
+            // grey with no explanation. Someone who speaks instead of types
+            // was quietly locked out of saving anything at all.
+            let canSave = !reply.trimmed.isEmpty || photoData != nil || voiceData != nil
             Button("Save today's entry") { save() }
                 .tetherButton()
-                .disabled(reply.trimmed.isEmpty)
-                .opacity(reply.trimmed.isEmpty ? 0.5 : 1)
+                .disabled(!canSave)
+                .opacity(canSave ? 1 : 0.5)
         }
     }
 
@@ -1116,9 +1159,8 @@ struct HomeView: View {
                         }
                     }
 
-                    Text(sentToday == nil
-                         ? "Send \(partner.displayName) something. No words needed."
-                         : "You sent: \(sentToday!.label)")
+                    Text(sentToday.map { "You sent: \($0.label)" }
+                         ?? "Send \(partner.displayName) something. No words needed.")
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
 
