@@ -1266,6 +1266,8 @@ struct SettingsView: View {
     @Environment(\.modelContext) private var ctx
     @State private var store = PurchaseService.shared
     @State private var notifService = NotificationService.shared
+    /// Needed so erasing data can sign out rather than just closing the sheet.
+    @Environment(SessionStore.self) private var session
     /// Needed so a reminder-time change does not quietly undo a Quiet week.
     @Query(sort: \Pause.createdAt, order: .reverse) private var pauses: [Pause]
     @State private var showPaywall = false
@@ -1863,6 +1865,21 @@ struct SettingsView: View {
         // Destroying the key makes any residual ciphertext permanently unreadable.
         CryptoService.shared.destroyKey()
         NotificationService.shared.cancelAll()
+
+        // Sign out, don't just close the sheet.
+        //
+        // Dismissing back to Home after wiping everything landed the person on
+        // a screen built around data that no longer exists — empty cards, a
+        // streak of zero, a partner link to nobody. It looked broken rather
+        // than finished. Marking onboarding incomplete sends them back to the
+        // start, which is where someone who has just erased everything
+        // actually is.
+        profile.onboardingDone = false
+        profile.onboardingStep = 0
+        profile.partnerID = nil
+        profile.pairedAt = nil
+        try? ctx.save()
+        session.signOut()
         dismiss()
     }
 }

@@ -111,9 +111,69 @@ struct WelcomeStep: View {
                         .submitLabel(.done)
                 }
 
-                // The tone, not the gender. It is what actually drives the UI,
-                // it includes people who do not fit either box, and nobody has
-                // to be sorted into a category to pick a colour they like.
+                // Asked because it is the fastest way to a right-looking app:
+                // it sets the DEFAULT accent below. It does not replace that
+                // picker and it does not gate anything — every option is one
+                // tap from every other, and "Prefer not to say" is a real
+                // answer that changes nothing.
+                VStack(alignment: .leading, spacing: TetherSpace.s) {
+                    Text("About you")
+                        .font(TetherType.label)
+                        .foregroundStyle(TetherColor.text)
+                    Text("This only picks your starting colour. Change it any time.")
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+
+                    // Two columns, because four stacked rows push the tone
+                    // picker and the button off the bottom of the screen —
+                    // the exact overflow this ScrollView exists to prevent.
+                    LazyVGrid(columns: [GridItem(.flexible()),
+                                        GridItem(.flexible())],
+                              spacing: TetherSpace.s) {
+                        ForEach(Gender.allCases) { option in
+                            Button {
+                                profile.genderRaw = option.rawValue
+                                FeelManager.shared.raw = option.preferredFeel.rawValue
+                                TetherHaptics.light()
+                            } label: {
+                                HStack(spacing: 6) {
+                                    Image(systemName: option.symbol)
+                                        .font(.system(size: 12))
+                                    Text(option.title)
+                                        .font(TetherType.caption)
+                                }
+                                .foregroundStyle(profile.genderRaw == option.rawValue
+                                                 ? .white : TetherColor.text)
+                                .frame(maxWidth: .infinity)
+                                .frame(minHeight: 44)
+                                .background(profile.genderRaw == option.rawValue
+                                            ? AnyShapeStyle(TetherGradient.brand)
+                                            : AnyShapeStyle(TetherColor.surface))
+                                .clipShape(RoundedRectangle(
+                                    cornerRadius: TetherRadius.small,
+                                    style: .continuous))
+                                .overlay(
+                                    RoundedRectangle(
+                                        cornerRadius: TetherRadius.small,
+                                        style: .continuous)
+                                        .strokeBorder(
+                                            profile.genderRaw == option.rawValue
+                                            ? .clear : TetherColor.border,
+                                            lineWidth: 1)
+                                )
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityAddTraits(
+                                profile.genderRaw == option.rawValue
+                                ? [.isSelected] : [])
+                        }
+                    }
+                }
+
+                // The tone. Gender above sets this by default; this is where
+                // anyone overrides it, and it includes people who do not fit
+                // either box — which is why it stays.
                 VStack(alignment: .leading, spacing: TetherSpace.s) {
                     Text("How should it feel?")
                         .font(TetherType.label)

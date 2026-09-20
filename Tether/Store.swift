@@ -8,6 +8,15 @@ final class SessionStore {
     var profile: UserProfile?
     var showPaywall = false
     var safetyBanner: String?
+
+    /// Clearing the profile is what sends the app back to onboarding — the
+    /// root view branches on whether this exists. Used when data is erased,
+    /// where returning someone to a Home built around data that is gone reads
+    /// as a bug rather than as a completed action.
+    func signOut() {
+        profile = nil
+        safetyBanner = nil
+    }
 }
 
 // MARK: - Streaks

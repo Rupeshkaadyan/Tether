@@ -86,7 +86,11 @@ struct JournalComposer: View {
                     }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Save") { save() }
+                    // The button names the destination. "Save" alone gave no
+                    // confirmation of where the entry was about to go, so a
+                    // person could write in Shared, save, and reasonably
+                    // believe it had vanished when it landed somewhere else.
+                    Button(isShared ? "Save to Shared" : "Save privately") { save() }
                         .disabled(text.trimmed.isEmpty)
                 }
             }

@@ -69,6 +69,45 @@ enum Visibility: String, Codable {
     case shared, `private`
 }
 
+/// Who you are, asked once at the start and never again.
+///
+/// This only sets the DEFAULT accent. It is not a gate and not a judgement —
+/// anyone can change the accent in Settings afterwards. Picking "Woman" simply
+/// starts you on the rose palette instead of the indigo one, because that is
+/// what most people who pick it turn out to want, and expecting them to go and
+/// find it in Settings is expecting them to know it exists.
+enum Gender: String, CaseIterable, Identifiable {
+    case woman, man, nonbinary, undisclosed
+
+    var id: String { rawValue }
+
+    var title: LocalizedStringKey {
+        switch self {
+        case .woman:       return "Woman"
+        case .man:         return "Man"
+        case .nonbinary:   return "Non-binary"
+        case .undisclosed: return "Prefer not to say"
+        }
+    }
+
+    var symbol: String {
+        switch self {
+        case .woman:       return "person.fill"
+        case .man:         return "person.fill"
+        case .nonbinary:   return "person.fill"
+        case .undisclosed: return "person.crop.circle"
+        }
+    }
+
+    /// The accent this choice starts you on.
+    var preferredFeel: FeelManager.Feel {
+        switch self {
+        case .woman: return .warm
+        default:     return .classic
+        }
+    }
+}
+
 enum EntrySource: String, Codable {
     case prompt, journal, coach
 }
@@ -167,6 +206,9 @@ final class UserProfile {
     /// A small avatar, shown next to your name and beside your partner's when
     /// you are connected. External storage keeps it out of the main store.
     @Attribute(.externalStorage) var photoData: Data?
+    /// Asked once during onboarding. Sets the starting accent only — see
+    /// `Gender` for why it is not a gate.
+    var genderRaw: String = ""
     var trackRaw: String = ""
     var locale: String = ""
     var timeZoneID: String = ""
