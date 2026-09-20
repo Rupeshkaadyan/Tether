@@ -27,7 +27,6 @@ struct HomeView: View {
     @State private var mood = 3
     @State private var reply = ""
     @State private var showSettings = false
-    @State private var showSaved = false
     @State private var showPairing = false
     @State private var showRecap = false
     @State private var showTogether = false
@@ -43,7 +42,6 @@ struct HomeView: View {
     @State private var showPause = false
     @State private var showTwoVersions = false
     /// Set by a Home Screen quick action.
-    @State private var pendingQuickAction: QuickAction?
     @State private var showJournal = false
 
     /// The gallery below the ritual. Built here so each tile can carry a LIVE

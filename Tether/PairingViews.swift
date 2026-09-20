@@ -214,7 +214,6 @@ struct WaitingRoomView: View {
 
     @Environment(\.modelContext) private var ctx
     @State private var showCopied = false
-    @State private var tick = 0
 
     private var qrPayload: String {
         "tether://join?code=\(invite.code)"

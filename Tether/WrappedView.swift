@@ -154,7 +154,6 @@ struct WrappedView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var image: Image?
-    @State private var showShare = false
 
     let stats: WrappedStats
 

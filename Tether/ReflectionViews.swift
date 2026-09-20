@@ -273,7 +273,6 @@ struct RevealMomentView: View {
     @State private var revealed = false
     /// The one line they can send back. This is the point of the whole screen.
     @State private var replyText = ""
-    @State private var replySent = false
 
     var body: some View {
         ZStack {
@@ -394,7 +393,6 @@ struct RevealMomentView: View {
         entry.replyAt = Date()
         try? ctx.save()
         replyText = ""
-        replySent = true
         TetherHaptics.success()
     }
 
