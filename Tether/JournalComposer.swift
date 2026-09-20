@@ -11,6 +11,11 @@ struct JournalComposer: View {
     /// Which tab the person was on when they opened this. If they were looking
     /// at Shared, they probably mean to write a shared entry.
     var initialScope: JournalView.Scope = .onlyMe
+    /// Called with the saved entry so the journal can switch to whichever tab
+    /// it actually landed in. Without this, writing a shared entry from the
+    /// Shared tab saved it, closed the sheet, and the screen looked unchanged
+    /// — the entry existed, but under the other tab.
+    var onSaved: ((JournalEntry) -> Void)? = nil
 
     @Environment(\.modelContext) private var ctx
     @Environment(\.dismiss) private var dismiss
@@ -45,12 +50,19 @@ struct JournalComposer: View {
                             .focused($focused)
                     }
 
-                    // Only offered when there is someone to share WITH. Asking
-                    // an unpaired person to choose is meaningless.
-                    if partner != nil {
-                        VisibilityPicker(isShared: $isShared,
-                                         partnerName: partner?.displayName)
-                    }
+                    // ALWAYS shown, even with no partner.
+                    //
+                    // It was hidden entirely unless a partner existed, so an
+                    // unpaired person wrote into Shared, saw nothing appear,
+                    // and reasonably concluded the button was broken. The
+                    // entry was being saved — as private, silently, because
+                    // there was nobody to share it with and no way to say so.
+                    //
+                    // The control is visible either way; Shared is simply not
+                    // selectable until there is someone to share with.
+                    VisibilityPicker(isShared: $isShared,
+                                     partnerName: partner?.displayName,
+                                     canShare: partner != nil)
                 }
                 .padding(TetherSpace.margin)
                 .padding(.bottom, TetherSpace.xxl)
@@ -104,6 +116,7 @@ struct JournalComposer: View {
 
         try? ctx.save()
         TetherHaptics.success()
+        onSaved?(entry)
         dismiss()
     }
 }

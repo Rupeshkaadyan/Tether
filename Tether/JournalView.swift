@@ -102,7 +102,12 @@ struct JournalView: View {
             }
             .sheet(isPresented: $showSettings) { SettingsView(profile: profile) }
             .sheet(isPresented: $showComposer) {
-                JournalComposer(profile: profile, initialScope: scope)
+                JournalComposer(profile: profile, initialScope: scope) { entry in
+                    // Follow the entry. Writing "shared" while standing in the
+                    // "Only me" tab used to save it and show nothing, which
+                    // looks exactly like the button not working.
+                    scope = (entry.visibility == .shared) ? .shared : .onlyMe
+                }
             }
             .overlay(alignment: .bottomTrailing) {
                 // Write from the journal. Entries could previously only be
@@ -346,6 +351,42 @@ struct JournalView: View {
             .padding(.bottom, TetherSpace.m)
         }
         .accessibilityElement(children: .combine)
+        // Long-press for the things you would reasonably want to do to an
+        // entry you already wrote: move it between private and shared, or
+        // delete it. Previously there was no way to do either — once written,
+        // an entry was fixed for good.
+        .contextMenu {
+            if entry.userID == profile.id {
+                Button {
+                    toggleShare(entry)
+                } label: {
+                    Label(entry.visibility == .shared ? "Make it only mine"
+                                                     : "Share with \(partner?.displayName ?? "partner")",
+                          systemImage: entry.visibility == .shared ? "lock.fill" : "person.2.fill")
+                }
+                .disabled(partner == nil && entry.visibility == .private)
+
+                Button(role: .destructive) {
+                    delete(entry)
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+            }
+        }
+    }
+
+    private func toggleShare(_ entry: JournalEntry) {
+        withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
+            entry.visibility = (entry.visibility == .shared) ? .private : .shared
+            try? ctx.save()
+        }
+        TetherHaptics.light()
+    }
+
+    private func delete(_ entry: JournalEntry) {
+        ctx.delete(entry)
+        try? ctx.save()
+        TetherHaptics.light()
     }
 
     private var emptyState: some View {

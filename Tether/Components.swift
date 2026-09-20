@@ -185,6 +185,9 @@ struct PromptCard: View {
 struct VisibilityPicker: View {
     @Binding var isShared: Bool
     var partnerName: String?
+    /// False when there is nobody to share with. The option still shows —
+    /// visibly unavailable, so the control does not appear broken.
+    var canShare: Bool = true
 
     var body: some View {
         VStack(alignment: .leading, spacing: TetherSpace.s) {
@@ -194,13 +197,17 @@ struct VisibilityPicker: View {
                 option(value: false,
                        icon: "lock.fill",
                        title: "Only me",
-                       subtitle: "Nobody else sees this.")
+                       subtitle: "Nobody else sees this.",
+                       enabled: true)
                 option(value: true,
                        icon: "person.2.fill",
                        title: "Shared",
-                       subtitle: partnerName == nil
-                                 ? "You both see this."
-                                 : "\(partnerName ?? "They") can read this.")
+                       subtitle: canShare
+                                 ? (partnerName == nil
+                                    ? "You both see this."
+                                    : "\(partnerName ?? "They") can read this.")
+                                 : "Pair with your partner first.",
+                       enabled: canShare)
             }
         }
     }
@@ -208,8 +215,10 @@ struct VisibilityPicker: View {
     private func option(value: Bool,
                         icon: String,
                         title: String,
-                        subtitle: String) -> some View {
+                        subtitle: String,
+                        enabled: Bool) -> some View {
         Button {
+            guard enabled else { return }
             isShared = value
             TetherHaptics.light()
         } label: {
@@ -242,7 +251,9 @@ struct VisibilityPicker: View {
             )
         }
         .buttonStyle(.plain)
+        .opacity(enabled ? 1 : 0.5)
         .accessibilityAddTraits(isShared == value ? [.isSelected] : [])
+        .accessibilityHidden(!enabled)
     }
 }
 
