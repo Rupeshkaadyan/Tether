@@ -274,9 +274,11 @@ struct CoachView: View {
         }
         .background(TetherColor.surface)
         .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                Spacer()
-                Button("Done") { dismissKeyboard() }
+            ToolbarItem(placement: .keyboard) {
+                HStack {
+                    Spacer()
+                    Button("Done") { dismissKeyboard() }
+                }
             }
         }
     }

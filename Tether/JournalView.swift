@@ -83,18 +83,17 @@ struct JournalView: View {
                 // dismissal is the hardware/software "hide keyboard" control,
                 // which most people do not know exists — so the search field
                 // stayed focused and the screen stayed half-covered.
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") { searchFocused = false }
+                ToolbarItem(placement: .keyboard) {
+                    HStack {
+                        Spacer()
+                        Button("Done") { searchFocused = false }
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
-                    Menu {
-                        Button {
-                            showSettings = true
-                        } label: {
-                            Label("Settings", systemImage: "gearshape")
-                        }
-                    } label: {
+                    // A plain button. This was briefly a Menu with a single
+                    // item, which is strictly worse: an extra tap to reach the
+                    // only option, and a nav-bar item UIKit then has to size.
+                    Button { showSettings = true } label: {
                         Icon(.settings, size: 21, color: TetherColor.muted)
                     }
                     .accessibilityLabel("Settings")

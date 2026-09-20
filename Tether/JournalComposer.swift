@@ -74,9 +74,16 @@ struct JournalComposer: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancel") { dismiss() }
                 }
+                // ToolbarItem (singular) wrapping an HStack, NOT
+                // ToolbarItemGroup with a Spacer child. In a Group every child
+                // becomes its own UIBarButtonItem, so the Spacer became a
+                // zero-width bar item — which is the "ItemWrapperView.width ==
+                // 0" constraint break. Inside an HStack it is just layout.
                 ToolbarItem(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") { focused = false }
+                    HStack {
+                        Spacer()
+                        Button("Done") { focused = false }
+                    }
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") { save() }
