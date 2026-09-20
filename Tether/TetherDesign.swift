@@ -84,8 +84,14 @@ struct TetherAtmosphere: View {
 
     var body: some View {
         GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
+            // Guarded. Inside a scrolling List a GeometryReader can be handed
+            // a zero or NEGATIVE size while rows are being measured and
+            // recycled. Every dimension below multiplies this, and `sag` is
+            // passed into a Path — a negative sag produces negative control
+            // points, which is one source of "Invalid frame dimension
+            // (negative or non-finite)" while scrolling Settings.
+            let w = geo.size.width.isFinite ? max(0, geo.size.width) : 0
+            let h = geo.size.height.isFinite ? max(0, geo.size.height) : 0
 
             ZStack {
                 // Two wide arcs, anchored off-screen so only a shoulder shows.
