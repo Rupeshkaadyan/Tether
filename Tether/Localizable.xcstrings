@@ -1053,6 +1053,28 @@
         }
       }
     },
+    "Add a note to draw from": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Add a note to draw from"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नोट जोड़ें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añade una nota"
+          }
+        }
+      }
+    },
     "Add a note, photo or voice": {
       "localizations": {
         "en": {
@@ -2407,6 +2429,28 @@
         }
       }
     },
+    "Draw something to think about": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Draw something to think about"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कुछ सोचने के लिए निकालें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Saca algo en qué pensar"
+          }
+        }
+      }
+    },
     "Drifting": {
       "extractionState": "stale",
       "localizations": {
@@ -2660,6 +2704,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tether की हर चीज़, आप दोनों के लिए, महीने के एक टेकअवे से भी कम में।"
+          }
+        }
+      }
+    },
+    "Everything, in one place": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Everything, in one place"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सब कुछ, एक जगह"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todo en un lugar"
+          }
+        }
+      }
+    },
+    "Explore": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Explore"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खोजें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Explorar"
           }
         }
       }
@@ -2967,6 +3055,28 @@
         }
       }
     },
+    "Guess, then find out": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Guess, then find out"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अंदाज़ा लगाएँ, फिर जानें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adivina y descubre"
+          }
+        }
+      }
+    },
     "Higher is better": {
       "localizations": {
         "es": {
@@ -3146,6 +3256,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "यह कैसा लगे?"
+          }
+        }
+      }
+    },
+    "How the week actually went": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "How the week actually went"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सप्ताह वास्तव में कैसा रहा"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cómo fue la semana"
           }
         }
       }
@@ -3518,6 +3650,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "केवल मेरे लिए"
+          }
+        }
+      }
+    },
+    "Just the two of you": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Just the two of you"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सिर्फ़ आप दोनों"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo vosotros dos"
           }
         }
       }
@@ -4700,6 +4854,28 @@
         }
       }
     },
+    "Nothing to look back on yet": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Nothing to look back on yet"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी देखने के लिए कुछ नहीं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aún no hay nada que mirar"
+          }
+        }
+      }
+    },
     "Numbers only. Not one word either of you wrote is on this card — that is the point.": {
       "localizations": {
         "en": {
@@ -5178,6 +5354,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "पहले अपने साथी से जुड़ें।"
+          }
+        }
+      }
+    },
+    "Pause the reminders": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Pause the reminders"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "याद दिलाना रोकें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pausar los recordatorios"
           }
         }
       }
@@ -6504,6 +6702,28 @@
         }
       }
     },
+    "Slow it down and be careful with each other": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Slow it down and be careful with each other"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "धीमे रहें और एक-दूसरे का ध्यान रखें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Id despacio y cuidaos"
+          }
+        }
+      }
+    },
     "Small proofs that you keep showing up.": {
       "localizations": {
         "es": {
@@ -7125,6 +7345,28 @@
         }
       }
     },
+    "Talk it through, in your own words": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Talk it through, in your own words"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने शब्दों में बात करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Háblalo con tus palabras"
+          }
+        }
+      }
+    },
     "Tether": {
       "localizations": {
         "en": {
@@ -7387,6 +7629,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "वे इसे जार से निकाल सकते हैं।"
+          }
+        }
+      }
+    },
+    "Things you didn't send": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Things you didn't send"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जो आपने नहीं भेजा"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cosas que no enviaste"
           }
         }
       }
@@ -8782,6 +9046,28 @@
         }
       }
     },
+    "What you're both glad of": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "What you're both glad of"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जिसके लिए आप दोनों आभारी हैं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lo que ambos agradecéis"
+          }
+        }
+      }
+    },
     "When": {
       "localizations": {
         "en": {
@@ -9084,6 +9370,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "जहाँ आप अलग थे"
+          }
+        }
+      }
+    },
+    "Where you've been": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Where you've been"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप कहाँ थे"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dónde has estado"
           }
         }
       }
@@ -9691,6 +9999,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपने लिखा। यही मायने रखता था।"
+          }
+        }
+      }
+    },
+    "You're in one": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "You're in one"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप इसमें हैं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Estás en una"
           }
         }
       }

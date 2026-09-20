@@ -46,6 +46,126 @@ struct HomeView: View {
     @State private var pendingQuickAction: QuickAction?
     @State private var showJournal = false
 
+    /// The gallery below the ritual. Built here so each tile can carry a LIVE
+    /// reason to tap it — a count, a state — rather than only a name.
+    private var galleryTiles: [GalleryTile] {
+        var tiles: [GalleryTile] = []
+
+        // Wide, because this is the one that matters most right now.
+        tiles.append(GalleryTile(
+            id: "coach",
+            icon: .coach,
+            title: "Ask the coach",
+            detail: "Talk it through, in your own words",
+            tint: TetherColor.brand,
+            isWide: true,
+            action: { onOpenCoach() }
+        ))
+
+        tiles.append(GalleryTile(
+            id: "jar",
+            icon: .bookmark,
+            title: "Wisdom Jar",
+            detail: jarNotes.isEmpty ? "Add a note to draw from"
+                                     : "Draw something to think about",
+            badge: jarNotes.isEmpty ? nil : "\(jarNotes.count)",
+            tint: TetherColor.brand,
+            action: { showJar = true }
+        ))
+
+        tiles.append(GalleryTile(
+            id: "memory",
+            icon: .memory,
+            title: "Memory Lane",
+            detail: olderEntries.isEmpty ? "Nothing to look back on yet"
+                                         : "Where you've been",
+            badge: olderEntries.isEmpty ? nil : "\(olderEntries.count)",
+            tint: TetherColor.warm,
+            action: { showMemoryLane = true }
+        ))
+
+        tiles.append(GalleryTile(
+            id: "together",
+            icon: .couple,
+            title: "Gratitude & Us",
+            detail: "What you're both glad of",
+            tint: TetherColor.rose,
+            action: { showTogether = true }
+        ))
+
+        tiles.append(GalleryTile(
+            id: "unsent",
+            icon: .privateEntry,
+            title: "Unsent",
+            detail: "Things you didn't send",
+            tint: TetherColor.muted,
+            action: { showUnsent = true }
+        ))
+
+        if isPaired {
+            tiles.append(GalleryTile(
+                id: "chat",
+                icon: .send,
+                title: "Private chat",
+                detail: "Just the two of you",
+                tint: TetherColor.brand,
+                action: { showChat = true }
+            ))
+        }
+
+        tiles.append(GalleryTile(
+            id: "quiz",
+            icon: .star,
+            title: "How well do you know them?",
+            detail: "Guess, then find out",
+            tint: TetherColor.warm,
+            action: { showQuiz = true }
+        ))
+
+        tiles.append(GalleryTile(
+            id: "year",
+            icon: .calendar,
+            title: "Your year",
+            detail: "Everything, in one place",
+            tint: TetherColor.rose,
+            action: { showWrapped = true }
+        ))
+
+        tiles.append(GalleryTile(
+            id: "recap",
+            icon: .trendUp,
+            title: "Weekly recap",
+            detail: "How the week actually went",
+            tint: TetherColor.muted,
+            action: { showRecap = true }
+        ))
+
+        tiles.append(GalleryTile(
+            id: "pause",
+            icon: .pause,
+            title: "Quiet week",
+            detail: pauses.contains(where: { $0.isActive })
+                   ? "You're in one" : "Pause the reminders",
+            badge: pauses.contains(where: { $0.isActive }) ? "On" : nil,
+            tint: TetherColor.brand,
+            action: { showPause = true }
+        ))
+
+        // Wide, and last: it should be easy to find and hard to hit by
+        // accident, which is the right combination for this one.
+        tiles.append(GalleryTile(
+            id: "cooldown",
+            icon: .shield,
+            title: "We're in a hard moment",
+            detail: "Slow it down and be careful with each other",
+            tint: TetherColor.strained,
+            isWide: true,
+            action: { showCooldown = true }
+        ))
+
+        return tiles
+    }
+
     /// Days both people wrote about, where at least one found it hard.
     private var twoVersions: [TwoVersions] {
         TwoVersionsEngine.find(entries: entries,
@@ -219,41 +339,17 @@ struct HomeView: View {
                         .buttonStyle(.plain)
                     }
 
-                    Button("Ask the coach") { onOpenCoach() }
-                        .tetherButton()
-                        .padding(.top, TetherSpace.s)
-
-                    if isPaired {
-                        Button("Private chat") { showChat = true }
-                            .tetherButton(.secondary)
-                    }
-
-                    Button("Unsent") { showUnsent = true }
-                        .tetherButton(.secondary)
-
-                    Button("How well do you know them?") { showQuiz = true }
-                        .tetherButton(.secondary)
-
-                    Button("Your year") { showWrapped = true }
-                        .tetherButton(.secondary)
-
-                    Button("Quiet week") { showPause = true }
-                        .tetherButton(.secondary)
-
-                    Button("Wisdom Jar") { showJar = true }
-                        .tetherButton(.secondary)
-
-                    Button("Memory Lane") { showMemoryLane = true }
-                        .tetherButton(.secondary)
-
-                    Button("Gratitude & Us") { showTogether = true }
-                        .tetherButton(.secondary)
-
-                    Button("We're in a hard moment") { showCooldown = true }
-                        .tetherButton(.tertiary)
-
-                    Button("View weekly recap") { showRecap = true }
-                        .tetherButton(.secondary)
+                    // A gallery, not a list.
+                    //
+                    // This was ten identical full-width buttons stacked
+                    // vertically, which read as a settings screen rather than
+                    // as somewhere you want to spend time. Tiles carry an
+                    // illustration and a live reason to tap — "3 notes
+                    // waiting" beats a static label — and the wide tile breaks
+                    // the two-column rhythm so the eye does not slide past.
+                    SectionHeader(title: "Explore")
+                    HomeGallery(tiles: galleryTiles)
+                        .tetherAppear(delay: 0.2)
                 }
                 .padding(TetherSpace.margin)
                 .readableFrame()
