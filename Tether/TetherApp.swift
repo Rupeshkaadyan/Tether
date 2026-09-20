@@ -66,6 +66,14 @@ struct TetherApp: App {
                     default: break
                     }
                 }
+                // Long-press the icon and you get three ways in: write
+                // something, answer today's question, or start a quiet week.
+                // Re-installed whenever the app becomes active — the system
+                // can drop them, and a shortcut that silently disappears is
+                // worse than none.
+                .onChange(of: scenePhase) { _, phase in
+                    if phase == .active { AppShortcuts.install() }
+                }
         }
     }
 }

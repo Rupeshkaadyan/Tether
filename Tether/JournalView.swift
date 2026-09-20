@@ -350,10 +350,24 @@ struct JournalView: View {
             .padding(.bottom, TetherSpace.m)
         }
         .accessibilityElement(children: .combine)
-        // Long-press for the things you would reasonably want to do to an
-        // entry you already wrote: move it between private and shared, or
-        // delete it. Previously there was no way to do either — once written,
-        // an entry was fixed for good.
+        // Swipe, as well as long-press. On a list of things you wrote, swipe
+        // is the gesture people actually try first; a context menu is what
+        // they find afterwards when the swipe did nothing.
+        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+            if entry.userID == profile.id {
+                Button(role: .destructive) { delete(entry) } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+                Button { toggleShare(entry) } label: {
+                    Label(entry.visibility == .shared ? "Only mine" : "Share",
+                          systemImage: entry.visibility == .shared
+                                       ? "lock.fill" : "person.2.fill")
+                }
+                .tint(TetherColor.brand)
+            }
+        }
+        // Long-press for the same actions. Previously there was no way to do
+        // either — once written, an entry was fixed for good.
         .contextMenu {
             if entry.userID == profile.id {
                 Button {
