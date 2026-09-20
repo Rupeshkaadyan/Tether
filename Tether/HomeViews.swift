@@ -313,27 +313,39 @@ struct HomeView: View {
                         NavigationLink {
                             JournalView(profile: profile)
                         } label: {
-                            HStack(spacing: TetherSpace.s) {
-                                IconDisc(icon: .journal, size: 34,
-                                         color: TetherColor.brand)
-                                VStack(alignment: .leading, spacing: 2) {
+                            VStack(alignment: .leading, spacing: TetherSpace.m) {
+                                HStack(spacing: TetherSpace.s) {
                                     Text("Your journal")
                                         .font(TetherType.label)
                                         .foregroundStyle(TetherColor.text)
+                                    Spacer(minLength: 0)
                                     Text("\(olderEntries.count) recent "
                                          + (olderEntries.count == 1 ? "entry" : "entries"))
-                                        .font(TetherType.caption)
-                                        .foregroundStyle(TetherColor.muted)
+                                        .font(TetherType.micro)
+                                        .foregroundStyle(TetherColor.faint)
                                 }
-                                Spacer(minLength: 0)
-                                Image(systemName: "chevron.right")
-                                    .font(.system(size: 13))
-                                    .foregroundStyle(TetherColor.faint)
-                                    .accessibilityHidden(true)
+
+                                // Real previews, not a row of icon shapes.
+                                //
+                                // A photo shows as a photo, a voice note shows
+                                // a waveform, and everything else shows the
+                                // opening line of what was written. An icon
+                                // grid told you what TYPES of thing were
+                                // there; this shows you the things.
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: TetherSpace.s) {
+                                        ForEach(Array(olderEntries.prefix(6))) { entry in
+                                            JournalThumb(entry: entry)
+                                        }
+                                    }
+                                }
+                                // Lets the horizontal strip scroll without
+                                // hijacking the vertical scroll of Home.
+                                .scrollClipDisabled()
                             }
                             .padding(TetherSpace.m)
                             .background(TetherColor.surface)
-                            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
+                            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large,
                                                         style: .continuous))
                         }
                         .buttonStyle(.plain)
@@ -1388,6 +1400,8 @@ struct SettingsView: View {
     @State private var showTrack = false
     @State private var exportUnlocked = false
     @State private var profilePhoto: PhotosPickerItem?
+    /// Set by the picker, cleared once the crop is confirmed.
+    @State private var pendingCropImage: UIImage?
 
     /// What the account line says. Honest about CloudKit being off — saying
     /// "connected" when sync is not enabled would be a lie the person would
@@ -1400,12 +1414,22 @@ struct SettingsView: View {
     }
 
     private func loadProfilePhoto() async {
-        guard let data = try? await profilePhoto?.loadTransferable(type: Data.self)
+        guard let data = try? await profilePhoto?.loadTransferable(type: Data.self),
+              let image = UIImage(data: data)
         else { return }
-        // Downscale before storing. A full-resolution photo in the store is
-        // the kind of thing that quietly makes an app slow.
-        profile.photoData = UIImage(data: data)?.downsampled(to: 512)
+        // Held for the cropper rather than saved straight away. A photo taken
+        // as-is is whatever framing the camera happened to capture; letting
+        // someone set the framing is the difference between a picture that
+        // looks chosen and one that looks uploaded.
+        pendingCropImage = image
+    }
+
+    private func commitCroppedPhoto(_ image: UIImage) {
+        profile.photoData = image.downsampled(to: 512)
         try? ctx.save()
+        pendingCropImage = nil
+        profilePhoto = nil
+        TetherHaptics.success()
     }
     @State private var exportMessage: String?
     @State private var switchingLanguage = false
@@ -1463,6 +1487,10 @@ struct SettingsView: View {
         case .warm:
             return AnyShapeStyle(LinearGradient(
                 colors: [Color(hex: "C4608A"), Color(hex: "8E3A61")],
+                startPoint: .topLeading, endPoint: .bottomTrailing))
+        case .bold:
+            return AnyShapeStyle(LinearGradient(
+                colors: [Color(hex: "1F6FD0"), Color(hex: "0B3D80")],
                 startPoint: .topLeading, endPoint: .bottomTrailing))
         }
     }
@@ -1573,6 +1601,17 @@ struct SettingsView: View {
                     .padding(.vertical, TetherSpace.xs)
                 }
                 .task(id: profilePhoto) { await loadProfilePhoto() }
+                .fullScreenCover(
+                    isPresented: Binding(
+                        get: { pendingCropImage != nil },
+                        set: { if !$0 { pendingCropImage = nil } })
+                ) {
+                    if let image = pendingCropImage {
+                        PhotoCropper(image: image,
+                                     onDone: { commitCroppedPhoto($0) },
+                                     onCancel: { pendingCropImage = nil })
+                    }
+                }
 
                 Section {
                     HStack {

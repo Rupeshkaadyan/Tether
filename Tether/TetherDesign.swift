@@ -367,13 +367,14 @@ final class FeelManager {
     static let shared = FeelManager()
 
     enum Feel: String, CaseIterable, Identifiable {
-        case classic, warm
+        case classic, bold, warm
 
         var id: String { rawValue }
 
         var title: String {
             switch self {
             case .classic: return "Classic"
+            case .bold:    return "Bold"
             case .warm:    return "Warm"
             }
         }
@@ -381,6 +382,7 @@ final class FeelManager {
         var blurb: String {
             switch self {
             case .classic: return "Cool indigo. Even-toned and direct."
+            case .bold:    return "Deep steel blue. Grounded and certain."
             case .warm:    return "Rose and plum. Softer, more reflective."
             }
         }

@@ -25,6 +25,21 @@ struct TetherApp: App {
             ? CloudKitSyncService(containerID: Persistence.cloudKitContainerID)
             : LocalSyncService()
         _sync = State(initialValue: service)
+
+        // Lock on COLD LAUNCH, not only on background.
+        //
+        // isLocked starts false and lock() was only called from
+        // scenePhase == .background. So quitting the app and reopening it —
+        // as opposed to switching back to it from the app switcher — opened
+        // straight into the journal with no Face ID at all. For an app
+        // holding someone's private writing, that is the whole protection
+        // gone at exactly the moment it is most needed.
+        //
+        // Locking here means every entry point asks: cold start, and return
+        // from background.
+        if AppLockManager.shared.isEnabled {
+            AppLockManager.shared.lock()
+        }
     }
 
     var body: some Scene {

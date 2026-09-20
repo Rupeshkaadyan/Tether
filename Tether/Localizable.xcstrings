@@ -1061,16 +1061,16 @@
             "value": "Add a note to draw from"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "नोट जोड़ें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Añade una nota"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नोट जोड़ें"
           }
         }
       }
@@ -1577,6 +1577,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "बाइबिल आधारित"
+          }
+        }
+      }
+    },
+    "Bold": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Bold"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सशक्त"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intenso"
           }
         }
       }
@@ -2212,6 +2234,28 @@
         }
       }
     },
+    "Deep steel blue. Grounded and certain.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Deep steel blue. Grounded and certain."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गहरा इस्पात नीला। स्थिर और निश्चित।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Azul acero profundo. Firme y seguro."
+          }
+        }
+      }
+    },
     "Deep water, slow bubbles rising.": {
       "localizations": {
         "en": {
@@ -2437,16 +2481,16 @@
             "value": "Draw something to think about"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "कुछ सोचने के लिए निकालें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Saca algo en qué pensar"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "कुछ सोचने के लिए निकालें"
           }
         }
       }
@@ -2716,21 +2760,22 @@
             "value": "Everything, in one place"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "सब कुछ, एक जगह"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Todo en un lugar"
           }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सब कुछ, एक जगह"
+          }
         }
       }
     },
     "Explore": {
+      "extractionState": "stale",
       "localizations": {
         "en": {
           "stringUnit": {
@@ -2738,16 +2783,16 @@
             "value": "Explore"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "खोजें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Explorar"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खोजें"
           }
         }
       }
@@ -2887,16 +2932,16 @@
             "value": "Frosted, weightless, softly lit."
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ठंडा पाला, हल्का, कोमल रोशनी।"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Escarchado, ligero, suavemente iluminado."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ठंडा पाला, हल्का, कोमल रोशनी।"
           }
         }
       }
@@ -2981,16 +3026,16 @@
             "value": "Glass"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "काँच"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Cristal"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "काँच"
           }
         }
       }
@@ -3063,16 +3108,16 @@
             "value": "Guess, then find out"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अंदाज़ा लगाएँ, फिर जानें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Adivina y descubre"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अंदाज़ा लगाएँ, फिर जानें"
           }
         }
       }
@@ -3268,16 +3313,16 @@
             "value": "How the week actually went"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "सप्ताह वास्तव में कैसा रहा"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Cómo fue la semana"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सप्ताह वास्तव में कैसा रहा"
           }
         }
       }
@@ -3662,16 +3707,16 @@
             "value": "Just the two of you"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "सिर्फ़ आप दोनों"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Solo vosotros dos"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सिर्फ़ आप दोनों"
           }
         }
       }
@@ -4862,16 +4907,16 @@
             "value": "Nothing to look back on yet"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अभी देखने के लिए कुछ नहीं"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Aún no hay nada que mirar"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अभी देखने के लिए कुछ नहीं"
           }
         }
       }
@@ -5194,16 +5239,16 @@
             "value": "Only mine"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "सिर्फ़ मेरा"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Solo mía"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सिर्फ़ मेरा"
           }
         }
       }
@@ -5366,16 +5411,16 @@
             "value": "Pause the reminders"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "याद दिलाना रोकें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Pausar los recordatorios"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "याद दिलाना रोकें"
           }
         }
       }
@@ -5398,6 +5443,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "फ़ोटो"
+          }
+        }
+      }
+    },
+    "Photo entry": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Photo entry"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "फ़ोटो प्रविष्टि"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrada con foto"
           }
         }
       }
@@ -5457,6 +5524,28 @@
         }
       }
     },
+    "Pinch to zoom, drag to move.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Pinch to zoom, drag to move."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ज़ूम करने के लिए पिंच करें, हिलाने के लिए खींचें।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pellizca para ampliar, arrastra para mover."
+          }
+        }
+      }
+    },
     "Play voice note": {
       "localizations": {
         "en": {
@@ -5497,6 +5586,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "चल रहा है…"
+          }
+        }
+      }
+    },
+    "Position": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Position"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्थिति"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Posición"
           }
         }
       }
@@ -5987,6 +6098,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tether खोलने पर आपके डिवाइस का पासकोड या Face ID चाहिए। और कोई आपकी जर्नल नहीं पढ़ सकता।"
+          }
+        }
+      }
+    },
+    "Reset": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Reset"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "रीसेट"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer"
           }
         }
       }
@@ -6484,16 +6617,16 @@
             "value": "Share"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "साझा करें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Compartir"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साझा करें"
           }
         }
       }
@@ -6710,16 +6843,16 @@
             "value": "Slow it down and be careful with each other"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "धीमे रहें और एक-दूसरे का ध्यान रखें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Id despacio y cuidaos"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "धीमे रहें और एक-दूसरे का ध्यान रखें"
           }
         }
       }
@@ -7353,16 +7486,16 @@
             "value": "Talk it through, in your own words"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "अपने शब्दों में बात करें"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Háblalo con tus palabras"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपने शब्दों में बात करें"
           }
         }
       }
@@ -7641,16 +7774,16 @@
             "value": "Things you didn't send"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "जो आपने नहीं भेजा"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Cosas que no enviaste"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जो आपने नहीं भेजा"
           }
         }
       }
@@ -8085,6 +8218,28 @@
         }
       }
     },
+    "Use": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Use"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "उपयोग करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Usar"
+          }
+        }
+      }
+    },
     "Vedic & Dharmic": {
       "extractionState": "stale",
       "localizations": {
@@ -8103,6 +8258,7 @@
       }
     },
     "View weekly recap": {
+      "extractionState": "stale",
       "localizations": {
         "es": {
           "stringUnit": {
@@ -8136,6 +8292,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आवाज़"
+          }
+        }
+      }
+    },
+    "Voice entry": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Voice entry"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आवाज़ प्रविष्टि"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrada de voz"
           }
         }
       }
@@ -9054,16 +9232,16 @@
             "value": "What you're both glad of"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "जिसके लिए आप दोनों आभारी हैं"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Lo que ambos agradecéis"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "जिसके लिए आप दोनों आभारी हैं"
           }
         }
       }
@@ -9382,16 +9560,16 @@
             "value": "Where you've been"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आप कहाँ थे"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Dónde has estado"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप कहाँ थे"
           }
         }
       }
@@ -10011,16 +10189,16 @@
             "value": "You're in one"
           }
         },
-        "hi": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "आप इसमें हैं"
-          }
-        },
         "es": {
           "stringUnit": {
             "state": "translated",
             "value": "Estás en una"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप इसमें हैं"
           }
         }
       }

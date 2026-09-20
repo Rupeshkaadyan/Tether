@@ -102,9 +102,15 @@ enum Gender: String, CaseIterable, Identifiable {
     }
 
     /// The accent this choice starts you on.
+    ///
+    /// Woman gets the rose palette across the whole app. Man gets Bold — a
+    /// deep steel blue, which reads as weight rather than decoration. The
+    /// others start on the neutral indigo. All three stay selectable
+    /// afterwards; this is only which one is pre-chosen.
     var preferredFeel: FeelManager.Feel {
         switch self {
         case .woman: return .warm
+        case .man:   return .bold
         default:     return .classic
         }
     }

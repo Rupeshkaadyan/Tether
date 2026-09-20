@@ -70,8 +70,28 @@ enum TetherColor {
     // app crawled. Building them once here removes that entirely.
     private static let classicBrand     = Color.adaptive("5B4BC4", "8B7BE8")
     private static let warmBrand        = Color.adaptive("B0486E", "E08FA8")
+    /// Deep steel blue. Reads as weight and certainty rather than decoration —
+    /// the point of a distinct masculine accent, not a lighter indigo.
+    private static let boldBrand        = Color.adaptive("1657B8", "4C8EF0")
     private static let classicBrandSoft = Color.adaptive("EFECFB", "2A2440")
     private static let warmBrandSoft    = Color.adaptive("FBEDF1", "34202A")
+    private static let boldBrandSoft    = Color.adaptive("E7EFFB", "16233A")
+
+    private static var brandColor: Color {
+        switch FeelManager.shared.feel {
+        case .warm:    return warmBrand
+        case .bold:    return boldBrand
+        case .classic: return classicBrand
+        }
+    }
+
+    private static var brandSoftColor: Color {
+        switch FeelManager.shared.feel {
+        case .warm:    return warmBrandSoft
+        case .bold:    return boldBrandSoft
+        case .classic: return classicBrandSoft
+        }
+    }
 
     /// The accent for the current Feel.
     ///
@@ -81,11 +101,11 @@ enum TetherColor {
     /// colours above are cached — previously this created a fresh Color, and a
     /// fresh hex parse, on every access.
     static var brand: Color {
-        FeelManager.shared.feel == .warm ? warmBrand : classicBrand
+        brandColor
     }
 
     static var brandSoft: Color {
-        FeelManager.shared.feel == .warm ? warmBrandSoft : classicBrandSoft
+        brandSoftColor
     }
     static let tint          = Color.adaptive("EFECFB", "2A2440")
 
@@ -118,10 +138,19 @@ enum TetherGradient {
         colors: [Color.adaptive("C4608A", "D98BA8"), Color.adaptive("8E3A61", "A85B7E")],
         startPoint: .topLeading, endPoint: .bottomTrailing)
 
+    /// Steel blue ramp, for the Bold feel.
+    private static let boldBrand = LinearGradient(
+        colors: [Color.adaptive("1F6FD0", "4C8EF0"), Color.adaptive("0B3D80", "1E5BA8")],
+        startPoint: .topLeading, endPoint: .bottomTrailing)
+
     /// The brand gradient, following the chosen Feel.
-    /// Classic: #6A57D6 → #4A3AA8. Warm: rose → plum.
+    /// Classic: #6A57D6 → #4A3AA8. Bold: steel blue. Warm: rose → plum.
     static var brand: LinearGradient {
-        FeelManager.shared.feel == .warm ? warmBrand : classicBrand
+        switch FeelManager.shared.feel {
+        case .warm:    return warmBrand
+        case .bold:    return boldBrand
+        case .classic: return classicBrand
+        }
     }
 
     static let dawn = LinearGradient(
