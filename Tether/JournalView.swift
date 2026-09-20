@@ -272,9 +272,14 @@ struct JournalView: View {
 
             VStack(alignment: .leading, spacing: TetherSpace.xs) {
                 HStack(spacing: TetherSpace.s) {
+                    // The actual time, not just "morning". Two entries on the
+                    // same day were previously indistinguishable — same date,
+                    // same label — so there was no way to tell which was which
+                    // or what order they happened in.
                     Text(entry.entryDate.formatted(
                         .dateTime.weekday(.abbreviated).day().month(.abbreviated))
-                         + " · " + timeOfDayLabel(entry.entryDate))
+                         + " · "
+                         + entry.entryDate.formatted(.dateTime.hour().minute()))
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
                     Spacer(minLength: 0)

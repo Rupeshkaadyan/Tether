@@ -177,9 +177,43 @@ struct HomeView: View {
                             .tetherAppear(delay: 0.2)
                     }
 
+                    // This used to render up to ten full journal cards inline,
+                    // so Home grew every time you wrote — and each card blends
+                    // a material over the backdrop, which is the single most
+                    // expensive thing on the screen. Ten of them, on every
+                    // scroll, is what made Home stutter.
+                    //
+                    // The journal is one tap away and does this properly, with
+                    // grouping, search and a scope filter. Home does not need
+                    // to be a second copy of it.
                     if !olderEntries.isEmpty {
-                        SectionHeader(title: "Recent")
-                        recentList
+                        NavigationLink {
+                            JournalView(profile: profile)
+                        } label: {
+                            HStack(spacing: TetherSpace.s) {
+                                IconDisc(icon: .journal, size: 34,
+                                         color: TetherColor.brand)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Your journal")
+                                        .font(TetherType.label)
+                                        .foregroundStyle(TetherColor.text)
+                                    Text("\(olderEntries.count) recent "
+                                         + (olderEntries.count == 1 ? "entry" : "entries"))
+                                        .font(TetherType.caption)
+                                        .foregroundStyle(TetherColor.muted)
+                                }
+                                Spacer(minLength: 0)
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13))
+                                    .foregroundStyle(TetherColor.faint)
+                                    .accessibilityHidden(true)
+                            }
+                            .padding(TetherSpace.m)
+                            .background(TetherColor.surface)
+                            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
+                                                        style: .continuous))
+                        }
+                        .buttonStyle(.plain)
                     }
 
                     Button("Ask the coach") { onOpenCoach() }
