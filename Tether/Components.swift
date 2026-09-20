@@ -61,6 +61,12 @@ struct TetherCard<Content: View>: View {
     var padded = true
     let content: Content
 
+    /// True when the glass scene is active, which makes cards genuinely
+    /// translucent rather than tinted panels.
+    private var isGlass: Bool {
+        SceneManager.shared.choice == .glass
+    }
+
     init(padded: Bool = true, @ViewBuilder content: () -> Content) {
         self.padded = padded
         self.content = content()
@@ -80,10 +86,15 @@ struct TetherCard<Content: View>: View {
             //
             // Tinted with the surface colour on top rather than left bare, so
             // the card still reads as a raised surface and not a hole.
-            .background(.regularMaterial,
+            // Glass gets a thicker, clearer material and almost no tint, so
+            // the backdrop genuinely shows through the card. Everywhere else
+            // the surface tint is heavier — reading as a solid panel is right
+            // for Jungle or Night, and wrong here.
+            .background(isGlass ? .ultraThinMaterial : .regularMaterial,
                         in: RoundedRectangle(cornerRadius: TetherRadius.large,
                                              style: .continuous))
-            .background(TetherColor.surface.opacity(0.55),
+            .background(TetherColor.surface
+                            .opacity(isGlass ? 0.22 : 0.55),
                         in: RoundedRectangle(cornerRadius: TetherRadius.large,
                                              style: .continuous))
             .clipShape(RoundedRectangle(cornerRadius: TetherRadius.large, style: .continuous))

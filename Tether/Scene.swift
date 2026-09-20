@@ -21,7 +21,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     // when the phone is in dark mode?" — it follows the phone: dark gets
     // Night, light gets Dawn. Anything else would mean a person who has set
     // their phone to dark mode opening an app that ignores them.
-    case automatic, day, dawn, night, garden, jungle, ocean, dune, aurora, meadow
+    case automatic, glass, day, dawn, night, garden, jungle, ocean, dune, aurora, meadow
 
     var id: String { rawValue }
 
@@ -48,6 +48,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     var title: LocalizedStringKey {
         switch self {
         case .automatic: return "Match phone"
+        case .glass:     return "Glass"
         case .day:       return "Day"
         case .dawn:      return "Dawn"
         case .night:     return "Night"
@@ -63,6 +64,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     var blurb: LocalizedStringKey {
         switch self {
         case .automatic: return "Follows your phone. Dark gets Night, light gets Day."
+        case .glass:     return "Frosted, weightless, softly lit."
         case .day:       return "Bright sky, soft cloud, clear light."
         case .dawn:      return "Warm paper and morning light."
         case .night:     return "Deep sky, drifting fireflies."
@@ -78,6 +80,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     var symbol: String {
         switch self {
         case .automatic: return "circle.lefthalf.filled"
+        case .glass:     return "square.stack.3d.down.right"
         case .day:       return "sun.max"
         case .dawn:      return "sun.horizon"
         case .night:     return "moon.stars"
@@ -100,7 +103,10 @@ enum AppScene: String, CaseIterable, Identifiable {
     /// `.automatic` is free because it only ever resolves to Night or Day.
     var isFree: Bool {
         switch self {
-        case .automatic, .day, .night: return true
+        // Glass is free alongside the two the phone picks. It is the one that
+        // shows the app off, so paywalling it would undercut the screenshots
+        // and the first-run impression for no gain.
+        case .automatic, .glass, .day, .night: return true
         default: return false
         }
     }
@@ -110,7 +116,7 @@ enum AppScene: String, CaseIterable, Identifiable {
         switch self {
         // `.automatic` never reaches here — resolve it first. Treated as light
         // so a missed resolution fails visibly rather than silently dark.
-        case .automatic, .day, .dawn, .dune, .meadow: return false
+        case .automatic, .glass, .day, .dawn, .dune, .meadow: return false
         case .night, .garden, .jungle, .ocean, .aurora: return true
         }
     }
@@ -128,6 +134,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     var ambientParticleCount: Int {
         switch self {
         case .automatic, .dawn: return 7
+        case .glass:            return 5
         case .day:              return 6
         case .meadow:           return 8
         case .night:            return 9
@@ -142,6 +149,10 @@ enum AppScene: String, CaseIterable, Identifiable {
     /// Three stops, top-leading → bottom-trailing.
     var backdrop: [Color] {
         switch self {
+        case .glass:
+            // Cool, near-neutral, and light enough that cards read as panes
+            // floating over it rather than boxes sitting on it.
+            return [Color(hex: "EEF3F8"), Color(hex: "E2EAF2"), Color(hex: "F7FAFC")]
         case .day:
             return [Color(hex: "EAF4FD"), Color(hex: "DCEBF7"), Color(hex: "F3F7FB")]
         case .meadow:
@@ -166,6 +177,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     /// A soft light source, so the scene is lit rather than flat.
     var glow: Color {
         switch self {
+        case .glass:            return Color(hex: "CFE3F2")
         case .day:              return Color(hex: "FFE9B8")
         case .meadow:           return Color(hex: "D6E8A0")
         case .automatic, .dawn: return Color(hex: "FFD9A0")
@@ -181,6 +193,7 @@ enum AppScene: String, CaseIterable, Identifiable {
     var particle: Particle {
         switch self {
         case .automatic, .dawn, .day, .dune: return .motes
+        case .glass:                         return .motes
         case .night:                         return .fireflies
         case .garden:                        return .butterflies
         case .jungle:                        return .butterflies

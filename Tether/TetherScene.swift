@@ -10,6 +10,7 @@ extension AppScene {
     /// `.automatic`, which has already been resolved into a real scene.
     var timeOfDay: TetherScene.TimeOfDay {
         switch self {
+        case .glass:             return .day
         case .automatic, .dawn:  return .dawn
         case .night, .aurora:    return .night
         case .day, .garden, .jungle, .meadow: return .day

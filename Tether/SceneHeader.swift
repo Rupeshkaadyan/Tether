@@ -46,6 +46,18 @@ extension AppScene {
     /// Resolved scenes only. `.automatic` falls back to Day.
     var header: SceneHeader {
         switch self {
+        case .glass:
+            // Pale, cool and almost colourless. The glass theme is carried by
+            // the card material rather than the sky, so the horizon stays
+            // quiet — colour here would fight it.
+            return SceneHeader(
+                sky: [Color(hex: "DCE7F2"), Color(hex: "EAF1F8"), Color(hex: "F8FBFD")],
+                orb: Color(hex: "FFFFFF"),
+                far: Color(hex: "CFDDEA").opacity(0.9),
+                near: Color(hex: "B4C7DA"),
+                water: Color(hex: "C9D9E8"),
+                silhouette: .ridge, showsStars: false)
+
         case .automatic, .day:
             return SceneHeader(
                 sky: [Color(hex: "5E86D8"), Color(hex: "9FB6E8"), Color(hex: "EAF1FA")],

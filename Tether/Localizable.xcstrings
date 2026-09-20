@@ -2791,6 +2791,28 @@
         }
       }
     },
+    "Frosted, weightless, softly lit.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Frosted, weightless, softly lit."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ठंडा पाला, हल्का, कोमल रोशनी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escarchado, ligero, suavemente iluminado."
+          }
+        }
+      }
+    },
     "Garden": {
       "localizations": {
         "en": {
@@ -2859,6 +2881,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपको जान रहा हूँ"
+          }
+        }
+      }
+    },
+    "Glass": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Glass"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "काँच"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cristal"
           }
         }
       }
