@@ -446,10 +446,16 @@ struct HomeView: View {
                 // Stacks at accessibility text sizes, where the horizontal
                 // pairing row squeezes the text into hyphenated fragments.
                 AdaptiveRow(stacked: typeSize.isAccessibility) {
-                    PairedAvatars(left: profile.displayName,
-                                  right: partner?.displayName,
-                                  size: 42,
-                                  converged: isPaired)
+                    // The rope version: real photos when they exist, and the
+                    // connection drawn as an actual slack line between two
+                    // people rather than two circles that happen to sit near
+                    // each other. This is the thing the app is named for, and
+                    // it should be visible on the first screen.
+                    TetherConnection(meName: profile.displayName,
+                                     mePhoto: profile.photoData,
+                                     partnerName: isPaired ? partner?.displayName : nil,
+                                     partnerPhoto: partner?.photoData,
+                                     size: 48)
                 } trailing: {
                     VStack(alignment: .leading, spacing: 2) {
                         Text(isPaired
@@ -1267,6 +1273,26 @@ struct SettingsView: View {
     @State private var showDeleteConfirm = false
     @State private var showTrack = false
     @State private var exportUnlocked = false
+    @State private var profilePhoto: PhotosPickerItem?
+
+    /// What the account line says. Honest about CloudKit being off — saying
+    /// "connected" when sync is not enabled would be a lie the person would
+    /// only discover when their data failed to appear on another device.
+    private var signInStatus: String {
+        if Persistence.useCloudKit {
+            return "Apple ID · syncing privately"
+        }
+        return "On this device only"
+    }
+
+    private func loadProfilePhoto() async {
+        guard let data = try? await profilePhoto?.loadTransferable(type: Data.self)
+        else { return }
+        // Downscale before storing. A full-resolution photo in the store is
+        // the kind of thing that quietly makes an app slow.
+        profile.photoData = UIImage(data: data)?.downsampled(to: 512)
+        try? ctx.save()
+    }
     @State private var exportMessage: String?
     @State private var switchingLanguage = false
     @State private var scene = SceneManager.shared
@@ -1399,6 +1425,41 @@ struct SettingsView: View {
     var body: some View {
         NavigationStack {
             List {
+                // You, first. A settings screen that opens with an anonymous
+                // row of toggles says nothing about who the app belongs to.
+                Section {
+                    HStack(spacing: TetherSpace.m) {
+                        ZStack(alignment: .bottomTrailing) {
+                            ProfileAvatar(name: profile.displayName,
+                                          photoData: profile.photoData,
+                                          size: 62)
+                            PhotosPicker(selection: $profilePhoto,
+                                         matching: .images) {
+                                Image(systemName: "pencil.circle.fill")
+                                    .font(.system(size: 19))
+                                    .foregroundStyle(TetherColor.brand)
+                                    .background(Circle().fill(TetherColor.surface))
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityLabel("Change your picture")
+                        }
+
+                        VStack(alignment: .leading, spacing: 2) {
+                            Text(profile.displayName.isEmpty
+                                 ? "Your profile" : profile.displayName)
+                                .font(TetherType.label)
+                                .foregroundStyle(TetherColor.text)
+                            Text(signInStatus)
+                                .font(TetherType.micro)
+                                .foregroundStyle(TetherColor.faint)
+                        }
+
+                        Spacer(minLength: 0)
+                    }
+                    .padding(.vertical, TetherSpace.xs)
+                }
+                .task(id: profilePhoto) { await loadProfilePhoto() }
+
                 Section {
                     HStack {
                         Text("Name")

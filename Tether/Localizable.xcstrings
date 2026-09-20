@@ -1235,6 +1235,28 @@
         }
       }
     },
+    "Apple ID · syncing privately": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Apple ID · syncing privately"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple ID · निजी सिंक"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apple ID · sincronización privada"
+          }
+        }
+      }
+    },
     "Ask anything": {
       "localizations": {
         "es": {
@@ -1652,6 +1674,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "अनुष्ठान बदलें"
+          }
+        }
+      }
+    },
+    "Change your picture": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Change your picture"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपनी तस्वीर बदलें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cambiar tu foto"
           }
         }
       }
@@ -4676,6 +4720,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "इस दिन"
+          }
+        }
+      }
+    },
+    "On this device only": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "On this device only"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "केवल इस डिवाइस पर"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Solo en este dispositivo"
           }
         }
       }
@@ -9635,6 +9701,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "आपकी मुख्य प्रेम भाषा"
+          }
+        }
+      }
+    },
+    "Your profile": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Your profile"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आपकी प्रोफ़ाइल"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu perfil"
           }
         }
       }

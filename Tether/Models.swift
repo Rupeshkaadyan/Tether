@@ -164,6 +164,9 @@ enum Mood {
 final class UserProfile {
     var id: UUID = UUID()
     var displayName: String = ""
+    /// A small avatar, shown next to your name and beside your partner's when
+    /// you are connected. External storage keeps it out of the main store.
+    @Attribute(.externalStorage) var photoData: Data?
     var trackRaw: String = ""
     var locale: String = ""
     var timeZoneID: String = ""
