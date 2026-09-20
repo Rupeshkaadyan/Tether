@@ -48,6 +48,12 @@ struct HomeView: View {
     @State private var voiceData: Data?
     @State private var showNotifExplainer = false
     @State private var showComposer = false
+    /// Whether the next entry is shared with the partner.
+    ///
+    /// Defaults to FALSE. Sharing is a deliberate act, and the cost of a
+    /// mistake is not recoverable — once someone has read something you did
+    /// not mean to share, you cannot un-share it.
+    @State private var shareWithPartner = false
     @State private var milestoneToast: String?
     @AppStorage("tether.notifAsked") private var notifAsked = false
     @Environment(\.dynamicTypeSize) private var typeSize
@@ -594,6 +600,12 @@ struct HomeView: View {
                 }
             }
 
+            // Who this is for, chosen before it is saved.
+            //
+            // There was no such control at all. Entries defaulted to shared,
+            // so the only way to write something private was to not write it.
+            VisibilityPicker(isShared: $shareWithPartner, partnerName: partner?.displayName)
+
             Button("Save today's entry") { save() }
                 .tetherButton()
                 .disabled(reply.trimmed.isEmpty)
@@ -1139,6 +1151,7 @@ struct HomeView: View {
         entry.safetyFlagged = verdict.isCrisis
         entry.photoData = photoData
         entry.voiceData = voiceData
+        entry.visibility = shareWithPartner ? .shared : .private
         ctx.insert(entry)
         ctx.insert(MoodLog(userID: profile.id, mood: mood))
 

@@ -1,0 +1,109 @@
+import SwiftData
+import SwiftUI
+
+/// Writing an entry, from inside the journal.
+///
+/// This did not exist. Entries could only be created from Home's daily prompt
+/// or by releasing an Unsent note, so the journal — the place you go to write —
+/// had no way to write anything. Everything had to happen somewhere else first.
+struct JournalComposer: View {
+    @Bindable var profile: UserProfile
+    /// Which tab the person was on when they opened this. If they were looking
+    /// at Shared, they probably mean to write a shared entry.
+    var initialScope: JournalView.Scope = .onlyMe
+
+    @Environment(\.modelContext) private var ctx
+    @Environment(\.dismiss) private var dismiss
+    @Query private var profiles: [UserProfile]
+
+    @State private var text = ""
+    @State private var mood = 3
+    @State private var isShared = false
+    @FocusState private var focused: Bool
+
+    private var partner: UserProfile? {
+        guard let id = profile.partnerID else { return nil }
+        return profiles.first { $0.id == id }
+    }
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: TetherSpace.xl) {
+                    VStack(alignment: .leading, spacing: TetherSpace.s) {
+                        SectionHeader(title: "How are you?")
+                        MoodRow(selection: $mood)
+                    }
+
+                    VStack(alignment: .leading, spacing: TetherSpace.s) {
+                        SectionHeader(title: "What happened?")
+                        // Bottom-anchored so the field grows with the text
+                        // instead of scrolling it out of view while typing.
+                        TextField("A line is enough.", text: $text, axis: .vertical)
+                            .lineLimit(4...14)
+                            .tetherField()
+                            .focused($focused)
+                    }
+
+                    // Only offered when there is someone to share WITH. Asking
+                    // an unpaired person to choose is meaningless.
+                    if partner != nil {
+                        VisibilityPicker(isShared: $isShared,
+                                         partnerName: partner?.displayName)
+                    }
+                }
+                .padding(TetherSpace.margin)
+                .padding(.bottom, TetherSpace.xxl)
+            }
+            .background { TetherBackdrop() }
+            .navigationTitle("New entry")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") { focused = false }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Save") { save() }
+                        .disabled(text.trimmed.isEmpty)
+                }
+            }
+            .onAppear {
+                isShared = (initialScope == .shared) && partner != nil
+                focused = true
+            }
+        }
+    }
+
+    private func save() {
+        let body = text.trimmed
+        let verdict = SafetyClassifier.classify(body)
+
+        let entry = JournalEntry(userID: profile.id,
+                                 body: SecureContent.seal(body),
+                                 mood: mood,
+                                 source: .journal)
+        entry.visibility = (isShared && partner != nil) ? .shared : .private
+        entry.safetyFlagged = verdict.isCrisis
+        ctx.insert(entry)
+        ctx.insert(MoodLog(userID: profile.id, mood: mood))
+
+        if verdict.isCrisis {
+            // Never distilled into retrievable memory, and never shared.
+            entry.visibility = .private
+        } else {
+            ctx.insert(CoachEngine.makeMemory(from: body,
+                                              ownerID: profile.id,
+                                              source: .journal,
+                                              sourceID: entry.id,
+                                              visibility: entry.visibility))
+        }
+
+        try? ctx.save()
+        TetherHaptics.success()
+        dismiss()
+    }
+}

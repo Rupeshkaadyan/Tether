@@ -172,6 +172,80 @@ struct PromptCard: View {
     }
 }
 
+// MARK: - Visibility
+
+/// Chooses who an entry is for: only me, or shared with the partner.
+///
+/// The options say what actually happens — "Only me" / "Shared" — rather than
+/// the jargon, because the cost of getting this wrong is not recoverable. Once
+/// someone has read a thing you did not mean to share, you cannot un-share it.
+///
+/// Off by default, and the shared option names the partner out loud so the
+/// choice is concrete rather than abstract.
+struct VisibilityPicker: View {
+    @Binding var isShared: Bool
+    var partnerName: String?
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: TetherSpace.s) {
+            SectionHeader(title: "Who is this for?")
+
+            HStack(spacing: TetherSpace.s) {
+                option(value: false,
+                       icon: "lock.fill",
+                       title: "Only me",
+                       subtitle: "Nobody else sees this.")
+                option(value: true,
+                       icon: "person.2.fill",
+                       title: "Shared",
+                       subtitle: partnerName == nil
+                                 ? "You both see this."
+                                 : "\(partnerName ?? "They") can read this.")
+            }
+        }
+    }
+
+    private func option(value: Bool,
+                        icon: String,
+                        title: String,
+                        subtitle: String) -> some View {
+        Button {
+            isShared = value
+            TetherHaptics.light()
+        } label: {
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 6) {
+                    Image(systemName: icon)
+                        .font(.system(size: 12))
+                    Text(title)
+                        .font(TetherType.label)
+                }
+                .foregroundStyle(isShared == value ? .white : TetherColor.text)
+                Text(subtitle)
+                    .font(TetherType.micro)
+                    .foregroundStyle(isShared == value
+                                     ? .white.opacity(0.85)
+                                     : TetherColor.faint)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(TetherSpace.m)
+            .background(isShared == value
+                        ? AnyShapeStyle(TetherGradient.brand)
+                        : AnyShapeStyle(TetherColor.surface))
+            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.small,
+                                        style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: TetherRadius.small, style: .continuous)
+                    .strokeBorder(isShared == value ? .clear : TetherColor.border,
+                                  lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(isShared == value ? [.isSelected] : [])
+    }
+}
+
 // MARK: - Chip
 
 struct Chip: View {

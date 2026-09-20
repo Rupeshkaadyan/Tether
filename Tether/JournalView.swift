@@ -11,6 +11,8 @@ struct JournalView: View {
     @State private var scope: Scope = .onlyMe
     @State private var query = ""
     @State private var showSettings = false
+    @State private var showComposer = false
+    @FocusState private var searchFocused: Bool
 
     /// The two tabs are MUTUALLY EXCLUSIVE, and the names now say so.
     ///
@@ -77,14 +79,47 @@ struct JournalView: View {
             .navigationTitle("Journal")
             .navigationBarTitleDisplayMode(.large)
             .toolbar {
+                // A way to put the keyboard away. Without this the only
+                // dismissal is the hardware/software "hide keyboard" control,
+                // which most people do not know exists — so the search field
+                // stayed focused and the screen stayed half-covered.
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") { searchFocused = false }
+                }
                 ToolbarItem(placement: .confirmationAction) {
-                    Button { showSettings = true } label: {
+                    Menu {
+                        Button {
+                            showSettings = true
+                        } label: {
+                            Label("Settings", systemImage: "gearshape")
+                        }
+                    } label: {
                         Icon(.settings, size: 21, color: TetherColor.muted)
                     }
                     .accessibilityLabel("Settings")
                 }
             }
             .sheet(isPresented: $showSettings) { SettingsView(profile: profile) }
+            .sheet(isPresented: $showComposer) {
+                JournalComposer(profile: profile, initialScope: scope)
+            }
+            .overlay(alignment: .bottomTrailing) {
+                // Write from the journal. Entries could previously only be
+                // created from Home or by releasing an Unsent note, so the
+                // journal itself had no way to write anything.
+                Button { showComposer = true } label: {
+                    Image(systemName: "square.and.pencil")
+                        .font(.system(size: 20, weight: .medium))
+                        .foregroundStyle(.white)
+                        .frame(width: 54, height: 54)
+                        .background(TetherGradient.brand, in: Circle())
+                        .tetherShadow(.floating)
+                }
+                .buttonStyle(.plain)
+                .padding(TetherSpace.margin)
+                .accessibilityLabel("Write in your journal")
+            }
         }
     }
 
@@ -132,6 +167,9 @@ struct JournalView: View {
                 .foregroundStyle(TetherColor.text)
                 .tint(TetherColor.brand)
                 .textInputAutocapitalization(.never)
+                .focused($searchFocused)
+                .submitLabel(.done)
+                .onSubmit { searchFocused = false }
             if !query.isEmpty {
                 Button { query = "" } label: {
                     Icon(.close, size: 15, color: TetherColor.faint)
@@ -240,9 +278,15 @@ struct JournalView: View {
                         .font(TetherType.caption)
                         .foregroundStyle(TetherColor.muted)
                     Spacer(minLength: 0)
+                    // An icon alone was not enough — a lock and two people
+                    // look similar at 13pt, and there was no way to tell at a
+                    // glance what anyone else could see. The words say it.
                     Icon(entry.visibility == .private ? .privateEntry : .sharedEntry,
                          size: 13,
                          color: TetherColor.faint)
+                    Text(entry.visibility == .private ? "Only me" : "Shared")
+                        .font(TetherType.micro)
+                        .foregroundStyle(TetherColor.faint)
                 }
 
                 Text(SecureContent.read(entry.body))

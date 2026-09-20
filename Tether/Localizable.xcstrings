@@ -684,6 +684,28 @@
         }
       }
     },
+    "A line is enough.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "A line is enough."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "एक पंक्ति काफ़ी है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Una línea basta."
+          }
+        }
+      }
+    },
     "A look back": {
       "localizations": {
         "es": {
@@ -2870,6 +2892,28 @@
         }
       }
     },
+    "How are you?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "How are you?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "आप कैसे हैं?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Cómo estás?"
+          }
+        }
+      }
+    },
     "How do you feel loved?": {
       "localizations": {
         "es": {
@@ -4011,6 +4055,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "उनमें आप जिस एक बात की कद्र करते हैं और कभी ज़बान से कही नहीं — उसका नाम लें।"
+          }
+        }
+      }
+    },
+    "New entry": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "New entry"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "नई प्रविष्टि"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entrada nueva"
           }
         }
       }
@@ -7620,6 +7686,28 @@
         }
       }
     },
+    "What happened?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "What happened?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "क्या हुआ?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Qué pasó?"
+          }
+        }
+      }
+    },
     "What is a conversation the two of you keep postponing?": {
       "extractionState": "stale",
       "localizations": {
@@ -8470,6 +8558,28 @@
         }
       }
     },
+    "Who is this for?": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Who is this for?"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "यह किसके लिए है?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Para quién es esto?"
+          }
+        }
+      }
+    },
     "Wisdom Jar": {
       "localizations": {
         "en": {
@@ -8581,6 +8691,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "नोट लिखें…"
+          }
+        }
+      }
+    },
+    "Write in your journal": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Write in your journal"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "अपनी डायरी में लिखें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escribe en tu diario"
           }
         }
       }

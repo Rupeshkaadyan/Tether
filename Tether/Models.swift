@@ -562,7 +562,16 @@ final class JournalEntry {
         self.entryDate = Date()
         self.body = body
         self.mood = mood
-        self.visibilityRaw = Visibility.shared.rawValue
+        // PRIVATE BY DEFAULT.
+        //
+        // This was `.shared`, which meant every journal entry a person wrote
+        // was visible to their partner unless something explicitly changed it.
+        // Nothing did. So the "Only me" tab was always empty, the Shared tab
+        // held everything, and the app quietly broke its own privacy promise
+        // for anyone who did not go looking for a setting that did not exist.
+        //
+        // Sharing must be a deliberate act, not the absence of one.
+        self.visibilityRaw = Visibility.private.rawValue
         self.sourceRaw = source.rawValue
         self.safetyFlagged = false
         self.createdAt = Date()
