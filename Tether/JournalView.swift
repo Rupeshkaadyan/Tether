@@ -45,7 +45,9 @@ struct JournalView: View {
             }
         case .shared:
             base = entries.filter { entry in
-                guard entry.visibility == .shared else { return false }
+                // isShareable, not just `.shared` — a crisis entry is never
+                // shown here even if it was written before that rule existed.
+                guard entry.isShareable else { return false }
                 return entry.userID == profile.id || entry.userID == partner?.id
             }
         }

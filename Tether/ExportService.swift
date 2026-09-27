@@ -54,7 +54,7 @@ enum ExportService {
         // Shared entries from the partner
         if let partner {
             let theirs = entries
-                .filter { $0.userID == partner.id && $0.visibility == .shared }
+                .filter { $0.userID == partner.id && $0.isShareable }
                 .sorted { $0.entryDate > $1.entryDate }
             if !theirs.isEmpty {
                 out.append("## \(partner.displayName)'s shared entries")

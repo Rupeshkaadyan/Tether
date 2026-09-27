@@ -35,7 +35,11 @@ struct MoodGraphCard: View {
         // Average per person per day, so three entries on a Tuesday do not
         // outweigh a single entry on Wednesday.
         func series(for userID: UUID, isMe: Bool) -> [MoodPoint] {
-            let mine = recent.filter { $0.userID == userID }
+            // Your own moods are yours; the partner's only come from what
+            // they chose to share. This plotted everything they wrote.
+            let mine = recent.filter {
+                $0.userID == userID && (isMe || $0.isShareable)
+            }
             let grouped = Dictionary(grouping: mine) {
                 cal.startOfDay(for: $0.entryDate)
             }

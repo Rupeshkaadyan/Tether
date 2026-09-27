@@ -641,6 +641,21 @@ final class JournalEntry {
     }
 }
 
+extension JournalEntry {
+    /// THE definition of "the other person may see this".
+    ///
+    /// This was previously re-derived in six separate places, and five of them
+    /// got it wrong — Two Versions, the reveal, Memory Lane, the mood graph
+    /// and recovery memory each read the partner's entries on a weaker test,
+    /// so private writing leaked by content, by mood and by timing.
+    ///
+    /// One predicate, used everywhere. If a new screen needs to know whether
+    /// an entry is visible to a partner, it asks this and nothing else.
+    var isShareable: Bool {
+        visibility == .shared && !safetyFlagged
+    }
+}
+
 @Model
 final class PromptReply {
     var id: UUID = UUID()

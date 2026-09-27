@@ -54,13 +54,9 @@ enum TwoVersionsEngine {
         //
         // Privacy is enforced at the source, not at the point of display: if
         // it is filtered here it cannot leak from any future caller either.
-        func shareable(_ e: JournalEntry) -> Bool {
-            e.visibility == .shared && !e.safetyFlagged
-        }
-
-        let mine = Dictionary(grouping: entries.filter { $0.userID == meID && shareable($0) },
+        let mine = Dictionary(grouping: entries.filter { $0.userID == meID && $0.isShareable },
                               by: { day(of: $0.entryDate) })
-        let theirs = Dictionary(grouping: entries.filter { $0.userID == partnerID && shareable($0) },
+        let theirs = Dictionary(grouping: entries.filter { $0.userID == partnerID && $0.isShareable },
                                 by: { day(of: $0.entryDate) })
 
         var out: [TwoVersions] = []

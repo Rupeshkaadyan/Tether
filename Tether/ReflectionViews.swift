@@ -325,7 +325,7 @@ struct RevealMomentView: View {
                             revealCard(label: partnerName, entry: theirEntry)
 
                             // The reply: one line, only on shared entries.
-                            if theirEntry.visibility == .shared {
+                            if theirEntry.isShareable {
                                 if let existing = theirEntry.replyBody, !existing.isEmpty {
                                     HStack(alignment: .top, spacing: TetherSpace.xs) {
                                         Icon(.send, size: 13, color: .white.opacity(0.6))
@@ -387,7 +387,7 @@ struct RevealMomentView: View {
     /// private entry — the guard is the privacy promise.
     private func sendReply(to entry: JournalEntry) {
         let text = replyText.trimmed
-        guard !text.isEmpty, entry.visibility == .shared else { return }
+        guard !text.isEmpty, entry.isShareable else { return }
         entry.replyBody = text
         entry.replyBy = myEntry?.userID
         entry.replyAt = Date()
@@ -725,9 +725,16 @@ struct MemoryLaneView: View {
     }
 
     /// Both partners' entries when paired.
+    ///
+    /// Yours are all here — they are yours. The partner's are only the ones
+    /// they chose to share: this list previously included everything they had
+    /// written, so a private entry appeared in Memory Lane alongside the
+    /// shared ones.
     private var story: [JournalEntry] {
         guard let partner else { return entries.filter { $0.userID == profile.id } }
-        return entries.filter { $0.userID == profile.id || $0.userID == partner.id }
+        return entries.filter {
+            $0.userID == profile.id || ($0.userID == partner.id && $0.isShareable)
+        }
     }
 
     var body: some View {

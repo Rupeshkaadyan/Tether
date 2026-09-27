@@ -216,16 +216,12 @@ struct HomeView: View {
     /// classifier had flagged — would have been shown to their partner, and a
     /// "they're having a hard day" nudge would have been derived from writing
     /// that was never meant to be seen.
-    private func isShareable(_ entry: JournalEntry) -> Bool {
-        entry.visibility == .shared && !entry.safetyFlagged
-    }
-
     private var partnerAnsweredToday: Bool {
         guard let partner else { return false }
         return entries.contains {
             $0.userID == partner.id
             && Calendar.current.isDateInToday($0.entryDate)
-            && isShareable($0)
+            && $0.isShareable
         }
     }
 
@@ -985,7 +981,7 @@ struct HomeView: View {
         return entries.first {
             $0.userID == partner.id
             && Calendar.current.isDateInToday($0.entryDate)
-            && isShareable($0)
+            && $0.isShareable
         }
     }
 
@@ -995,7 +991,9 @@ struct HomeView: View {
         guard isPaired, let partner else { return 0 }
         let cal = Calendar.current
         let mine = Set(myEntries.map { cal.startOfDay(for: $0.entryDate) })
-        let theirs = Set(entries.filter { $0.userID == partner.id }
+        // Only days they shared. Counting private days leaked the fact and
+        // the timing of writing that was never meant to be seen.
+        let theirs = Set(entries.filter { $0.userID == partner.id && $0.isShareable }
                                 .map { cal.startOfDay(for: $0.entryDate) })
         let both = mine.intersection(theirs)
 
@@ -1249,7 +1247,7 @@ struct HomeView: View {
         guard entries.count >= 2, let partner else { return nil }
         let cal = Calendar.current
         let theirs = entries
-            .filter { $0.userID == partner.id }
+            .filter { $0.userID == partner.id && $0.isShareable }
             .sorted { $0.entryDate < $1.entryDate }
         guard theirs.count >= 2 else { return nil }
 
