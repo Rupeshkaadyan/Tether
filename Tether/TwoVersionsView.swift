@@ -45,9 +45,22 @@ enum TwoVersionsEngine {
 
         func day(of d: Date) -> Date { cal.startOfDay(for: d) }
 
-        let mine = Dictionary(grouping: entries.filter { $0.userID == meID },
+        // SHARED AND NOT IN CRISIS — both sides.
+        //
+        // This previously grouped on userID alone. A private entry, or one the
+        // safety classifier had flagged, would have been rendered to the
+        // partner by this screen — the exact opposite of what the app
+        // promises, delivered by the screen whose whole subject is trust.
+        //
+        // Privacy is enforced at the source, not at the point of display: if
+        // it is filtered here it cannot leak from any future caller either.
+        func shareable(_ e: JournalEntry) -> Bool {
+            e.visibility == .shared && !e.safetyFlagged
+        }
+
+        let mine = Dictionary(grouping: entries.filter { $0.userID == meID && shareable($0) },
                               by: { day(of: $0.entryDate) })
-        let theirs = Dictionary(grouping: entries.filter { $0.userID == partnerID },
+        let theirs = Dictionary(grouping: entries.filter { $0.userID == partnerID && shareable($0) },
                                 by: { day(of: $0.entryDate) })
 
         var out: [TwoVersions] = []

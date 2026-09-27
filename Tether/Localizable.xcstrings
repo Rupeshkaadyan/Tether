@@ -1019,6 +1019,28 @@
         }
       }
     },
+    "Actions for this entry": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Actions for this entry"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस प्रविष्टि के विकल्प"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opciones de esta entrada"
+          }
+        }
+      }
+    },
     "Active Days": {
       "extractionState": "stale",
       "localizations": {

@@ -12,20 +12,35 @@ struct JournalThumb: View {
 
     private let size: CGFloat = 84
 
+    /// Decoded once, then reused.
+    ///
+    /// These thumbnails decode a JPEG and, for voice notes, run an
+    /// `AVAudioFile` decode that writes a temp file. Doing that inside `body`
+    /// meant the work ran on the main thread every time SwiftUI re-evaluated
+    /// the view — up to six times on Home, on every redraw.
+    private static let imageCache = NSCache<NSString, UIImage>()
+    private static let barsCache = NSCache<NSString, NSArray>()
+
+    @State private var loadedImage: UIImage?
+    @State private var loadedBars: [CGFloat]?
+
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             Group {
-                if let data = entry.photoData,
-                   let ui = UIImage(data: data) {
-                    Image(uiImage: ui)
+                if let loadedImage {
+                    Image(uiImage: loadedImage)
                         .resizable()
                         .scaledToFill()
-                } else if let audio = entry.voiceData {
-                    waveform(audio)
-                } else {
+                } else if let bars = loadedBars {
+                    barsView(bars)
+                } else if entry.photoData == nil && entry.voiceData == nil {
                     textPreview
+                } else {
+                    // Placeholder while the decode runs off the main thread.
+                    Color.clear
                 }
             }
+            .task(id: entry.id) { await load() }
             .frame(width: size, height: size)
             .background(TetherColor.surfaceSunken)
             .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium,
@@ -64,9 +79,43 @@ struct JournalThumb: View {
     ///
     /// Reading real samples means the shape matches what you actually said,
     /// so two recordings never look identical.
-    private func waveform(_ data: Data) -> some View {
-        let bars = WaveformSampler.levels(from: data, count: 18)
-        return HStack(alignment: .center, spacing: 2) {
+    /// Decodes off the main thread and caches the result.
+    private func load() async {
+        let key = entry.id.uuidString as NSString
+
+        if let cached = Self.imageCache.object(forKey: key) {
+            loadedImage = cached
+            return
+        }
+        if let cached = Self.barsCache.object(forKey: key) as? [CGFloat] {
+            loadedBars = cached
+            return
+        }
+
+        let data = entry.photoData
+        let audio = entry.voiceData
+
+        let result = await Task.detached(priority: .userInitiated) { () -> (UIImage?, [CGFloat]?) in
+            if let data, let image = UIImage(data: data) {
+                return (image, nil)
+            }
+            if let audio {
+                return (nil, WaveformSampler.levels(from: audio, count: 18))
+            }
+            return (nil, nil)
+        }.value
+
+        if let image = result.0 {
+            Self.imageCache.setObject(image, forKey: key)
+            loadedImage = image
+        } else if let bars = result.1 {
+            Self.barsCache.setObject(bars as NSArray, forKey: key)
+            loadedBars = bars
+        }
+    }
+
+    private func barsView(_ bars: [CGFloat]) -> some View {
+        HStack(alignment: .center, spacing: 2) {
             ForEach(Array(bars.enumerated()), id: \.offset) { _, level in
                 Capsule()
                     .fill(TetherColor.brand.opacity(0.75))

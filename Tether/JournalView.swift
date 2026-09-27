@@ -293,6 +293,38 @@ struct JournalView: View {
                     Text(entry.visibility == .private ? "Only me" : "Shared")
                         .font(TetherType.micro)
                         .foregroundStyle(TetherColor.faint)
+
+                    // A visible control for the same actions.
+                    //
+                    // `.swipeActions` were added to these rows, but the rows
+                    // live in a ScrollView/VStack — swipe actions only work on
+                    // List rows, so they never fired and the only way to reach
+                    // them was long-press, which nobody knows to try. A
+                    // discoverable menu beats a gesture that silently does
+                    // nothing.
+                    if entry.userID == profile.id {
+                        Menu {
+                            Button {
+                                toggleShare(entry)
+                            } label: {
+                                Label(entry.visibility == .shared ? "Only mine" : "Share",
+                                      systemImage: entry.visibility == .shared
+                                                   ? "lock.fill" : "person.2.fill")
+                            }
+                            Button(role: .destructive) {
+                                delete(entry)
+                            } label: {
+                                Label("Delete", systemImage: "trash")
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis")
+                                .font(.system(size: 14, weight: .medium))
+                                .foregroundStyle(TetherColor.faint)
+                                .frame(width: 30, height: 30)
+                                .contentShape(Rectangle())
+                        }
+                        .accessibilityLabel("Actions for this entry")
+                    }
                 }
 
                 Text(SecureContent.read(entry.body))
@@ -396,15 +428,32 @@ struct JournalView: View {
         }
     }
 
+    /// Every memory the Coach distilled from this entry.
+    ///
+    /// Derived copies have to follow the entry they came from. Without this a
+    /// deleted entry's writing stayed retrievable by the Coach, and un-sharing
+    /// left the distilled copy still marked shared — the privacy setting
+    /// applied to the original and silently not to its copies.
+    private func memories(for entry: JournalEntry) -> [AIMemory] {
+        let id = entry.id
+        let predicate = #Predicate<AIMemory> { $0.sourceID == id }
+        let descriptor = FetchDescriptor<AIMemory>(predicate: predicate)
+        return (try? ctx.fetch(descriptor)) ?? []
+    }
+
     private func toggleShare(_ entry: JournalEntry) {
         withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
             entry.visibility = (entry.visibility == .shared) ? .private : .shared
+            for memory in memories(for: entry) {
+                memory.visibility = entry.visibility
+            }
             try? ctx.save()
         }
         TetherHaptics.light()
     }
 
     private func delete(_ entry: JournalEntry) {
+        for memory in memories(for: entry) { ctx.delete(memory) }
         ctx.delete(entry)
         try? ctx.save()
         TetherHaptics.light()
