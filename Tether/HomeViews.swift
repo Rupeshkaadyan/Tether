@@ -46,6 +46,14 @@ struct HomeView: View {
 
     /// The gallery below the ritual. Built here so each tile can carry a LIVE
     /// reason to tap it — a count, a state — rather than only a name.
+    private func applyQuickAction(_ action: QuickAction) {
+        switch action {
+        case .newEntry:    showJournal = true
+        case .todayPrompt: showComposer = true
+        case .quietWeek:   showPause = true
+        }
+    }
+
     private var galleryTiles: [GalleryTile] {
         var tiles: [GalleryTile] = []
 
@@ -426,10 +434,15 @@ struct HomeView: View {
             }
             .onReceive(NotificationCenter.default.publisher(for: .tetherQuickAction)) { note in
                 guard let action = note.userInfo?["action"] as? QuickAction else { return }
-                switch action {
-                case .newEntry:    showJournal = true
-                case .todayPrompt: showComposer = true
-                case .quietWeek:   showPause = true
+                applyQuickAction(action)
+            }
+            // Consumes a shortcut that arrived before this view existed. Without
+            // this, tapping "New entry" from a cold launch opened the app and
+            // did nothing at all.
+            .onAppear {
+                if let pending = AppShortcuts.pending {
+                    AppShortcuts.pending = nil
+                    applyQuickAction(pending)
                 }
             }
             .sheet(isPresented: $showTwoVersions) {

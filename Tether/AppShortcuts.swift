@@ -65,6 +65,7 @@ final class ShortcutDelegate: NSObject, UIApplicationDelegate {
             completionHandler(false)
             return
         }
+        AppShortcuts.pending = action
         NotificationCenter.default.post(
             name: .tetherQuickAction,
             object: nil,
@@ -78,6 +79,14 @@ extension Notification.Name {
 }
 
 enum AppShortcuts {
+
+    /// Held until someone can act on it.
+    ///
+    /// The notification is posted the moment the shortcut is tapped, which on a
+    /// cold launch is BEFORE HomeView exists — so nobody is observing and the
+    /// tap is silently dropped. Holding it here means the action survives until
+    /// a view is ready to consume it.
+    static var pending: QuickAction?
 
     static func install() {
         UIApplication.shared.shortcutItems = QuickAction.allCases.map { action in
