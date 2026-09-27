@@ -207,9 +207,24 @@ struct HomeView: View {
 
     private var isPaired: Bool { partner != nil }
 
+    /// Whether an entry may be shown to the other person.
+    ///
+    /// The reveal and the care nudge both read the partner's entry for today,
+    /// and neither checked this. A private entry — or one the safety
+    /// classifier had flagged — would have been shown to their partner, and a
+    /// "they're having a hard day" nudge would have been derived from writing
+    /// that was never meant to be seen.
+    private func isShareable(_ entry: JournalEntry) -> Bool {
+        entry.visibility == .shared && !entry.safetyFlagged
+    }
+
     private var partnerAnsweredToday: Bool {
         guard let partner else { return false }
-        return entries.contains { $0.userID == partner.id && Calendar.current.isDateInToday($0.entryDate) }
+        return entries.contains {
+            $0.userID == partner.id
+            && Calendar.current.isDateInToday($0.entryDate)
+            && isShareable($0)
+        }
     }
 
     /// Called when the user taps the Pulse card — the shell switches tabs.
@@ -444,6 +459,12 @@ struct HomeView: View {
                     AppShortcuts.pending = nil
                     applyQuickAction(pending)
                 }
+                // Also checked on open. It was only called at the end of
+                // save(), so if your partner answered after you — or you
+                // simply opened the app with both answers already in — the
+                // moment never arrived. The reveal was reachable only by
+                // being the second person to write that day.
+                maybeReveal()
             }
             .sheet(isPresented: $showTwoVersions) {
                 TwoVersionsView(versions: twoVersions,
@@ -945,8 +966,12 @@ struct HomeView: View {
 
     private var partnerTodayEntry: JournalEntry? {
         guard let partner else { return nil }
+        // Same gate as partnerAnsweredToday: anything read here is rendered to
+        // the other person, so it has to have been shared deliberately.
         return entries.first {
-            $0.userID == partner.id && Calendar.current.isDateInToday($0.entryDate)
+            $0.userID == partner.id
+            && Calendar.current.isDateInToday($0.entryDate)
+            && isShareable($0)
         }
     }
 
