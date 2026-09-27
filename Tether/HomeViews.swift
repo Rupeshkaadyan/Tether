@@ -191,6 +191,8 @@ struct HomeView: View {
     /// mistake is not recoverable — once someone has read something you did
     /// not mean to share, you cannot un-share it.
     @State private var shareWithPartner = false
+    /// Applied once, before the person has touched the control.
+    @State private var shareDefaultApplied = false
     @State private var milestoneToast: String?
     @AppStorage("tether.notifAsked") private var notifAsked = false
     @Environment(\.dynamicTypeSize) private var typeSize
@@ -465,6 +467,18 @@ struct HomeView: View {
                 // moment never arrived. The reveal was reachable only by
                 // being the second person to write that day.
                 maybeReveal()
+
+                // The daily answer is the shared thing; the journal is the
+                // private thing. Defaulting both to private made every paired
+                // surface dark — the reveal, Two Versions, the pulse — for
+                // couples who never went looking for a switch.
+                //
+                // Applied once, and only before the person has touched the
+                // control, so it never overrides a deliberate choice.
+                if !shareDefaultApplied {
+                    shareDefaultApplied = true
+                    shareWithPartner = isPaired
+                }
             }
             .sheet(isPresented: $showTwoVersions) {
                 TwoVersionsView(versions: twoVersions,
@@ -1415,7 +1429,12 @@ struct HomeView: View {
         entry.safetyFlagged = verdict.isCrisis
         entry.photoData = photoData
         entry.voiceData = voiceData
-        entry.visibility = shareWithPartner ? .shared : .private
+
+        // Crisis is private regardless of the toggle. Someone in crisis must
+        // never have their writing — or the fact of it — arrive on their
+        // partner's screen.
+        entry.visibility = verdict.isCrisis ? .private
+                                            : (shareWithPartner ? .shared : .private)
         ctx.insert(entry)
         ctx.insert(MoodLog(userID: profile.id, mood: mood))
 
