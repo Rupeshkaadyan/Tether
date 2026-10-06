@@ -2030,6 +2030,25 @@ struct SettingsView: View {
                     .padding(.vertical, TetherSpace.xs)
                 }
 
+                // Guideline 5.1.1(i): the privacy policy must be reachable from
+                // inside the app, not only from the store listing. The policy
+                // existed as a file in the repository and was linked from
+                // nowhere, which is the same as not having one.
+                Section("Legal") {
+                    Link(destination: Legal.privacyPolicy) {
+                        Label("Privacy policy", systemImage: "hand.raised")
+                            .font(TetherType.label)
+                    }
+                    Link(destination: Legal.subscriptionTerms) {
+                        Label("Subscription terms", systemImage: "doc.text")
+                            .font(TetherType.label)
+                    }
+                    Link(destination: Legal.manageSubscriptions) {
+                        Label("Manage subscription", systemImage: "creditcard")
+                            .font(TetherType.label)
+                    }
+                }
+
                 Section {
                     Button("Delete all my data", role: .destructive) {
                         showDeleteConfirm = true

@@ -3,8 +3,14 @@ import SwiftUI
 struct PaywallView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var store = PurchaseService.shared
-    @State private var selected: TetherProduct = Catalog.annualProduct
+    @State private var selectedID: String = Catalog.annual
     @State private var showRestored = false
+    @State private var restoreFoundNothing = false
+
+    /// The product the person has chosen, once StoreKit has loaded it.
+    private var selected: TetherProduct? {
+        store.products.first { $0.id == selectedID }
+    }
 
     var body: some View {
         NavigationStack {
@@ -31,6 +37,16 @@ struct PaywallView: View {
             } message: {
                 Text("If you had a subscription, it is active again.")
             }
+            .alert("Nothing to restore", isPresented: $restoreFoundNothing) {
+                Button("OK", role: .cancel) { }
+            } message: {
+                Text("No previous subscription was found for this Apple Account.")
+            }
+            .task {
+                // A paywall opened before the products finished loading shows a
+                // loading state rather than an empty list or an invented price.
+                if !store.productsLoaded { await store.loadProducts() }
+            }
         }
     }
 
@@ -52,7 +68,7 @@ struct PaywallView: View {
     private var sharedLine: some View {
         HStack(spacing: TetherSpace.s) {
             Image(systemName: "person.2.fill")
-            .accessibilityHidden(true)
+                .accessibilityHidden(true)
                 .font(.system(size: 14))
             Text("One subscription. Both partners. Always.")
                 .font(TetherType.label)
@@ -94,92 +110,119 @@ struct PaywallView: View {
         .accessibilityElement(children: .combine)
     }
 
+    @ViewBuilder
     private var options: some View {
-        VStack(spacing: TetherSpace.m) {
-            ForEach(Catalog.products) { product in
-                Button {
-                    selected = product
-                } label: {
-                    HStack(spacing: TetherSpace.m) {
-                        Image(systemName: selected == product ? "largecircle.fill.circle" : "circle")
-                            .font(.system(size: 20))
-                            .foregroundStyle(selected == product ? TetherColor.brand : TetherColor.border)
-
-                        VStack(alignment: .leading, spacing: 2) {
-                            HStack(spacing: TetherSpace.s) {
-                                Text(product.title)
-                                    .font(TetherType.label)
-                                    .foregroundStyle(TetherColor.text)
-                                if let badge = product.badge {
-                                    Text(badge)
-                                        .font(.system(size: 11, weight: .semibold))
-                                        .foregroundStyle(TetherColor.thriving)
-                                        .padding(.horizontal, 6)
-                                        .padding(.vertical, 2)
-                                        .background(TetherColor.thriving.opacity(0.12))
-                                        .clipShape(Capsule())
-                                }
-                            }
-                            Text(product.detail)
-                                .font(TetherType.caption)
-                                .foregroundStyle(TetherColor.muted)
-                        }
-
-                        Spacer(minLength: 0)
-
-                        Text(product.priceLabel)
-                            .font(TetherType.caption)
-                            .foregroundStyle(TetherColor.text)
-                            .multilineTextAlignment(.trailing)
-                    }
-                    .padding(TetherSpace.m)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(selected == product ? TetherColor.tint : TetherColor.surface)
-                    .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
-                    .overlay(
-                        RoundedRectangle(cornerRadius: TetherRadius.medium)
-                            .strokeBorder(selected == product ? TetherColor.brand : TetherColor.border,
-                                          lineWidth: selected == product ? 2 : 1)
-                    )
+        if !store.productsLoaded {
+            HStack(spacing: TetherSpace.s) {
+                ProgressView()
+                Text("Loading subscriptions…")
+                    .font(TetherType.caption)
+                    .foregroundStyle(TetherColor.muted)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(TetherSpace.m)
+        } else {
+            VStack(spacing: TetherSpace.m) {
+                ForEach(store.products) { product in
+                    optionRow(product)
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel("\(product.title), \(product.priceLabel)")
-                .accessibilityAddTraits(selected == product ? [.isSelected] : [])
             }
         }
+    }
+
+    private func optionRow(_ product: TetherProduct) -> some View {
+        Button {
+            selectedID = product.id
+        } label: {
+            HStack(spacing: TetherSpace.m) {
+                Image(systemName: selectedID == product.id
+                      ? "largecircle.fill.circle" : "circle")
+                    .font(.system(size: 20))
+                    .foregroundStyle(selectedID == product.id
+                                     ? TetherColor.brand : TetherColor.border)
+
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack(spacing: TetherSpace.s) {
+                        Text(product.title)
+                            .font(TetherType.label)
+                            .foregroundStyle(TetherColor.text)
+                        if let badge = product.badge {
+                            Text(badge)
+                                .font(.system(size: 11, weight: .semibold))
+                                .foregroundStyle(TetherColor.thriving)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(TetherColor.thriving.opacity(0.12))
+                                .clipShape(Capsule())
+                        }
+                    }
+                    // The trial length comes from the subscription itself, so
+                    // it cannot promise something the offer does not include.
+                    Text(product.introLabel ?? product.detail)
+                        .font(TetherType.caption)
+                        .foregroundStyle(TetherColor.muted)
+                }
+
+                Spacer(minLength: 0)
+
+                Text(product.priceLabel)
+                    .font(TetherType.caption)
+                    .foregroundStyle(TetherColor.text)
+                    .multilineTextAlignment(.trailing)
+            }
+            .padding(TetherSpace.m)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(selectedID == product.id ? TetherColor.tint : TetherColor.surface)
+            .clipShape(RoundedRectangle(cornerRadius: TetherRadius.medium))
+            .overlay(
+                RoundedRectangle(cornerRadius: TetherRadius.medium)
+                    .strokeBorder(selectedID == product.id
+                                  ? TetherColor.brand : TetherColor.border,
+                                  lineWidth: selectedID == product.id ? 2 : 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .disabled(!product.isAvailable)
+        .opacity(product.isAvailable ? 1 : 0.5)
+        .accessibilityLabel("\(product.title), \(product.priceLabel)")
+        .accessibilityAddTraits(selectedID == product.id ? [.isSelected] : [])
     }
 
     private var cta: some View {
         VStack(spacing: TetherSpace.m) {
             Button {
                 Task {
-                    if store.entitlement.isPaid {
+                    if store.hasAccess {
                         dismiss()
-                    } else {
-                        await store.purchase(selected)
-                        dismiss()
+                    } else if let selected {
+                        let ok = await store.purchase(selected)
+                        if ok { dismiss() }
                     }
                 }
             } label: {
                 if store.isLoading {
                     ProgressView().tint(.white)
                 } else {
-                    Text("Start \(TrialConfig.label)")
+                    Text(ctaLabel)
                 }
             }
             .tetherButton()
-            .disabled(store.isLoading)
+            .disabled(store.isLoading || !(selected?.isAvailable ?? false))
 
-            Text("Then \(selected.priceLabel). Cancel anytime in Settings.")
-                .font(TetherType.caption)
-                .foregroundStyle(TetherColor.muted)
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity)
+            if let error = store.lastError {
+                Text(error)
+                    .font(TetherType.caption)
+                    .foregroundStyle(TetherColor.strained)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
 
             Button("Restore purchases") {
                 Task {
                     await store.restore()
-                    showRestored = true
+                    if store.hasAccess { showRestored = true }
+                    else { restoreFoundNothing = true }
                 }
             }
             .font(TetherType.caption)
@@ -187,12 +230,27 @@ struct PaywallView: View {
         }
     }
 
+    /// Names the trial only when StoreKit says there is one.
+    private var ctaLabel: String {
+        if store.hasAccess { return "Continue" }
+        if let intro = selected?.introLabel { return "Start \(intro)" }
+        return "Subscribe"
+    }
+
     private var footer: some View {
         VStack(alignment: .leading, spacing: TetherSpace.s) {
-            Text("Subscriptions renew automatically unless cancelled at least 24 hours before the period ends. Manage in your App Store account.")
+            Text(Legal.renewalDisclosure)
                 .font(.system(size: 11))
                 .foregroundStyle(TetherColor.muted)
                 .fixedSize(horizontal: false, vertical: true)
+
+            HStack(spacing: TetherSpace.m) {
+                Link("Privacy policy", destination: Legal.privacyPolicy)
+                Link("Terms", destination: Legal.subscriptionTerms)
+                Link("Manage", destination: Legal.manageSubscriptions)
+            }
+            .font(.system(size: 11))
+
             Text("Tether is not therapy and not a crisis service.")
                 .font(.system(size: 11))
                 .foregroundStyle(TetherColor.muted)

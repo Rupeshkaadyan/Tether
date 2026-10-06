@@ -221,6 +221,15 @@ targ_common = [
      "Tether uses the microphone only when you tap Dictate or Voice. Dictation is transcribed on this device; a voice note is stored on this device with your entry. Nothing is ever uploaded."),
     ("INFOPLIST_KEY_NSSpeechRecognitionUsageDescription",
      "Tether uses speech recognition to turn your dictation into text. Recognition runs on this device."),
+    # Export compliance. Tether's encryption is CryptoKit (AES-GCM) plus the
+    # Keychain — both are Apple's own implementations of standard algorithms,
+    # which is exactly what the exemption covers. Nothing is custom-built and
+    # nothing is a proprietary cipher, so "NO" is the accurate answer and
+    # spares every upload the compliance questionnaire.
+    #
+    # If a third-party crypto library or a custom protocol is ever added, this
+    # must be revisited — answering NO wrongly is worse than the paperwork.
+    ("INFOPLIST_KEY_ITSAppUsesNonExemptEncryption", "NO"),
     ("ASSETCATALOG_COMPILER_APPICON_NAME", "AppIcon"),
     ("ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME", "AccentColor"),
     ("ASSETCATALOG_COMPILER_APPICON_NAME", "AppIcon"),

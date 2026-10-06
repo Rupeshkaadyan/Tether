@@ -2055,6 +2055,28 @@
         }
       }
     },
+    "Could not reach the App Store.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Could not reach the App Store."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "App Store से संपर्क नहीं हो सका।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo conectar con el App Store."
+          }
+        }
+      }
+    },
     "Counts of things you actually did — never time spent in an app. There is no behind here, only not yet.": {
       "localizations": {
         "en": {
@@ -3926,6 +3948,28 @@
         }
       }
     },
+    "Loading subscriptions…": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Loading subscriptions…"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सदस्यताएँ लोड हो रही हैं…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cargando suscripciones…"
+          }
+        }
+      }
+    },
     "Lock with Face ID": {
       "localizations": {
         "en": {
@@ -4048,6 +4092,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "पुरुष"
+          }
+        }
+      }
+    },
+    "Manage subscription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Manage subscription"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सदस्यता प्रबंधित करें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gestionar suscripción"
           }
         }
       }
@@ -4576,6 +4642,28 @@
         }
       }
     },
+    "No previous subscription was found for this Apple Account.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "No previous subscription was found for this Apple Account."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "इस Apple खाते के लिए कोई पिछली सदस्यता नहीं मिली।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se encontró ninguna suscripción anterior para esta cuenta de Apple."
+          }
+        }
+      }
+    },
     "Nobody else will ever see this one.": {
       "localizations": {
         "en": {
@@ -4945,6 +5033,28 @@
         }
       }
     },
+    "Nothing to restore": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Nothing to restore"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "बहाल करने के लिए कुछ नहीं"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nada que restaurar"
+          }
+        }
+      }
+    },
     "Numbers only. Not one word either of you wrote is on this card — that is the point.": {
       "localizations": {
         "en": {
@@ -5143,6 +5253,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "अगले सप्ताह के लिए एक फ़ोकस"
+          }
+        }
+      }
+    },
+    "One payment a year": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "One payment a year"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "साल में एक भुगतान"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un pago al año"
           }
         }
       }
@@ -5693,6 +5825,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "गोपनीयता"
+          }
+        }
+      }
+    },
+    "Privacy policy": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Privacy policy"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "गोपनीयता नीति"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Política de privacidad"
           }
         }
       }
@@ -7369,6 +7523,28 @@
         }
       }
     },
+    "Subscribe": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Subscribe"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सदस्यता लें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suscribirse"
+          }
+        }
+      }
+    },
     "Subscription": {
       "localizations": {
         "es": {
@@ -7381,6 +7557,50 @@
           "stringUnit": {
             "state": "translated",
             "value": "सदस्यता"
+          }
+        }
+      }
+    },
+    "Subscription terms": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Subscription terms"
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सदस्यता की शर्तें"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Términos de suscripción"
+          }
+        }
+      }
+    },
+    "Subscriptions are not available yet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Subscriptions are not available yet."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "सदस्यताएँ अभी उपलब्ध नहीं हैं।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las suscripciones aún no están disponibles."
           }
         }
       }
@@ -7721,6 +7941,50 @@
         }
       }
     },
+    "That purchase could not be verified.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "That purchase could not be verified."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "वह खरीद सत्यापित नहीं हो सकी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo verificar esa compra."
+          }
+        }
+      }
+    },
+    "That subscription is not available yet.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "That subscription is not available yet."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "वह सदस्यता अभी उपलब्ध नहीं है।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esa suscripción aún no está disponible."
+          }
+        }
+      }
+    },
     "That's completely fine. You can take the quiz any time from Settings to personalise your insights.": {
       "localizations": {
         "es": {
@@ -7733,6 +7997,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "यह बिल्कुल ठीक है। आप सेटिंग्स से कभी भी क्विज़ ले सकते हैं।"
+          }
+        }
+      }
+    },
+    "The purchase could not be completed.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "The purchase could not be completed."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "खरीद पूरी नहीं हो सकी।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo completar la compra."
           }
         }
       }
@@ -8450,6 +8736,28 @@
           "stringUnit": {
             "state": "translated",
             "value": "%@ की प्रतीक्षा"
+          }
+        }
+      }
+    },
+    "Waiting for approval. This unlocks once it is approved.": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "new",
+            "value": "Waiting for approval. This unlocks once it is approved."
+          }
+        },
+        "hi": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "स्वीकृति की प्रतीक्षा है। स्वीकृति मिलने पर यह अनलॉक होगा।"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esperando aprobación. Se desbloqueará cuando se apruebe."
           }
         }
       }
